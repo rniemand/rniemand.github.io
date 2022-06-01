@@ -194,6 +194,6 @@ public class TestController : ApiController
 
 To ensure everything is working 100%, compile your project and head over to the newly created TestController, you should get the following response:
 
-![](/assets/img/2016/2016-07-24-A/001.png)
+![](/assets/img/2016/2016-07-24/001.png)
 
 That's all there is to it :)

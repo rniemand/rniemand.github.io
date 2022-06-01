@@ -9,7 +9,7 @@ toc: true
 ## Setting up the project
 To begin you will need to create a new console application in Visual Studio.
 
-![](/assets/img/2015/2015-06-18-A/001.png)
+![](/assets/img/2015/2015-06-18/001.png)
 
 Once your application has been created open the Package Manager console and install the following packages.
 
@@ -20,7 +20,7 @@ Install-Package Microsoft.Owin.StaticFiles
 
 This will install all the dependencies needed to build our application.
 
-![](/assets/img/2015/2015-06-18-A/002.png)
+![](/assets/img/2015/2015-06-18/002.png)
 
 ## Startup class
 Next, we will need to create a special class used by OWIN to bootstrap your web application called Startup with the following contents:
@@ -88,7 +88,7 @@ P.S. don't forget to add a reference to System.Configuration.
 ## Adding static content
 Let's presume like me you have a www folder where you would like to serve content from and this folder is part of your Visual Studio solution with an appSetting created pointing the PhysicalFileSystem to the right path:
 
-![](/assets/img/2015/2015-06-18-A/003.png)
+![](/assets/img/2015/2015-06-18/003.png)
 
 When it comes to adding content, you can now treat the www folder as if it were the root folder for a static web server and add files to it at will (keeping references to other files relative to your root directory).
 
@@ -181,7 +181,7 @@ namespace WebSelfHosted
 
 That's all there is to it (honestly). Save and run your project using F5 to see it all in action:
 
-![](/assets/img/2015/2015-06-18-A/004.png)
+![](/assets/img/2015/2015-06-18/004.png)
 
 Web API up and running serving our ValuesController.cs file.
 
