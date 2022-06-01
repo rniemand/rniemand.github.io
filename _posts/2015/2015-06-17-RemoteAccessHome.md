@@ -58,7 +58,7 @@ To enable remote access from your computer's point of view you will need to have
 
 Once done you should have something like this:
 
-![](/assets/img/2015/06/2015-06-17-A/2015-06-17-001.png)
+![](/assets/img/2015/2015-06-17-A/2015-06-17-001.png)
 
 That should be it from your computer's configuration side. Should you struggle to connect, a good thing to check is that your firewall (on your computer) is allowing RDP connections.
 
