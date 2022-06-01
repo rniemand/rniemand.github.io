@@ -197,4 +197,4 @@ If everything went well, you should see the current time being displayed on the 
 Congratulations, you now have a working Arduino powered clock.
 
 ## Powering the Clock
-In order to keep this post as short as possible I have created a new post called powering your Arduino projects that cover this topic in a lot more detail.
+In order to keep this post as short as possible I have created a new post called [powering your Arduino projects](https://www.richardn.ca/posts/PoweringYourArduinoProjects/) that cover this topic in a lot more detail.
