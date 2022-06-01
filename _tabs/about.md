@@ -4,7 +4,6 @@ icon: fas fa-info-circle
 order: 4
 ---
 
-> Add Markdown syntax content to file `_tabs/about.md`{: .filepath } and it will show up on this page.
-{: .prompt-tip }
+Specialties: C# (.NET Core, ASP.NET Core), SQL, PowerShell, Angular, TypeScript and more
 
-About
+Working on my blog still.. [https://richardn.ca](https://www.richardn.ca).
