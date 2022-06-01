@@ -29,7 +29,7 @@ description: >-                        # used by seo meta and the atom feed
   Coding, Ci-Cd, thoughts and more
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: ''
+url: 'https://www.richardn.ca'
 
 github:
   username: rniemand             # change to your github username
@@ -56,7 +56,7 @@ google_site_verification:               # fill in to your verification string
 # The end of `jekyll-seo-tag` settings
 
 google_analytics:
-  id:                 # fill in your Google Analytics ID
+  id: UA-42267024-12
   # Google Analytics pageviews report settings
   pv:
     proxy_endpoint:   # fill in the Google Analytics superProxy endpoint of Google App Engine
