@@ -12,3 +12,4 @@ order: 6
 - [Speedtest.net](https://www.richardn.ca/posts/HomeAssistantFromScratchSpeedtest/) (2018-07-03)
 - [MQTT](https://www.richardn.ca/posts/HomeAssistantFromScratchMqtt/) (2018-07-16)
 - [MySQL \ MariaDB](https://www.richardn.ca/posts/HomeAssistantFromScratchMysql/) (2018-07-17)
+- [Presence Detection](https://www.richardn.ca/posts/HomeAssistantFromScratchPresenceDetection/) (2018-07-19)
