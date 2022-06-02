@@ -1,2 +1,9 @@
 https://github.com/cotes2020/jekyll-theme-chirpy/issues/463
 https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+
+Install deps >> bundle
+Running>> bundle exec jekyll s
+
+https://chirpy.cotes.page/posts/write-a-new-post/
+https://chirpy.cotes.page/posts/text-and-typography/
+
