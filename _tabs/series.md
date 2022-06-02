@@ -8,3 +8,4 @@ order: 6
 - [Installation](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/) (2018-06-27)
 - [Secrets and Security](https://www.richardn.ca/posts/HomeAssistantFromScratchSecretsAndSecurity/) (2018-06-26)
 - [Plex Media Server](https://www.richardn.ca/posts/HomeAssistantFromScratchPlex/) (2018-06-26)
+- [Hue Lights](https://www.richardn.ca/posts/HomeAssistantFromScratchHue/) (2018-07-02)
