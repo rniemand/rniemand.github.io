@@ -11,3 +11,4 @@ order: 6
 - [Hue Lights](https://www.richardn.ca/posts/HomeAssistantFromScratchHue/) (2018-07-02)
 - [Speedtest.net](https://www.richardn.ca/posts/HomeAssistantFromScratchSpeedtest/) (2018-07-03)
 - [MQTT](https://www.richardn.ca/posts/HomeAssistantFromScratchMqtt/) (2018-07-16)
+- [MySQL \ MariaDB](https://www.richardn.ca/posts/HomeAssistantFromScratchMysql/) (2018-07-17)
