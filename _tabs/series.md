@@ -13,3 +13,4 @@ order: 6
 - [MQTT](https://www.richardn.ca/posts/HomeAssistantFromScratchMqtt/) (2018-07-16)
 - [MySQL \ MariaDB](https://www.richardn.ca/posts/HomeAssistantFromScratchMysql/) (2018-07-17)
 - [Presence Detection](https://www.richardn.ca/posts/HomeAssistantFromScratchPresenceDetection/) (2018-07-19)
+- [History](https://www.richardn.ca/posts/HomeAssistantFromScratchHistory/) (2018-07-25)
