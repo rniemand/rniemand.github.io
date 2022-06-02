@@ -11,19 +11,7 @@ This series of posts will cover setting up my Home Assistant setup from scratch 
 Please be sure to keep checking back on this post as I will be updating the list below with all future posts relating to this topic.
 
 ## The Posts
-
-- Installation - the basics of installing Home Assistant
-- Secrets and Security - don't commit your personal data!
-- Setting up Plex - discovering, monitoring and controlling Plex from HASS.
-- Setting up Philips Hue lights - our first integration with a smart device.
-- Measuring bandwidth with Speedtest.net - our fist sensor.
-- Setting up MQTT - making it easier for devices to communicate with HASS.
-- Setting up MySQL - squeeze the most out of your HASS database.
-- Presence Detection - tracking users via. Google Maps Location Sharing
-- History - storing only what we care about
-- Weather and System Monitoring - new post format
-- Octoprint - monitoring your 3D printer
-- Breaking up configuration - taming your wild configuration files
+You can view the complete post listing [here](https://www.richardn.ca/series/#home-assistant-from-scratch-2018).
 
 ## Installation
 This post will cover the bare bones installation of Home Assistant on a Raspberry Pi 3 using the Hass.io image. In addition to the installation I will cover the setup of some core plugins to ensure that you get the most out of your Home Assistant installation.
