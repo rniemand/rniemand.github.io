@@ -16,3 +16,4 @@ order: 6
 - [History](https://www.richardn.ca/posts/HomeAssistantFromScratchHistory/) (2018-07-25)
 - [DarkSky and System Monitor](https://www.richardn.ca/posts/HomeAssistantFromScratchWeather/) (2018-07-25)
 - [Octoprint](https://www.richardn.ca/posts/HomeAssistantFromScratchOctoprint/) (2018-10-09)
+- [Breaking up Configuration](https://www.richardn.ca/posts/HomeAssistantFromScratchBreakingUpConfig/) (2018-12-06)
