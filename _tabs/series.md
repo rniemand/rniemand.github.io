@@ -14,3 +14,4 @@ order: 6
 - [MySQL \ MariaDB](https://www.richardn.ca/posts/HomeAssistantFromScratchMysql/) (2018-07-17)
 - [Presence Detection](https://www.richardn.ca/posts/HomeAssistantFromScratchPresenceDetection/) (2018-07-19)
 - [History](https://www.richardn.ca/posts/HomeAssistantFromScratchHistory/) (2018-07-25)
+- [DarkSky and System Monitor](https://www.richardn.ca/posts/HomeAssistantFromScratchWeather/) (2018-07-25)
