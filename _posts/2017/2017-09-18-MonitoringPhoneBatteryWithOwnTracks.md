@@ -47,11 +47,6 @@ I created this sensor in my config/sensor.yaml file, with the following config:
   name: Phone Battery (Richard)
   unit_of_measurement: '%'
   value_template: >
-    {% if value_json.batt %}
-      {{ value_json.batt }}
-    {% else %}
-      {{ states('sensor.phone_battery_richard') }}
-    {% endif %}
 ```
 
 Most of it is self-explanatory with the exception of the value_template, which I am sure most of you can work out. Basically this template first checks that we have some battery information to extract (value_json.batt) and providing we do it will extract it, should there be no information to extract it will use the last known value of the battery. I found that sometimes OwnTracks would check in without sending battery information, this is just a safeguard against that.
@@ -70,15 +65,6 @@ This sensor is configured as below, using very similar logic to the battery code
   state_topic: owntracks/niemandr/hwnxt
   name: Connection (Richard)
   value_template: >
-    {% if value_json.conn %}
-      {% if value_json.conn == 'w' %}
-        WiFi
-      {% else %}
-        Mobile
-      {% endif %}
-    {% else %}
-      {{ states('sensor.connection_richard') }}
-    {% endif %}
 ```
 
 After another restart of Home Assistant (notice a trend here) I was able to see my WiFi / mobile connection information.
@@ -95,11 +81,6 @@ To track this information you will need to add another sensor with the following
   state_topic: owntracks/niemandr/hwnxt
   name: GPS Accuracy
   value_template: >
-    {% if value_json.acc %}
-      {{ value_json.acc }}
-    {% else %}
-      {{ states('sensor.gps_accuracy') }}
-    {% endif %}
 ```
 
 After restarting Home Assistant I can now see my GPS accuracy in meters I believe:
