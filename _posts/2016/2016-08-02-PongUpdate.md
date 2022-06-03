@@ -2,7 +2,7 @@
 title: Pong - Update 2
 date: 2016-08-02 20:00:00 -0600
 categories: [javascript]
-tags: [game]
+tags: [game development]
 toc: true
 ---
 

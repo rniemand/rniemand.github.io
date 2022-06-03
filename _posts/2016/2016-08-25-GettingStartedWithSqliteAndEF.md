@@ -1,7 +1,7 @@
 ---
 title: Getting started with SQLite and Entity Framework
 date: 2016-08-25 21:00:00 -0600
-categories: [c#]
+categories: [.net]
 tags: [ef,sqlite]
 toc: true
 ---

@@ -2,7 +2,7 @@
 title: Singleton Pattern in TypeScript
 date: 2016-07-25 20:00:00 -0600
 categories: [typescript]
-tags: [sungleton]
+tags: [design patterns]
 toc: true
 ---
 

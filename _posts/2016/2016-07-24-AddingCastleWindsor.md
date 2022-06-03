@@ -2,7 +2,7 @@
 title: Adding Castle Windsor to your WebAPI project
 date: 2016-07-24 20:00:00 -0600
 categories: [.net]
-tags: [di,castle windsor]
+tags: [ioc]
 toc: true
 ---
 This post is meant to serve as a simple guide to get you up and running with Castle Windsor in your next WebAPI project.
