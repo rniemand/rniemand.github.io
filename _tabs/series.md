@@ -7,7 +7,8 @@ order: 6
 ## Unraid Containers (2022)
 - [Running RabbitMQ on Unraid](https://www.richardn.ca/posts/UnraidRabbitMQ/) (2022-05-26)
 - [HASS On Unraid: Installation](https://www.richardn.ca/posts/HassOnUnraidInstallation/) (2022-05-27)
-- [HASS On Unraid: MariaDB]() (2022-05-27)
+- [HASS On Unraid: MariaDB](https://www.richardn.ca/posts/HassOnUnraidMariaDB/) (2022-05-27)
+- [HASS On Unraid: DNS]() (2022-05-30)
 
 ## Home Server Revamp (2019)
 - [Setting Date and Time (Ubuntu)](https://www.richardn.ca/posts/SettingDateTimeUbuntu/) (2019-06-13)
