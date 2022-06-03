@@ -9,7 +9,8 @@ order: 6
 - [Installing InfluxDB](https://www.richardn.ca/posts/InstallingInfluxDBOnUbuntu/) (2019-06-14)
 - [Setting Static IP Address](https://www.richardn.ca/posts/SettingStaticIPUbuntu/) (2019-06-14)
 - [Installing MariaDB (MySQL) on Ubuntu](https://www.richardn.ca/posts/InstallingMariaDBOnUbuntu/) (2019-06-15)
-- [Installing Telegraf on Ubuntu]() (2019-06-17)
+- [Installing Telegraf on Ubuntu](https://www.richardn.ca/posts/InstallingTelegrafOnUbuntu/) (2019-06-17)
+- [Installing Chronograf on Ubuntu]() (2019-06-18)
 
 ## Home Assistant from Scratch (2018)
 - [Installation](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/) (2018-06-27)
