@@ -6,7 +6,9 @@ order: 6
 
 ## Home Server Revamp (2019)
 - [Setting Date and Time (Ubuntu)](https://www.richardn.ca/posts/SettingDateTimeUbuntu/) (2019-06-13)
-- [Installing InfluxDB]() (2019-06-14)
+- [Installing InfluxDB](https://www.richardn.ca/posts/InstallingInfluxDBOnUbuntu/) (2019-06-14)
+- [Setting Static IP Address]() (2019-06-14)
+- [Installing MariaDB (MySQL) on Ubuntu]() (2019-06-15)
 
 ## Home Assistant from Scratch (2018)
 - [Installation](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/) (2018-06-27)
