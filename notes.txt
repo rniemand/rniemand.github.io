@@ -7,3 +7,7 @@ Running>> bundle exec jekyll s
 https://chirpy.cotes.page/posts/write-a-new-post/
 https://chirpy.cotes.page/posts/text-and-typography/
 
+
+
+https://www.urlencoder.org/
+{{ "" | url_decode }}

@@ -86,7 +86,7 @@ return msg;
 Template to generate the reset message:
 
 ```json
-{"RfReceived":{"Data":"B82346OFF"}}
+{{ "%7B%22RfReceived%22%3A%7B%22Data%22%3A%22B82346OFF%22%7D%7D" | url_decode }}
 ```
 
 Publish the reset message via MQTT on the `tele/RF_Bridge/RESULT` topic - mocking the required structure of a decoded Sonoff RF message.
@@ -111,7 +111,7 @@ binary_sensor:
     payload_on: "1E3B46"
     payload_off: "1E3B46OFF"
     device_class: door
-    value_template: '{{ value_json.RfReceived.Data }}'
+    value_template: '{{ "%7B%7B%20value_json.RfReceived.Data%20%7D%7D" | url_decode }}'
 ```
 
 > **Note** the `1E3B46OFF` payload is the actual reset message sent from Node-RED
@@ -138,7 +138,7 @@ trigger:
 
 condition:
   condition: template
-  value_template: "{{ trigger.payload_json['RfReceived']['Data'] == '1E3B46' }}"
+  value_template: "{{ "%7B%7B%20trigger.payload_json%5B%27RfReceived%27%5D%5B%27Data%27%5D%20%3D%3D%20%271E3B46%27%20%7D%7D" | url_decode }}"
 
 action:
   - service: tts.google_say
