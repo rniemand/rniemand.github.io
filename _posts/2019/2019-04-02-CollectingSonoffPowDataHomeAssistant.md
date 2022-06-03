@@ -87,7 +87,7 @@ sensor:
     state_topic: "tele/anet-a8-pow/SENSOR"
     name: 'Reactive Power (Anet A8)'
     unit_of_measurement: 'VA'
-    value_template: "{{ value_json.ENERGY.ReactivePower }}"
+    value_template: "{{ "%7B%7B%20value_json.ENERGY.ReactivePower%20%7D%7D" | url_decode }}"
 ```
 
 Repeat this step for each counter you wish to collect.

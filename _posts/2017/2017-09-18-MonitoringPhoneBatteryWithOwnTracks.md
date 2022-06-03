@@ -47,6 +47,7 @@ I created this sensor in my config/sensor.yaml file, with the following config:
   name: Phone Battery (Richard)
   unit_of_measurement: '%'
   value_template: >
+    {{ "%7B%25%20if%20value_json.batt%20%25%7D%0A%20%20%20%20%20%20%7B%7B%20value_json.batt%20%7D%7D%0A%20%20%20%20%7B%25%20else%20%25%7D%0A%20%20%20%20%20%20%7B%7B%20states%28%27sensor.phone_battery_richard%27%29%20%7D%7D%0A%20%20%20%20%7B%25%20endif%20%25%7D" | url_decode }}
 ```
 
 Most of it is self-explanatory with the exception of the value_template, which I am sure most of you can work out. Basically this template first checks that we have some battery information to extract (value_json.batt) and providing we do it will extract it, should there be no information to extract it will use the last known value of the battery. I found that sometimes OwnTracks would check in without sending battery information, this is just a safeguard against that.
@@ -65,6 +66,7 @@ This sensor is configured as below, using very similar logic to the battery code
   state_topic: owntracks/niemandr/hwnxt
   name: Connection (Richard)
   value_template: >
+    {{ "%7B%25%20if%20value_json.conn%20%25%7D%0A%20%20%20%20%20%20%7B%25%20if%20value_json.conn%20%3D%3D%20%27w%27%20%25%7D%0A%20%20%20%20%20%20%20%20WiFi%0A%20%20%20%20%20%20%7B%25%20else%20%25%7D%0A%20%20%20%20%20%20%20%20Mobile%0A%20%20%20%20%20%20%7B%25%20endif%20%25%7D%0A%20%20%20%20%7B%25%20else%20%25%7D%0A%20%20%20%20%20%20%7B%7B%20states%28%27sensor.connection_richard%27%29%20%7D%7D%0A%20%20%20%20%7B%25%20endif%20%25%7D" | url_decode }}
 ```
 
 After another restart of Home Assistant (notice a trend here) I was able to see my WiFi / mobile connection information.
@@ -81,6 +83,7 @@ To track this information you will need to add another sensor with the following
   state_topic: owntracks/niemandr/hwnxt
   name: GPS Accuracy
   value_template: >
+    {{ "%7B%25%20if%20value_json.acc%20%25%7D%0A%20%20%20%20%20%20%7B%7B%20value_json.acc%20%7D%7D%0A%20%20%20%20%7B%25%20else%20%25%7D%0A%20%20%20%20%20%20%7B%7B%20states%28%27sensor.gps_accuracy%27%29%20%7D%7D%0A%20%20%20%20%7B%25%20endif%20%25%7D" | url_decode }}
 ```
 
 After restarting Home Assistant I can now see my GPS accuracy in meters I believe:
