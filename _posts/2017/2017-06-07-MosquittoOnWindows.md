@@ -1,7 +1,7 @@
 ---
 title: Mosquitto on Windows
 date: 2017-06-07 18:00:00 -0600
-categories: [mosquitto]
+categories: [mqtt]
 tags: [iot,windows]
 toc: true
 ---
