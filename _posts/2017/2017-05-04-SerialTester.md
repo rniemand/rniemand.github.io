@@ -2,7 +2,7 @@
 title: Serial Tester (Arduino Tool)
 date: 2017-05-04 18:00:00 -0600
 categories: [apps]
-tags: [serial]
+tags: [serial tester]
 toc: true
 ---
 

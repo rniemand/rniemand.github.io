@@ -2,7 +2,7 @@
 title: Anet A8 - My first 3D printer
 date: 2017-08-31 18:00:00 -0600
 categories: [3d printing]
-tags: []
+tags: [anet a8,review]
 toc: true
 ---
 
