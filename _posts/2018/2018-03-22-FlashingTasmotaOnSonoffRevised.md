@@ -1,8 +1,8 @@
 ---
 title: 'Flashing Tasmota on Sonoff (Revised)'
 date: 2018-03-22 18:00:00 -0600
-categories: [arduino]
-tags: [sonoff,tasmota]
+categories: [hardware]
+tags: [sonoff,tasmota,flashing]
 toc: true
 ---
 

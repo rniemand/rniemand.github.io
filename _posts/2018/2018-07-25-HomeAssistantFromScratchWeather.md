@@ -2,7 +2,7 @@
 title: Home Assistant From Scratch - Weather and System Monitoring
 date: 2018-07-25 18:00:00 -0600
 categories: [home assistant]
-tags: [darksky]
+tags: [darksky,series]
 toc: true
 ---
 

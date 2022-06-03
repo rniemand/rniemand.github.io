@@ -2,7 +2,7 @@
 title: Home Assistant From Scratch - Speedtest.net
 date: 2018-07-03 18:00:00 -0600
 categories: [home assistant]
-tags: [speedtest]
+tags: [speedtest,series]
 toc: true
 ---
 

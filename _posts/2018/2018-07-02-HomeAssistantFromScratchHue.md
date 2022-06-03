@@ -2,7 +2,7 @@
 title: Home Assistant From Scratch - Hue Lights
 date: 2018-07-02 18:00:00 -0600
 categories: [home assistant]
-tags: [hue]
+tags: [hue,series]
 toc: true
 ---
 

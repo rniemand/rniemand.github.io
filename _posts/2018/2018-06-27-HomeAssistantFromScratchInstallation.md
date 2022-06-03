@@ -2,7 +2,7 @@
 title: Home Assistant From Scratch - Installation
 date: 2018-06-27 18:00:00 -0600
 categories: [home assistant]
-tags: [installation]
+tags: [installation,series]
 toc: true
 ---
 

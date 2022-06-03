@@ -2,7 +2,7 @@
 title: Home Assistant From Scratch - Secrets and Security
 date: 2018-06-28 18:00:00 -0600
 categories: [home assistant]
-tags: [security]
+tags: [security,series]
 toc: true
 ---
 

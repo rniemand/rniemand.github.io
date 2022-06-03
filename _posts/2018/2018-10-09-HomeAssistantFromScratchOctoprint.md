@@ -2,7 +2,7 @@
 title: Home Assistant From Scratch - Octoprint
 date: 2018-10-09 18:00:00 -0600
 categories: [home assistant]
-tags: [octoprint]
+tags: [octoprint,series]
 toc: true
 ---
 

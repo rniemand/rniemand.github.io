@@ -1,8 +1,8 @@
 ---
 title: Installing OctoPrint on Armbian from Source
 date: 2018-12-12 18:00:00 -0600
-categories: [ci-cd]
-tags: [appveyor]
+categories: [3d printing]
+tags: [octoprint,installation]
 toc: true
 ---
 
