@@ -2,7 +2,7 @@
 title: Installing Telegraf on DietPi / ARM (Revised)
 date: 2019-03-27 18:00:00 -0600
 categories: [telegraf]
-tags: [dietpi]
+tags: [dietpi,installation]
 toc: true
 ---
 
