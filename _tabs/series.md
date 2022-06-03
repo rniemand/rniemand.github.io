@@ -13,7 +13,8 @@ order: 6
 - [Installing Chronograf on Ubuntu](https://www.richardn.ca/posts/InstallingChronografOnUbuntu/) (2019-06-18)
 - [Installing Grafana on Ubuntu](https://www.richardn.ca/posts/InstallingGrafanaOnUbuntu/) (2019-07-02)
 - [Installing Node-RED on Ubuntu](https://www.richardn.ca/posts/InstallingNodeRedOnUbuntu/) (2019-07-03)
-- [Backing up MariaDB (MySQL) via CRON]() (2019-07-10)
+- [Backing up MariaDB (MySQL) via CRON](https://www.richardn.ca/posts/BackingUpMariaDbViaCron/) (2019-07-10)
+- [Installing Webmin on Ubuntu]() (2019-07-24)
 
 ## Home Assistant from Scratch (2018)
 - [Installation](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/) (2018-06-27)
