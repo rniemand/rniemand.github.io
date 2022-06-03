@@ -5,7 +5,8 @@ order: 6
 ---
 
 ## Home Server Revamp (2019)
-More to come.
+- [Setting Date and Time (Ubuntu)](https://www.richardn.ca/posts/SettingDateTimeUbuntu/) (2019-06-13)
+- [Installing InfluxDB]() (2019-06-14)
 
 ## Home Assistant from Scratch (2018)
 - [Installation](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/) (2018-06-27)
