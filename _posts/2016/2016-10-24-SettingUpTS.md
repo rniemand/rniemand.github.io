@@ -1,7 +1,7 @@
 ---
 title: Setting up TypeScript in VS Code
 date: 2016-10-24 22:00:00 -0600
-categories: [environment setup]
+categories: [environment setup,languages]
 tags: [typescript]
 toc: true
 ---

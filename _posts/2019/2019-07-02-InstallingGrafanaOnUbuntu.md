@@ -1,7 +1,7 @@
 ---
 title: Installing Grafana on Ubuntu
 date: 2019-07-02 18:00:00 -0600
-categories: [grafana]
+categories: [monitoring,grafana]
 tags: [ubuntu]
 toc: true
 ---

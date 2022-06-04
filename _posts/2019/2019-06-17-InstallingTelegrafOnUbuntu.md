@@ -1,7 +1,7 @@
 ---
 title: Installing Telegraf on Ubuntu
 date: 2019-06-17 18:00:00 -0600
-categories: [telegraf]
+categories: [monitoring,telegraf]
 tags: [ubuntu]
 toc: true
 ---

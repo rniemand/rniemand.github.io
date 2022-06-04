@@ -1,7 +1,7 @@
 ---
 title: Installing InfluxDB on Windows
 date: 2019-01-04 18:00:00 -0600
-categories: [influxdb]
+categories: [monitoring,influxdb]
 tags: [installation,windows]
 toc: true
 ---

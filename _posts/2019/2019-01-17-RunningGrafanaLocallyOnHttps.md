@@ -1,7 +1,7 @@
 ---
 title: Running Grafana locally on HTTPS
 date: 2019-01-17 18:00:00 -0600
-categories: [grafana]
+categories: [monitoring,grafana]
 tags: [https]
 toc: true
 ---
