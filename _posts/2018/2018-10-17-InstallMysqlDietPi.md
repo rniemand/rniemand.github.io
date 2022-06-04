@@ -1,7 +1,7 @@
 ---
 title: Install MySQL on DietPi (Debian)
 date: 2018-10-17 18:00:00 -0600
-categories: [mysql]
+categories: [mysql,mariadb]
 tags: [dietpi]
 toc: true
 ---

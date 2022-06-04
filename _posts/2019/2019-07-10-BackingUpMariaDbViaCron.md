@@ -1,7 +1,7 @@
 ---
 title: Backing up MariaDB (MySQL) via CRON
 date: 2019-07-10 18:00:00 -0600
-categories: [mariadb]
+categories: [mysql,mariadb]
 tags: [ubuntu,backup]
 toc: true
 ---
