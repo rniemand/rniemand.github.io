@@ -1,7 +1,7 @@
 ---
 title: SQLite and Dapper in C#
 date: 2016-07-29 22:00:00 -0600
-categories: [.net,dapper]
+categories: [.net,database]
 tags: [dapper,sqlite]
 toc: true
 ---

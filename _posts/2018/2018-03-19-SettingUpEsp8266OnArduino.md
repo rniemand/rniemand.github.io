@@ -1,8 +1,8 @@
 ---
 title: Setting up ESP8266 on Arduino
 date: 2018-03-19 18:00:00 -0600
-categories: [environment setup,esp8266]
-tags: [arduino,setup]
+categories: [arduino,esp8266]
+tags: []
 toc: true
 ---
 
