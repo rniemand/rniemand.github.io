@@ -1,7 +1,7 @@
 ---
 title: '*.NDS Rom Info Scraping (C#)'
 date: 2016-08-16 21:00:00 -0600
-categories: [.net]
+categories: [.net,misc]
 tags: [roms]
 toc: true
 ---

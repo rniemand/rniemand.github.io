@@ -1,7 +1,7 @@
 ---
 title: Simplest way to access POST data after model binding (Web API)
 date: 2016-04-07 20:00:00 -0600
-categories: [.net]
+categories: [.net,owin]
 tags: [web api]
 toc: true
 ---

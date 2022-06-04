@@ -1,8 +1,8 @@
 ---
 title: Setting up TypeScript in VS Code
 date: 2016-10-24 22:00:00 -0600
-categories: [typescript]
-tags: [tutorial]
+categories: [environment setup]
+tags: [typescript]
 toc: true
 ---
 This blog post serves as an abridged summary of the below getting started guides for TypeScript and VS Code and is presented in the shortest possible form:
