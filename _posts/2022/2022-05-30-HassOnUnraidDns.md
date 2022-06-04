@@ -1,8 +1,8 @@
 ---
 title: 'HASS On Unraid: DNS'
 date: 2022-05-30 18:00:00 -0600
-categories: [home assistant,unraid]
-tags: [dns]
+categories: [home assistant]
+tags: [unraid]
 toc: true
 ---
 

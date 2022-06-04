@@ -1,7 +1,7 @@
 ---
 title: Adding Castle Windsor to your WebAPI project
 date: 2016-07-24 20:00:00 -0600
-categories: [.net,ioc]
+categories: [.net]
 tags: [ioc]
 toc: true
 ---

@@ -1,8 +1,8 @@
 ---
 title: Monitoring a Door with Home Assistant
 date: 2017-10-19 18:00:00 -0600
-categories: [home assistant,projects]
-tags: [tutorial]
+categories: [home assistant]
+tags: [project]
 toc: true
 ---
 

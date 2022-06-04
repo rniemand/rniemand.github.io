@@ -1,8 +1,8 @@
 ---
 title: Upgrading Home Assistant (Windows Service Edition)
 date: 2017-09-11 18:00:00 -0600
-categories: [home assistant,concepts]
-tags: []
+categories: [home assistant]
+tags: [windows]
 toc: true
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: Wondrous OctoPrint & My OrangePi Lite
 date: 2017-09-14 18:00:00 -0600
-categories: [3d printing,octoprint]
-tags: [tutorial]
+categories: [3d printing]
+tags: [octoprint]
 toc: true
 ---
 

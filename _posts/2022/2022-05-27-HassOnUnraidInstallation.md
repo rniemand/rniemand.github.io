@@ -1,8 +1,8 @@
 ---
 title: 'HASS On Unraid: Installation'
 date: 2022-05-27 18:00:00 -0600
-categories: [home assistant,unraid]
-tags: [installation]
+categories: [home assistant]
+tags: [unraid]
 toc: true
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: Simplest way to access POST data after model binding (Web API)
 date: 2016-04-07 20:00:00 -0600
-categories: [.net,web]
-tags: []
+categories: [.net]
+tags: [web]
 toc: true
 ---
 I am currently in the process of writing a C# wrapper for [Kik](https://www.kik.com/) and needed a way to dump the raw POST body when their service made a callback to one of my WebAPI controllers (after model binding had occurred). After some Googling I found a posting on Stackoverflow (unfortunately I didn't bookmark the link) which had a creative solution to the problem by making use of a `DelegatingHandler`.

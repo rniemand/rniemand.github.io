@@ -1,8 +1,8 @@
 ---
 title: Home Assistant From Scratch - Breaking up Config
 date: 2018-12-06 18:00:00 -0600
-categories: [home assistant,concepts]
-tags: [configuration]
+categories: [home assistant]
+tags: []
 toc: true
 ---
 

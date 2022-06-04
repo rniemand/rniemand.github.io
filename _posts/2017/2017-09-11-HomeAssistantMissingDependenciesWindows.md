@@ -1,8 +1,8 @@
 ---
 title: Home Assistant Missing Dependencies (Windows)
 date: 2017-09-11 18:00:00 -0600
-categories: [home assistant,windows]
-tags: [troubleshooting]
+categories: [home assistant]
+tags: [windows]
 toc: true
 ---
 

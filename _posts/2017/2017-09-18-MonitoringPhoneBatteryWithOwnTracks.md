@@ -1,8 +1,8 @@
 ---
 title: Monitoring Phone Battery with OwnTracks & Home Assistant
 date: 2017-09-18 18:00:00 -0600
-categories: [home assistant,integrations]
-tags: [owntracks]
+categories: [home assistant]
+tags: []
 toc: true
 ---
 

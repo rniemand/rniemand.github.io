@@ -1,8 +1,8 @@
 ---
 title: Installing InfluxDB on Ubuntu
 date: 2019-06-14 18:00:00 -0600
-categories: [monitoring,influxdb]
-tags: [ubuntu,installation]
+categories: [monitoring]
+tags: [ubuntu,influxdb]
 toc: true
 ---
 

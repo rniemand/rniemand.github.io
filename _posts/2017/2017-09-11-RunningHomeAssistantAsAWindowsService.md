@@ -1,8 +1,8 @@
 ---
 title: Running Home Assistant as a Windows Service
 date: 2017-09-11 18:00:00 -0600
-categories: [home assistant,windows]
-tags: [service,windows]
+categories: [home assistant]
+tags: [windows]
 toc: true
 ---
 

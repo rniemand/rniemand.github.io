@@ -1,8 +1,8 @@
 ---
 title: Home Assistant From Scratch - MQTT
 date: 2018-07-16 18:00:00 -0600
-categories: [home assistant,series]
-tags: [mqtt]
+categories: [home assistant]
+tags: []
 toc: true
 ---
 

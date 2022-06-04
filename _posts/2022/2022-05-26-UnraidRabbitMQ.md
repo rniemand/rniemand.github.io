@@ -1,8 +1,8 @@
 ---
 title: Running RabbitMQ on Unraid
 date: 2022-05-26 18:00:00 -0600
-categories: [monitoring,rabbitmq]
-tags: [unraid,docker]
+categories: [monitoring]
+tags: [unraid,rabbitmq]
 toc: true
 ---
 

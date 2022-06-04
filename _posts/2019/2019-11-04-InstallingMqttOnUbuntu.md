@@ -1,8 +1,8 @@
 ---
 title: Installing MQTT on Ubuntu
 date: 2019-11-04- 18:00:00 -0600
-categories: [iot,mqtt]
-tags: [ubuntu,mosquitto]
+categories: [iot]
+tags: [ubuntu,mqtt]
 toc: true
 ---
 

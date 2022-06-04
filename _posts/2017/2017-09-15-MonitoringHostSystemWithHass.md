@@ -1,7 +1,7 @@
 ---
 title: Monitoring Host System with Home Assistant
 date: 2017-09-15 18:00:00 -0600
-categories: [home assistant,integrations]
+categories: [home assistant]
 tags: []
 toc: true
 ---

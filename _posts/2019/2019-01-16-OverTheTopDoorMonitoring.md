@@ -1,8 +1,8 @@
 ---
 title: Over the top Door Monitoring (RF, Node-RED and HASS)
 date: 2019-01-16 18:00:00 -0600
-categories: [home assistant,projects]
-tags: [node-red,mqtt]
+categories: [home assistant]
+tags: [project]
 toc: true
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Upgrading Home Assistant on DietPi
 date: 2018-02-15 18:00:00 -0600
-categories: [home assistant,concepts]
+categories: [home assistant]
 tags: [dietpi]
 toc: true
 ---

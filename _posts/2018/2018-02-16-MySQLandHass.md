@@ -1,8 +1,8 @@
 ---
 title: MySQL and Home Assistant
 date: 2018-02-16 18:00:00 -0600
-categories: [home assistant,concepts]
-tags: [mysql]
+categories: [home assistant]
+tags: [database]
 toc: true
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: Home Assistant From Scratch - MySQL
 date: 2018-07-17 18:00:00 -0600
-categories: [home assistant,series]
-tags: [mysql,mariadb]
+categories: [home assistant]
+tags: []
 toc: true
 ---
 

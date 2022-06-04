@@ -1,7 +1,7 @@
 ---
 title: Running Satisfactory Dedicated Server
 date: 2021-10-28 18:00:00 -0600
-categories: [gaming,servers]
+categories: [gaming]
 tags: [docker,satisfactory]
 toc: true
 ---

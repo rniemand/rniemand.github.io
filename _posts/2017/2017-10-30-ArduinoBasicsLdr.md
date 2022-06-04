@@ -1,8 +1,8 @@
 ---
 title: 'Arduino Basics: LDR'
 date: 2017-10-30 18:00:00 -0600
-categories: [arduino,basics]
-tags: [ldr]
+categories: [arduino]
+tags: [basics]
 toc: true
 ---
 

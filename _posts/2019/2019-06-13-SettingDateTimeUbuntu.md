@@ -1,8 +1,8 @@
 ---
 title: Setting Date and Time (Ubuntu)
 date: 2019-06-13 18:00:00 -0600
-categories: [linux,ubuntu]
-tags: [date time]
+categories: [ubuntu]
+tags: []
 toc: true
 ---
 
