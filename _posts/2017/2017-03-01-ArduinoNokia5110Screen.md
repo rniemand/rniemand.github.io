@@ -1,7 +1,7 @@
 ---
 title: Arduino + Nokia 5110 Screen
 date: 2017-03-01 18:00:00 -0600
-categories: [arduino]
+categories: [arduino,basics]
 tags: [tutorial]
 toc: true
 ---

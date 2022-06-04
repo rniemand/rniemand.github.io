@@ -1,7 +1,7 @@
 ---
 title: Portainer Cheat Sheet
 date: 2022-05-24 18:00:00 -0600
-categories: [cheat sheets]
+categories: [cheat sheets,virtualization]
 tags: [portainer]
 toc: true
 ---

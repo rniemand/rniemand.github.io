@@ -1,7 +1,7 @@
 ---
 title: Arduino Cheat Sheet
 date: 2017-02-27 18:00:00 -0600
-categories: [cheat sheets]
+categories: [cheat sheets,arduino]
 tags: [arduino]
 toc: true
 ---

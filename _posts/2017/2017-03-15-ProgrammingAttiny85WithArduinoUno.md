@@ -1,7 +1,7 @@
 ---
 title: Programming an ATTiny85 with an Arduino Uno
 date: 2017-03-15 18:00:00 -0600
-categories: [hardware]
+categories: [arduino,flashing]
 tags: [attiny85,flashing]
 toc: true
 ---

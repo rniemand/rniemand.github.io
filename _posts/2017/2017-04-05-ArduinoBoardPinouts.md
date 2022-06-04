@@ -1,7 +1,7 @@
 ---
 title: Arduino Board Pinouts
 date: 2017-04-05 18:00:00 -0600
-categories: [cheat sheets]
+categories: [cheat sheets,arduino]
 tags: [arduino,pinouts]
 toc: true
 ---

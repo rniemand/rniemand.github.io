@@ -1,7 +1,7 @@
 ---
 title: Flashing ATmega 168 (Pro Mini) with an Arduino UNO
 date: 2017-03-10 18:00:00 -0600
-categories: [hardware]
+categories: [arduino,flashing]
 tags: [atmega168,flashing]
 toc: true
 ---

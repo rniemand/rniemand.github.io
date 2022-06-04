@@ -1,7 +1,7 @@
 ---
 title: Pro Mini Digital Clock using DS3231
 date: 2017-03-17 18:00:00 -0600
-categories: [arduino]
+categories: [arduino,projects]
 tags: [ds3231,project]
 toc: true
 ---

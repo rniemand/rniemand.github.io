@@ -1,7 +1,7 @@
 ---
 title: Arduino Data Type Usage Examples
 date: 2017-02-28 18:00:00 -0600
-categories: [cheat sheets]
+categories: [cheat sheets,arduino]
 tags: [arduino,data types]
 toc: true
 ---

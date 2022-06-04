@@ -1,7 +1,7 @@
 ---
 title: Powering your Arduino Projects
 date: 2017-04-26 18:00:00 -0600
-categories: [arduino]
+categories: [arduino,basics]
 tags: [powering]
 toc: true
 ---
