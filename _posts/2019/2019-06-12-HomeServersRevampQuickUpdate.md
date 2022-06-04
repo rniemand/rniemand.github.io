@@ -1,8 +1,8 @@
 ---
 title: Home Servers Revamp (a Quick Update)
 date: 2019-06-12 18:00:00 -0600
-categories: [ubuntu]
-tags: []
+categories: [misc]
+tags: [ubuntu]
 toc: true
 ---
 

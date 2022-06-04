@@ -1,7 +1,7 @@
 ---
 title: Installing MariaDB (MySQL) on Ubuntu
 date: 2019-06-15 18:00:00 -0600
-categories: [ubuntu]
+categories: [database]
 tags: [mariadb]
 toc: true
 ---
