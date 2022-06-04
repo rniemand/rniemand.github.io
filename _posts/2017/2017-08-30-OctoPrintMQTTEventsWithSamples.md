@@ -1,8 +1,8 @@
 ---
 title: OctoPrint MQTT Events (with samples)
 date: 2017-08-30 18:00:00 -0600
-categories: [3d printing]
-tags: [octoprint,mqtt]
+categories: [3d printing,octoprint]
+tags: [mqtt]
 toc: true
 ---
 

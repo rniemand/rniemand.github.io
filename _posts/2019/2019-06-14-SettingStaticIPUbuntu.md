@@ -1,7 +1,7 @@
 ---
 title: Setting Static IP Address (Ubuntu)
 date: 2019-06-14 18:00:00 -0600
-categories: [network]
+categories: [networking]
 tags: [ubuntu]
 toc: true
 ---
