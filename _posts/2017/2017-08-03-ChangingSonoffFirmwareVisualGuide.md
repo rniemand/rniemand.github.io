@@ -2,7 +2,7 @@
 title: Changing Sonoff Firmware (Visual Guide)
 date: 2017-08-03 18:00:00 -0600
 categories: [arduino,flashing]
-tags: [firmware,sonoff,flashing]
+tags: [firmware,sonoff]
 toc: true
 ---
 
