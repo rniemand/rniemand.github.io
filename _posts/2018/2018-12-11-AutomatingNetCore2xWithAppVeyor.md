@@ -1,8 +1,8 @@
 ---
 title: Automating .Net Core 2.x App NuGet Deployment with AppVeyor
 date: 2018-12-11 18:00:00 -0600
-categories: [.net core,ci-cd]
-tags: [appveyor]
+categories: [ci-cd,appveyor]
+tags: []
 toc: true
 ---
 

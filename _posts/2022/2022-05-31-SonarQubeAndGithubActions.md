@@ -1,8 +1,8 @@
 ---
 title: SonarQube and Github Actions
 date: 2022-05-31 18:00:00 -0600
-categories: [sonarqube]
-tags: [unraid,github,github actions]
+categories: [ci-cd,sonarqube]
+tags: [github]
 toc: true
 ---
 

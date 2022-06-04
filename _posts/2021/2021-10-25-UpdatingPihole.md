@@ -1,8 +1,8 @@
 ---
 title: Updating Pi-hole
 date: 2021-10-25 18:00:00 -0600
-categories: [pihole]
-tags: [updating]
+categories: [networking,pihole]
+tags: []
 toc: true
 ---
 

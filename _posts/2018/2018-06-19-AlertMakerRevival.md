@@ -2,7 +2,7 @@
 title: Alert Maker Revival
 date: 2018-06-19 18:00:00 -0600
 categories: [apps]
-tags: [alert maker,legacy]
+tags: []
 toc: true
 ---
 
