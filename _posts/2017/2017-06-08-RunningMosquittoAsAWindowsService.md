@@ -1,8 +1,8 @@
 ---
 title: Running Mosquitto as a Windows Service
 date: 2017-06-08 18:00:00 -0600
-categories: [mqtt]
-tags: [iot,windows,service]
+categories: [iot,mqtt]
+tags: [windows,service]
 toc: true
 ---
 

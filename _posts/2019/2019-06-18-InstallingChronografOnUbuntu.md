@@ -1,7 +1,7 @@
 ---
 title: Installing Chronograf on Ubuntu
 date: 2019-06-18 18:00:00 -0600
-categories: [chronograf]
+categories: [monitoring,chronograf]
 tags: [ubuntu]
 toc: true
 ---

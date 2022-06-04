@@ -1,7 +1,7 @@
 ---
 title: Installing Node-RED on Ubuntu
 date: 2019-07-03 18:00:00 -0600
-categories: [node-red]
+categories: [iot,node-red]
 tags: [ubuntu]
 toc: true
 ---

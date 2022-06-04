@@ -1,7 +1,7 @@
 ---
 title: NodeRED on DietPi
 date: 2018-03-15 18:00:00 -0600
-categories: [node-red]
+categories: [iot,node-red]
 tags: [dietpi]
 toc: true
 ---

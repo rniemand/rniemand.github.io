@@ -1,7 +1,7 @@
 ---
 title: Sonoff & MQTT Example (Lounge Light)
 date: 2017-10-03 18:00:00 -0600
-categories: [mqtt]
+categories: [iot,mqtt]
 tags: [sonoff]
 toc: true
 ---

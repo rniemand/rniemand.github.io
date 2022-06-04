@@ -1,7 +1,7 @@
 ---
 title: 'Installing Mosquitto on (DietPi / Raspbian / Debian)'
 date: 2018-01-08 18:00:00 -0600
-categories: [mqtt]
+categories: [iot,mqtt]
 tags: [installation,dietpi,mosquitto]
 toc: true
 ---

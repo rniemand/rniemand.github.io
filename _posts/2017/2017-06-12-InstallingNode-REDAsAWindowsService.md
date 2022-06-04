@@ -1,7 +1,7 @@
 ---
 title: Installing Node-RED as a Windows Service
 date: 2017-06-12 18:00:00 -0600
-categories: [node-red]
+categories: [iot,node-red]
 tags: [windows,service]
 toc: true
 ---
