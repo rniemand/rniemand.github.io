@@ -2,7 +2,7 @@
 title: Collecting Sonoff Pow data in Home Assistant
 date: 2019-04-02 18:00:00 -0600
 categories: [home assistant]
-tags: []
+tags: [mqtt,mosquitto]
 toc: true
 ---
 

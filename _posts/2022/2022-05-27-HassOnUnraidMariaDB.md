@@ -2,7 +2,7 @@
 title: 'HASS On Unraid: MariaDB'
 date: 2022-05-27 18:00:00 -0600
 categories: [home assistant]
-tags: [unraid]
+tags: [unraid,mariadb,mysql]
 toc: true
 ---
 

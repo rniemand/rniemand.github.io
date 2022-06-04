@@ -2,7 +2,7 @@
 title: Installing OctoPrint on Armbian from Source
 date: 2018-12-12 18:00:00 -0600
 categories: [3d printing]
-tags: [octoprint]
+tags: [octoprint,dietpi]
 toc: true
 ---
 

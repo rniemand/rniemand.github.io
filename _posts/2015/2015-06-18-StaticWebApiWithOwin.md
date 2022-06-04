@@ -2,7 +2,7 @@
 title: Hosting Web API and Static Content with OWIN
 date: 2015-06-18 19:15:00 -0600
 categories: [.net]
-tags: [web]
+tags: [owin]
 toc: true
 ---
 

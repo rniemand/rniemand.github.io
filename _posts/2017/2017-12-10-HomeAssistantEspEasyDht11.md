@@ -2,7 +2,7 @@
 title: 'Home Assistant + ESP Easy + DHT11 = :)'
 date: 2017-12-10 18:00:00 -0600
 categories: [home assistant]
-tags: []
+tags: [espeasy]
 toc: true
 ---
 

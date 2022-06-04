@@ -2,7 +2,7 @@
 title: Installing Webmin on Ubuntu
 date: 2019-07-24 18:00:00 -0600
 categories: [webmin]
-tags: []
+tags: [ubuntu]
 toc: true
 ---
 
