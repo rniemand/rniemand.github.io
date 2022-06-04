@@ -1,8 +1,8 @@
 ---
 title: '*.NDS Rom Info Scraping (C#)'
 date: 2016-08-16 21:00:00 -0600
-categories: [.net,projects]
-tags: []
+categories: [.net]
+tags: [project]
 toc: true
 ---
 I am starting a small **ROM management** project to help me keep my various ROM backups in order and make searching for a specific backup easier. I decided it would be a good idea to programmatically extract information from the ROM file and then scrape the `www` to get more detailed metadata about the ROM file in question.

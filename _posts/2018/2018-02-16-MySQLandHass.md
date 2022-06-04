@@ -2,7 +2,7 @@
 title: MySQL and Home Assistant
 date: 2018-02-16 18:00:00 -0600
 categories: [home assistant]
-tags: [database]
+tags: [mysql,mariadb]
 toc: true
 ---
 
