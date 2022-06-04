@@ -1,7 +1,7 @@
 ---
 title: About
 icon: fas fa-info-circle
-order: 4
+order: 1
 ---
 
 This blog is a dumping ground for my thoughts, applications, technical wins, research and a whole lot more.

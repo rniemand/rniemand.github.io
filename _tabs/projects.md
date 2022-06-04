@@ -1,7 +1,7 @@
 ---
 title: Projects
 icon: fas fa-info-circle
-order: 5
+order: 2
 ---
 
 ## Class Libraries
