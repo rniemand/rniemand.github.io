@@ -1,8 +1,8 @@
 ---
 title: 'HASS On Unraid: Google TTS'
 date: 2022-05-30 18:00:00 -0600
-categories: [home assistant]
-tags: [unraid,tts]
+categories: [home assistant,unraid]
+tags: [tts]
 toc: true
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Monitoring Internet Speed with Home Assistant
 date: 2017-09-14 18:00:00 -0600
-categories: [home assistant]
+categories: [home assistant,integrations]
 tags: [speedtest]
 toc: true
 ---

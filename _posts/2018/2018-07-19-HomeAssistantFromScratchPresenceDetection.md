@@ -1,8 +1,8 @@
 ---
 title: Home Assistant From Scratch - Presence Detection
 date: 2018-07-19 18:00:00 -0600
-categories: [home assistant]
-tags: [owntracks,series]
+categories: [home assistant,series]
+tags: [owntracks]
 toc: true
 ---
 

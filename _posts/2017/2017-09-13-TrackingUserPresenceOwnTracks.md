@@ -1,7 +1,7 @@
 ---
 title: Tracking User Presence (HASS and OwnTracks)
 date: 2017-09-13 18:00:00 -0600
-categories: [home assistant]
+categories: [home assistant,integrations]
 tags: [service,windows]
 toc: true
 ---

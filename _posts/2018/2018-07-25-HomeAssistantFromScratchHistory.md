@@ -1,8 +1,8 @@
 ---
 title: Home Assistant From Scratch - History
 date: 2018-07-25 18:00:00 -0600
-categories: [home assistant]
-tags: [history,series]
+categories: [home assistant,series]
+tags: [history]
 toc: true
 ---
 

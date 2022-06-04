@@ -1,8 +1,8 @@
 ---
 title: Home Assistant From Scratch - Setting Up Plex
 date: 2018-06-28 18:00:00 -0600
-categories: [home assistant]
-tags: [plex,series]
+categories: [home assistant,series]
+tags: [plex]
 toc: true
 ---
 

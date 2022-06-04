@@ -1,7 +1,7 @@
 ---
 title: Collecting Sonoff Pow data in Home Assistant
 date: 2019-04-02 18:00:00 -0600
-categories: [home assistant]
+categories: [home assistant,integrations]
 tags: [sonoff pow]
 toc: true
 ---

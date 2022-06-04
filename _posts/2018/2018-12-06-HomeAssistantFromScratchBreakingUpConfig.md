@@ -1,7 +1,7 @@
 ---
 title: Home Assistant From Scratch - Breaking up Config
 date: 2018-12-06 18:00:00 -0600
-categories: [home assistant]
+categories: [home assistant,concepts]
 tags: [configuration]
 toc: true
 ---
@@ -9,7 +9,7 @@ toc: true
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.
 {: .prompt-tip }
 
-Today I would like to tackle breaking up your configuration file (`configuration.yam`l) into smaller, more manageable parts to make configuring Home Assistant a lot easier.
+Today I would like to tackle breaking up your configuration file (`configuration.yaml`) into smaller, more manageable parts to make configuring Home Assistant a lot easier.
 
 ## Home Assistant YAML Commands
 Home Assistant offers the following helper keywords for use in your configuration files:

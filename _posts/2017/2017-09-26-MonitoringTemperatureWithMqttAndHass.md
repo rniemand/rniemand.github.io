@@ -1,7 +1,7 @@
 ---
 title: Monitoring Temperature with MQTT and Home Assistant
 date: 2017-09-26 18:00:00 -0600
-categories: [home assistant]
+categories: [home assistant,integrations]
 tags: [mqtt,dht11]
 toc: true
 ---

@@ -1,8 +1,8 @@
 ---
 title: Running Home Assistant On Unraid
 date: 2021-10-25 18:00:00 -0600
-categories: [home assistant]
-tags: [unraid]
+categories: [home assistant,unraid]
+tags: [series]
 toc: true
 ---
 

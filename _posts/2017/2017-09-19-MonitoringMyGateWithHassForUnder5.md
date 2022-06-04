@@ -1,7 +1,7 @@
 ---
 title: Monitoring my Gate with Home Assistant for under $5
 date: 2017-09-19 18:00:00 -0600
-categories: [home assistant]
+categories: [home assistant,projects]
 tags: [mqtt,esp8266]
 toc: true
 ---
