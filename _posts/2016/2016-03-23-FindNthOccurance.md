@@ -1,7 +1,7 @@
 ---
 title: Find the nth occurrence of a string (JavaScript)
 date: 2016-03-23 18:00:00 -0600
-categories: [gists]
+categories: [code]
 tags: [javascript]
 toc: true
 ---

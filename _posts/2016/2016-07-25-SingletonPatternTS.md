@@ -1,8 +1,8 @@
 ---
 title: Singleton Pattern in TypeScript
 date: 2016-07-25 20:00:00 -0600
-categories: [design patterns]
-tags: [typescript]
+categories: [patterns]
+tags: [typescript,singleton]
 toc: true
 ---
 
