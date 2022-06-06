@@ -6,7 +6,7 @@ tags: [dns]
 toc: true
 ---
 
-# Understanding DNS
+## Understanding DNS
 Most ISP's make use of dynamic IP Addresses to prevent you from hosting websites off your home computer, and rotate these addresses fairly often (sometimes on a daily basis). It would be near impossible to know the currently assigned IP Address of your home computer at a given time unless you were in front of it to check. This is not helpful, especially when you need to know this address when connecting to your computer away from home.
 
 This is where a custom DNS entry (`Dynamic Name Server`) comes in handy. A DNS entry is a simple name used to help your computer 
