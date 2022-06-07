@@ -2,7 +2,7 @@
 title: 'HASS On Unraid: MQTT'
 date: 2022-06-06 18:00:00 -0600
 categories: [home assistant]
-tags: [unraid,tts]
+tags: [mqtt,mosquitto]
 toc: true
 ---
 
