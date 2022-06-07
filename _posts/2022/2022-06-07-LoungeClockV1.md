@@ -7,6 +7,11 @@ toc: true
 ---
 
 
+## Source Code
+More to come...
+
+- https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/1.0/clock-code.yaml
+
 ## PCB Files
 - https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/1.0/Gerber_PCB_WS2812B_7_Segment-1.png
 - https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/1.0/Gerber_PCB_WS2812B_7_Segment.csv
