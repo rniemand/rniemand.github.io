@@ -17,8 +17,15 @@ More to come...
 More to come
 
 ```
-D3       WS2812B      Lights      GRB
+D3       WS2812B        Lights      GRB
+D1       dht            Temperature
+A0       adc            Brightness
+-        wifi_signal    WiFi
 ```
+
+https://fritzing.org/
+
+
 
 ### Segment Values
 More to come...
@@ -42,6 +49,10 @@ int digitsLeds[10][ledsInDigitCount] = {
 
 ![](/assets/img/2022/2022-06-07/003.png)
 
+### Basic Scematic
+More to come...
+
+![](/assets/img/2022/2022-06-07/004.png)
 
 
 ## PCB Files
