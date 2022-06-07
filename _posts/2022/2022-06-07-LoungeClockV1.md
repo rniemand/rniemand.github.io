@@ -6,6 +6,54 @@ tags: [mqtt,mosquitto,3d printing,iot,project]
 toc: true
 ---
 
+In this post I will cover how I built my lounge clock using [ESPHome](https://esphome.io/), [Home Assistant](https://www.home-assistant.io/), [MQTT](https://www.richardn.ca/posts/InstallingMqttOnUbuntu/) and a whole lot of other technologies, I think that the end result looks pretty good for my first attempt:
+
+![](/assets/img/2022/2022-06-07/001.jpg)
+
+## Bill of Material
+The following tools \ materials are required should you want to make your own:
+
+- 3D Printer - or a 3D printing service near you
+  - Used to print all the components used in the clock
+- 4x [7-Segment display PCB's](https://github.com/rniemand/code-samples/tree/main/projects/lounge-clock) - more information below
+- Piece of wood to mount the clock on
+- ESP8266 - preferably the Wemos D1 Mini
+- Some wires to connect everything together
+- 2 Part Epoxy - I find it works best with PLA
+- Hot glue gun (and glue)
+
+## Custom PCB
+Using [Easy EDA](https://easyeda.com/editor) I was able to come up with the following circuit board:
+
+![](/assets/img/2022/2022-06-07/002.jpg){: w="350" }
+
+It's a pretty simple board that makes use of some [WS2812b](https://www.aliexpress.com/wholesale?catId=0&initiative_id=SB_20220607051521&SearchText=ws2812b&spm=a2g0o.home.1000002.0) SMD LEDS wired in the traditional 7-segment pattern:
+
+![](/assets/img/2022/2022-06-07/003.png)
+
+For fabrication I made use of [JLCPCB](https://jlcpcb.com/) and their [pick and place](https://jlcpcb.com/capabilities/Capabilities) service, all in 10 boards assembled cost me `$27.00` (not too bad!).
+
+![](/assets/img/2022/2022-06-07/004.png)
+
+I have made the Gerber files available [here](https://github.com/rniemand/code-samples/tree/main/projects/lounge-clock/1.0) if you would like to make your own.
+
+## 3D Printing
+There is a **LOT** of 3D printing required for this project, namely:
+
+- 2x [Double 7-Segment risers](https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/01%20-%202x%20-%20Double%20Segment%20Holder.stl) - used to group 2 segments together
+- (Optional) 1x [Double 7-Segment risers template](https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/02%20-%201x%20-%20Doublle%20Segment%20Hole%20Stencil.stl) - used for drilling holes
+- 4x [7-Segment covers](https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/03%20-%204x%20-%20Segment%20Cover.stl) - in black if possible for the best results
+- 28x [Segments](https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/04%20-%2028x%20-%20Segment%20Diffuser.stl) - I would print more as they break easily
+- 1x [Dots holder](https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/05%20-%201x%20-%20Dots%20Holder.stl) - used to hold 2 additional `WS2812 LEDs`
+- 1x [Dots cover](https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/06%20-%201x%20-%20Dots%20Cover.stl) - in black if possible for the best results
+- 2x [Dots segments](https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/07%20-%202x%20-%20Dots%20Diffuser.stl) - plus a couple of spares
+- 2x [Double 7-Segment covers](https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/08%20-%202x%20-%20Double%20Segment%20Cover.stl) - my attempt at cleaning up the mess at the end :)
+
+The assembly is pretty straight forward (like Lego for adults) and I left enough space to route all the required wires through the risers to give the clock a neater look - although I do not know what happened to mine!
+
+![](/assets/img/2022/2022-06-07/005.jpg)
+
+I would put aside ~18 hours for all the printing to be completed (depending on your printing profile).
 
 ## Source Code
 More to come...
