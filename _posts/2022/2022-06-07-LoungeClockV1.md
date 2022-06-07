@@ -1,6 +1,6 @@
 ---
 title: 'Lounge Clock (v 1.0)'
-date: 2022-06-07 18:00:00 -0600
+date: 2022-06-07 07:00:00 -0600
 categories: [home assistant,esphome]
 tags: [mqtt,mosquitto,3d printing,iot,project]
 toc: true
@@ -14,7 +14,6 @@ In this post I will cover how I built my lounge clock using [ESPHome](https://es
 The following tools \ materials are required should you want to make your own:
 
 - 3D Printer - or a 3D printing service near you
-  - Used to print all the components used in the clock
 - 4x [7-Segment display PCB's](https://github.com/rniemand/code-samples/tree/main/projects/lounge-clock) - more information below
 - Piece of wood to mount the clock on
 - ESP8266 - preferably the Wemos D1 Mini
@@ -66,7 +65,7 @@ Each 7-Segment board has a `DIN` (Digital In) and `DOUT` (Digital Out) solder po
 On the PCB all the `GND` points are all connected together, along with the `VCC` points to make routing power a lot easier. When connecting the boards you just need to follow this pattern if you are using the [source code](https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/1.0/clock-code.yaml) I provide.
 
 ```
-DIN -> [7-Seg] = [7-Seg] = [7-Seg] = [7-Seg] = [.] = [.]
+DIN -> [7-Seg] -> [7-Seg] -> [7-Seg] -> [7-Seg] -> [.] -> [.]
 ```
 
 Where the following is true:
@@ -84,6 +83,15 @@ D3       WS2812B        Lights
 D1       DHT11          Temperature
 A0       ADC - LDR      Brightness
 ```
+
+![](/assets/img/2022/2022-06-07/012.jpg)
+
+![](/assets/img/2022/2022-06-07/013.jpg)
+
+Like most `DIY` projects it may not be pretty, but it works!
+
+> **FYI**: the yellow tape on the spacers are to stop the plastic rubbing on my walls
+{: .prompt-info }
 
 ## Source Code
 The source code use for my clock is an adaptation of the code [found here](https://3dmixers.com/m/250988-led-clock-7-segments-) and I take no credit for the original code, only the modifications to it - [thestovedoc](https://3dmixers.com/user/thestovedoc/portfolio) deserves the credit!
