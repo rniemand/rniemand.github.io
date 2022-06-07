@@ -73,3 +73,98 @@ More to come...
 - https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/07%20-%202x%20-%20Dots%20Diffuser.stl
 - https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/08%20-%202x%20-%20Double%20Segment%20Cover.stl
 
+## Home Assistant Setup
+
+### Card Control
+
+```yaml
+type: horizontal-stack
+cards:
+  - type: light
+    entity: light.lounge_clock
+  - square: true
+    columns: 3
+    type: grid
+    cards:
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: light.lounge_hours_lights
+        hold_action:
+          action: more-info
+        name: HH
+        icon: mdi:alpha-h
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: light.lounge_dots_lights
+        hold_action:
+          action: more-info
+        name: ':'
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: light.lounge_minutes_lights
+        hold_action:
+          action: more-info
+        name: MM
+        icon: mdi:alpha-m
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: switch.lounge_leading_zero
+        name: Zero
+        icon: ''
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: switch.lounge_dots_blink
+        name: Blink
+        icon: mdi:car-light-dimmed
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: switch.lounge_24_hour_format
+        name: '24'
+        icon: mdi:hours-24
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: call-service
+          service: light.turn_on
+          service_data:
+            effect: Time Effect
+          target:
+            entity_id: light.lounge_clock
+        entity: ''
+        icon: mdi:clock-digital
+        hold_action:
+          action: none
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: more-info
+        entity: light.lounge_clock_all_lights
+        hold_action:
+          action: none
+```
