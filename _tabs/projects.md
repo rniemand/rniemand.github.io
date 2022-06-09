@@ -24,9 +24,6 @@ order: 2
 
 ## Wrappers
 - [Grafana-CLI-Tools](https://github.com/rniemand/Grafana-CLI-Tools) - CLI tooling for Grafana written in `C#`
-- [hass-utils](https://github.com/rniemand/hass-utils) - HomeAssistant utility service ([Docker](https://hub.docker.com/repository/docker/niemandr/hass-utils))
-- [FluentHoverfly](https://github.com/rniemand/FluentHoverfly) - `WIP`: Fluent C# wrapper for Hoverfly
-- [Rn.Mountebank](https://github.com/rniemand/Rn.Mountebank) `WIP`: Simple mountebank wrapper for `C#`
 
 ## Misc.
 - [cron-tool](https://github.com/rniemand/cron-tool) - `JSON` based job runner to automate common tasks ([NuGet](https://www.nuget.org/packages/Rn.CronTool/)) ([Docker](https://hub.docker.com/repository/docker/niemandr/cron-tool))
