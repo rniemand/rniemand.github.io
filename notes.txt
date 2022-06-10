@@ -11,3 +11,7 @@ https://chirpy.cotes.page/posts/text-and-typography/
 
 https://www.urlencoder.org/
 {{ "" | url_decode }}
+
+
+
+https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide
