@@ -1,6 +1,9 @@
 https://github.com/cotes2020/jekyll-theme-chirpy/issues/463
 https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
+Needs: https://rubyinstaller.org/downloads/
+       https://git-scm.com/
+
 Install deps >> bundle
 Running>> bundle exec jekyll s
 Running>> bundle exec jekyll s --incremental
