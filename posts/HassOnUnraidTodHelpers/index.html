@@ -1,0 +1,415 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="prefer-datetime-locale" content="en-ca"><meta name="generator" content="Jekyll v4.2.2" /><meta property="og:title" content="HASS On Unraid: Times of Day Automations" /><meta property="og:locale" content="en" /><meta name="description" content="In this post I will explore the concepts of Helpers in Home Assistant and the potential that they can unlock with your automations." /><meta property="og:description" content="In this post I will explore the concepts of Helpers in Home Assistant and the potential that they can unlock with your automations." /><link rel="canonical" href="https://www.richardn.ca/posts/HassOnUnraidTodHelpers/" /><meta property="og:url" content="https://www.richardn.ca/posts/HassOnUnraidTodHelpers/" /><meta property="og:site_name" content="RichardN" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2022-06-10T07:00:00-06:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="HASS On Unraid: Times of Day Automations" /><meta name="twitter:site" content="@richardniemand" /> <script type="application/ld+json"> {"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-06-10T07:00:00-06:00","datePublished":"2022-06-10T07:00:00-06:00","description":"In this post I will explore the concepts of Helpers in Home Assistant and the potential that they can unlock with your automations.","headline":"HASS On Unraid: Times of Day Automations","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.richardn.ca/posts/HassOnUnraidTodHelpers/"},"url":"https://www.richardn.ca/posts/HassOnUnraidTodHelpers/"}</script><title>HASS On Unraid: Times of Day Automations | RichardN</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="RichardN"><meta name="application-name" content="RichardN"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="dns-prefetch" href="https://fonts.gstatic.com" crossorigin><link rel="preconnect" href="https://fonts.googleapis.com" ><link rel="dns-prefetch" href="https://fonts.googleapis.com" ><link rel="preconnect" href="https://cdn.jsdelivr.net" ><link rel="dns-prefetch" href="https://cdn.jsdelivr.net" ><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato&family=Source+Sans+Pro:wght@400;600;700;900&display=swap"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get MODE_ATTR() { return "data-mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } static get ID() { return "mode-toggle"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } let self = this; /* always follow the system prefers */ this.sysDarkPrefers.addEventListener("change", () => { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.notify(); }); } /* constructor() */ get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode === ModeToggle.DARK_MODE; } get isLightMode() { return this.mode === ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer)) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } setDark() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_ATTR, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_ATTR); sessionStorage.removeItem(ModeToggle.MODE_KEY); } /* Notify another plugins that the theme mode has changed */ notify() { window.postMessage({ direction: ModeToggle.ID, message: this.modeStatus }, "*"); } } /* ModeToggle */ const toggle = new ModeToggle(); function flipMode() { if (toggle.hasMode) { if (toggle.isSysDarkPrefer) { if (toggle.isLightMode) { toggle.clearMode(); } else { toggle.setLight(); } } else { if (toggle.isDarkMode) { toggle.clearMode(); } else { toggle.setDark(); } } } else { if (toggle.isSysDarkPrefer) { toggle.setLight(); } else { toggle.setDark(); } } toggle.notify(); } /* flipMode() */ </script><body data-spy="scroll" data-target="#toc" data-topbar-visible="true"><div id="sidebar" class="d-flex flex-column align-items-end"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" class="mx-auto"> <img src="https://pbs.twimg.com/profile_images/1532003282125611012/W4n_UW8W_400x400.jpg" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">RichardN</a></div><div class="site-subtitle font-italic">Coding and more</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a><li class="nav-item"> <a href="/projects/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>PROJECTS</span> </a><li class="nav-item"> <a href="/series/" class="nav-link"> <i class="fa-fw fas fa-info-circle ml-xl-3 mr-xl-3 unloaded"></i> <span>SERIES</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <button class="mode-toggle btn" aria-label="Switch Mode"> <i class="fas fa-adjust"></i> </button> <span class="icon-border"></span> <a href="https://github.com/rniemand" aria-label="github" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/richardniemand" aria-label="twitter" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['niemand.richard','gmail.com'].join('@')" aria-label="email" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" > <i class="fas fa-rss"></i> </a></div></div><div id="topbar-wrapper"><div id="topbar" class="container d-flex align-items-center justify-content-between h-100 pl-3 pr-3 pl-md-4 pr-md-4"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>HASS On Unraid: Times of Day Automations</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper" class="d-flex justify-content-center"><div id="main" class="container pl-xl-4 pr-xl-4"><div class="row"><div id="core-wrapper" class="col-12 col-lg-11 col-xl-9 pr-xl-4"><div class="post pl-1 pr-1 pl-md-2 pr-md-2"><h1 data-toc-skip>HASS On Unraid: Times of Day Automations</h1><div class="post-meta text-muted"> <span> Posted <em class="" data-ts="1654866000" data-df="ll" data-toggle="tooltip" data-placement="bottom"> Jun 10, 2022 </em> </span><div class="d-flex justify-content-between"> <span> By <em> <a href="https://twitter.com/username">Richard Niemand</a> </em> </span><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="1742 words"> <em>9 min</em> read</span></div></div></div><div class="post-content"><p>In this post I will explore the concepts of Helpers in Home Assistant and the potential that they can unlock with your automations.</p><blockquote class="prompt-tip"><div><p>It is worthwhile adopting a naming convention for your automation to make discovery \ searching easier in the future, I tend to follow an “<code class="language-plaintext highlighter-rouge">&lt;object&gt;</code> - <code class="language-plaintext highlighter-rouge">&lt;action&gt;</code> - <code class="language-plaintext highlighter-rouge">&lt;condition&gt;</code>” pattern.</p></div></blockquote><p>Let’s start.</p><h1 id="required-integrations">Required Integrations</h1><p>If you are planning on following along at home you will need to add the following integrations to Home Assistant.</p><h2 id="times-of-the-day"><span class="mr-2">Times of the Day</span><a href="#times-of-the-day" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>One of the more useful integrations I use is <a href="https://www.home-assistant.io/integrations/tod/">Times of the Day</a>, which as the name suggests allows you to create a binary sensor that gets its values by checking if the current time is within defined time ranges.</p><p>What makes this integration powerful is the fact that it uses your home’s location in combination with the <a href="https://www.home-assistant.io/integrations/sun/#implementation-details">sun integration</a> to provide dynamic values for <code class="language-plaintext highlighter-rouge">sunrise</code> and <code class="language-plaintext highlighter-rouge">sunset</code> that can be used in your automations.</p><p>In my automation tasks I tend to use the following times of day a lot:</p><h3 id="before-sunrise"><span class="mr-2">Before Sunrise</span><a href="#before-sunrise" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Defined in <code class="language-plaintext highlighter-rouge">custom/binary_sensors/binary.is-daytime.yaml</code></p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre><td class="rouge-code"><pre><span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">tod</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Is</span><span class="nv"> </span><span class="s">Daytime"</span>
+  <span class="na">after</span><span class="pi">:</span> <span class="s">sunrise</span>
+  <span class="na">before</span><span class="pi">:</span> <span class="s">sunset</span>
+</pre></table></code></div></div><p>Simple binary sensor that is enabled between sunrise and sunset, there are no hard-coded times here to adjust as the length of the days changes during the year.</p><h3 id="night"><span class="mr-2">Night</span><a href="#night" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Defined in <code class="language-plaintext highlighter-rouge">custom/binary_sensors/binary.is-evening.yaml</code></p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">tod</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Is</span><span class="nv"> </span><span class="s">Evening"</span>
+  <span class="na">after</span><span class="pi">:</span> <span class="s">sunset</span>
+  <span class="na">after_offset</span><span class="pi">:</span> <span class="s2">"</span><span class="s">-00:10"</span>
+  <span class="na">before</span><span class="pi">:</span> <span class="s">sunrise</span>
+</pre></table></code></div></div><p>Similar to <strong>Before Sunrise</strong>, however I subtract 10 min from “sunset” to ensure that my lights are on just a little bit before.</p><blockquote class="prompt-info"><div><p>If you are using any of the before modifiers make sure that you take them into consideration for your automations.</p></div></blockquote><h2 id="workday"><span class="mr-2">Workday</span><a href="#workday" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>The <a href="https://www.home-assistant.io/integrations/workday/">workday</a> binary sensor indicates whether the current day is a workday or not. It allows specifying which days of the week will count as workdays and also uses the Python module <a href="https://pypi.org/project/holidays/">holidays</a> to incorporate information about region-specific public holidays.</p><p>Using the workday integration I am able to create binary sensors for <strong>school days</strong> and <strong>work days</strong> allowing me to add context aware automations for my kids, i.e. allowing them to sleep in on the weekends.</p><h3 id="is-school-night"><span class="mr-2">Is School Night</span><a href="#is-school-night" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Defined in <code class="language-plaintext highlighter-rouge">custom/binary_sensors/is-school-night.yaml</code>”.`</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre><td class="rouge-code"><pre><span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">workday</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Is</span><span class="nv"> </span><span class="s">School</span><span class="nv"> </span><span class="s">Night"</span>
+  <span class="na">country</span><span class="pi">:</span> <span class="s">CA</span>
+  <span class="na">province</span><span class="pi">:</span> <span class="s">AB</span>
+  <span class="na">workdays</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">sun</span><span class="pi">,</span> <span class="nv">mon</span><span class="pi">,</span> <span class="nv">tue</span><span class="pi">,</span> <span class="nv">wed</span><span class="pi">,</span> <span class="nv">thu</span><span class="pi">]</span>
+  <span class="na">excludes</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">fri</span><span class="pi">,</span> <span class="nv">sat</span><span class="pi">]</span>
+</pre></table></code></div></div><p>I ensure that my country and province is set along with the appropriate days to use for tracking school days. This works for 90% of my use-cases but things like the schools PD Days etc are not catered for here. Currently I am just manually toggling the relevant automations when required.</p><h3 id="is-workday"><span class="mr-2">Is Workday</span><a href="#is-workday" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Defined in <code class="language-plaintext highlighter-rouge">custom/binary_sensors/is-workday.yaml</code></p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre><td class="rouge-code"><pre><span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">workday</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Is</span><span class="nv"> </span><span class="s">Workday"</span>
+  <span class="na">country</span><span class="pi">:</span> <span class="s">CA</span>
+  <span class="na">province</span><span class="pi">:</span> <span class="s">AB</span>
+  <span class="na">workdays</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">mon</span><span class="pi">,</span> <span class="nv">tue</span><span class="pi">,</span> <span class="nv">wed</span><span class="pi">,</span> <span class="nv">thu</span><span class="pi">,</span> <span class="nv">fri</span><span class="pi">]</span>
+</pre></table></code></div></div><p>Pretty much a copy of the “Is School Day” sensor, I decided to separate them in the hopes that in the future I can adjust the school nights one to cater for various PD Days, snow days etc. this is to ensure that I don’t need to back track and redo any automations that share this logic in the future.</p><h2 id="including-the-sensors"><span class="mr-2">Including the sensors</span><a href="#including-the-sensors" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>To load these sensors into Home Assistant I include them in my main “configuration.yaml” file like so:</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre><span class="na">binary_sensor</span><span class="pi">:</span> <span class="kt">!include_dir_merge_list</span> <span class="s">custom/binary_sensors</span>
+</pre></table></code></div></div><p><img data-src="/assets/img/2022/2022-06-10/001.png" alt="" data-proofer-ignore></p><p>Thats it - these sensors are good to go with any of your automations.</p><h1 id="helpers">Helpers</h1><p>Helpers are a relatively new concept to Home Assistant that has been getting a lot of love over the last 4-6 months, and allow for dynamic values for use with automations. These values can either be defined via the Home Assistant UI, or through various wizards when setting up automations.</p><p>By far the most useful helpers are the <strong>Date and/or Time</strong>, <strong>Dropdown</strong>, <strong>Group</strong> and <strong>Number</strong> helpers, however there are so many of them available, with the list growing with each release it seems.</p><h1 id="automations">Automations</h1><p>Below are some sample automations that make use of the <strong>Times of Day</strong> and <strong>Workday</strong> sensors along with some custom helpers.</p><h2 id="office---routine---workday-start"><span class="mr-2">Office - Routine - Workday Start</span><a href="#office---routine---workday-start" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Simple automation that uses a Date Time helper in combination with the Workday sensor to turn on the lights \ plugs in my office when my work day starts.</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">Office - Routine - Workday Start</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">time</span>
+    <span class="na">at</span><span class="pi">:</span> <span class="s">input_datetime.workday_start_richard</span>
+<span class="na">condition</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">and</span>
+    <span class="na">conditions</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">state</span>
+        <span class="na">entity_id</span><span class="pi">:</span> <span class="s">binary_sensor.is_workday</span>
+        <span class="na">state</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+      <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">state</span>
+        <span class="na">entity_id</span><span class="pi">:</span> <span class="s">input_boolean.enable_workday_automations</span>
+        <span class="na">state</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">service</span><span class="pi">:</span> <span class="s">light.turn_on</span>
+    <span class="na">data</span><span class="pi">:</span> <span class="pi">{}</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">entity_id</span><span class="pi">:</span> <span class="s">light.office_lamp</span>
+  <span class="pi">-</span> <span class="na">service</span><span class="pi">:</span> <span class="s">switch.turn_on</span>
+    <span class="na">data</span><span class="pi">:</span> <span class="pi">{}</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">entity_id</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">switch.plug_2</span>
+        <span class="pi">-</span> <span class="s">switch.plug_3</span>
+  <span class="pi">-</span> <span class="na">service</span><span class="pi">:</span> <span class="s">light.turn_on</span>
+    <span class="na">data</span><span class="pi">:</span>
+      <span class="na">brightness_pct</span><span class="pi">:</span> <span class="m">81</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">entity_id</span><span class="pi">:</span> <span class="s">light.nas</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><p><img data-src="/assets/img/2022/2022-06-10/002.png" alt="" data-proofer-ignore></p><h2 id="sam---school-day---start-0645"><span class="mr-2">Sam - School Day - Start (06:45)</span><a href="#sam---school-day---start-0645" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>On school days I use this automation to ensure that my daughter is up for 7:00 am, this makes use of the <strong>Is School Day</strong> sensor and basically just turns on her lights in the morning:</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">Sam - School Day - Start (06:45)</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">time</span>
+    <span class="na">at</span><span class="pi">:</span> <span class="s1">'</span><span class="s">06:45:00'</span>
+<span class="na">condition</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">and</span>
+    <span class="na">conditions</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">state</span>
+        <span class="na">entity_id</span><span class="pi">:</span> <span class="s">binary_sensor.is_workday</span>
+        <span class="na">state</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+      <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">state</span>
+        <span class="na">entity_id</span><span class="pi">:</span> <span class="s">input_boolean.school_automation</span>
+        <span class="na">state</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">service</span><span class="pi">:</span> <span class="s">light.turn_on</span>
+    <span class="na">data</span><span class="pi">:</span>
+      <span class="na">brightness_pct</span><span class="pi">:</span> <span class="m">96</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">entity_id</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">light.sam_overhead</span>
+        <span class="pi">-</span> <span class="s">light.sam_bedside</span>
+  <span class="pi">-</span> <span class="na">service</span><span class="pi">:</span> <span class="s">light.turn_off</span>
+    <span class="na">data</span><span class="pi">:</span> <span class="pi">{}</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">entity_id</span><span class="pi">:</span> <span class="s">light.samsign</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><p>I make use of a boolean toggle to quickly enable \ disable the automation when needed.</p><p><img data-src="/assets/img/2022/2022-06-10/003.png" alt="" data-proofer-ignore></p><p>In addition to this I have another automation that re-enabled this toggle at the start of the next day (~10:00 am) in case I forget to re-enable it manually.</p><h2 id="school-related-automations"><span class="mr-2">School Related Automations</span><a href="#school-related-automations" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><h3 id="set-scene---sam-bedtime---weekends"><span class="mr-2">Set Scene - Sam Bedtime - Weekends</span><a href="#set-scene---sam-bedtime---weekends" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>This automation makes use of the Workday sensor along with dynamic times to activate a specified scene on the weekends for my daughter.</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">Set Scene - Sam Bedtime - Weekends</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">time</span>
+    <span class="na">at</span><span class="pi">:</span> <span class="s">input_datetime.sam_bedtime_weekend</span>
+<span class="na">condition</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">state</span>
+    <span class="na">entity_id</span><span class="pi">:</span> <span class="s">binary_sensor.is_school_night</span>
+    <span class="na">state</span><span class="pi">:</span> <span class="s1">'</span><span class="s">off'</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">scene</span><span class="pi">:</span> <span class="s">scene.sam_bedtime</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><h3 id="set-scene---sam-bedtime---school-automation-on"><span class="mr-2">Set Scene - Sam Bedtime - School Automation (On)</span><a href="#set-scene---sam-bedtime---school-automation-on" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Similar to the above this automation will turn off Sam’s lights at the appropriate time in the evenings on a school night.</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">Set Scene - Sam Bedtime - School Automation (On)</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">time</span>
+    <span class="na">at</span><span class="pi">:</span> <span class="s">input_datetime.sam_bedtime_school_night</span>
+<span class="na">condition</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">and</span>
+    <span class="na">conditions</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">state</span>
+        <span class="na">entity_id</span><span class="pi">:</span> <span class="s">input_boolean.school_automation</span>
+        <span class="na">state</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+      <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">state</span>
+        <span class="na">entity_id</span><span class="pi">:</span> <span class="s">binary_sensor.is_school_night</span>
+        <span class="na">state</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">scene</span><span class="pi">:</span> <span class="s">scene.sam_bedtime</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><h3 id="set-scene---sam-bedtime---school-automation-off"><span class="mr-2">Set Scene - Sam Bedtime - School Automation (Off)</span><a href="#set-scene---sam-bedtime---school-automation-off" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Helper automation to cater for school specific off days when Sam can stay up a bit later in the evenings.</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">Set Scene - Sam Bedtime - School Automation (Off)</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">time</span>
+    <span class="na">at</span><span class="pi">:</span> <span class="s">input_datetime.sam_bedtime_weekend</span>
+<span class="na">condition</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">and</span>
+    <span class="na">conditions</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">state</span>
+        <span class="na">entity_id</span><span class="pi">:</span> <span class="s">input_boolean.school_automation</span>
+        <span class="na">state</span><span class="pi">:</span> <span class="s1">'</span><span class="s">off'</span>
+      <span class="pi">-</span> <span class="na">condition</span><span class="pi">:</span> <span class="s">state</span>
+        <span class="na">entity_id</span><span class="pi">:</span> <span class="s">binary_sensor.is_school_night</span>
+        <span class="na">state</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">scene</span><span class="pi">:</span> <span class="s">scene.sam_bedtime</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><h3 id="pulling-it-all-together"><span class="mr-2">Pulling it all together</span><a href="#pulling-it-all-together" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>To allow for easier control of Sam’s automations i created the following view that allows me to quickly toggle \ tweak any values that I may need to:</p><p><img data-src="/assets/img/2022/2022-06-10/004.png" alt="" data-proofer-ignore></p><h2 id="light-automations"><span class="mr-2">Light Automations</span><a href="#light-automations" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Below are a few automation examples I use with some of the lighting around my house.</p><h3 id="external---lights---turn-off-mornings"><span class="mr-2">External - Lights - Turn Off (Mornings)</span><a href="#external---lights---turn-off-mornings" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Dynamic automation to turn off lights based on the sunrise.</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">External - Lights - Turn Off (Mornings)</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">state</span>
+    <span class="na">entity_id</span><span class="pi">:</span> <span class="s">binary_sensor.is_daytime</span>
+    <span class="na">from</span><span class="pi">:</span> <span class="s1">'</span><span class="s">off'</span>
+    <span class="na">to</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+    <span class="na">for</span><span class="pi">:</span>
+      <span class="na">hours</span><span class="pi">:</span> <span class="m">0</span>
+      <span class="na">minutes</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">seconds</span><span class="pi">:</span> <span class="m">0</span>
+<span class="na">condition</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">service</span><span class="pi">:</span> <span class="s">switch.turn_off</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">entity_id</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">switch.front_lights</span>
+        <span class="pi">-</span> <span class="s">switch.holiday_lights</span>
+    <span class="na">data</span><span class="pi">:</span> <span class="pi">{}</span>
+  <span class="pi">-</span> <span class="na">service</span><span class="pi">:</span> <span class="s">light.turn_off</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">entity_id</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">light.deck_light</span>
+    <span class="na">data</span><span class="pi">:</span> <span class="pi">{}</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><h3 id="external---lights---turn-on-evenings"><span class="mr-2">External - Lights - Turn On (Evenings)</span><a href="#external---lights---turn-on-evenings" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Dynamic automation used to turn on lights based on the sunset.</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">External - Lights - Turn On (Evenings)</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">state</span>
+    <span class="na">entity_id</span><span class="pi">:</span> <span class="s">binary_sensor.is_evening</span>
+    <span class="na">from</span><span class="pi">:</span> <span class="s1">'</span><span class="s">off'</span>
+    <span class="na">to</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+<span class="na">condition</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">service</span><span class="pi">:</span> <span class="s">switch.turn_on</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">entity_id</span><span class="pi">:</span> <span class="s">switch.front_lights</span>
+    <span class="na">data</span><span class="pi">:</span> <span class="pi">{}</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><h3 id="dining-area---lights---turn-off---display-cabinet-mornings"><span class="mr-2">Dining Area - Lights - Turn Off - Display Cabinet (Mornings)</span><a href="#dining-area---lights---turn-off---display-cabinet-mornings" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h3><p>Helper automation to ensure that specific lights are turned off regardless of sunrise \ sunset.</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">Dining Area - Lights - Turn Off - Display Cabinet (Mornings)</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">state</span>
+    <span class="na">entity_id</span><span class="pi">:</span> <span class="s">binary_sensor.is_daytime</span>
+    <span class="na">from</span><span class="pi">:</span> <span class="s1">'</span><span class="s">off'</span>
+    <span class="na">to</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+    <span class="na">for</span><span class="pi">:</span>
+      <span class="na">hours</span><span class="pi">:</span> <span class="m">0</span>
+      <span class="na">minutes</span><span class="pi">:</span> <span class="m">5</span>
+      <span class="na">seconds</span><span class="pi">:</span> <span class="m">0</span>
+<span class="na">condition</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">service</span><span class="pi">:</span> <span class="s">light.turn_off</span>
+    <span class="na">target</span><span class="pi">:</span>
+      <span class="na">entity_id</span><span class="pi">:</span> <span class="s">light.display_cabinet</span>
+    <span class="na">data</span><span class="pi">:</span> <span class="pi">{}</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><h2 id="changing-lounge-clock-scene"><span class="mr-2">Changing Lounge Clock Scene</span><a href="#changing-lounge-clock-scene" class="anchor text-muted"><i class="fas fa-hashtag"></i></a></h2><p>Another use for the Times of Day integration is to adjust the style of my <strong><a href="https://www.richardn.ca/posts/LoungeClockV1/">lounge clock</a></strong>, making it more visible during the day, and dimming it in the evenings. Below are a couple of the automations I use for that:</p><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">Lounge Clock - Set Scene - Early Evening</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">state</span>
+    <span class="na">entity_id</span><span class="pi">:</span> <span class="s">binary_sensor.is_evening</span>
+    <span class="na">from</span><span class="pi">:</span> <span class="s1">'</span><span class="s">off'</span>
+    <span class="na">to</span><span class="pi">:</span> <span class="s1">'</span><span class="s">on'</span>
+<span class="na">condition</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">delay</span><span class="pi">:</span>
+      <span class="na">hours</span><span class="pi">:</span> <span class="m">0</span>
+      <span class="na">minutes</span><span class="pi">:</span> <span class="m">10</span>
+      <span class="na">seconds</span><span class="pi">:</span> <span class="m">0</span>
+      <span class="na">milliseconds</span><span class="pi">:</span> <span class="m">0</span>
+  <span class="pi">-</span> <span class="na">scene</span><span class="pi">:</span> <span class="s">scene.lounge_clock_early_evening</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><div class="language-yaml highlighter-rouge"><div class="code-header"> <span data-label-text="YAML"><i class="fas fa-code small"></i></span> <button aria-label="copy" data-title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+</pre><td class="rouge-code"><pre><span class="na">alias</span><span class="pi">:</span> <span class="s">Lounge Clock - Set Scene - Early Morning</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s1">'</span><span class="s">'</span>
+<span class="na">trigger</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">platform</span><span class="pi">:</span> <span class="s">time</span>
+    <span class="na">at</span><span class="pi">:</span> <span class="s1">'</span><span class="s">07:00:00'</span>
+<span class="na">condition</span><span class="pi">:</span> <span class="pi">[]</span>
+<span class="na">action</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">scene</span><span class="pi">:</span> <span class="s">scene.lounge_clock_early_morning</span>
+<span class="na">mode</span><span class="pi">:</span> <span class="s">single</span>
+</pre></table></code></div></div><h1 id="in-closing">In Closing</h1><p>Undoubtedly you can see that the possibilities opened up by adding just these 2 sensors to Home Assistant are numerous, with the addition of being location aware and adjusting to the sunrise and sunset times for your area saves you from having to constantly update times to match dawn \ dusk is worth the effort.</p><p>I hope that you found this post useful, and would love to see the automations that you can come up with.</p><p>Happy hacking!</p></div><div class="post-tail-wrapper text-muted"><div class="post-meta mb-3"> <i class="far fa-folder-open fa-fw mr-1"></i> <a href='/categories/home-assistant/'>home assistant</a></div><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=HASS+On+Unraid%3A+Times+of+Day+Automations+-+RichardN&url=https%3A%2F%2Fwww.richardn.ca%2Fposts%2FHassOnUnraidTodHelpers%2F" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=HASS+On+Unraid%3A+Times+of+Day+Automations+-+RichardN&u=https%3A%2F%2Fwww.richardn.ca%2Fposts%2FHassOnUnraidTodHelpers%2F" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://t.me/share/url?url=https%3A%2F%2Fwww.richardn.ca%2Fposts%2FHassOnUnraidTodHelpers%2F&text=HASS+On+Unraid%3A+Times+of+Day+Automations+-+RichardN" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" data-title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted"><div class="access"><div id="access-lastmod" class="post"><div class="panel-heading">Recently Updated</div><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/posts/LoungeClockV1/">Lounge Clock (v 1.0)</a><li><a href="/posts/HassOnUnraidMqtt/">HASS On Unraid: MQTT</a><li><a href="/posts/RemoteAccessHome/">Remote Access Home</a><li><a href="/posts/StaticWebApiWithOwin/">Hosting Web API and Static Content with OWIN</a><li><a href="/posts/FindNthOccurance/">Find the nth occurrence of a string (JavaScript)</a></ul></div><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/mqtt/">mqtt</a> <a class="post-tag" href="/tags/mosquitto/">mosquitto</a> <a class="post-tag" href="/tags/ubuntu/">ubuntu</a> <a class="post-tag" href="/tags/windows/">windows</a> <a class="post-tag" href="/tags/dietpi/">dietpi</a> <a class="post-tag" href="/tags/mariadb/">mariadb</a> <a class="post-tag" href="/tags/mysql/">mysql</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/unraid/">unraid</a> <a class="post-tag" href="/tags/flashing/">flashing</a></div></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"><div class="panel-heading pl-3 pt-2 mb-2">Contents</div><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div id="tail-wrapper" class="col-12 col-lg-11 col-xl-9 pl-3 pr-3 pr-xl-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/posts/HassOnUnraidMariaDB/"><div class="card-body"> <em class="small" data-ts="1653696000" data-df="ll" > May 27, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>HASS On Unraid: MariaDB</h3><div class="text-muted small"><p> This post is part of a series covering running various containers on Unraid. In this post I will cover configuring Home Assistant to use MariaDB rather than the default SQLite DB, you can refe...</p></div></div></a></div><div class="card"> <a href="/posts/HassOnUnraidDns/"><div class="card-body"> <em class="small" data-ts="1653955200" data-df="ll" > May 30, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>HASS On Unraid: DNS</h3><div class="text-muted small"><p> This post is part of a series covering running various containers on Unraid. Today I will be covering setting up DNS and HTTPS on your local Home Assistance instance making use of Duck DNS and...</p></div></div></a></div><div class="card"> <a href="/posts/HassOnUnraidGoogleTTS/"><div class="card-body"> <em class="small" data-ts="1653955200" data-df="ll" > May 30, 2022 </em><h3 class="pt-0 mt-1 mb-3" data-toc-skip>HASS On Unraid: Google TTS</h3><div class="text-muted small"><p> This post is part of a series covering running various containers on Unraid. Today I will cover setting up TTS on Home Assistant using the Google Cast integration. Basic Discovery Out of the ...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/posts/HassOnUnraidEspHomeZigbeeZWave/" class="btn btn-outline-primary" prompt="Older"><p>HASS On Unraid: ESPHome - Zigbee - Z-Wave</p></a> <a href="/posts/CeilingFanRemoteHacking/" class="btn btn-outline-primary" prompt="Newer"><p>Ceiling Fan Remote Hacking</p></a></div><div id="disqus_thread" class="pt-2 pb-2"><p class="text-center text-muted small"> Comments powered by <a href="https://disqus.com/">Disqus</a>.</p></div><script type="text/javascript"> var disqus_config = function () { this.page.url = 'https://www.richardn.ca/posts/HassOnUnraidTodHelpers/'; this.page.identifier = '/posts/HassOnUnraidTodHelpers/'; }; /* Lazy loading */ var disqus_observer = new IntersectionObserver(function (entries) { if(entries[0].isIntersecting) { (function () { var d = document, s = d.createElement('script'); s.src = 'https://richardn-ca.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })(); disqus_observer.disconnect(); } }, { threshold: [0] }); disqus_observer.observe(document.querySelector('#disqus_thread')); /* Auto switch theme */ function reloadDisqus() { /* Disqus hasn't been loaded */ if (typeof DISQUS === "undefined") { return; } if (document.readyState == 'complete') { DISQUS.reset({ reload: true, config: disqus_config }); } } const modeToggle = document.querySelector(".mode-toggle"); if (typeof modeToggle !== "undefined") { /* modeToggle.addEventListener('click', reloadDisqus); // not pretty for 'color-scheme' */ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', reloadDisqus); } </script></div></div><footer class="row pl-3 pr-3"><div class="col-12 d-flex justify-content-between align-items-center text-muted pl-0 pr-0"><div class="footer-left"><p class="mb-0"> © 2022 <a href="https://twitter.com/username">Richard Niemand</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><div id="access-tags"><div class="panel-heading">Trending Tags</div><div class="d-flex flex-wrap mt-3 mb-1 mr-3"> <a class="post-tag" href="/tags/mqtt/">mqtt</a> <a class="post-tag" href="/tags/mosquitto/">mosquitto</a> <a class="post-tag" href="/tags/ubuntu/">ubuntu</a> <a class="post-tag" href="/tags/windows/">windows</a> <a class="post-tag" href="/tags/dietpi/">dietpi</a> <a class="post-tag" href="/tags/mariadb/">mariadb</a> <a class="post-tag" href="/tags/mysql/">mysql</a> <a class="post-tag" href="/tags/project/">project</a> <a class="post-tag" href="/tags/unraid/">unraid</a> <a class="post-tag" href="/tags/flashing/">flashing</a></div></div></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a><div id="notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-animation="true" data-autohide="false"><div class="toast-header"> <button type="button" class="ml-2 ml-auto close" data-dismiss="toast" aria-label="Close"> <span aria-hidden="true">&times;</span> </button></div><div class="toast-body text-center pt-0"><p class="pl-2 pr-2 mb-3">A new version of content is available.</p><button type="button" class="btn btn-primary" aria-label="Update"> Update </button></div></div><script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No results found.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/lozad/dist/lozad.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/dayjs@1/dayjs.min.js,npm/dayjs@1/locale/en-ca.min.js,npm/dayjs@1/plugin/relativeTime.min.js,npm/dayjs@1/plugin/localizedFormat.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.bundle.min.js"></script> <script defer src="/app.js"></script> <script defer src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script> <script> document.addEventListener("DOMContentLoaded", function(event) { window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-HRDC8SXRVG'); }); </script>
