@@ -37,7 +37,7 @@ You can include this configuration in Home Assistant by adding the following lin
 ### Install Duck DNS Addon
 Under Home Assistant add ons, find and install the Duck DNS plugin:
 
-![](/assets/img/2022/2022-05-30/010.png)
+![](/assets/img/2022/2022-05-30/001.png)
 
 Once installed follow the prompts when setting up the Add-On making sure to substitute your token where necessary. In addition, please ensure that the rest of your configuration looks like this:
 
