@@ -21,7 +21,7 @@ Unfortunately the model I selected only sends a single code (others offer a code
 
 I have a [Sonoff RF Bridge](https://itead.cc/product/sonoff-rf-bridge-433/) running [Tasmota](https://github.com/arendst/Tasmota) which intercepts all 433 MHz RF signals and relays them to my MQTT broker allowing me to use the switches in my Home Automation setup.
 
-![](/assets/img/2019/2019-01-16/002.png)
+![](/assets/img/2019/2019-01-16/002.jpg)
 
 The rest of the hardware used in the project consists of:
 
