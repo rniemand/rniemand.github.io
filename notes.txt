@@ -1,0 +1,28 @@
+- https://github.com/cotes2020/jekyll-theme-chirpy/issues/463
+- https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+
+- https://chirpy.cotes.page/posts/write-a-new-post/
+- https://chirpy.cotes.page/posts/text-and-typography/
+
+https://www.urlencoder.org/
+{{ "" | url_decode }}
+
+## Upgrading Site
+https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide
+https://chirpy.cotes.page/posts/getting-started/#deployment
+
+  - https://github.com/cotes2020/jekyll-theme-chirpy/tags
+  - https://github.com/cotes2020/chirpy-starter/compare/v5.3.0...v5.3.1
+
+# Development
+
+```shell
+cd C:\Dev\personal\rniemand.github.io\
+bundle install
+bundle exec jekyll s
+bundle exec jekyll s --incremental
+```
+http://localhost:4000/
+
+
+https://github.com/cotes2020/chirpy-starter/compare/v5.3.2...v5.5.2
