@@ -4,7 +4,6 @@ date: 2022-05-31 18:00:00 -0600
 categories: [ci-cd]
 tags: [sonarqube,github]
 toc: true
-image: assets/banners/sonarqube.png
 ---
 
 Today I will be covering my [SonarQube](https://www.sonarqube.org/) & [Github Actions](https://github.com/features/actions) integration that I use for the majority of my builds at home.
