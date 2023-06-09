@@ -26,3 +26,8 @@ http://localhost:4000/
 
 
 https://github.com/cotes2020/chirpy-starter/compare/v5.3.2...v5.5.2
+
+## Updating Header
+
+Copy source file from latest chirpy theme location: C:\Ruby31-x64\lib\ruby\gems\3.1.0\gems\jekyll-theme-chirpy-6.0.1\_includes
+Update: _includes/head.html
