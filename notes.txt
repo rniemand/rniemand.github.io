@@ -23,7 +23,7 @@ http://localhost:4000/
 
 ## Updating
 - https://github.com/cotes2020/jekyll-theme-chirpy/tags
-- https://github.com/cotes2020/chirpy-starter/compare/v5.5.2...v6.0.1
+- https://github.com/cotes2020/chirpy-starter/compare/v6.0.1...v6.1.0
 - Last update applied: v6.0.1
 
 ## Updating Header
