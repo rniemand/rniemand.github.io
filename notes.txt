@@ -12,8 +12,14 @@ https://chirpy.cotes.page/posts/getting-started/#deployment
 
 # Development
 
+## Installation
+- https://jekyllrb.com/docs/installation/
+
+## Running
+
 ```shell
 cd C:\Dev\personal\rniemand.github.io\
+cd C:\Dev\rniemand.github.io\
 bundle install
 bundle exec jekyll s
 bundle exec jekyll s --incremental
