@@ -1,13 +1,6 @@
----
----
+// $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
 
-/*
-  If the number of TAB files has changed, the following variable is required.
-  And it must be defined before `@import`.
-*/
-$tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
-
-@import "{{ site.theme }}";
+// @import "{{ site.theme }}";
 
 /* append your custom style below */
 
@@ -26,7 +19,12 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
     padding: 5px;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     margin-top: 1rem !important;
   }
 
@@ -36,12 +34,16 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
     .highlight {
       width: 100%;
 
-      table td pre { border: 0px; }
+      table td pre {
+        border: 0px;
+      }
 
       .rouge-code {
         width: 100%;
 
-        pre { width: 100%; }
+        pre {
+          width: 100%;
+        }
       }
     }
   }
@@ -56,7 +58,13 @@ $tab-count: {{ site.tabs | size | plus: 1 }}; // plus 1 for home tab
     }
   }
 
-  #back-to-top, .post-tail-wrapper, .post-meta, .post-tags, .post-tail-bottom, #tail-wrapper, #related-posts {
+  #back-to-top,
+  .post-tail-wrapper,
+  .post-meta,
+  .post-tags,
+  .post-tail-bottom,
+  #tail-wrapper,
+  #related-posts {
     display: none !important;
   }
 
