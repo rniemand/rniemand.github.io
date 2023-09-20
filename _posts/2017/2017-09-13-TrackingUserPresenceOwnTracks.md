@@ -18,7 +18,7 @@ I installed the client on my phone,configured it to talk to my home MQTT server,
 ## Getting your location
 Home Assistant needs to know your home location in order to determine whether you are home or not, and for the most part the installer does a pretty good job at guessing your coordinates, however you will need to refine them a bit to ensure that everything works properly.
 
-To do this you will need the `latitude` and `longitude` of your home location. For mine I made use of the [following site](http://www.latlong.net/) to work this out, but you can also do this via Google maps by pulling the values out of the URL - the site was a bit easier IMO.
+To do this you will need the `latitude` and `longitude` of your home location. For mine I made use of the [following site](https://www.latlong.net/) to work this out, but you can also do this via Google maps by pulling the values out of the URL - the site was a bit easier IMO.
 
 Once you have your coordinates you will need to add them to the configuration.yaml under the homeassistant configuration property as shown below:
 

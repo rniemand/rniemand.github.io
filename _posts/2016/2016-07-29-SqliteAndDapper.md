@@ -11,7 +11,7 @@ In this article I am going to cover the basics of running **SQLite** and [Dapper
 While creating this article I made use of the following online resources and tools, and feel that the original authors should get the credit for the bits and pieces I used.
 
 - [SQLite Manager](https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/) - SQLite query tool (Firefox extension)
-- [Getting started with SQLite in C#](http://blog.tigrangasparian.com/2012/02/09/getting-started-with-sqlite-in-c-part-one/) - used as a guideline
+- [Getting started with SQLite in C#](https://blog.tigrangasparian.com/2012/02/09/getting-started-with-sqlite-in-c-part-one/) - used as a guideline
 - [How to create and connect to an SQLite database in C#](https://www.fluxbytes.com/csharp/how-to-create-and-connect-to-an-sqlite-database-in-c/) - used as a guideline
 - [Datatypes In SQLite Version 3](https://www.sqlite.org/datatype3.html)
 - [SQLite database default time value 'now'](https://stackoverflow.com/questions/200309/sqlite-database-default-time-value-now) - yes I Googled this

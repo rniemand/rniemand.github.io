@@ -7,7 +7,7 @@ toc: true
 ---
 I am starting a small **ROM management** project to help me keep my various ROM backups in order and make searching for a specific backup easier. I decided it would be a good idea to programmatically extract information from the ROM file and then scrape the `www` to get more detailed metadata about the ROM file in question.
 
-Being new to all of this I spent some time on Google and found the [following wiki page](http://dsibrew.org/wiki/DSi_cartridge_header), that details the DSi Cartridge Header, thus allowing me to create a module for my ROM scraper that would be able to look for and extract all the basic information I need to begin scraping the web for more metadata.
+Being new to all of this I spent some time on Google and found the [following wiki page](https://dsibrew.org/wiki/DSi_cartridge_header), that details the DSi Cartridge Header, thus allowing me to create a module for my ROM scraper that would be able to look for and extract all the basic information I need to begin scraping the web for more metadata.
 
 From the wiki, I am interested mainly in the following bits of information:
 
@@ -54,7 +54,7 @@ There is a lot of room for optimization here, but for a quick test this seems to
 
 ![](/assets/img/2016/2016-08-16/001.png)
 
-Using the information extracted from the ROM file and [advanscene.com](http://advanscene.com/), I can take the returned Game Code (AEKE) and run a basic search.
+Using the information extracted from the ROM file and [advanscene.com](https://advanscene.com/), I can take the returned Game Code (AEKE) and run a basic search.
 
 ![](/assets/img/2016/2016-08-16/002.png)
 

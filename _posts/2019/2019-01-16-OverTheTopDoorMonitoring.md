@@ -27,7 +27,7 @@ The rest of the hardware used in the project consists of:
 
 - Raspberry Pi 3 running Home Assistant
 - Google Home - used for notifications
-- [NanoPi NEO2](http://nanopi.io/nanopi-neo2.html) running Node-RED <- this is an awesome $20 SBC!
+- [NanoPi NEO2](https://nanopi.io/nanopi-neo2.html) running Node-RED <- this is an awesome $20 SBC!
 
 ## Node-RED Flow
 As mentioned above the RF sensors I am using only send a code when the contact is broken (i.e. the door is opened). I would like the door to return to a closed state after 2 min so a re-trigger is possible, and a more accurate state for the door is recorded in Home Assistant.

@@ -48,7 +48,7 @@ userDir: 'C:/Users/Administrator/.node-red/'
 Save and close the settings file.
 
 ## The Node-RED Service
-You will need to download a tool called [NSSM](http://nssm.cc/download) in order to run Node-RED as a service - I covered NSSM in more detail in [this post](https://www.richardn.ca/posts/RunningMosquittoAsAWindowsService/), however for now, all you need to do is download the latest version (`nssm 2.24-101-g897c7ad`) and copy either the 32-bit or 64-bit executable to any folder on your computer.
+You will need to download a tool called [NSSM](https://nssm.cc/download) in order to run Node-RED as a service - I covered NSSM in more detail in [this post](https://www.richardn.ca/posts/RunningMosquittoAsAWindowsService/), however for now, all you need to do is download the latest version (`nssm 2.24-101-g897c7ad`) and copy either the 32-bit or 64-bit executable to any folder on your computer.
 
 In a command line, navigate to the folder containing `nssm.exe` and run the following command:
 

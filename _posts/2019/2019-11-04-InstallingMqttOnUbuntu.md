@@ -80,7 +80,7 @@ That's pretty much all there is to installing mosquitto on Ubuntu, hopefully thi
 
 Below are some helpful links to make working with MQTT a lot easier:
 
-- [MQTT Explorer](http://mqtt-explorer.com/) - an awesome cross-platform MQTT client
+- [MQTT Explorer](https://mqtt-explorer.com/) - an awesome cross-platform MQTT client
 - [Official Mosquitto Website](https://mosquitto.org/) - has a lot of documentation
 - [Hive.MQ](https://www.hivemq.com/) - good resource for MQTT, has an awesome browser based client for quick testing.
 

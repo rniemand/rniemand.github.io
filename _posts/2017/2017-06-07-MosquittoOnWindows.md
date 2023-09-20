@@ -11,7 +11,7 @@ After discovering the joys and simplicity of using **MQTT** on IoT enabled devic
 ## Prerequisites
 There are 3 prerequisites when it comes to installing mosquitto locally:
 
-- [Open SSL](http://slproweb.com/products/Win32OpenSSL.html)
+- [Open SSL](https://slproweb.com/products/Win32OpenSSL.html)
 - pthreads
 - [Mosquitto](https://mosquitto.org/download/)
 

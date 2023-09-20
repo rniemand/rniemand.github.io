@@ -13,9 +13,9 @@ This post will cover re-creating this service, and showcase a really amazing app
 ## NSSM
 I stumbled upon a nifty application called **NSSM** (or the `Non-Sucking Service Manager`) while attempting to fix my mosquitto installation, and I am glad I did!
 
-It is available [here](http://nssm.cc/download) and was created by **Iain Patterson** and as far as I can tell is free to use non commercially. Make sure that you download the `nssm 2.24-101-g897c7ad` version, and take either the 32-bit or 64-bit version depending on your system.
+It is available [here](https://nssm.cc/download) and was created by **Iain Patterson** and as far as I can tell is free to use non commercially. Make sure that you download the `nssm 2.24-101-g897c7ad` version, and take either the 32-bit or 64-bit version depending on your system.
 
-**NSSM** is command line driven ([http://nssm.cc/commands](http://nssm.cc/commands)), but has a built-in GUI should you prefer it (I sure do). I highly recommend placing the `nssm.exe` in a directory that is easy to get access to. For my case I just dropped it into my mosquitto installation directory:
+**NSSM** is command line driven ([https://nssm.cc/commands](https://nssm.cc/commands)), but has a built-in GUI should you prefer it (I sure do). I highly recommend placing the `nssm.exe` in a directory that is easy to get access to. For my case I just dropped it into my mosquitto installation directory:
 
 ```
 C:\Program Files (x86)\mosquitto

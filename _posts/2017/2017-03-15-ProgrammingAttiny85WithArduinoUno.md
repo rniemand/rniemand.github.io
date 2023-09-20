@@ -56,7 +56,7 @@ Provided there were no errors writing to your Arduino you can mark this step as 
 The next logical step would be to wire up the ATTiny to the newly created Arduino ISP, but before we do that let's take some time to get familiar with the pinout of the ATTiny.
 
 ### ATTiny pinout
-Below you can see my cheat sheet for the ATTiny85 microprocessor, the pinout differs based on the version of the microprocessor you choose, so please double check the [spec sheet](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf) if you are using a different variant of the ATTiny.
+Below you can see my cheat sheet for the ATTiny85 microprocessor, the pinout differs based on the version of the microprocessor you choose, so please double check the [spec sheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf) if you are using a different variant of the ATTiny.
 
 ![](/assets/img/2017/2017-03-15/005.jpg)
 
@@ -168,7 +168,7 @@ We have successfully flashed our sample code to the ATTiny. Let's disconnect all
 - If you would like to use the arduino to power the ATTiny leave GND and 5vconnected, otherwise remove them too.
 
 ## Running without Arduino
-The last thing we need to do is get rid of that bulky Arduino UNO board and power our project through some other mechanism. Looking at the [data sheet](http://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf) it would seem that the ATTiny85 can be powered with anything from 1.8v - 5.5v.
+The last thing we need to do is get rid of that bulky Arduino UNO board and power our project through some other mechanism. Looking at the [data sheet](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf) it would seem that the ATTiny85 can be powered with anything from 1.8v - 5.5v.
 
 ![](/assets/img/2017/2017-03-15/010.png)
 

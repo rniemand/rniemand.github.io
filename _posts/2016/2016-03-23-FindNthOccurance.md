@@ -6,7 +6,7 @@ tags: [javascript]
 toc: true
 author: Someone Else
 ---
-I was playing around in JavScript needing to find 7’th position of a ‘(’ within a long string. Messing about with the [indexOf()](https://www.w3schools.com/jsref/jsref_indexof.asp) and [substring()](https://www.w3schools.com/jsref/jsref_substring.asp) methods were a bit too cumbersome so I came up with the following code snippet. Hopefully this saves you some time.
+I was playing around in JavScript needing to find 7’th position of a `(` within a long string. Messing about with the [indexOf()](https://www.w3schools.com/jsref/jsref_indexof.asp) and [substring()](https://www.w3schools.com/jsref/jsref_substring.asp) methods were a bit too cumbersome so I came up with the following code snippet. Hopefully this saves you some time.
 
 ```js
 function nthOccurrence(str, s, c) {

@@ -71,7 +71,7 @@ That completed all the configuration.
 ## Flashing firmware
 To flash your firmware to the Sonoff switch you will need an ISP of some sorts. Unfortunately I didn't have one on me, so I had to make a plan using an Arduino UNO with its microprocessor removed (see below).
 
-I found a nice picture detailing the pin-out on ([http://randomnerdtutorials.com/](http://randomnerdtutorials.com/)):
+I found a nice picture detailing the pin-out on ([https://randomnerdtutorials.com/](https://randomnerdtutorials.com/)):
 
 ![](/assets/img/2017/2017-08-03/010.png)
 

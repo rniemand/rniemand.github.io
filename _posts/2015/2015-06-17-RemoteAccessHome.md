@@ -15,7 +15,7 @@ resolve the address of the targeted computer using a human friendly host name. T
 When connecting to your home computer remotely it makes more sense to use a Custom Hostname over an IP Address as you are more likely to remember the host name. We will be using this for our connection.
 
 ## Getting a DNS Server
-You could create your own public DNS server and update your IP Address manually, or you could make use of an existing paid for or free service. When it comes to DNS servers there are a lot of good free ones available online (e.g. [FreeDNS](http://www.freedns.com/)) which allow you to sign up for a free sub-domain.
+You could create your own public DNS server and update your IP Address manually, or you could make use of an existing paid for or free service. When it comes to DNS servers there are a lot of good free ones available online (e.g. [FreeDNS](https://www.freedns.com/)) which allow you to sign up for a free sub-domain.
 
 Depending on the service you are using you will have the option to either use a Sub Domain or Domain when connecting to your home computer (all free DNS providers make you use sub domains). In my mind it makes more sense to use a subdomain (e.g. rdp.home.com) over a top-level domain (e.g. home.com).
 
@@ -26,7 +26,7 @@ After picking a DNS server and configuring your sub-domain you will need somethi
 
 If you are in my boat and don't want to pay for a DNS service like Dynamic DNS you will need some sort of client to handle updating your IP Address with the service, again most service providers offer some form of application (or PowerShell / Shell script) to do this which change per provider, have a look through their documentation and FAQ to find out how to use and configure it.
 
-I was not in love with any of the applications I found when it came to updating my IP Address on [FreeDNS](http://www.freedns.com/), so I decided to write my own one called [DnsUpdater](https://github.com/rniemand/DnsUpdater) which is a simple windows service capable of updating any DNS provider that follows the Dyn DNS Protocol and Free DNS also.
+I was not in love with any of the applications I found when it came to updating my IP Address on [FreeDNS](https://www.freedns.com/), so I decided to write my own one called [DnsUpdater](https://github.com/rniemand/DnsUpdater) which is a simple windows service capable of updating any DNS provider that follows the Dyn DNS Protocol and Free DNS also.
 
 Once you have something in place to keep your IP Address updated with your DNS service of choice it is time to move on.
 
