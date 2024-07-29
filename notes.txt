@@ -29,10 +29,10 @@ http://localhost:4000/
 
 ## Updating
 - https://github.com/cotes2020/jekyll-theme-chirpy/tags
-- https://github.com/cotes2020/chirpy-starter/compare/v6.1.0...v6.2.2
-- Last update applied: v6.2.2
+- https://github.com/cotes2020/chirpy-starter/compare/v6.2.2...v7.0.1
+- Last update applied: v7.0.1
 
 ## Updating Header
 
-Copy source file from latest chirpy theme location: C:\Ruby31-x64\lib\ruby\gems\3.2.0\gems\jekyll-theme-chirpy-6.2.2\_includes
+Copy source file from latest chirpy theme location: C:\Ruby31-x64\lib\ruby\gems\3.1.0\gems\jekyll-theme-chirpy-7.0.1\_includes
 Update: _includes/head.html
