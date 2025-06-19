@@ -5,11 +5,20 @@
   <subtitle>This is a longer description about your blog.</subtitle>
   <link href="https://example.com/eleventy-base-blog/feed/feed.xml" rel="self" />
   <link href="https://example.com/eleventy-base-blog/" />
-  <updated>2018-09-30T00:00:00Z</updated>
+  <updated>2025-06-19T00:00:00Z</updated>
   <id>https://example.com/eleventy-base-blog/</id>
   <author>
     <name>Your Name</name>
   </author>
+  <entry>
+    <title>Hello World</title>
+    <link href="https://example.com/eleventy-base-blog/blog/2025/2025-06-19/post/" />
+    <updated>2025-06-19T00:00:00Z</updated>
+    <id>https://example.com/eleventy-base-blog/blog/2025/2025-06-19/post/</id>
+    <content type="html">&lt;p&gt;Hello World!&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/eleventy-base-blog/blog/2025/2025-06-19/post/xbVnp_hAou-350.avif 350w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/eleventy-base-blog/blog/2025/2025-06-19/post/xbVnp_hAou-350.webp 350w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/eleventy-base-blog/blog/2025/2025-06-19/post/xbVnp_hAou-350.png&quot; alt=&quot;A possum parent and two possum kids hanging from the iconic red balloon&quot; width=&quot;350&quot; height=&quot;685&quot;&gt;&lt;/picture&gt;
+</content>
+  </entry>
   <entry>
     <title>This is my fourth post</title>
     <link href="https://example.com/eleventy-base-blog/blog/fourthpost/" />
