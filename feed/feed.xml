@@ -17,6 +17,225 @@
     <id>https://example.com/blog/2025/2025-06-19/post/</id>
     <content type="html">&lt;p&gt;Hello World!&lt;/p&gt;
 &lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2025/2025-06-19/post/xbVnp_hAou-350.avif 350w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2025/2025-06-19/post/xbVnp_hAou-350.webp 350w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2025/2025-06-19/post/xbVnp_hAou-350.png&quot; alt=&quot;A possum parent and two possum kids hanging from the iconic red balloon&quot; width=&quot;350&quot; height=&quot;685&quot;&gt;&lt;/picture&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2025/2025-06-19/post/S15aoBba1I-621.avif 621w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2025/2025-06-19/post/S15aoBba1I-621.webp 621w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2025/2025-06-19/post/S15aoBba1I-621.png&quot; alt=&quot;A possum parent and two possum kids hanging from the iconic red balloon&quot; width=&quot;621&quot; height=&quot;185&quot;&gt;&lt;/picture&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Using Certificates with ASP.Net Core under Docker</title>
+    <link href="https://example.com/blog/2024/2024-07-31/AspNetDockerCerts/" />
+    <updated>2024-07-31T00:00:00Z</updated>
+    <id>https://example.com/blog/2024/2024-07-31/AspNetDockerCerts/</id>
+    <content type="html">&lt;p&gt;This post serves as a quick reference guide to getting custom certificates working for a Docker based asp.net core application.&lt;/p&gt;
+&lt;h2 id=&quot;obtaining-the-certificate&quot;&gt;Obtaining the certificate&lt;/h2&gt;
+&lt;p&gt;Depending on your use case this could be as simple as using something like &lt;a href=&quot;https://letsencrypt.org/&quot;&gt;LetsEncrypt&lt;/a&gt; for a free certificate, or using a paid for service like &lt;a href=&quot;https://www.ssls.com/&quot;&gt;ssl.com&lt;/a&gt; to buy a custom certificate.&lt;/p&gt;
+&lt;h3 id=&quot;converting-your-certificate-to-pfx&quot;&gt;Converting your certificate to *.pfx&lt;/h3&gt;
+&lt;p&gt;For my project I went with the paid path and bought one for my application which resulted in me receiving a &lt;code&gt;.crt&lt;/code&gt; file along with a key file which was incompatible with asp.net as it requires a &lt;code&gt;.pfx&lt;/code&gt; file. After some quick Googling I was able to convert my certificate to the required pfx format by running the following command on one of my Ubuntu servers.&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;openssl pkcs12 &lt;span class=&quot;token parameter variable&quot;&gt;-export&lt;/span&gt; &lt;span class=&quot;token parameter variable&quot;&gt;-out&lt;/span&gt; mycert.ca.pfx &lt;span class=&quot;token parameter variable&quot;&gt;-inkey&lt;/span&gt; mycert.ca_key.txt &lt;span class=&quot;token parameter variable&quot;&gt;-in&lt;/span&gt; mycert.ca.crt&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Hopefully this saves you some time in the future.&lt;/p&gt;
+&lt;h2 id=&quot;configuring-your-docker-container&quot;&gt;Configuring your Docker container&lt;/h2&gt;
+&lt;p&gt;With some trial and error I managed to come up with the following Docker configuration that works with my application:&lt;/p&gt;
+&lt;h3 id=&quot;port-bindings&quot;&gt;Port Bindings&lt;/h3&gt;
+&lt;p&gt;You will need to expose and map any of the container ports you wish to access on the host - generally with asp.net applications you will want to map ports 80 (for HTTP) and 443 (for HTTPS), I ended up with the following configuration:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Container 443 -&amp;gt; Host 5005 (TCP)
+&lt;ul&gt;
+&lt;li&gt;Will be used to serve the HTTPS variant of the application&lt;/li&gt;
+&lt;li&gt;I was already using port 443 on the host hence the odd port mapping chosen&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Container 80 -&amp;gt; Host 5003 (TCP)
+&lt;ul&gt;
+&lt;li&gt;Will be used to serve the HTTP variant of the application&lt;/li&gt;
+&lt;li&gt;Again I was already using port 80 on the host so remapped mine to 5003&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;container-paths&quot;&gt;Container Paths&lt;/h3&gt;
+&lt;p&gt;You will also need to map some additional paths for your container:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;/https/aspnetapp.pfx&lt;/code&gt; -&amp;gt; &lt;code&gt;/mnt/user/Backups/app-data/nas-landing-page/mysite.ca.pfx&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;Points &lt;code&gt;/https/aspnetapp.pfx&lt;/code&gt; on the container to the physical certificate on the host&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;/root/.aspnet&lt;/code&gt; -&amp;gt; &lt;code&gt;/mnt/user/Backups/app-data/nas-landing-page/.aspnet/&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;Maps a persistent path to store your applications &lt;code&gt;DataProtection-Keys&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;container-variables&quot;&gt;Container Variables&lt;/h3&gt;
+&lt;p&gt;The last piece of the puzzle is defining some configuration environment variables for your container to tell asp.net core where to look for the certificate file, what ports to use for HTTP and so on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;ASPNETCORE_URLS&lt;/code&gt; -&amp;gt; &lt;code&gt;https://+;http://+&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;Configures asp.net core to make use of HTTP and HTTPS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ASPNETCORE_HTTPS_PORT&lt;/code&gt; -&amp;gt; &lt;code&gt;5005&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;Tells asp.net core which external port the host will be using for HTTPS&lt;/li&gt;
+&lt;li&gt;Please note that this has been set to 5005 as per the port mappings above&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ASPNETCORE_Kestrel&#92;_&#92;_Certificates&#92;_&#92;_Default&#92;_&#92;_Password&lt;/code&gt; -&amp;gt; &lt;code&gt;xxx&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;Defines the password to use with the provided certificate&lt;/li&gt;
+&lt;li&gt;This is the password you set when creating the &lt;code&gt;*.pfx&lt;/code&gt; certificate&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ASPNETCORE_Kestrel&#92;_&#92;_Certificates&#92;_&#92;_Default&#92;_&#92;_Path&lt;/code&gt; -&amp;gt; &lt;code&gt;/https/aspnetapp.pfx&lt;/code&gt;
+&lt;ul&gt;
+&lt;li&gt;Path to the certificate to use&lt;/li&gt;
+&lt;li&gt;This is the path set in the container paths section above&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;sample-docker-run-command&quot;&gt;Sample Docker Run Command&lt;/h3&gt;
+&lt;p&gt;Below is a sample Docker run command for a fictitious &lt;strong&gt;dockeruser/container&lt;/strong&gt; container with the above configuration:&lt;/p&gt;
+&lt;pre class=&quot;language-bash&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;docker&lt;/span&gt; run
+  &lt;span class=&quot;token parameter variable&quot;&gt;-d&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;--name&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;Container&#39;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;--net&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;bridge&#39;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;TZ&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;America/Edmonton&quot;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;ASPNETCORE_URLS&#39;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;https://+;http://+&#39;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;ASPNETCORE_HTTPS_PORT&#39;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;5005&#39;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;ASPNETCORE_Kestrel__Certificates__Default__Password&#39;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;xxx&#39;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;ASPNETCORE_Kestrel__Certificates__Default__Path&#39;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/https/aspnetapp.pfx&#39;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;5003:80/tcp&#39;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-p&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;5005:443/tcp&#39;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/…/mysite.ca.pfx&#39;&lt;/span&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/https/aspnetapp.pfx&#39;&lt;/span&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;rw&#39;&lt;/span&gt;
+  &lt;span class=&quot;token parameter variable&quot;&gt;-v&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&#39;/…/.aspnet/&#39;&lt;/span&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;/root/.aspnet&#39;&lt;/span&gt;&lt;span class=&quot;token builtin class-name&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&#39;rw&#39;&lt;/span&gt;
+&#39;dockeruser/container’&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;After deployment you should be able to browse to your application on HTTPS and get served a valid certificate.&lt;/p&gt;
+</content>
+  </entry>
+  <entry>
+    <title>Using GitHub Pages for your Personal Blog</title>
+    <link href="https://example.com/blog/2023/2023-06-21/post/" />
+    <updated>2023-06-20T00:00:00Z</updated>
+    <id>https://example.com/blog/2023/2023-06-21/post/</id>
+    <content type="html">&lt;p&gt;In this post I will cover the process I used to get this blog (&lt;a href=&quot;https://www.richardn.ca/&quot;&gt;https://www.richardn.ca/&lt;/a&gt;) running under a custom domain on &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt; along with getting Google Analytics and Adsense working with the &lt;a href=&quot;https://github.com/cotes2020/chirpy-starter&quot;&gt;chirpy-starter template&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;step-1-setting-up-github-pages&quot;&gt;Step 1: Setting up GitHub Pages&lt;/h2&gt;
+&lt;p&gt;The first thing you will need to do is create your personal GitHub pages repository.&lt;/p&gt;
+&lt;p&gt;The name of this repository needs to be your &lt;strong&gt;GitHub username&lt;/strong&gt; + &lt;code&gt;.github.io&lt;/code&gt; - in my case I would need to create a repository with a name of &lt;code&gt;rniemand.github.io&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Once you have created the repository check it out locally on your computer.&lt;/p&gt;
+&lt;h2 id=&quot;step-2-add-your-sites-contents&quot;&gt;Step 2: Add your sites contents&lt;/h2&gt;
+&lt;p&gt;The gist of this step is committing any static HTML used for your site, as far as I can tell GitHub pages only supports static sites for your &lt;code&gt;.github.io&lt;/code&gt; site. This is an easy limitation to work around by making use of a static site generator (&lt;strong&gt;SSG&lt;/strong&gt;) of which there are many to choose from.&lt;/p&gt;
+&lt;p&gt;Personally I love the flow &#92; configuration of &lt;a href=&quot;https://github.com/cotes2020/chirpy-starter&quot;&gt;Chirpy&lt;/a&gt; which has an excellent &lt;a href=&quot;https://chirpy.cotes.page/posts/getting-started/&quot;&gt;getting started guide&lt;/a&gt; which covers most of the steps needed to get your blog up and running.&lt;/p&gt;
+&lt;p&gt;I will summarise it at a high level below should you need it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fork the &lt;a href=&quot;https://github.com/cotes2020/jekyll-theme-chirpy/fork&quot;&gt;starter template&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Check out the repository locally
+&lt;ul&gt;
+&lt;li&gt;Ensure that you let all git submodules initialise&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Run the &lt;code&gt;bundle&lt;/code&gt; command to install required dependencies&lt;/li&gt;
+&lt;li&gt;Make required changes to the &lt;code&gt;_configyml&lt;/code&gt; file for your site&lt;/li&gt;
+&lt;li&gt;Build and serve the site using the &lt;code&gt;bundle exec jekyll s&lt;/code&gt; command&lt;/li&gt;
+&lt;li&gt;Once running, browse your site locally at &lt;a href=&quot;http://localhost:4000&quot;&gt;http://localhost:4000&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Manage / edit your blog posts&lt;/li&gt;
+&lt;li&gt;Commit and push changes once done&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I go into a bit more detail in &lt;a href=&quot;https://www.richardn.ca/posts/UpdatingChirpy/&quot;&gt;this blog post&lt;/a&gt; should you need more information.&lt;/p&gt;
+&lt;h2 id=&quot;step-3-setting-up-github-pages&quot;&gt;Step 3: Setting up GitHub pages&lt;/h2&gt;
+&lt;p&gt;If you are using Chirpy and have checked in any changes to your site you can enable automatic build and deployments in GitHub Pages by performing the following actions on your repositories GitHub page:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Navigate to &lt;strong&gt;Settings&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;Select &lt;strong&gt;Pages&lt;/strong&gt; in the left hand menu&lt;/li&gt;
+&lt;li&gt;Under the &lt;strong&gt;build and deployment&lt;/strong&gt; section
+&lt;ul&gt;
+&lt;li&gt;Set &lt;strong&gt;GitHub Actions&lt;/strong&gt; as your source&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Click save to update your preferences&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Your settings should look something like this:&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/S15aoBba1I-621.avif 621w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/S15aoBba1I-621.webp 621w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/S15aoBba1I-621.png&quot; alt=&quot;&quot; width=&quot;621&quot; height=&quot;185&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;The next time you push changes to your blog the &lt;code&gt;pages-deploy.yml&lt;/code&gt; action should run:&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/h_8Skfd_8Q-695.avif 695w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/h_8Skfd_8Q-695.webp 695w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/h_8Skfd_8Q-695.png&quot; alt=&quot;&quot; width=&quot;695&quot; height=&quot;68&quot;&gt;&lt;/picture&gt;
+&lt;h3 id=&quot;using-a-custom-domain&quot;&gt;Using a custom domain&lt;/h3&gt;
+&lt;p&gt;To use a custom domain I followed the steps outlined in the official &lt;a href=&quot;https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages#verifying-a-domain-for-your-user-site&quot;&gt;GitHub Pages documentation&lt;/a&gt;, which basically requires that you add a custom &lt;strong&gt;CNAME&lt;/strong&gt; for your site that points to your GitHub Pages repository name (e.g. &lt;code&gt;rniemand.github.io&lt;/code&gt;).&lt;/p&gt;
+&lt;p&gt;I purchased my domain through &lt;a href=&quot;https://www.godaddy.com/en-ca&quot;&gt;GoDaddy&lt;/a&gt; and use &lt;a href=&quot;https://freedns.afraid.org/&quot;&gt;FreeDNS&lt;/a&gt; to manage my domain (this is not required as GoDaddy has all the tooling that you need). Because I am using a custom DNS provider I needed to point manually define my nameservers on my domain as shown below:&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/Vs9t9RE8dX-1285.avif 1285w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/Vs9t9RE8dX-1285.webp 1285w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/Vs9t9RE8dX-1285.png&quot; alt=&quot;&quot; width=&quot;1285&quot; height=&quot;606&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;To pass the required verification from GitHub I needed to create a &lt;strong&gt;CNAME&lt;/strong&gt; entry called &lt;code&gt;www.richardn.ca&lt;/code&gt; and point it to &lt;code&gt;rniemand.github.io&lt;/code&gt; - wait some time for the change to propagate (you can check the propagation status using a command like &lt;code&gt;dig&lt;/code&gt; on linux):&lt;/p&gt;
+&lt;pre class=&quot;language-shell&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-shell&quot;&gt;&lt;span class=&quot;token function&quot;&gt;dig&lt;/span&gt; www.richardn.ca&lt;/code&gt;&lt;/pre&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/fVeY0M6G2t-613.avif 613w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/fVeY0M6G2t-613.webp 613w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/fVeY0M6G2t-613.png&quot; alt=&quot;&quot; width=&quot;613&quot; height=&quot;53&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;Once your changes are live you should be able to set your custom domain in GitHub as shown below:&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/vmW1pokhpI-670.avif 670w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/vmW1pokhpI-670.webp 670w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/vmW1pokhpI-670.png&quot; alt=&quot;&quot; width=&quot;670&quot; height=&quot;164&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;You should also claim your domain under your GitHub user profile: &lt;a href=&quot;https://github.com/settings/pages&quot;&gt;https://github.com/settings/pages&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This can be done by following the instructions listed &lt;a href=&quot;https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/43Coyst6Qs-796.avif 796w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/43Coyst6Qs-796.webp 796w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/43Coyst6Qs-796.png&quot; alt=&quot;&quot; width=&quot;796&quot; height=&quot;187&quot;&gt;&lt;/picture&gt;
+&lt;h3 id=&quot;using-https&quot;&gt;Using HTTPS&lt;/h3&gt;
+&lt;p&gt;If you would like to serve your blog over HTTPS (generally a must for these days) you can simply check the “Enforce HTTPS” checkbox on your repositories Pages configuration section as shown below:&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/wTMj8iFNCK-642.avif 642w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/wTMj8iFNCK-642.webp 642w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/wTMj8iFNCK-642.png&quot; alt=&quot;&quot; width=&quot;642&quot; height=&quot;75&quot;&gt;&lt;/picture&gt;
+&lt;p&gt;Provided that you have verified your domain with GitHub you should be able to browse your site on HTTPS - an SSL certificate will be generated for you by GitHub and used for your site:&lt;/p&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/DFcrMTNxHv-325.avif 325w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/DFcrMTNxHv-325.webp 325w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/DFcrMTNxHv-325.png&quot; alt=&quot;&quot; width=&quot;325&quot; height=&quot;253&quot;&gt;&lt;/picture&gt;
+&lt;h2 id=&quot;step-4-analytics-and-advertising&quot;&gt;Step 4: Analytics and Advertising&lt;/h2&gt;
+&lt;p&gt;Provided you are using the &lt;a href=&quot;https://github.com/cotes2020/chirpy-starter&quot;&gt;Chirpy&lt;/a&gt; theme (SSG) mentioned above you should be able to follow the steps below to configure Google Analytics and Adsense on your blog for some passive income.&lt;/p&gt;
+&lt;h3 id=&quot;adding-google-analytics&quot;&gt;Adding Google Analytics&lt;/h3&gt;
+&lt;p&gt;In order to add Google Analytics to your site you will need to insert a custom tracking script into every page of your blog as per the normal analytics setup process.&lt;/p&gt;
+&lt;p&gt;Initially this stumped me for a while, but after some Google searches the solution is as simple as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Creating a new file called &lt;code&gt;./_includes&#92;head.html&lt;/code&gt; in the root of your repository
+&lt;ul&gt;
+&lt;li&gt;This will overwrite the default one used by Chirpy&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Copy the contents from the original &lt;a href=&quot;https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/_includes/head.html&quot;&gt;head.html&lt;/a&gt; file to your local copy&lt;/li&gt;
+&lt;li&gt;Insert the required script tag provided by Google somewhere into your head.html file
+&lt;ul&gt;
+&lt;li&gt;I opted to insert it above this line &lt;code&gt;{ % unless site.theme_mode % }&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Commit and push your changes&lt;/li&gt;
+&lt;li&gt;Once GitHub Pages has completed the build action triggered by your commit you should start seeing data for your blog in Google Analytics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/mDX7vaxReO-958.avif 958w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/mDX7vaxReO-958.webp 958w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/mDX7vaxReO-958.png&quot; alt=&quot;&quot; width=&quot;958&quot; height=&quot;419&quot;&gt;&lt;/picture&gt;
+&lt;h3 id=&quot;setting-up-google-adsense&quot;&gt;Setting up Google Adsense&lt;/h3&gt;
+&lt;p&gt;Enabling Google Adsense is a lot simpler when compared to Analytics, and involves the following steps:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Obtain your &lt;code&gt;ads.txt&lt;/code&gt; file from Adsense
+&lt;ul&gt;
+&lt;li&gt;This will be provided when initially setting up your site&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Add &lt;code&gt;ads.txt&lt;/code&gt; to the root of your repository and commit the changes&lt;/li&gt;
+&lt;li&gt;Allow for GitHub Pages to build your site&lt;/li&gt;
+&lt;li&gt;Confirm that your &lt;code&gt;ads.txt&lt;/code&gt; is available by browsing to it
+&lt;ul&gt;
+&lt;li&gt;E.g. &lt;code&gt;https://yoursite.com/ads.txt&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Once &lt;code&gt;ads.txt&lt;/code&gt; is available you can continue configuring your site on Adsense&lt;/li&gt;
+&lt;/ul&gt;
+&lt;picture&gt;&lt;source type=&quot;image/avif&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/Q6svPcdURW-809.avif 809w&quot;&gt;&lt;source type=&quot;image/webp&quot; srcset=&quot;https://example.com/blog/2023/2023-06-21/post/Q6svPcdURW-809.webp 809w&quot;&gt;&lt;img loading=&quot;lazy&quot; decoding=&quot;async&quot; src=&quot;https://example.com/blog/2023/2023-06-21/post/Q6svPcdURW-809.png&quot; alt=&quot;&quot; width=&quot;809&quot; height=&quot;281&quot;&gt;&lt;/picture&gt;
+&lt;h2 id=&quot;step-5-keeping-up-to-date&quot;&gt;Step 5: Keeping up to date&lt;/h2&gt;
+&lt;p&gt;Lastly you will need to have some plan in place to ensure that you are keeping your SSG up to date, below is the process that I generally use.&lt;/p&gt;
+&lt;h3 id=&quot;updating-chirpy&quot;&gt;Updating Chirpy&lt;/h3&gt;
+&lt;p&gt;Updating Chirpy is as simple as checking the &lt;a href=&quot;https://github.com/cotes2020/jekyll-theme-chirpy/tags&quot;&gt;releases page&lt;/a&gt; and generating a comparison against your local version and the latest build:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Let&#39;s say you are on &lt;strong&gt;v5.5.2&lt;/strong&gt; and the latest version is &lt;strong&gt;v6.0.1&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;You can generate a GitHub comparison between the tags like so
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;https://github.com/cotes2020/chirpy-starter/compare/v5.5.2...v6.0.1&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Manually apply any changes listed in the compare to your site and commit&lt;/li&gt;
+&lt;li&gt;Note the version you are on for the next comparison&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I cover this process in more detail in &lt;a href=&quot;https://www.richardn.ca/posts/UpdatingChirpy/#updating-chirpy&quot;&gt;this post&lt;/a&gt; should you need more information.&lt;/p&gt;
+&lt;h3 id=&quot;keep-head-html-up-to-date&quot;&gt;Keep head.html up to date&lt;/h3&gt;
+&lt;p&gt;Be sure from time to time to compare your local copy of &lt;code&gt;./_includes&#92;head.html&lt;/code&gt; with the maintained version &lt;a href=&quot;https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/_includes/head.html&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I would suggest doing this every time you update Chirpy to ensure that you do not drift too far from the source version.&lt;/p&gt;
+&lt;h3 id=&quot;running-locally-windows&quot;&gt;Running locally (Windows)&lt;/h3&gt;
+&lt;p&gt;With a more recent update of Chirpy they updated the localization dependency which has obliterated locally running on Windows using a custom timezone in your &lt;code&gt;_config.yml&lt;/code&gt; file, specifically this line for me:&lt;/p&gt;
+&lt;pre class=&quot;language-yaml&quot; tabindex=&quot;0&quot;&gt;&lt;code class=&quot;language-yaml&quot;&gt;&lt;span class=&quot;token key atrule&quot;&gt;timezone&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; America/Edmonton&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Thankfully the solution is just to remove your timezone from your local configuration file (ensure that you do not commit the removal of this back to your repository) and run the site using the normal &lt;code&gt;bundle exec jekyll s&lt;/code&gt; command.&lt;/p&gt;
+&lt;p&gt;This should resolve the issue.&lt;/p&gt;
+&lt;h2 id=&quot;in-closing&quot;&gt;In Closing&lt;/h2&gt;
+&lt;p&gt;I hope you find this post helpful, please feel free to let me know if I have missed something out in the comments below!&lt;/p&gt;
 </content>
   </entry>
   <entry>

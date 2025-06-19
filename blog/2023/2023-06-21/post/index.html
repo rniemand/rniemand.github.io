@@ -1,0 +1,644 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Using GitHub Pages for your Personal Blog</title>
+		<meta name="description" content="Coding and more">
+		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="RichardN">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+/* Defaults */
+:root {
+	--font-family: -apple-system, system-ui, sans-serif;
+	--font-family-monospace: Consolas, Menlo, Monaco, Andale Mono WT, Andale Mono, Lucida Console, Lucida Sans Typewriter, DejaVu Sans Mono, Bitstream Vera Sans Mono, Liberation Mono, Nimbus Mono L, Courier New, Courier, monospace;
+}
+
+/* Theme colors */
+:root {
+	--color-gray-20: #e0e0e0;
+	--color-gray-50: #C0C0C0;
+	--color-gray-90: #333;
+
+	--background-color: #fff;
+
+	--text-color: var(--color-gray-90);
+	--text-color-link: #082840;
+	--text-color-link-active: #5f2b48;
+	--text-color-link-visited: #17050F;
+
+	--syntax-tab-size: 2;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--color-gray-20: #e0e0e0;
+		--color-gray-50: #C0C0C0;
+		--color-gray-90: #dad8d8;
+
+		/* --text-color is assigned to --color-gray-_ above */
+		--text-color-link: #1493fb;
+		--text-color-link-active: #6969f7;
+		--text-color-link-visited: #a6a6f8;
+
+		--background-color: #15202b;
+	}
+}
+
+
+/* Global stylesheet */
+* {
+	box-sizing: border-box;
+}
+
+@view-transition {
+	navigation: auto;
+}
+
+html,
+body {
+	padding: 0;
+	margin: 0 auto;
+	font-family: var(--font-family);
+	color: var(--text-color);
+	background-color: var(--background-color);
+}
+html {
+	overflow-y: scroll;
+}
+body {
+	max-width: 40em;
+}
+
+/* https://www.a11yproject.com/posts/how-to-hide-content/ */
+.visually-hidden:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Fluid images via https://www.zachleat.com/web/fluid-images/ */
+img{
+  max-width: 100%;
+}
+img[width][height] {
+  height: auto;
+}
+img[src$=".svg"] {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+video,
+iframe {
+	width: 100%;
+	height: auto;
+}
+iframe {
+	aspect-ratio: 16/9;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+p {
+	line-height: 1.5;
+}
+
+li {
+	line-height: 1.5;
+}
+
+a[href] {
+	color: var(--text-color-link);
+}
+a[href]:visited {
+	color: var(--text-color-link-visited);
+}
+a[href]:hover,
+a[href]:active {
+	color: var(--text-color-link-active);
+}
+
+main,
+footer {
+	padding: 1rem;
+}
+main :first-child {
+	margin-top: 0;
+}
+
+header {
+	border-bottom: 1px dashed var(--color-gray-20);
+}
+
+#skip-link {
+	text-decoration: none;
+	background: var(--background-color);
+	color: var(--text-color);
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-gray-90);
+	border-radius: 2px;
+}
+
+/* Prevent visually-hidden skip link fom pushing content around when focused */
+#skip-link.visually-hidden:focus {
+	position: absolute;
+	top: 1rem;
+	left: 1rem;
+	/* Ensure it is positioned on top of everything else when it is shown */
+	z-index: 999;
+}
+
+.links-nextprev {
+	display: flex;
+	justify-content: space-between;
+	gap: .5em 1em;
+	list-style: "";
+	border-top: 1px dashed var(--color-gray-20);
+	padding: 1em 0;
+}
+.links-nextprev > * {
+	flex-grow: 1;
+}
+.links-nextprev-next {
+	text-align: right;
+}
+
+table {
+	margin: 1em 0;
+}
+table td,
+table th {
+	padding-right: 1em;
+}
+
+pre,
+code {
+	font-family: var(--font-family-monospace);
+}
+pre:not([class*="language-"]) {
+	margin: .5em 0;
+	line-height: 1.375; /* 22px /16 */
+	-moz-tab-size: var(--syntax-tab-size);
+	-o-tab-size: var(--syntax-tab-size);
+	tab-size: var(--syntax-tab-size);
+	-webkit-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	overflow-x: auto;
+}
+code {
+	word-break: break-all;
+}
+
+/* Header */
+header {
+	display: flex;
+	gap: 1em;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1em;
+}
+.home-link {
+	flex-grow: 1;
+	font-size: 1em; /* 16px /16 */
+	font-weight: 700;
+}
+.home-link:link:not(:hover) {
+	text-decoration: none;
+}
+
+/* Nav */
+.nav {
+	display: flex;
+	gap: .5em 1em;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+.nav-item {
+	display: inline-block;
+}
+.nav-item a[href]:not(:hover) {
+	text-decoration: none;
+}
+.nav a[href][aria-current="page"] {
+	text-decoration: underline;
+}
+
+/* Posts list */
+.postlist {
+	counter-reset: start-from var(--postlist-index);
+	list-style: none;
+	padding: 0;
+	padding-left: 1.5rem;
+}
+.postlist-item {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	counter-increment: start-from -1;
+	margin-bottom: 1em;
+}
+.postlist-item:before {
+	display: inline-block;
+	pointer-events: none;
+	content: "" counter(start-from, decimal-leading-zero) ". ";
+	line-height: 100%;
+	text-align: right;
+	margin-left: -1.5rem;
+}
+.postlist-date,
+.postlist-item:before {
+	font-size: 0.8125em; /* 13px /16 */
+	color: var(--color-gray-90);
+}
+.postlist-date {
+	word-spacing: -0.5px;
+}
+.postlist-link {
+	font-size: 1.1875em; /* 19px /16 */
+	font-weight: 700;
+	flex-basis: calc(100% - 1.5rem);
+	padding-left: .25em;
+	padding-right: .5em;
+	text-underline-position: from-font;
+	text-underline-offset: 0;
+	text-decoration-thickness: 1px;
+}
+.postlist-item-active .postlist-link {
+	font-weight: bold;
+}
+
+/* Tags */
+.post-tag {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: capitalize;
+	font-style: italic;
+}
+.postlist-item > .post-tag {
+	align-self: center;
+}
+
+/* Tags list */
+.post-metadata {
+	display: inline-flex;
+	flex-wrap: wrap;
+	gap: .5em;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.post-metadata time {
+	margin-right: 1em;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<body>
+		<a href="#main" id="skip-link" class="visually-hidden">Skip to main content</a>
+
+		<header>
+			<a href="/" class="home-link">RichardN</a>
+			<nav>
+				<h2 class="visually-hidden" id="top-level-navigation-menu">Top level navigation menu</h2>
+				<ul class="nav">
+					<li class="nav-item"><a href="/">Home</a></li>
+					<li class="nav-item"><a href="/blog/">Archive</a></li>
+					<li class="nav-item"><a href="/about/">About</a></li>
+					<li class="nav-item"><a href="/feed/feed.xml">Feed</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<main id="main">
+			<heading-anchors>
+				
+
+
+<h1 id="using-github-pages-for-your-personal-blog">Using GitHub Pages for your Personal Blog</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2023-06-20">20 June 2023</time></li>
+</ul>
+
+<p>In this post I will cover the process I used to get this blog (<a href="https://www.richardn.ca/">https://www.richardn.ca/</a>) running under a custom domain on <a href="https://pages.github.com/">GitHub Pages</a> along with getting Google Analytics and Adsense working with the <a href="https://github.com/cotes2020/chirpy-starter">chirpy-starter template</a>.</p>
+<h2 id="step-1-setting-up-github-pages">Step 1: Setting up GitHub Pages</h2>
+<p>The first thing you will need to do is create your personal GitHub pages repository.</p>
+<p>The name of this repository needs to be your <strong>GitHub username</strong> + <code>.github.io</code> - in my case I would need to create a repository with a name of <code>rniemand.github.io</code>.</p>
+<p>Once you have created the repository check it out locally on your computer.</p>
+<h2 id="step-2-add-your-sites-contents">Step 2: Add your sites contents</h2>
+<p>The gist of this step is committing any static HTML used for your site, as far as I can tell GitHub pages only supports static sites for your <code>.github.io</code> site. This is an easy limitation to work around by making use of a static site generator (<strong>SSG</strong>) of which there are many to choose from.</p>
+<p>Personally I love the flow \ configuration of <a href="https://github.com/cotes2020/chirpy-starter">Chirpy</a> which has an excellent <a href="https://chirpy.cotes.page/posts/getting-started/">getting started guide</a> which covers most of the steps needed to get your blog up and running.</p>
+<p>I will summarise it at a high level below should you need it:</p>
+<ul>
+<li>Fork the <a href="https://github.com/cotes2020/jekyll-theme-chirpy/fork">starter template</a></li>
+<li>Check out the repository locally
+<ul>
+<li>Ensure that you let all git submodules initialise</li>
+</ul>
+</li>
+<li>Run the <code>bundle</code> command to install required dependencies</li>
+<li>Make required changes to the <code>_configyml</code> file for your site</li>
+<li>Build and serve the site using the <code>bundle exec jekyll s</code> command</li>
+<li>Once running, browse your site locally at <a href="http://localhost:4000">http://localhost:4000</a></li>
+<li>Manage / edit your blog posts</li>
+<li>Commit and push changes once done</li>
+</ul>
+<p>I go into a bit more detail in <a href="https://www.richardn.ca/posts/UpdatingChirpy/">this blog post</a> should you need more information.</p>
+<h2 id="step-3-setting-up-github-pages">Step 3: Setting up GitHub pages</h2>
+<p>If you are using Chirpy and have checked in any changes to your site you can enable automatic build and deployments in GitHub Pages by performing the following actions on your repositories GitHub page:</p>
+<ul>
+<li>Navigate to <strong>Settings</strong></li>
+<li>Select <strong>Pages</strong> in the left hand menu</li>
+<li>Under the <strong>build and deployment</strong> section
+<ul>
+<li>Set <strong>GitHub Actions</strong> as your source</li>
+</ul>
+</li>
+<li>Click save to update your preferences</li>
+</ul>
+<p>Your settings should look something like this:</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/S15aoBba1I-621.avif 621w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/S15aoBba1I-621.webp 621w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/S15aoBba1I-621.png" alt="" width="621" height="185"></picture>
+<p>The next time you push changes to your blog the <code>pages-deploy.yml</code> action should run:</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/h_8Skfd_8Q-695.avif 695w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/h_8Skfd_8Q-695.webp 695w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/h_8Skfd_8Q-695.png" alt="" width="695" height="68"></picture>
+<h3 id="using-a-custom-domain">Using a custom domain</h3>
+<p>To use a custom domain I followed the steps outlined in the official <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/verifying-your-custom-domain-for-github-pages#verifying-a-domain-for-your-user-site">GitHub Pages documentation</a>, which basically requires that you add a custom <strong>CNAME</strong> for your site that points to your GitHub Pages repository name (e.g. <code>rniemand.github.io</code>).</p>
+<p>I purchased my domain through <a href="https://www.godaddy.com/en-ca">GoDaddy</a> and use <a href="https://freedns.afraid.org/">FreeDNS</a> to manage my domain (this is not required as GoDaddy has all the tooling that you need). Because I am using a custom DNS provider I needed to point manually define my nameservers on my domain as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/Vs9t9RE8dX-1285.avif 1285w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/Vs9t9RE8dX-1285.webp 1285w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/Vs9t9RE8dX-1285.png" alt="" width="1285" height="606"></picture>
+<p>To pass the required verification from GitHub I needed to create a <strong>CNAME</strong> entry called <code>www.richardn.ca</code> and point it to <code>rniemand.github.io</code> - wait some time for the change to propagate (you can check the propagation status using a command like <code>dig</code> on linux):</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">dig</span> www.richardn.ca</code></pre>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/fVeY0M6G2t-613.avif 613w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/fVeY0M6G2t-613.webp 613w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/fVeY0M6G2t-613.png" alt="" width="613" height="53"></picture>
+<p>Once your changes are live you should be able to set your custom domain in GitHub as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/vmW1pokhpI-670.avif 670w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/vmW1pokhpI-670.webp 670w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/vmW1pokhpI-670.png" alt="" width="670" height="164"></picture>
+<p>You should also claim your domain under your GitHub user profile: <a href="https://github.com/settings/pages">https://github.com/settings/pages</a>.</p>
+<p>This can be done by following the instructions listed <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/about-custom-domains-and-github-pages">here</a>.</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/43Coyst6Qs-796.avif 796w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/43Coyst6Qs-796.webp 796w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/43Coyst6Qs-796.png" alt="" width="796" height="187"></picture>
+<h3 id="using-https">Using HTTPS</h3>
+<p>If you would like to serve your blog over HTTPS (generally a must for these days) you can simply check the “Enforce HTTPS” checkbox on your repositories Pages configuration section as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/wTMj8iFNCK-642.avif 642w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/wTMj8iFNCK-642.webp 642w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/wTMj8iFNCK-642.png" alt="" width="642" height="75"></picture>
+<p>Provided that you have verified your domain with GitHub you should be able to browse your site on HTTPS - an SSL certificate will be generated for you by GitHub and used for your site:</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/DFcrMTNxHv-325.avif 325w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/DFcrMTNxHv-325.webp 325w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/DFcrMTNxHv-325.png" alt="" width="325" height="253"></picture>
+<h2 id="step-4-analytics-and-advertising">Step 4: Analytics and Advertising</h2>
+<p>Provided you are using the <a href="https://github.com/cotes2020/chirpy-starter">Chirpy</a> theme (SSG) mentioned above you should be able to follow the steps below to configure Google Analytics and Adsense on your blog for some passive income.</p>
+<h3 id="adding-google-analytics">Adding Google Analytics</h3>
+<p>In order to add Google Analytics to your site you will need to insert a custom tracking script into every page of your blog as per the normal analytics setup process.</p>
+<p>Initially this stumped me for a while, but after some Google searches the solution is as simple as:</p>
+<ul>
+<li>Creating a new file called <code>./_includes\head.html</code> in the root of your repository
+<ul>
+<li>This will overwrite the default one used by Chirpy</li>
+</ul>
+</li>
+<li>Copy the contents from the original <a href="https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/_includes/head.html">head.html</a> file to your local copy</li>
+<li>Insert the required script tag provided by Google somewhere into your head.html file
+<ul>
+<li>I opted to insert it above this line <code>{ % unless site.theme_mode % }</code></li>
+</ul>
+</li>
+<li>Commit and push your changes</li>
+<li>Once GitHub Pages has completed the build action triggered by your commit you should start seeing data for your blog in Google Analytics</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/mDX7vaxReO-958.avif 958w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/mDX7vaxReO-958.webp 958w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/mDX7vaxReO-958.png" alt="" width="958" height="419"></picture>
+<h3 id="setting-up-google-adsense">Setting up Google Adsense</h3>
+<p>Enabling Google Adsense is a lot simpler when compared to Analytics, and involves the following steps:</p>
+<ul>
+<li>Obtain your <code>ads.txt</code> file from Adsense
+<ul>
+<li>This will be provided when initially setting up your site</li>
+</ul>
+</li>
+<li>Add <code>ads.txt</code> to the root of your repository and commit the changes</li>
+<li>Allow for GitHub Pages to build your site</li>
+<li>Confirm that your <code>ads.txt</code> is available by browsing to it
+<ul>
+<li>E.g. <code>https://yoursite.com/ads.txt</code></li>
+</ul>
+</li>
+<li>Once <code>ads.txt</code> is available you can continue configuring your site on Adsense</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/Q6svPcdURW-809.avif 809w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/Q6svPcdURW-809.webp 809w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/Q6svPcdURW-809.png" alt="" width="809" height="281"></picture>
+<h2 id="step-5-keeping-up-to-date">Step 5: Keeping up to date</h2>
+<p>Lastly you will need to have some plan in place to ensure that you are keeping your SSG up to date, below is the process that I generally use.</p>
+<h3 id="updating-chirpy">Updating Chirpy</h3>
+<p>Updating Chirpy is as simple as checking the <a href="https://github.com/cotes2020/jekyll-theme-chirpy/tags">releases page</a> and generating a comparison against your local version and the latest build:</p>
+<ul>
+<li>Let's say you are on <strong>v5.5.2</strong> and the latest version is <strong>v6.0.1</strong></li>
+<li>You can generate a GitHub comparison between the tags like so
+<ul>
+<li><code>https://github.com/cotes2020/chirpy-starter/compare/v5.5.2...v6.0.1</code></li>
+</ul>
+</li>
+<li>Manually apply any changes listed in the compare to your site and commit</li>
+<li>Note the version you are on for the next comparison</li>
+</ul>
+<p>I cover this process in more detail in <a href="https://www.richardn.ca/posts/UpdatingChirpy/#updating-chirpy">this post</a> should you need more information.</p>
+<h3 id="keep-head-html-up-to-date">Keep head.html up to date</h3>
+<p>Be sure from time to time to compare your local copy of <code>./_includes\head.html</code> with the maintained version <a href="https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/_includes/head.html">here</a>.</p>
+<p>I would suggest doing this every time you update Chirpy to ensure that you do not drift too far from the source version.</p>
+<h3 id="running-locally-windows">Running locally (Windows)</h3>
+<p>With a more recent update of Chirpy they updated the localization dependency which has obliterated locally running on Windows using a custom timezone in your <code>_config.yml</code> file, specifically this line for me:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">timezone</span><span class="token punctuation">:</span> America/Edmonton</code></pre>
+<p>Thankfully the solution is just to remove your timezone from your local configuration file (ensure that you do not commit the removal of this back to your repository) and run the site using the normal <code>bundle exec jekyll s</code> command.</p>
+<p>This should resolve the issue.</p>
+<h2 id="in-closing">In Closing</h2>
+<p>I hope you find this post helpful, please feel free to let me know if I have missed something out in the comments below!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/fourthpost/">This is my fourth post</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2024/2024-07-31/AspNetDockerCerts/">Using Certificates with ASP.Net Core under Docker</a></li>
+</ul>
+
+			</heading-anchors>
+		</main>
+
+		<footer>
+			<p>
+				<em>Built with <a href="https://www.11ty.dev/">Eleventy v3.1.1</a></em>
+			</p>
+		</footer>
+
+		<!-- This page `/blog/2023/2023-06-21/post/` was built on 2025-06-19T22:27:15.407Z -->
+		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
+	</body>
+</html>

@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>This is my first post.</title>
-		<meta name="description" content="This is a post on My Blog about agile frameworks.">
+		<title>Using Certificates with ASP.Net Core under Docker</title>
+		<meta name="description" content="Coding and more">
 		<link rel="alternate" href="/feed/feed.xml" type="application/atom+xml" title="RichardN">
 		
 		
@@ -498,28 +498,97 @@ pre[class*="language-diff-"] {
 				
 
 
-<h1 id="this-is-my-first-post">This is my first post.</h1>
+<h1 id="using-certificates-with-asp-net-core-under-docker">Using Certificates with ASP.Net Core under Docker</h1>
 
 <ul class="post-metadata">
-	<li><time datetime="2018-05-01">01 May 2018</time></li>
-	<li><a href="/tags/another-tag/" class="post-tag">another tag</a></li>
+	<li><time datetime="2024-07-31">31 July 2024</time></li>
 </ul>
 
-<p>Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.</p>
-<p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
-<h2 id="section-header">Section Header</h2>
-<p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
-<pre class="language-diff-js" tabindex="0"><code class="language-diff-js"> // this is a command
- function myCommand() {
-+  let counter = 0;
--  let counter = 1;
-   counter++;
- }
+<p>This post serves as a quick reference guide to getting custom certificates working for a Docker based asp.net core application.</p>
+<h2 id="obtaining-the-certificate">Obtaining the certificate</h2>
+<p>Depending on your use case this could be as simple as using something like <a href="https://letsencrypt.org/">LetsEncrypt</a> for a free certificate, or using a paid for service like <a href="https://www.ssls.com/">ssl.com</a> to buy a custom certificate.</p>
+<h3 id="converting-your-certificate-to-pfx">Converting your certificate to *.pfx</h3>
+<p>For my project I went with the paid path and bought one for my application which resulted in me receiving a <code>.crt</code> file along with a key file which was incompatible with asp.net as it requires a <code>.pfx</code> file. After some quick Googling I was able to convert my certificate to the required pfx format by running the following command on one of my Ubuntu servers.</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash">openssl pkcs12 <span class="token parameter variable">-export</span> <span class="token parameter variable">-out</span> mycert.ca.pfx <span class="token parameter variable">-inkey</span> mycert.ca_key.txt <span class="token parameter variable">-in</span> mycert.ca.crt</code></pre>
+<p>Hopefully this saves you some time in the future.</p>
+<h2 id="configuring-your-docker-container">Configuring your Docker container</h2>
+<p>With some trial and error I managed to come up with the following Docker configuration that works with my application:</p>
+<h3 id="port-bindings">Port Bindings</h3>
+<p>You will need to expose and map any of the container ports you wish to access on the host - generally with asp.net applications you will want to map ports 80 (for HTTP) and 443 (for HTTPS), I ended up with the following configuration:</p>
+<ul>
+<li>Container 443 -&gt; Host 5005 (TCP)
+<ul>
+<li>Will be used to serve the HTTPS variant of the application</li>
+<li>I was already using port 443 on the host hence the odd port mapping chosen</li>
+</ul>
+</li>
+<li>Container 80 -&gt; Host 5003 (TCP)
+<ul>
+<li>Will be used to serve the HTTP variant of the application</li>
+<li>Again I was already using port 80 on the host so remapped mine to 5003</li>
+</ul>
+</li>
+</ul>
+<h3 id="container-paths">Container Paths</h3>
+<p>You will also need to map some additional paths for your container:</p>
+<ul>
+<li><code>/https/aspnetapp.pfx</code> -&gt; <code>/mnt/user/Backups/app-data/nas-landing-page/mysite.ca.pfx</code>
+<ul>
+<li>Points <code>/https/aspnetapp.pfx</code> on the container to the physical certificate on the host</li>
+</ul>
+</li>
+<li><code>/root/.aspnet</code> -&gt; <code>/mnt/user/Backups/app-data/nas-landing-page/.aspnet/</code>
+<ul>
+<li>Maps a persistent path to store your applications <code>DataProtection-Keys</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="container-variables">Container Variables</h3>
+<p>The last piece of the puzzle is defining some configuration environment variables for your container to tell asp.net core where to look for the certificate file, what ports to use for HTTP and so on:</p>
+<ul>
+<li><code>ASPNETCORE_URLS</code> -&gt; <code>https://+;http://+</code>
+<ul>
+<li>Configures asp.net core to make use of HTTP and HTTPS</li>
+</ul>
+</li>
+<li><code>ASPNETCORE_HTTPS_PORT</code> -&gt; <code>5005</code>
+<ul>
+<li>Tells asp.net core which external port the host will be using for HTTPS</li>
+<li>Please note that this has been set to 5005 as per the port mappings above</li>
+</ul>
+</li>
+<li><code>ASPNETCORE_Kestrel\_\_Certificates\_\_Default\_\_Password</code> -&gt; <code>xxx</code>
+<ul>
+<li>Defines the password to use with the provided certificate</li>
+<li>This is the password you set when creating the <code>*.pfx</code> certificate</li>
+</ul>
+</li>
+<li><code>ASPNETCORE_Kestrel\_\_Certificates\_\_Default\_\_Path</code> -&gt; <code>/https/aspnetapp.pfx</code>
+<ul>
+<li>Path to the certificate to use</li>
+<li>This is the path set in the container paths section above</li>
+</ul>
+</li>
+</ul>
+<h3 id="sample-docker-run-command">Sample Docker Run Command</h3>
+<p>Below is a sample Docker run command for a fictitious <strong>dockeruser/container</strong> container with the above configuration:</p>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">docker</span> run
+  <span class="token parameter variable">-d</span>
+  <span class="token parameter variable">--name</span><span class="token operator">=</span><span class="token string">'Container'</span>
+  <span class="token parameter variable">--net</span><span class="token operator">=</span><span class="token string">'bridge'</span>
+  <span class="token parameter variable">-e</span> <span class="token assign-left variable">TZ</span><span class="token operator">=</span><span class="token string">"America/Edmonton"</span>
+  <span class="token parameter variable">-e</span> <span class="token string">'ASPNETCORE_URLS'</span><span class="token operator">=</span><span class="token string">'https://+;http://+'</span>
+  <span class="token parameter variable">-e</span> <span class="token string">'ASPNETCORE_HTTPS_PORT'</span><span class="token operator">=</span><span class="token string">'5005'</span>
+  <span class="token parameter variable">-e</span> <span class="token string">'ASPNETCORE_Kestrel__Certificates__Default__Password'</span><span class="token operator">=</span><span class="token string">'xxx'</span>
+  <span class="token parameter variable">-e</span> <span class="token string">'ASPNETCORE_Kestrel__Certificates__Default__Path'</span><span class="token operator">=</span><span class="token string">'/https/aspnetapp.pfx'</span>
+  <span class="token parameter variable">-p</span> <span class="token string">'5003:80/tcp'</span>
+  <span class="token parameter variable">-p</span> <span class="token string">'5005:443/tcp'</span>
+  <span class="token parameter variable">-v</span> <span class="token string">'/…/mysite.ca.pfx'</span><span class="token builtin class-name">:</span><span class="token string">'/https/aspnetapp.pfx'</span><span class="token builtin class-name">:</span><span class="token string">'rw'</span>
+  <span class="token parameter variable">-v</span> <span class="token string">'/…/.aspnet/'</span><span class="token builtin class-name">:</span><span class="token string">'/root/.aspnet'</span><span class="token builtin class-name">:</span><span class="token string">'rw'</span>
+'dockeruser/container’</code></pre>
+<p>After deployment you should be able to browse to your application on HTTPS and get served a valid certificate.</p>
 
- // Test with a line break above this line.
- console.log('Test');</code></pre>
-
-<ul class="links-nextprev"><li class="links-nextprev-next">Next →<br><a href="/blog/secondpost/">This is my second post with a much longer title.</a></li>
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2023/2023-06-21/post/">Using GitHub Pages for your Personal Blog</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2025/2025-06-19/post/">Hello World</a></li>
 </ul>
 
 			</heading-anchors>
@@ -531,7 +600,7 @@ pre[class*="language-diff-"] {
 			</p>
 		</footer>
 
-		<!-- This page `/blog/firstpost/` was built on 2025-06-19T22:27:15.407Z -->
+		<!-- This page `/blog/2024/2024-07-31/AspNetDockerCerts/` was built on 2025-06-19T22:27:15.407Z -->
 		<script type="module" src="/dist/xbxy_EL6cU.js"></script>
 	</body>
 </html>
