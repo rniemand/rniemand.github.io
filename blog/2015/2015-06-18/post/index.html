@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Hosting Web API and Static Content with OWIN</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="hosting-web-api-and-static-content-with-owin">Hosting Web API and Static Content with OWIN</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2015-06-18">18 June 2015</time></li>
+</ul>
+
+<h2 id="setting-up-the-project">Setting up the project</h2>
+<p>To begin you will need to create a new console application in Visual Studio.</p>
+<picture><source type="image/avif" srcset="/blog/2015/2015-06-18/post/MIPpuXtW8t-680.avif 680w"><source type="image/webp" srcset="/blog/2015/2015-06-18/post/MIPpuXtW8t-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2015/2015-06-18/post/MIPpuXtW8t-680.png" alt="" width="680" height="394"></picture>
+<p>Once your application has been created open the Package Manager console and install the following packages.</p>
+<pre><code>Install-Package Microsoft.AspNet.WebApi.OwinSelfHost
+Install-Package Microsoft.Owin.StaticFiles
+</code></pre>
+<p>This will install all the dependencies needed to build our application.</p>
+<picture><source type="image/avif" srcset="/blog/2015/2015-06-18/post/SpvOBVgZ6M-613.avif 613w"><source type="image/webp" srcset="/blog/2015/2015-06-18/post/SpvOBVgZ6M-613.webp 613w"><img loading="lazy" decoding="async" src="/blog/2015/2015-06-18/post/SpvOBVgZ6M-613.png" alt="" width="613" height="146"></picture>
+<h2 id="startup-class">Startup class</h2>
+<p>Next, we will need to create a special class used by OWIN to bootstrap your web application called Startup with the following contents:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">class</span> <span class="token class-name">Startup</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Configuration</span><span class="token punctuation">(</span><span class="token class-name">IAppBuilder</span> app<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name">HttpConfiguration</span> config <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">HttpConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        config<span class="token punctuation">.</span>Routes<span class="token punctuation">.</span><span class="token function">MapHttpRoute</span><span class="token punctuation">(</span>
+            <span class="token named-parameter punctuation">name</span><span class="token punctuation">:</span> <span class="token string">"DefaultApi"</span><span class="token punctuation">,</span>
+            <span class="token named-parameter punctuation">routeTemplate</span><span class="token punctuation">:</span> <span class="token string">"api/{controller}/{id}"</span><span class="token punctuation">,</span>
+            <span class="token named-parameter punctuation">defaults</span><span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token punctuation">{</span> id <span class="token operator">=</span> RouteParameter<span class="token punctuation">.</span>Optional <span class="token punctuation">}</span>
+        <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        app<span class="token punctuation">.</span><span class="token function">UseWebApi</span><span class="token punctuation">(</span>config<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name"><span class="token keyword">var</span></span> physicalFileSystem <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PhysicalFileSystem</span><span class="token punctuation">(</span><span class="token string">@"./www"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> options <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">FileServerOptions</span>
+        <span class="token punctuation">{</span>
+            EnableDefaultFiles <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+            FileSystem <span class="token operator">=</span> physicalFileSystem
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        options<span class="token punctuation">.</span>StaticFileOptions<span class="token punctuation">.</span>FileSystem <span class="token operator">=</span> physicalFileSystem<span class="token punctuation">;</span>
+        options<span class="token punctuation">.</span>StaticFileOptions<span class="token punctuation">.</span>ServeUnknownFileTypes <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        options<span class="token punctuation">.</span>DefaultFilesOptions<span class="token punctuation">.</span>DefaultFileNames <span class="token operator">=</span> <span class="token keyword">new</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+        <span class="token punctuation">{</span>
+            <span class="token string">"index.html"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+        app<span class="token punctuation">.</span><span class="token function">UseFileServer</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The lines in the class above do the following key things:</p>
+<ul>
+<li>Creates and configures Web API through the HttpConfiguration class and sets up the default routing (<code>api/{controller}/{id}</code>).</li>
+<li>Creates and configures a file server (for static content) through PhysicalFileSystem - and sets the root directory to <code>./www</code>.</li>
+</ul>
+<p>Something to keep in mind here when setting the path for the PhysicalFileSystem class is that you will need to set the always copy flag to true on all items found under the www directory. This sucks, a better method I find is to add a new appSetting key to your web.config file and point that to a source folder.</p>
+<pre class="language-xml" tabindex="0"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>appSettings</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>add</span> <span class="token attr-name">key</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>www.rootDir<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>C:\path\to\www<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>appSettings</span><span class="token punctuation">></span></span></code></pre>
+<p>With this setting you just need to modify the following line:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token class-name"><span class="token keyword">var</span></span> physicalFileSystem <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PhysicalFileSystem</span><span class="token punctuation">(</span><span class="token string">@"./www"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Changing it to this:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token class-name"><span class="token keyword">var</span></span> contentDir <span class="token operator">=</span> ConfigurationManager<span class="token punctuation">.</span>AppSettings<span class="token punctuation">[</span><span class="token string">"www.rootDir"</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token class-name"><span class="token keyword">var</span></span> physicalFileSystem <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">PhysicalFileSystem</span><span class="token punctuation">(</span>contentDir<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>P.S. don't forget to add a reference to System.Configuration.</p>
+<h2 id="adding-static-content">Adding static content</h2>
+<p>Let's presume like me you have a www folder where you would like to serve content from and this folder is part of your Visual Studio solution with an appSetting created pointing the PhysicalFileSystem to the right path:</p>
+<picture><source type="image/avif" srcset="/blog/2015/2015-06-18/post/78ybJiKcg2-373.avif 373w"><source type="image/webp" srcset="/blog/2015/2015-06-18/post/78ybJiKcg2-373.webp 373w"><img loading="lazy" decoding="async" src="/blog/2015/2015-06-18/post/78ybJiKcg2-373.png" alt="" width="373" height="111"></picture>
+<p>When it comes to adding content, you can now treat the www folder as if it were the root folder for a static web server and add files to it at will (keeping references to other files relative to your root directory).</p>
+<p>Let's create our index.html file with the following contents in the root of www:</p>
+<pre class="language-html" tabindex="0"><code class="language-html"><span class="token doctype"><span class="token punctuation">&lt;!</span><span class="token doctype-tag">DOCTYPE</span> <span class="token name">html</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>en<span class="token punctuation">"</span></span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/1999/xhtml<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>utf-8<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">></span></span>Hello World<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">></span></span>
+    Hello World
+    http://scripts/hello.js
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span></code></pre>
+<p>Next, we will create our scripts\hello.js file with the following contents:</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token function">alert</span><span class="token punctuation">(</span><span class="token string">'hello world'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Hopefully by now you can see that this is pretty simple.</p>
+<h2 id="adding-a-web-api-controller">Adding a Web API Controller</h2>
+<p>Now let’s get a bit more advanced and add in a simple Web API controller to the project that we can call to get some default values:</p>
+<p>Create a new project file called Controllers\API\ValuesController.cs with the following contents:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Web<span class="token punctuation">.</span>Http</span><span class="token punctuation">;</span>
+
+<span class="token keyword">namespace</span> <span class="token namespace">WebSelfHosted<span class="token punctuation">.</span>Controllers<span class="token punctuation">.</span>API</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ValuesController</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ApiController</span></span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// GET api/values </span>
+        <span class="token keyword">public</span> <span class="token return-type class-name">IEnumerable<span class="token punctuation">&lt;</span><span class="token keyword">string</span><span class="token punctuation">></span></span> <span class="token function">Get</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token string">"value1"</span><span class="token punctuation">,</span> <span class="token string">"value2"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token comment">// GET api/values/5 </span>
+        <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> <span class="token function">Get</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> id<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span> <span class="token string">"value"</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span> 
+<span class="token punctuation">}</span></code></pre>
+<p>This controller will be available at http://localhost:12345/API/Values when we run our project.</p>
+<h2 id="wiring-it-all-up">Wiring it all up</h2>
+<p>The last thing we need to do is create a new instance of our web application using the <code>WebApp.Start&lt;&gt;()</code> method in our program.cs file to tie everything together and run our application, add the following code to program.cs:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">using</span> <span class="token namespace">System</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Diagnostics</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">Microsoft<span class="token punctuation">.</span>Owin<span class="token punctuation">.</span>Hosting</span><span class="token punctuation">;</span>
+
+<span class="token keyword">namespace</span> <span class="token namespace">WebSelfHosted</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">class</span> <span class="token class-name">Program</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span></span> args<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token class-name"><span class="token keyword">string</span></span> baseUrl <span class="token operator">=</span> <span class="token string">"http://localhost:12345/"</span><span class="token punctuation">;</span>
+            WebApp<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Start</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>Startup<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">StartOptions</span><span class="token punctuation">(</span>baseUrl<span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                ServerFactory <span class="token operator">=</span> <span class="token string">"Microsoft.Owin.Host.HttpListener"</span>
+            <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment">// Launch default browser</span>
+            Process<span class="token punctuation">.</span><span class="token function">Start</span><span class="token punctuation">(</span>baseUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            <span class="token comment">// Kick off other program logic</span>
+            <span class="token comment">// ...</span>
+
+            <span class="token comment">// In my case wait for ENTER to close app</span>
+            Console<span class="token punctuation">.</span><span class="token function">ReadLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>That's all there is to it (honestly). Save and run your project using F5 to see it all in action:</p>
+<picture><source type="image/avif" srcset="/blog/2015/2015-06-18/post/_0zsZud3_p-680.avif 680w"><source type="image/webp" srcset="/blog/2015/2015-06-18/post/_0zsZud3_p-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2015/2015-06-18/post/_0zsZud3_p-680.png" alt="" width="680" height="210"></picture>
+<p>Web API up and running serving our ValuesController.cs file.</p>
+<h2 id="going-forward">Going forward</h2>
+<p>I would suggest either making use of NUget or Bower to get and install client side packages (both are capable package managers). Using such projects allows you to easily keep your client packages up to date and helps to modularize your project and removes the need to ship support libraries with your source code.</p>
+<p>I would suggest making use of some MVVM framework (like <a href="https://angularjs.org/">Angular.js</a>, <a href="https://www.meteor.com/">Meteor</a>, etc.) to build up the client-side interface as adding MVC to this would be too much overkill :)</p>
+<p>Let me know what you think in the comments section below.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2015/2015-06-17/post/">Remote Access Home</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2023/2023-06-21/post/">Using GitHub Pages for your Personal Blog</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2015/2015-06-18/post/` was built on 2025-07-02T21:01:48.919Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
