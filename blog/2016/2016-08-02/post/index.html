@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Pong - Update 2</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="pong-update-2">Pong - Update 2</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2016-08-02">02 August 2016</time></li>
+</ul>
+
+<p>Following on from my <a href="https://www.richardn.ca/posts/Pong/">last post</a> I have made some minor tweaks to my pong game, and have addressed some of the issues that I picked up during the first phase of development, namely:</p>
+<ul>
+<li>Made use of the <code>requestAnimationFrame()</code> method to handle calls to the <code>update()</code> and <code>draw()</code> methods.</li>
+<li>Addressed issues with the collision detection to better match the relative position of the paddle and ball.</li>
+<li>Did some minor refactoring of the game code.</li>
+</ul>
+<p>The game seems to be running a lot smoother at the higher frame-rate, with only a few frames being dropped now and then. When profiling the JavaScript a typical update for a game frame takes less than <code>0.3</code> ms in total (well within the <code>16.666 ms</code> threshold when running at 60 FPS).</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-08-02/post/N_hKx2dbh_-628.avif 628w"><source type="image/webp" srcset="/blog/2016/2016-08-02/post/N_hKx2dbh_-628.webp 628w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-02/post/N_hKx2dbh_-628.png" alt="" width="628" height="238"></picture>
+<p>Below is a nice little breakdown of the changes made.</p>
+<h2 id="requestanimationframe">requestAnimationFrame()</h2>
+<p>I made use of <code>requestAnimationFrame()</code> to better handle the calling of the <code>update()</code> and <code>draw()</code> methods. To ensure that the position of the ball is predictable, I use the provided <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp">DOMHighResTimeStamp</a> to calculate the delta time between frames, and use the <code>time * velocity</code> of the ball to work out its new position on the canvas, something along the following lines.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">var</span> start <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> remainder <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> timeSlice <span class="token operator">=</span> <span class="token number">1000</span> <span class="token operator">/</span> <span class="token number">60</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">step</span><span class="token punctuation">(</span><span class="token parameter">timestamp</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// Handle updating start and calculating the delta</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>start<span class="token punctuation">)</span> start <span class="token operator">=</span> timestamp<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> delta <span class="token operator">=</span> <span class="token punctuation">(</span>timestamp <span class="token operator">-</span> start<span class="token punctuation">)</span> <span class="token operator">+</span> remainder<span class="token punctuation">;</span>
+    start <span class="token operator">=</span> timestamp<span class="token punctuation">;</span>
+
+    <span class="token comment">// work out the number of times we need to call update</span>
+    <span class="token keyword">var</span> updateCallCount <span class="token operator">=</span> delta <span class="token operator">/</span> timeSlice <span class="token operator">|</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    remainder <span class="token operator">=</span> delta <span class="token operator">-</span> <span class="token punctuation">(</span>timeSlice <span class="token operator">*</span> updateCallCount<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Call update the required number of times</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">var</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> updateCallCount<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token function">update</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Draw the current frame, and schedule a redraw</span>
+    <span class="token function">draw</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">requestAnimationFrame</span><span class="token punctuation">(</span>step<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token function">requestAnimationFrame</span><span class="token punctuation">(</span>step<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Admittedly for my second revision of the code I am not making use of the <code>delta</code> to move the ball, rather I am working out the number of times I need to call the update method and call it using a simple <code>for(;;){ ... }</code> loop. However, moving forward with the game code I will need to start making use of the delta value to calculate the actual position of the ball.</p>
+<h2 id="fixing-collision-detection">Fixing Collision Detection</h2>
+<p>As I mentioned in my last post, I was having issues when it came to detecting the collision between the ball and paddles (it was completely out when colliding with the top half of the paddle). I mentioned that I followed the tutorial verbatim, however it seems I somehow managed to omit some brackets when calculating the position of the paddles when calculating the collisions in the <code>update()</code> method.</p>
+<p>After including the brackets in the correct places the game's collision detection was working a lot better, but something still felt out of place. I decided to break up the majority of the collision detection into two helper methods <code>updateBallOnLeftSide()</code> and <code>updateBallOnRightSide()</code> and made adjustments in the detection logic to take into consideration that the y position of the paddle represents the middle of it and not the top of the paddle. This can be seen by the <code>paddleModifier</code> value being passed into the helper function below.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">function</span> <span class="token function">updateBallOnRightSide</span><span class="token punctuation">(</span><span class="token parameter">paddleModifier</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">var</span> paddleTop <span class="token operator">=</span> paddle2Y <span class="token operator">-</span> paddleModifier<span class="token punctuation">;</span>
+    <span class="token keyword">var</span> paddleBottom <span class="token operator">=</span> paddle2Y <span class="token operator">+</span> paddleModifier<span class="token punctuation">;</span>
+
+    <span class="token comment">// log collision ...</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>ballY <span class="token operator">>=</span> paddleTop <span class="token operator">&amp;&amp;</span> ballY <span class="token operator">&lt;=</span> paddleBottom<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ballSpeedX <span class="token operator">*=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">var</span> deltaY <span class="token operator">=</span> <span class="token punctuation">(</span>ballY <span class="token operator">-</span> paddleTop<span class="token punctuation">)</span> <span class="token operator">-</span> paddleModifier<span class="token punctuation">;</span>
+        ballSpeedY <span class="token operator">=</span> deltaY <span class="token operator">*</span> <span class="token number">0.35</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+        player1Score <span class="token operator">+=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token function">ballReset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Now things are working much better with collision detection, the only problem left to address is calculating the collision from the outside of the ball (rather than its centre as I am currently doing). This should be addressed in the next update in this series.</p>
+<h2 id="minor-code-refactoring">Minor Code Refactoring</h2>
+<p>In addition to the two major changes above, I did a lot of code refactoring (and still have a lot to do) to help me identify and troubleshoot the issues with the collision detection, the most useful of them being the introduction of the <code>logCollission()</code> function and calling code.</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">if</span><span class="token punctuation">(</span>logColissions<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">logCollission</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        <span class="token string-property property">"paddle"</span><span class="token operator">:</span> <span class="token string">"left"</span><span class="token punctuation">,</span>
+        <span class="token string-property property">"paddle-top"</span><span class="token operator">:</span> paddleTop<span class="token punctuation">,</span>
+        <span class="token string-property property">"paddle-bottom"</span><span class="token operator">:</span> paddleBottom<span class="token punctuation">,</span>
+        <span class="token string-property property">"ball-x"</span><span class="token operator">:</span> ballX<span class="token punctuation">,</span>
+        <span class="token string-property property">"ball-y"</span><span class="token operator">:</span> ballY
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Which when run returns the following to the debug <code>textarea</code>.</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"paddle"</span><span class="token operator">:</span><span class="token string">"right"</span><span class="token punctuation">,</span><span class="token property">"paddle-top"</span><span class="token operator">:</span><span class="token number">250</span><span class="token punctuation">,</span><span class="token property">"paddle-bottom"</span><span class="token operator">:</span><span class="token number">350</span><span class="token punctuation">,</span><span class="token property">"ball-x"</span><span class="token operator">:</span><span class="token number">535</span><span class="token punctuation">,</span><span class="token property">"ball-y"</span><span class="token operator">:</span><span class="token number">300</span><span class="token punctuation">}</span></code></pre>
+<p>This helps me to determine that the ball did indeed collide with the paddle (the centre of it in this case), and makes pinpointing the root cause of my collision detection issues much easier.
+The latest source code can be <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2016/2016-08-02">found here</a>, and a <a href="https://jsfiddle.net/fuwmbofb/">JSFiddle version</a> should you want to play around with it.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2016/2016-07-29/post2/">SQLite and Dapper in C#</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2016/2016-08-16/post/">*.NDS Rom Info Scraping (C#)</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2016/2016-08-02/post/` was built on 2025-07-02T21:15:44.053Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

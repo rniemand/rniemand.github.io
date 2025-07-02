@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Adding Castle Windsor to your WebAPI project</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="adding-castle-windsor-to-your-webapi-project">Adding Castle Windsor to your WebAPI project</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2016-07-24">24 July 2016</time></li>
+</ul>
+
+<p>This post is meant to serve as a simple guide to get you up and running with Castle Windsor in your next WebAPI project.</p>
+<p>First you will need to install Castle Windsor - open up the package manager console and enter in the following command (making sure that your targeted project is set correctly in the projects drop-down list).</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs">Install<span class="token operator">-</span>Package Castle<span class="token punctuation">.</span>Windsor</code></pre>
+<p>The idea of dependency injection (DI) in WebAPI is simple enough - we are going to be replacing the default <a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/hh834502(v=vs.118)?redirectedfrom=MSDN">HttpControllerActivator</a> that the pipeline makes use of with a &quot;smarter&quot; one (in our case Castle) that is able to resolve and inject any dependencies that the controller being spun up is looking for.</p>
+<p>This is my way of implementing DI in my applications and may be a bit different to the way you may do it. Please keep this in mind while looking through my code ;)</p>
+<p>First, we will need to create a dependency scope to help manage the lifecycle of any components we pull out of our DI container.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WindsorDependencyScope</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IDependencyScope</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">readonly</span> <span class="token class-name">IWindsorContainer</span> _container<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">readonly</span> <span class="token class-name">IDisposable</span> _scope<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">WindsorDependencyScope</span><span class="token punctuation">(</span><span class="token class-name">IWindsorContainer</span> container<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>container <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token string">"container"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        _container <span class="token operator">=</span> container<span class="token punctuation">;</span>
+        _scope <span class="token operator">=</span> container<span class="token punctuation">.</span><span class="token function">BeginScope</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">object</span></span> <span class="token function">GetService</span><span class="token punctuation">(</span><span class="token class-name">Type</span> t<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> _container<span class="token punctuation">.</span>Kernel<span class="token punctuation">.</span><span class="token function">HasComponent</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+            <span class="token punctuation">?</span> _container<span class="token punctuation">.</span><span class="token function">Resolve</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name">IEnumerable<span class="token punctuation">&lt;</span><span class="token keyword">object</span><span class="token punctuation">></span></span> <span class="token function">GetServices</span><span class="token punctuation">(</span><span class="token class-name">Type</span> t<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> _container<span class="token punctuation">.</span><span class="token function">ResolveAll</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Cast</span><span class="token generic class-name"><span class="token punctuation">&lt;</span><span class="token keyword">object</span><span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ToArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _scope<span class="token punctuation">.</span><span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Once I have my scope defined, I create a dependency resolver which will be used later on.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WindsorHttpDependencyResolver</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IDependencyResolver</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">readonly</span> <span class="token class-name">IWindsorContainer</span> _container<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">WindsorHttpDependencyResolver</span><span class="token punctuation">(</span><span class="token class-name">IWindsorContainer</span> container<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>container <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">ArgumentNullException</span><span class="token punctuation">(</span><span class="token string">"container"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        _container <span class="token operator">=</span> container<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">object</span></span> <span class="token function">GetService</span><span class="token punctuation">(</span><span class="token class-name">Type</span> t<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> _container<span class="token punctuation">.</span>Kernel<span class="token punctuation">.</span><span class="token function">HasComponent</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+            <span class="token punctuation">?</span> _container<span class="token punctuation">.</span><span class="token function">Resolve</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name">IEnumerable<span class="token punctuation">&lt;</span><span class="token keyword">object</span><span class="token punctuation">></span></span> <span class="token function">GetServices</span><span class="token punctuation">(</span><span class="token class-name">Type</span> t<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> _container<span class="token punctuation">.</span><span class="token function">ResolveAll</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Cast</span><span class="token generic class-name"><span class="token punctuation">&lt;</span><span class="token keyword">object</span><span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ToArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name">IDependencyScope</span> <span class="token function">BeginScope</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">WindsorDependencyScope</span><span class="token punctuation">(</span>_container<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>To assist me when I am in a pinch and need access to the Castle container I normally create a class like &quot;CastleHelper&quot; that gives me access to the Windsor Container through the use of a simple static class (this is not required in most implementations though).</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">CastleHelper</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">WindsorContainer</span> Container <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">private</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">WindsorHttpDependencyResolver</span> _resolver<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name"><span class="token keyword">bool</span></span> _initialized<span class="token punctuation">;</span>
+
+    <span class="token keyword">static</span> <span class="token function">CastleHelper</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        Container <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">WindsorContainer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _initialized <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">WindsorHttpDependencyResolver</span> <span class="token function">GetDependencyResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>_initialized<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> _resolver<span class="token punctuation">;</span>
+
+        _initialized <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        Container<span class="token punctuation">.</span><span class="token function">Install</span><span class="token punctuation">(</span>FromAssembly<span class="token punctuation">.</span><span class="token function">This</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        _resolver <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">WindsorHttpDependencyResolver</span><span class="token punctuation">(</span>Container<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> _resolver<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Next up I create an installer using the &quot;IWindsorInstaller&quot; interface that discovers and instals all classes derived from the APIController class.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebApiControllerInstaller</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IWindsorInstaller</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Install</span><span class="token punctuation">(</span><span class="token class-name">IWindsorContainer</span> container<span class="token punctuation">,</span> <span class="token class-name">IConfigurationStore</span> store<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        container<span class="token punctuation">.</span><span class="token function">Register</span><span class="token punctuation">(</span>Classes<span class="token punctuation">.</span><span class="token function">FromThisAssembly</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token generic-method"><span class="token function">BasedOn</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>ApiController<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">LifestylePerWebRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Next up, I add the following line to the &quot;<code>WebApiConfig.cs</code>&quot; file to replace the default dependency resolver with our newly created &quot;<code>WindsorHttpDependencyResolver</code>&quot;.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs">config<span class="token punctuation">.</span>DependencyResolver <span class="token operator">=</span> CastleHelper<span class="token punctuation">.</span><span class="token function">GetDependencyResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>To test that everything is working as expected I usually create a test service like so:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ITestService</span>
+<span class="token punctuation">{</span>
+    <span class="token return-type class-name"><span class="token keyword">string</span></span> <span class="token function">GetName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestService</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ITestService</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> <span class="token function">GetName</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token string">"Test Service"</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>...and install it using the following installer:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ServiceInstaller</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IWindsorInstaller</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Install</span><span class="token punctuation">(</span><span class="token class-name">IWindsorContainer</span> container<span class="token punctuation">,</span> <span class="token class-name">IConfigurationStore</span> store<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        container<span class="token punctuation">.</span><span class="token function">Register</span><span class="token punctuation">(</span>Component
+            <span class="token punctuation">.</span><span class="token generic-method"><span class="token function">For</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>ITestService<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token generic-method"><span class="token function">ImplementedBy</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>TestService<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">LifestylePerWebRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>...finally pulling it altogether using a test controller like so:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestController</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ApiController</span></span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">private</span> <span class="token keyword">readonly</span> <span class="token class-name">ITestService</span> _testService<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token function">TestController</span><span class="token punctuation">(</span><span class="token class-name">ITestService</span> testService<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        _testService <span class="token operator">=</span> testService<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token punctuation">[</span><span class="token attribute"><span class="token class-name">HttpGet</span></span><span class="token punctuation">]</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name">IHttpActionResult</span> <span class="token function">Get</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token function">Ok</span><span class="token punctuation">(</span>_testService<span class="token punctuation">.</span><span class="token function">GetName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>To ensure everything is working 100%, compile your project and head over to the newly created TestController, you should get the following response:</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-24/post/ZvpcrfGmcg-662.avif 662w"><source type="image/webp" srcset="/blog/2016/2016-07-24/post/ZvpcrfGmcg-662.webp 662w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-24/post/ZvpcrfGmcg-662.png" alt="" width="662" height="102"></picture>
+<p>That's all there is to it :)</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2016/2016-04-07/post/">Simplest way to access POST data after model binding (Web API)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2016/2016-07-25/post/">Singleton Pattern in TypeScript</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2016/2016-07-24/post/` was built on 2025-07-02T21:15:44.052Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

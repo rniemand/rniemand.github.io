@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>SQLite and Dapper in C#</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="sqlite-and-dapper-in-c">SQLite and Dapper in C#</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2016-07-29">29 July 2016</time></li>
+</ul>
+
+<p>In this article I am going to cover the basics of running <strong>SQLite</strong> and <a href="https://github.com/DapperLib/Dapper">Dapper</a> in a <code>C#</code> console application. There is a lot of code below which may be highly opinionated (so please bear that in mind while reading it) with links to an example application on Github below should you wish to see it all in action.</p>
+<h2 id="tools-and-resources">Tools and Resources</h2>
+<p>While creating this article I made use of the following online resources and tools, and feel that the original authors should get the credit for the bits and pieces I used.</p>
+<ul>
+<li><a href="https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/">SQLite Manager</a> - SQLite query tool (Firefox extension)</li>
+<li><a href="https://blog.tigrangasparian.com/2012/02/09/getting-started-with-sqlite-in-c-part-one/">Getting started with SQLite in C#</a> - used as a guideline</li>
+<li><a href="https://www.fluxbytes.com/csharp/how-to-create-and-connect-to-an-sqlite-database-in-c/">How to create and connect to an SQLite database in C#</a> - used as a guideline</li>
+<li><a href="https://www.sqlite.org/datatype3.html">Datatypes In SQLite Version 3</a></li>
+<li><a href="https://stackoverflow.com/questions/200309/sqlite-database-default-time-value-now">SQLite database default time value 'now'</a> - yes I Googled this</li>
+<li><a href="https://stackoverflow.com/questions/1122483/random-string-generator-returning-same-string">Random String Generator</a> - swiped the generator bit</li>
+</ul>
+<h2 id="first-steps">First Steps</h2>
+<p>First thing we need to do is create a new console application in Visual Studio and install <code>SQLite</code> and <code>Dapper</code> via the package manager console.</p>
+<pre><code>Install-Package System.Data.SQLite.Core
+Install-Package Dapper
+</code></pre>
+<p>This will install the required files for <code>SQLite</code> and <code>Dapper</code> into your solution along with any dependencies that they might have.</p>
+<h2 id="connecting-to-the-database">Connecting to the Database</h2>
+<p>The connection strings used in <code>SQLite</code> are pretty straight forward seeing that it is a server-less database engine and for this project is as simple as <code>Data Source=FilePath.sqlite;Version=3;</code>. The connection does support additional parameters like credentials, but that is beyond the scope of this tutorial.</p>
+<p>To connect to our database (and create it, if missing) add a <code>CreateAndOpenDb()</code> method with the following body:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">SQLiteConnection</span> _dbConnection<span class="token punctuation">;</span>
+<span class="token comment">// ...</span>
+<span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">CreateAndOpenDb</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name"><span class="token keyword">var</span></span> dbFilePath <span class="token operator">=</span> <span class="token string">"./TestDb.sqlite"</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>File<span class="token punctuation">.</span><span class="token function">Exists</span><span class="token punctuation">(</span>dbFilePath<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        SQLiteConnection<span class="token punctuation">.</span><span class="token function">CreateFile</span><span class="token punctuation">(</span>dbFilePath<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    _dbConnection <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">SQLiteConnection</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Format</span><span class="token punctuation">(</span>
+        <span class="token string">"Data Source={0};Version=3;"</span><span class="token punctuation">,</span> dbFilePath<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _dbConnection<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Quickly running the code confirms that I am able to create and connect to my new database.</p>
+<h2 id="extension-methods">Extension methods</h2>
+<p>I would suggest creating some extension/helper methods for common <code>SQLite</code> tasks to help speed up development, and will start off by creating a new <code>SQLiteExtensions</code> class as listed below:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span>
+    <span class="token keyword">this</span> <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">,</span>
+    <span class="token class-name"><span class="token keyword">string</span></span> commandText<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Ensure we have a connection</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>connection <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">NullReferenceException</span><span class="token punctuation">(</span><span class="token string">"Please provide a connection"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Ensure that the connection state is Open</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>connection<span class="token punctuation">.</span>State <span class="token operator">!=</span> ConnectionState<span class="token punctuation">.</span>Open<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        connection<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Use Dapper to execute the given query</span>
+    connection<span class="token punctuation">.</span><span class="token function">Execute</span><span class="token punctuation">(</span>commandText<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h2 id="initial-database-seeding">Initial Database Seeding</h2>
+<p>After creating the DB you will need to create all the tables and objects that your application needs in order to run, I would suggest creating a seed method that gets called when the database is first created. Below is the contents of my <code>SeedDatabase()</code> method.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SeedDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Create a Users table</span>
+    _dbConnection<span class="token punctuation">.</span><span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span><span class="token string">@"
+        CREATE TABLE IF NOT EXISTS [Users] (
+            [Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [Username] NVARCHAR(64) NOT NULL,
+            [Email] NVARCHAR(128) NOT NULL,
+            [Password] NVARCHAR(128) NOT NULL,
+            [DateCreated] TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Insert an ADMIN user</span>
+    _dbConnection<span class="token punctuation">.</span><span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span><span class="token string">@"
+        INSERT INTO Users
+            (Username, Email, Password)
+        VALUES
+            ('admin', 'niemand.richard@gmail.com', 'test')"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This will create and seed a <code>Users</code> table with an <code>admin</code> user.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/ZyXFS3yfA7-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/ZyXFS3yfA7-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/ZyXFS3yfA7-680.png" alt="" width="680" height="126"></picture>
+<h2 id="simple-user-model">Simple User model</h2>
+<p>Next, we will create a <code>User</code> class to represent an entry in the <code>Users</code> table. This class should have a property per column you wish to interact with from the target database table.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> Id <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> Username <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> Email <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> Password <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+    <span class="token keyword">public</span> <span class="token return-type class-name">DateTime</span> DateCreated <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>We will now make use of Dappers <code>Query&lt;T&gt;</code> method to map our <code>admin</code> user to the newly created User class.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token class-name"><span class="token keyword">var</span></span> adminUser <span class="token operator">=</span> _dbConnection<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Query</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>User<span class="token punctuation">></span></span></span><span class="token punctuation">(</span>
+    <span class="token string">"SELECT * FROM Users WHERE Username = 'admin'"</span><span class="token punctuation">)</span></code></pre>
+<p>Which results in the user being mapped like so:</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/7A5mrokHag-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/7A5mrokHag-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/7A5mrokHag-680.png" alt="" width="680" height="210"></picture>
+<p>Dapper is amazing!</p>
+<h2 id="creating-a-new-user">Creating a new user</h2>
+<p>Now it's time to add a new user to the database, but only if the user doesn't already exist. In order to do this, I will need to perform the following actions:</p>
+<ul>
+<li>Create a new <code>User</code> object to save to the database</li>
+<li>Check to see that the user doesn't already exist</li>
+<li>Insert the user into the database</li>
+</ul>
+<p>I will need to modify my <code>ExecuteNonQuery()</code> method a bit to make things easier.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span>
+    <span class="token keyword">this</span> <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">,</span>
+    <span class="token class-name"><span class="token keyword">string</span></span> commandText<span class="token punctuation">,</span>
+    <span class="token class-name"><span class="token keyword">object</span></span> param <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Ensure we have a connection</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>connection <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">NullReferenceException</span><span class="token punctuation">(</span>
+            <span class="token string">"Please provide a connection"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Ensure that the connection state is Open</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>connection<span class="token punctuation">.</span>State <span class="token operator">!=</span> ConnectionState<span class="token punctuation">.</span>Open<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        connection<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">// Use Dapper to execute the given query</span>
+    connection<span class="token punctuation">.</span><span class="token function">Execute</span><span class="token punctuation">(</span>commandText<span class="token punctuation">,</span> param<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This now allows for an optional <code>object</code> to be passed into the method, which is used by Dapper to replace any <code>@parameter</code> placeholders in the given command text.</p>
+<p>To help make working with <code>Users</code> easier I added a new <code>UserExtensions</code> class to the project to house all database/user related code.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">UserExtensions</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SaveAsNewUser</span><span class="token punctuation">(</span>
+        <span class="token keyword">this</span> <span class="token class-name">User</span> user<span class="token punctuation">,</span>
+        <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        connection<span class="token punctuation">.</span><span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span><span class="token string">@"
+            INSERT INTO Users (Username, Email, Password)
+            VALUES (@Username, @Email, @Password)"</span><span class="token punctuation">,</span>
+            user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">bool</span></span> <span class="token function">ExistsInDb</span><span class="token punctuation">(</span>
+        <span class="token keyword">this</span> <span class="token class-name">User</span> user<span class="token punctuation">,</span>
+        <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> rows <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">Query</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Format</span><span class="token punctuation">(</span>
+            <span class="token string">"SELECT COUNT(1) as 'Count' FROM Users WHERE Username = '{0}'"</span><span class="token punctuation">,</span>
+            user<span class="token punctuation">.</span>Username<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> rows<span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This now allows me to add a <code>CreateSecondUser()</code> method to my Program class with the following body:</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">CreateSecondUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name"><span class="token keyword">var</span></span> secondUser <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">User</span>
+    <span class="token punctuation">{</span>
+        Username <span class="token operator">=</span> <span class="token string">"rachel"</span><span class="token punctuation">,</span>
+        Email <span class="token operator">=</span> <span class="token string">"1@2.com"</span><span class="token punctuation">,</span>
+        Password <span class="token operator">=</span> <span class="token string">"password"</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>secondUser<span class="token punctuation">.</span><span class="token function">ExistsInDb</span><span class="token punctuation">(</span>_dbConnection<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        secondUser<span class="token punctuation">.</span><span class="token function">SaveAsNewUser</span><span class="token punctuation">(</span>_dbConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>This approach allows for more readable code, and helps a lot with code refactoring, as all of your management code is in one single place. After compiling and running the code I now have my second <code>Rachel</code> user.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/uQtL9ez6ku-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/uQtL9ez6ku-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/uQtL9ez6ku-680.png" alt="" width="680" height="143"></picture>
+<h2 id="updating-a-user">Updating a user</h2>
+<p>I now add a <code>GetUserByName()</code> and <code>SaveChanges()</code> method to <code>UserExtensions</code>, allowing me to easily save any changes I make to a user back to the database.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">User</span> <span class="token function">GetUserByName</span><span class="token punctuation">(</span>
+    <span class="token keyword">this</span> <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">,</span>
+    <span class="token class-name"><span class="token keyword">string</span></span> username<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name"><span class="token keyword">var</span></span> userCollection <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Query</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>User<span class="token punctuation">></span></span></span><span class="token punctuation">(</span>
+        <span class="token string">"SELECT * FROM Users WHERE Username = @UserName"</span><span class="token punctuation">,</span>
+        <span class="token keyword">new</span> <span class="token punctuation">{</span>Username <span class="token operator">=</span> username<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> userCollection<span class="token punctuation">.</span><span class="token function">FirstOrDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SaveChanges</span><span class="token punctuation">(</span>
+    <span class="token keyword">this</span> <span class="token class-name">User</span> user<span class="token punctuation">,</span>
+    <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    connection<span class="token punctuation">.</span><span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span><span class="token string">@"
+        UPDATE Users
+        SET
+        Email = @Email, Password = @Password
+        WHERE Id = @Id"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Next I add a <code>ModifyAdminUser()</code> method to <code>Program</code> with the following body.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ModifyAdminUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name"><span class="token keyword">var</span></span> adminUser <span class="token operator">=</span> _dbConnection<span class="token punctuation">.</span><span class="token function">GetUserByName</span><span class="token punctuation">(</span><span class="token string">"admin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    adminUser<span class="token punctuation">.</span>Password <span class="token operator">=</span> <span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Format</span><span class="token punctuation">(</span>
+        <span class="token string">"pass_{0}"</span><span class="token punctuation">,</span> DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    adminUser<span class="token punctuation">.</span><span class="token function">SaveChanges</span><span class="token punctuation">(</span>_dbConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Compiling and running the project results in my <code>admin</code> users password being updated.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/qbGvWqyEZF-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/qbGvWqyEZF-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/qbGvWqyEZF-680.png" alt="" width="680" height="142"></picture>
+<h2 id="more-more-more-users">More, more, more users</h2>
+<p>I added a <code>AddMoreUsers()</code> method to <code>Program</code> to allow me to add user accounts easily. This method takes in a number of users to add and makes use of a <a href="https://stackoverflow.com/questions/1122483/random-string-generator-returning-same-string">RandomString()</a> method I found online to help generate some unique usernames.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">AddMoreUsers</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> amount<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name"><span class="token keyword">var</span></span> baseUsername <span class="token operator">=</span> <span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Format</span><span class="token punctuation">(</span>
+        <span class="token string">"{0}{1}{2}{3}{4}{5}"</span><span class="token punctuation">,</span>
+        DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span>Year<span class="token punctuation">,</span>
+        DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span>Month<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">PadLeft</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token char">'0'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span>Day<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">PadLeft</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token char">'0'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span>Hour<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">PadLeft</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token char">'0'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span>Minute<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">PadLeft</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token char">'0'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+        DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span>Second<span class="token punctuation">.</span><span class="token function">ToString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">PadLeft</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token char">'0'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">var</span></span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> amount<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> tempUser <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">User</span>
+        <span class="token punctuation">{</span>
+            Username <span class="token operator">=</span> <span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Format</span><span class="token punctuation">(</span><span class="token string">"{0}{1}"</span><span class="token punctuation">,</span>
+                baseUsername<span class="token punctuation">,</span> <span class="token function">RandomString</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            Password <span class="token operator">=</span> <span class="token function">RandomString</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+            Email <span class="token operator">=</span> <span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Format</span><span class="token punctuation">(</span><span class="token string">"{0}@{1}.com"</span><span class="token punctuation">,</span>
+                <span class="token function">RandomString</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">RandomString</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+        tempUser<span class="token punctuation">.</span><span class="token function">SaveAsNewUser</span><span class="token punctuation">(</span>_dbConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Now I have loads of user accounts to mess around with.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/PZqYhbMIz3-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/PZqYhbMIz3-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/PZqYhbMIz3-680.png" alt="" width="680" height="221"></picture>
+<h2 id="removing-a-user">Removing a User</h2>
+<p>The last thing I would like to cover is deleting users from the DB. To do this I added the <code>GetLastUser()</code> and <code>RemoveFromDb()</code> methods to the <code>UserExtensions</code> class with the following body.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">User</span> <span class="token function">GetLastUser</span><span class="token punctuation">(</span>
+    <span class="token keyword">this</span> <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name"><span class="token keyword">var</span></span> userCollection <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Query</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>User<span class="token punctuation">></span></span></span><span class="token punctuation">(</span>
+        <span class="token string">"SELECT * FROM Users ORDER BY Id DESC LIMIT 1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> userCollection<span class="token punctuation">.</span><span class="token function">FirstOrDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">RemoveFromDb</span><span class="token punctuation">(</span>
+    <span class="token keyword">this</span> <span class="token class-name">User</span> user<span class="token punctuation">,</span>
+    <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    connection<span class="token punctuation">.</span><span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span>
+        <span class="token string">"DELETE FROM Users WHERE Id = @Id"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>These methods allow me to add a new <code>RemoveLastNonAdminUser()</code> method to the <code>Program</code> class with the following body.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">RemoveLastNonAdminUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token class-name"><span class="token keyword">var</span></span> user <span class="token operator">=</span> _dbConnection<span class="token punctuation">.</span><span class="token function">GetLastUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>Username <span class="token operator">==</span> <span class="token string">"admin"</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+    user<span class="token punctuation">.</span><span class="token function">RemoveFromDb</span><span class="token punctuation">(</span>_dbConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Each time this method is run the last user in the database is dropped.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/X0BuEQLz3h-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/X0BuEQLz3h-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/X0BuEQLz3h-680.png" alt="" width="680" height="287"></picture>
+<p>After another run of <code>RemoveLastNonAdminUser()</code>...</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/lG3FMXGQJg-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/lG3FMXGQJg-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/lG3FMXGQJg-680.png" alt="" width="680" height="289"></picture>
+<h2 id="source-code">Source Code</h2>
+<p>The source code for this project can be found on my <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2016/2016-07-29">code-samples GitHub repository</a>.</p>
+<p>I welcome feedback and pull requests and am always open to any suggestions you may have.</p>
+<p>I hope that you found this informative.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2016/2016-07-29/post/">Pong (or my first attempt at JS game development)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2016/2016-08-02/post/">Pong - Update 2</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2016/2016-07-29/post2/` was built on 2025-07-02T21:15:44.053Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

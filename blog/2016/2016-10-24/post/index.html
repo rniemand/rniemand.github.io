@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Setting up TypeScript in VS Code</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="setting-up-typescript-in-vs-code">Setting up TypeScript in VS Code</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2016-10-24">24 October 2016</time></li>
+</ul>
+
+<p>This blog post serves as an abridged summary of the below getting started guides for TypeScript and VS Code and is presented in the shortest possible form:</p>
+<ul>
+<li><a href="https://code.visualstudio.com/docs/languages/typescript">https://code.visualstudio.com/docs/languages/typescript</a></li>
+<li><a href="https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/">https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/</a></li>
+</ul>
+<h2 id="enabling-typescript">Enabling TypeScript</h2>
+<p>First create a file called <code>tsconfig.json</code> to the project with the following contents:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"target"</span><span class="token operator">:</span> <span class="token string">"es5"</span><span class="token punctuation">,</span>
+    <span class="token property">"module"</span><span class="token operator">:</span> <span class="token string">"commonjs"</span><span class="token punctuation">,</span>
+    <span class="token property">"sourceMap"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Next, create a sample <code>HelloWorld.ts</code> file with the following contents:</p>
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">class</span> <span class="token class-name">Startup</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span> <span class="token punctuation">{</span>
+    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Hello World'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+Startup<span class="token punctuation">.</span><span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Press <code>Ctrl+Shift+P</code> type in <code>Configure Task Runner</code> select <code>TypeScript - tsconfig.json</code>. I tend to modify the <code>args</code> command and add an additional <code>-w</code> switch to run tsc in watch mode as can be seen below:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.1.0"</span><span class="token punctuation">,</span>
+  <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"tsc"</span><span class="token punctuation">,</span>
+  <span class="token property">"isShellCommand"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+  <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"-p"</span><span class="token punctuation">,</span> <span class="token string">"."</span><span class="token punctuation">,</span> <span class="token string">"-w"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token property">"showOutput"</span><span class="token operator">:</span> <span class="token string">"silent"</span><span class="token punctuation">,</span>
+  <span class="token property">"problemMatcher"</span><span class="token operator">:</span> <span class="token string">"$tsc"</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Test out a build using <code>Ctrl+Shift+B</code> - this will generate <code>HelloWorld.js</code> and <code>HelloWorld.js.map</code> as can be seen below.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-10-24/post/rPzQ10Jzru-328.avif 328w"><source type="image/webp" srcset="/blog/2016/2016-10-24/post/rPzQ10Jzru-328.webp 328w"><img loading="lazy" decoding="async" src="/blog/2016/2016-10-24/post/rPzQ10Jzru-328.png" alt="" width="328" height="117"></picture>
+<h2 id="hiding-generated-files">Hiding Generated Files</h2>
+<p>If you are working primarily with <code>.ts</code> files in VS Code there is no need to see the generated <code>.map</code> and <code>.js</code> files (well at least I don't like looking at them). If you wish to hide these files and clean up your work-space all you need to do is follow the below steps:</p>
+<p>In the root of your application create a <code>.vscode/settings.json</code> file (if you don't already have one), and add the following to it:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"files.exclude"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"node_modules/"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        <span class="token property">"app/**/*.js"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        <span class="token property">"app/**/*.map"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p><strong>NOTE</strong>: I am presuming that your source files now live in a folder called <code>app/*/</code>, feel free to modify this to meet your project needs.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-10-24/post/KTB4NoWjBO-329.avif 329w"><source type="image/webp" srcset="/blog/2016/2016-10-24/post/KTB4NoWjBO-329.webp 329w"><img loading="lazy" decoding="async" src="/blog/2016/2016-10-24/post/KTB4NoWjBO-329.png" alt="" width="329" height="167"></picture>
+<p>Folder structure in VS Code before adding in <code>.vscode/settings.json</code>.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-10-24/post/nQ0fOrcRG_-1144.avif 1144w"><source type="image/webp" srcset="/blog/2016/2016-10-24/post/nQ0fOrcRG_-1144.webp 1144w"><img loading="lazy" decoding="async" src="/blog/2016/2016-10-24/post/nQ0fOrcRG_-1144.png" alt="" width="1144" height="312"></picture>
+<p>Folder structure in VS Code after adding in .<code>vscode/settings.json</code> (source folder shown on the right).</p>
+<p>I much prefer this way of working with .ts files as it feels a lot less cluttered.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2016/2016-08-25/post2/">OWIN - Mapping Attribute Routes (Web API 2)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2023/2023-06-21/post/">Using GitHub Pages for your Personal Blog</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2016/2016-10-24/post/` was built on 2025-07-02T21:15:44.053Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

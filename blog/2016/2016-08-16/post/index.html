@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>*.NDS Rom Info Scraping (C#)</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="nds-rom-info-scraping-c">*.NDS Rom Info Scraping (C#)</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2016-08-16">16 August 2016</time></li>
+</ul>
+
+<p>I am starting a small <strong>ROM management</strong> project to help me keep my various ROM backups in order and make searching for a specific backup easier. I decided it would be a good idea to programmatically extract information from the ROM file and then scrape the <code>www</code> to get more detailed metadata about the ROM file in question.</p>
+<p>Being new to all of this I spent some time on Google and found the <a href="https://dsibrew.org/wiki/DSi_cartridge_header">following wiki page</a>, that details the DSi Cartridge Header, thus allowing me to create a module for my ROM scraper that would be able to look for and extract all the basic information I need to begin scraping the web for more metadata.</p>
+<p>From the wiki, I am interested mainly in the following bits of information:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Length</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x000</td>
+<td>12</td>
+<td>The title of the game</td>
+</tr>
+<tr>
+<td>0x00C</td>
+<td>4</td>
+<td>The game code (used for lookups)</td>
+</tr>
+<tr>
+<td>0x010</td>
+<td>2</td>
+<td>The code of the game developer</td>
+</tr>
+<tr>
+<td>0x01E</td>
+<td>1</td>
+<td>ROM version</td>
+</tr>
+<tr>
+<td>0x230</td>
+<td>8</td>
+<td>Title ID</td>
+</tr>
+</tbody>
+</table>
+<p>With this information at hand I quickly put together the following sample project to check that I could pull the required information out of the ROM file.</p>
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">class</span> <span class="token class-name">Program</span> <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Main</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">string</span><span class="token punctuation">[</span><span class="token punctuation">]</span></span> args<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> source <span class="token operator">=</span> <span class="token string">@"E:\temp\test-rom.nds"</span><span class="token punctuation">;</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> fs <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">FileStream</span><span class="token punctuation">(</span>source<span class="token punctuation">,</span> FileMode<span class="token punctuation">.</span>Open<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name"><span class="token keyword">var</span></span> br <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">BinaryReader</span><span class="token punctuation">(</span>fs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Game Name   : {0}"</span><span class="token punctuation">,</span> <span class="token function">ReadBytes</span><span class="token punctuation">(</span>br<span class="token punctuation">,</span> <span class="token number">0x000</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Game Code   : {0}"</span><span class="token punctuation">,</span> <span class="token function">ReadBytes</span><span class="token punctuation">(</span>br<span class="token punctuation">,</span> <span class="token number">0x00C</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Maker Code  : {0}"</span><span class="token punctuation">,</span> <span class="token function">ReadBytes</span><span class="token punctuation">(</span>br<span class="token punctuation">,</span> <span class="token number">0x010</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"ROM Version : {0}"</span><span class="token punctuation">,</span> <span class="token function">ReadBytes</span><span class="token punctuation">(</span>br<span class="token punctuation">,</span> <span class="token number">0x01E</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Title ID    : {0}"</span><span class="token punctuation">,</span> <span class="token function">ReadBytes</span><span class="token punctuation">(</span>br<span class="token punctuation">,</span> <span class="token number">0x230</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Console<span class="token punctuation">.</span><span class="token function">WriteLine</span><span class="token punctuation">(</span><span class="token string">"Done"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        Console<span class="token punctuation">.</span><span class="token function">ReadLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> <span class="token function">ReadBytes</span><span class="token punctuation">(</span><span class="token class-name">BinaryReader</span> br<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">int</span></span> seek<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">int</span></span> length<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token class-name"><span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span></span> test <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name"><span class="token keyword">byte</span></span><span class="token punctuation">[</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        br<span class="token punctuation">.</span>BaseStream<span class="token punctuation">.</span><span class="token function">Seek</span><span class="token punctuation">(</span>seek<span class="token punctuation">,</span> SeekOrigin<span class="token punctuation">.</span>Begin<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        br<span class="token punctuation">.</span><span class="token function">Read</span><span class="token punctuation">(</span>test<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> Encoding<span class="token punctuation">.</span>UTF8<span class="token punctuation">.</span><span class="token function">GetString</span><span class="token punctuation">(</span>test<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>There is a lot of room for optimization here, but for a quick test this seems to do the job correctly.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-08-16/post/7U0P4Vv1Nx-343.avif 343w"><source type="image/webp" srcset="/blog/2016/2016-08-16/post/7U0P4Vv1Nx-343.webp 343w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-16/post/7U0P4Vv1Nx-343.png" alt="" width="343" height="123"></picture>
+<p>Using the information extracted from the ROM file and <a href="https://advanscene.com/">advanscene.com</a>, I can take the returned Game Code (AEKE) and run a basic search.</p>
+<picture><source type="image/avif" srcset="/blog/2016/2016-08-16/post/ZRGNq8Oj59-710.avif 710w"><source type="image/webp" srcset="/blog/2016/2016-08-16/post/ZRGNq8Oj59-710.webp 710w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-16/post/ZRGNq8Oj59-710.png" alt="" width="710" height="148"></picture>
+<p>Success, my proof of concept works - now it's time to take this into the real world.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2016/2016-08-02/post/">Pong - Update 2</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2016/2016-08-25/post/">Getting started with SQLite and Entity Framework</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2016/2016-08-16/post/` was built on 2025-07-02T21:15:44.053Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
