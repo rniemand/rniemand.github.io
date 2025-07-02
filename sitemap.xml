@@ -2,26 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 	
 	<url>
-		<loc>https://www.richardn.ca/blog/firstpost/</loc>
-		<lastmod>2018-05-01</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://www.richardn.ca/blog/secondpost/</loc>
-		<lastmod>2018-07-04</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://www.richardn.ca/blog/thirdpost/</loc>
-		<lastmod>2018-08-24</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://www.richardn.ca/blog/fourthpost/</loc>
-		<lastmod>2018-09-30</lastmod>
-	</url>
-	
-	<url>
 		<loc>https://www.richardn.ca/blog/2023/2023-06-21/post/</loc>
 		<lastmod>2023-06-20</lastmod>
 	</url>
@@ -38,26 +18,21 @@
 	
 	<url>
 		<loc>https://www.richardn.ca/about/</loc>
-		<lastmod>2025-06-19</lastmod>
+		<lastmod>2025-07-02</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://www.richardn.ca/blog/</loc>
-		<lastmod>2025-06-19</lastmod>
+		<lastmod>2025-07-02</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://www.richardn.ca/</loc>
-		<lastmod>2025-06-19</lastmod>
+		<lastmod>2025-07-02</lastmod>
 	</url>
 	
 	<url>
 		<loc>https://www.richardn.ca/tags/</loc>
-		<lastmod>2025-06-19</lastmod>
-	</url>
-	
-	<url>
-		<loc>https://www.richardn.ca/feed/feed.xml</loc>
-		<lastmod>2025-06-19</lastmod>
+		<lastmod>2025-07-02</lastmod>
 	</url>
 </urlset>
