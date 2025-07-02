@@ -1,4 +1,6 @@
 ---js
+const title = "About";
+
 const eleventyNavigation = {
 	key: "About",
 	order: 3
