@@ -1,4 +1,11 @@
-Holder.
+<img src="./001.png" alt="">
+
+
+---js
+const title = "Using GitHub Pages for your Personal Blog";
+const date = "2023-06-20";
+const draft = false;
+---
 
 https://www.rockyourcode.com/how-to-deploy-eleventy-to-github-pages-with-github-actions/
 https://medium.com/@andresbitrian/eleventy-website-to-github-pages-with-github-actions-36bc48d3be09
