@@ -1,3 +1,6 @@
 div.main-content {
 	margin-top: 4rem;
 }
+.blog-list a {
+	text-decoration: none;
+}
