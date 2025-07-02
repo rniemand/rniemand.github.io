@@ -19,11 +19,19 @@
 		<style>{% getBundle "css" %}</style>
 		<script type="module">{% include "node_modules/@zachleat/heading-anchors/heading-anchors.js" %}</script>
 	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-HRDC8SXRVG');
+	</script>
 	<body class="d-flex flex-column h-100">
 		<header>
 			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="#">RichardN</a>
+					<a class="navbar-brand" href="/">RichardN</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
