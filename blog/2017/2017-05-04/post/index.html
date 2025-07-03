@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,17 @@ pre[class*="language-diff-"] {
 
 <h1 id="serial-tester-arduino-tool">Serial Tester (Arduino Tool)</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-05-04">04 May 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/net/" class="post-tag">.net</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-05-04">04 May 2017</time>
+	</span>
+</div>
 
 <p>Inspired by a <a href="https://www.youtube.com/watch?v=J5vQFLjXk2I">youtube video</a> I wanted to start communicating with my Arduino via a serial connection from my computer. Having a connection from my <code>computer</code> -&gt; <code>Arduino</code> opens up a whole lot of new and exciting projects (e.g. external CPU / Memory display ...).</p>
 <p>Following the video it was easy enough to get up and running, but a real pain having to open Visual Studio every time I wanted to change the commands I was sending to my Arduino. I decided to throw together a small .exe aptly named Serial Tester to allow for simpler communication from my side, and it looks something like this:</p>
@@ -255,7 +268,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-05-04/post/` was built on 2025-07-03T22:42:22.112Z -->
+		<!-- This page `/blog/2017/2017-05-04/post/` was built on 2025-07-03T23:40:22.913Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

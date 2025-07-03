@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,18 @@ pre[class*="language-diff-"] {
 
 <h1 id="running-home-assistant-on-unraid">Running Home Assistant On Unraid</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2021-10-25">25 October 2021</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/home-assistant/" class="post-tag">home assistant</a>, 
+				<a href="/tags/unraid/" class="post-tag">unraid</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2021-10-25">25 October 2021</time>
+	</span>
+</div>
 
 <p>I have been running <a href="https://www.home-assistant.io/">Home Assistant</a> for years, and absolutely love it. By far the easiest way to run Home Assistant is using the official <a href="https://www.home-assistant.io/installation/linux">Home Assistant Operating System</a>, specifically the <code>.qcow2</code> image paired with my local <a href="https://unraid.net/">Unraid</a> server.</p>
 <p>As there are literally thousands of posts out there covering the deployment of Home Assistant online, this post is more of a quick reference for those people who want to get up and running quickly, let's dive in:</p>
@@ -305,7 +319,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2021/2021-10-25/post1/` was built on 2025-07-03T22:42:22.125Z -->
+		<!-- This page `/blog/2021/2021-10-25/post1/` was built on 2025-07-03T23:40:22.923Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,17 @@ pre[class*="language-diff-"] {
 
 <h1 id="alert-maker-revival">Alert Maker Revival</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2018-06-19">19 June 2018</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/net/" class="post-tag">.net</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2018-06-19">19 June 2018</time>
+	</span>
+</div>
 
 <p>While migrating some of my blog posts over from my old blog to this one I stumbled upon a program I wrote in 2011 when I started learning C# (to give you an idea of the age of this guy, it was written in .net 2.0!).</p>
 <p>With some nostalgia I opened the project in VS and ran it, to my surprise it worked with no issues.</p>
@@ -264,7 +277,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-06-19/post/` was built on 2025-07-03T22:42:22.118Z -->
+		<!-- This page `/blog/2018/2018-06-19/post/` was built on 2025-07-03T23:40:22.918Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

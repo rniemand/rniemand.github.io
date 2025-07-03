@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,19 @@ pre[class*="language-diff-"] {
 
 <h1 id="sqlite-and-dapper-in-c">SQLite and Dapper in C#</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2016-07-29">29 July 2016</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/net/" class="post-tag">.net</a>, 
+				<a href="/tags/sqlite/" class="post-tag">sqlite</a>, 
+				<a href="/tags/dapper/" class="post-tag">dapper</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2016-07-29">29 July 2016</time>
+	</span>
+</div>
 
 <p>In this article I am going to cover the basics of running <strong>SQLite</strong> and <a href="https://github.com/DapperLib/Dapper">Dapper</a> in a <code>C#</code> console application. There is a lot of code below which may be highly opinionated (so please bear that in mind while reading it) with links to an example application on Github below should you wish to see it all in action.</p>
 <h2 id="tools-and-resources">Tools and Resources</h2>
@@ -509,7 +524,7 @@ Install-Package Dapper
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2016/2016-07-29/post2/` was built on 2025-07-03T22:42:22.110Z -->
+		<!-- This page `/blog/2016/2016-07-29/post2/` was built on 2025-07-03T23:40:22.911Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

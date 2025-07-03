@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,19 @@ pre[class*="language-diff-"] {
 
 <h1 id="mosquitto-on-windows">Mosquitto on Windows</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-06-07">07 June 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/iot/" class="post-tag">iot</a>, 
+				<a href="/tags/windows/" class="post-tag">windows</a>, 
+				<a href="/tags/mqtt/" class="post-tag">mqtt</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-06-07">07 June 2017</time>
+	</span>
+</div>
 
 <p>After discovering the joys and simplicity of using <strong>MQTT</strong> on IoT enabled devices such as an NodeMCU ESP8266 I decided I wanted to host my own local (and with the right configuration public) instance of <a href="https://mosquitto.org/download/">mosquitto</a> for my devices to make use of. This post covers the basics of getting everything up and running on a Windows environment.</p>
 <h2 id="prerequisites">Prerequisites</h2>
@@ -304,7 +319,7 @@ mosquitto.exe -v -c mosquitto.conf
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-06-07/post/` was built on 2025-07-03T22:42:22.112Z -->
+		<!-- This page `/blog/2017/2017-06-07/post/` was built on 2025-07-03T23:40:22.913Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

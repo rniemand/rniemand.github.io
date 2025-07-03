@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,20 @@ pre[class*="language-diff-"] {
 
 <h1 id="installing-mosquitto-on-dietpi-raspbian-debian">Installing Mosquitto on (DietPi / Raspbian / Debian)</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2018-01-08">08 January 2018</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/iot/" class="post-tag">iot</a>, 
+				<a href="/tags/mqtt/" class="post-tag">mqtt</a>, 
+				<a href="/tags/mosquitto/" class="post-tag">mosquitto</a>, 
+				<a href="/tags/dietpi/" class="post-tag">dietpi</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2018-01-08">08 January 2018</time>
+	</span>
+</div>
 
 <p>At the end of December last year my family and I immigrated to Canada (from South Africa) for a fresh start and to allow my wife to be closer to her family. We decided to only bring the essentials with us to make things easier and to reduce the cost of the immigration. Now that we are starting to find our feet I have decided to pick up where I left off with my endeavours into home automation and to start setting up <a href="https://www.home-assistant.io/">Home Assistant</a> again, starting with my MQTT Broker of choice - <a href="https://mosquitto.org/">Mosquitto</a>.</p>
 <p>To save on costs I decided to make use of an old Raspberry Pi I packed running the <a href="https://dietpi.com/">DietPi OS</a> (lightweight version of Raspbian), as opposed to my original <a href="https://www.richardn.ca/posts/RunningMosquittoAsAWindowsService/">Windows Server running Mosquitto</a> I used to use. This post is just a quick high-level overview of how to get up and running with Mosquitto in under <code>10 minutes</code>, so let's dive in.</p>
@@ -343,7 +359,7 @@ sudo systemctl start mosquitto.service
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-01-08/post/` was built on 2025-07-03T22:42:22.117Z -->
+		<!-- This page `/blog/2018/2018-01-08/post/` was built on 2025-07-03T23:40:22.918Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

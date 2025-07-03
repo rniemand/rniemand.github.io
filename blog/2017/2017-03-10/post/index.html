@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,17 @@ pre[class*="language-diff-"] {
 
 <h1 id="flashing-atmega-168-pro-mini-with-an-arduino-uno">Flashing ATmega 168 (Pro Mini) with an Arduino UNO</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-03-10">10 March 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/arduino/" class="post-tag">arduino</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-03-10">10 March 2017</time>
+	</span>
+</div>
 
 <p>In preparation for my post on building a pong game on Arduino I wanted to flash the game code to the smallest Arduino compatible board I had lying around (my <code>ATmega 168 Pro Mini</code> I got from <a href="https://www.aliexpress.com/item/32579326448.html?spm=2114.13010608.0.0.flKfAz">AliExpress</a>). I immediately ran into a problem as the board has no built-in flasher due to its form factor. After some Googling I found out it was possible to flash the board using an Arduino UNOusing the below process.</p>
 <h2 id="prepping-the-devices">Prepping the Devices</h2>
@@ -278,7 +291,7 @@ Port: (depends on your PC - mine was COM3)
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-03-10/post/` was built on 2025-07-03T22:42:22.111Z -->
+		<!-- This page `/blog/2017/2017-03-10/post/` was built on 2025-07-03T23:40:22.912Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

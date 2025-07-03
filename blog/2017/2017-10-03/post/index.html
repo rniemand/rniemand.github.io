@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,19 @@ pre[class*="language-diff-"] {
 
 <h1 id="sonoff-and-mqtt-example-lounge-light">Sonoff &amp; MQTT Example (Lounge Light)</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-10-03">03 October 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/iot/" class="post-tag">iot</a>, 
+				<a href="/tags/mqtt/" class="post-tag">mqtt</a>, 
+				<a href="/tags/sonoff/" class="post-tag">sonoff</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-10-03">03 October 2017</time>
+	</span>
+</div>
 
 <p>A while back I got brave and <a href="https://www.richardn.ca/posts/ChangingSonoffFirmwareVisualGuide/">changed the firmware on the Sonoff switch</a> connected to my lounge light to use it in my home automation. I followed <a href="https://github.com/arendst/Tasmota">these instructions</a> when uploading the firmware and was up and running in about 10 minutes.</p>
 <p>Once I had everything connected back up it was time to interact with the light via my MQTT broker, and after Googling for the relevant commands I found <a href="https://github.com/arendst/Tasmota#tl-dr">them here</a>.</p>
@@ -277,7 +292,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-10-03/post/` was built on 2025-07-03T22:42:22.116Z -->
+		<!-- This page `/blog/2017/2017-10-03/post/` was built on 2025-07-03T23:40:22.917Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

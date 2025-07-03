@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,19 @@ pre[class*="language-diff-"] {
 
 <h1 id="running-mosquitto-as-a-windows-service">Running Mosquitto as a Windows Service</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-06-08">08 June 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/iot/" class="post-tag">iot</a>, 
+				<a href="/tags/windows/" class="post-tag">windows</a>, 
+				<a href="/tags/mqtt/" class="post-tag">mqtt</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-06-08">08 June 2017</time>
+	</span>
+</div>
 
 <p>In <a href="https://www.richardn.ca/posts/MosquittoOnWindows/">my last post</a> I ran over the required steps to get <code>mosquitto</code> up and running on a Windows environment. Now somewhere during my initial install I managed to break the Mosquitto Broker service that was installed by default, and ended up removing it using an elevated command window and the <code>SC delete NAME</code> command.</p>
 <p>This post will cover re-creating this service, and showcase a really amazing application I found to make almost anything into a Windows service.</p>
@@ -277,7 +292,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-06-08/post/` was built on 2025-07-03T22:42:22.112Z -->
+		<!-- This page `/blog/2017/2017-06-08/post/` was built on 2025-07-03T23:40:22.913Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

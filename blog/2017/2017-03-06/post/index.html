@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,17 @@ pre[class*="language-diff-"] {
 
 <h1 id="esp8266-mosi-miso-sck-cs-pinout">ESP8266 (MOSI, MISO, SCK, CS) Pinout</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-03-06">06 March 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/esp8266/" class="post-tag">esp8266</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-03-06">06 March 2017</time>
+	</span>
+</div>
 
 <p>When trying to work with an SD Card module on my <code>ESP8266</code> I ran into some issues mapping the MOSI, MISO, SCK and CS pins. After some digging online it turns out that these values are hard-coded into the Arduino IDE and mapped a bit weirdly on the <code>ESP</code> due to the limited pins available on the chip itself. Hopefully to save you some time here are the mappings you need to use.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">D0</span> <span class="token expression"><span class="token number">16</span></span></span>
@@ -343,7 +356,7 @@ File myFile<span class="token punctuation">;</span>
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-03-06/post/` was built on 2025-07-03T22:42:22.111Z -->
+		<!-- This page `/blog/2017/2017-03-06/post/` was built on 2025-07-03T23:40:22.912Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

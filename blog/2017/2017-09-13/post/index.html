@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,17 @@ pre[class*="language-diff-"] {
 
 <h1 id="tracking-user-presence-hass-and-owntracks">Tracking User Presence (HASS and OwnTracks)</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-09-13">13 September 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/home-assistant/" class="post-tag">home assistant</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-09-13">13 September 2017</time>
+	</span>
+</div>
 
 <p><a href="https://www.home-assistant.io/">Home Assistant</a> (<code>Hass</code>) is hands down one of the best home automation frameworks (HUBS) I have used, and offers support for over 800 devices with that number growing almost on a daily basis. It not only presents all your collected device data into a single portal, but offers a lot of automation through their scripting &amp; templating engine. After spending about a week diving into the features of Home Assistant I decided to tear everything down and start from scratch documenting my journey in order to help others get started with it.</p>
 <p>At the moment my main focus is around security and knowing what is going on at home when we are not around. I have built a couple of sensory nodes based on an ESP8266 development board (more to come in a later post) that now live in key areas of the house monitoring movement, doors &amp; windows, temperature, humidity, etc. These devices publish their information to my MQTT broker which is being monitored by Home Assistant. My main intent here is to have Home Assistant send me notifications on my mobile phone when there is movement around the house and we are not there. For this to happen I somehow need to let Home Assistant know when we are home, and when we are away so it is able to take the appropriate action when movement is detected, Enter OwnTracks.</p>
@@ -328,7 +341,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-09-13/post/` was built on 2025-07-03T22:42:22.114Z -->
+		<!-- This page `/blog/2017/2017-09-13/post/` was built on 2025-07-03T23:40:22.914Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

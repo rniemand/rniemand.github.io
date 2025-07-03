@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,18 @@ pre[class*="language-diff-"] {
 
 <h1 id="remote-access-home">Remote Access Home</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2015-06-17">17 June 2015</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/dns/" class="post-tag">dns</a>, 
+				<a href="/tags/networking/" class="post-tag">networking</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2015-06-17">17 June 2015</time>
+	</span>
+</div>
 
 <h2 id="understanding-dns">Understanding DNS</h2>
 <p>Most ISP's make use of dynamic IP Addresses to prevent you from hosting websites off your home computer, and rotate these addresses fairly often (sometimes on a daily basis). It would be near impossible to know the currently assigned IP Address of your home computer at a given time unless you were in front of it to check. This is not helpful, especially when you need to know this address when connecting to your computer away from home.</p>
@@ -292,7 +306,7 @@ resolve the address of the targeted computer using a human friendly host name. T
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2015/2015-06-17/post/` was built on 2025-07-03T22:42:22.109Z -->
+		<!-- This page `/blog/2015/2015-06-17/post/` was built on 2025-07-03T23:40:22.910Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

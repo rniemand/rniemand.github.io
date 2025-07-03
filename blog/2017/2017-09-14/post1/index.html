@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,17 @@ pre[class*="language-diff-"] {
 
 <h1 id="monitoring-internet-speed-with-home-assistant">Monitoring Internet Speed with Home Assistant</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-09-14">14 September 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/home-assistant/" class="post-tag">home assistant</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-09-14">14 September 2017</time>
+	</span>
+</div>
 
 <p>Continuing with my series around home automation using <a href="https://www.home-assistant.io/">Home Assistant</a> I would like to cover the <code>speedtest</code> sensor component. As the name suggests this component makes use of <a href="https://www.speedtest.net/">speedtest.net</a> to periodically test your server's internet connection and graphs the results for you to keep an eye on.</p>
 <p>When it comes to the configuration for this component I am going to be splitting up the main <code>configuration.yaml</code> file used by Home Assistant into smaller, more specific <code>*.yaml</code> files and referencing them using the <code>!include</code> keyword. This allows our configuration file to stay nice and small, and helps to break up the configuration for all your plugins. Lets begin:</p>
@@ -308,7 +321,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-09-14/post1/` was built on 2025-07-03T22:42:22.114Z -->
+		<!-- This page `/blog/2017/2017-09-14/post1/` was built on 2025-07-03T23:40:22.915Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

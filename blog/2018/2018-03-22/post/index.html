@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,19 @@ pre[class*="language-diff-"] {
 
 <h1 id="flashing-tasmota-on-sonoff-revised">Flashing Tasmota on Sonoff (Revised)</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2018-03-22">22 March 2018</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/arduino/" class="post-tag">arduino</a>, 
+				<a href="/tags/flashing/" class="post-tag">flashing</a>, 
+				<a href="/tags/tasmota/" class="post-tag">tasmota</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2018-03-22">22 March 2018</time>
+	</span>
+</div>
 
 <p>This post is an update to my previous &quot;<a href="https://www.richardn.ca/posts/ChangingSonoffFirmwareVisualGuide/">Changing Sonoff Firmware (Visual Guide)</a>&quot;, and is based on the following <a href="https://www.youtube.com/watch?v=c2IUIUnxjUY&amp;list=PLsc3WxZ0b5g2Y9AoWrJTPKy7-Q0GZAhIH&amp;index=2">Youtube video</a> which makes use of a much simpler flashing method.</p>
 <p>All credits to <code>Justin</code> from <a href="https://www.youtube.com/channel/UC7G4tLa4Kt6A9e3hJ-HO8ng/featured">DrZzs</a> - keep up the good work!</p>
@@ -348,7 +363,7 @@ Upload Speed:  115200
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-03-22/post/` was built on 2025-07-03T22:42:22.118Z -->
+		<!-- This page `/blog/2018/2018-03-22/post/` was built on 2025-07-03T23:40:22.918Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

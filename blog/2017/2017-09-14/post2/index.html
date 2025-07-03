@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,18 @@ pre[class*="language-diff-"] {
 
 <h1 id="wondrous-octoprint-and-my-orangepi-lite">Wondrous OctoPrint &amp; My OrangePi Lite</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-09-14">14 September 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/3d-printing/" class="post-tag">3d printing</a>, 
+				<a href="/tags/octoprint/" class="post-tag">octoprint</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-09-14">14 September 2017</time>
+	</span>
+</div>
 
 <p>Recently I bought <a href="https://www.richardn.ca/posts/AnetA8MyFirst3DPrinter/">my first 3D printer</a> and could not be happier with it, or at least that's what I thought... While watching some YouTube videos around 3D printing I stumbled upon an amazing project called <a href="https://octoprint.org/">OctoPrint</a> which blew my mind. OctoPrint's tagline is &quot;The snappy web interface for your 3D printer&quot;, and boy does it live up to that statement!</p>
 <p>OctoPrint is written in <a href="https://www.python.org/">Python</a> and can pretty much run anywhere (windows, mac, linux, etc). It interfaces with your 3D printer via it's USB cable and controls your printer through GCode commands. This offers the end user a lot of control over the print, and adds some features you would not otherwise have (e.g. the ability to pause and resume mid print). It offers an API should you want to interact with it programmatically and has a pretty big plugin repository covering all things 3D printing.</p>
@@ -317,7 +331,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-09-14/post2/` was built on 2025-07-03T22:42:22.115Z -->
+		<!-- This page `/blog/2017/2017-09-14/post2/` was built on 2025-07-03T23:40:22.915Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,21 @@ pre[class*="language-diff-"] {
 
 <h1 id="over-the-top-door-monitoring-rf-node-red-and-hass">Over the top Door Monitoring (RF, Node-RED and HASS)</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2019-01-16">16 January 2019</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/home-assistant/" class="post-tag">home assistant</a>, 
+				<a href="/tags/project/" class="post-tag">project</a>, 
+				<a href="/tags/node-red/" class="post-tag">node-red</a>, 
+				<a href="/tags/mqtt/" class="post-tag">mqtt</a>, 
+				<a href="/tags/mosquitto/" class="post-tag">mosquitto</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2019-01-16">16 January 2019</time>
+	</span>
+</div>
 
 <p>I work out of the basement at home and often don't hear when my wife gets back from work or my daughter gets back from school. I wanted a way to be notified when either the front door (or back door in this case) gets opened so I can head upstairs and greet them.</p>
 <p>I happened to have some <a href="https://www.aliexpress.com/item/32862123837.html">433 Mhz RF door sensors</a> lying around and decided to try setting up an audible alert on the basement Google Home when the door opens, this post is just a quick explanation of the flow I ended up using.</p>
@@ -369,7 +386,7 @@ msg<span class="token punctuation">.</span>payload <span class="token operator">
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2019/2019-01-16/post/` was built on 2025-07-03T22:42:22.122Z -->
+		<!-- This page `/blog/2019/2019-01-16/post/` was built on 2025-07-03T23:40:22.920Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

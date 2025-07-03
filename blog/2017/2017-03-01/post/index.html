@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,17 @@ pre[class*="language-diff-"] {
 
 <h1 id="arduino-nokia-5110-screen">Arduino + Nokia 5110 Screen</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2017-03-01">01 March 2017</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/arduino/" class="post-tag">arduino</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2017-03-01">01 March 2017</time>
+	</span>
+</div>
 
 <p>Today my goal is to get up and running with a <strong>Nokia 5110 LCD module</strong> and as little <code>Arduino</code> code as possible. The <code>Nokia 5110 LCD</code> module is a great little screen and offers a resolution of <code>84 x 48</code> pixels (that's 84 pixels across and 48 down). It's great for easily displaying data from your projects, and is widely used by hobbyists around the world (i.e. has a lot of support and is cheap).</p>
 <h2 id="required-components">Required Components</h2>
@@ -335,7 +348,7 @@ Adafruit_PCD8544 display <span class="token operator">=</span> <span class="toke
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-03-01/post/` was built on 2025-07-03T22:42:22.111Z -->
+		<!-- This page `/blog/2017/2017-03-01/post/` was built on 2025-07-03T23:40:22.912Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

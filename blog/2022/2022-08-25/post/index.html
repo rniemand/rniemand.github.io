@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,18 @@ pre[class*="language-diff-"] {
 
 <h1 id="voxelab-aries-3d-printer-with-cura">Voxelab Aries 3D Printer with Cura</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2022-08-25">25 August 2022</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/cura/" class="post-tag">cura</a>, 
+				<a href="/tags/3d-printing/" class="post-tag">3d printing</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2022-08-25">25 August 2022</time>
+	</span>
+</div>
 
 <p>Recently I bought myself a new 3D Printer, more specifically a new shiny &quot;<a href="https://www.voxelab3dp.com/product/aries-high-end-fdm-3d-printer-for-beginners?cID=29">Voxelab Aries 3D Printer</a>&quot; which <code>imho</code> is a pretty good value printer for its price point (<em>paid ~ CAD$ 400</em> all in). My only complaints with the printer is the fact that the firmware is closed source and the provided slicer leaves a lot behind in terms of functionality when compared to <a href="https://ultimaker.com/software/ultimaker-cura">Cura</a> or similar slicing software.</p>
 <p>In this post I will cover getting the printer up and running in Cura along with providing a suggested Cura profile that you can use as a template.</p>
@@ -319,7 +333,7 @@ _Extruder Settings_
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2022/2022-08-25/post/` was built on 2025-07-03T22:42:22.127Z -->
+		<!-- This page `/blog/2022/2022-08-25/post/` was built on 2025-07-03T23:40:22.926Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

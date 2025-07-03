@@ -7,6 +7,7 @@
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
 		
@@ -26,6 +27,10 @@ div.main-content {
 
 .blog-list a {
 	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
 }
 /**
  * okaidia theme for JavaScript, CSS and HTML
@@ -232,9 +237,17 @@ pre[class*="language-diff-"] {
 
 <h1 id="owin-mapping-attribute-routes-web-api-2">OWIN - Mapping Attribute Routes (Web API 2)</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="2016-08-25">25 August 2016</time></li>
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/net/" class="post-tag">.net</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2016-08-25">25 August 2016</time>
+	</span>
+</div>
 
 <p>So last night I was playing around with OWIN and a small self-hosted application that made use of WebAPI 2. Everything was working fine until I tried to make use of the <code>[RoutePrefix(&quot;&quot;)]</code> and <code>[Route(&quot;&quot;)]</code> decorators on my controller (they just were not mapping). After a bit of digging I found out that you need to call <code>config.MapHttpAttributeRoutes()</code> in your OWIN <code>Startup</code> class and that should fix the mapping issue.</p>
 <p>My initial attempt at this failed, and after a bit of playing around I figured out that the order in which you place the <code>MapHttpAttributeRoutes</code> and <code>MapHttpRoute</code> makes all the difference.</p>
@@ -260,7 +273,7 @@ config<span class="token punctuation">.</span>Routes<span class="token punctuati
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2016/2016-08-25/post2/` was built on 2025-07-03T22:42:22.111Z -->
+		<!-- This page `/blog/2016/2016-08-25/post2/` was built on 2025-07-03T23:40:22.911Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
