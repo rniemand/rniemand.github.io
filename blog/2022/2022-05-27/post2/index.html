@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>HASS On Unraid: MariaDB</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="hass-on-unraid-mariadb">HASS On Unraid: MariaDB</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2022-05-27">27 May 2022</time></li>
+</ul>
+
+<blockquote>
+<p>This post is <a href="https://www.richardn.ca/series/#unraid-containers-2022">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.
+{: .prompt-tip }</p>
+</blockquote>
+<p>In this post I will cover configuring Home Assistant to use <a href="https://mariadb.com/">MariaDB</a> rather than the default SQLite DB, you can refer to <a href="https://www.richardn.ca/posts/InstallingMariaDBOnUbuntu/">this post</a> for instructions on how to set up MariaDB on Ubuntu.</p>
+<h2 id="create-db-and-user">Create DB and User</h2>
+<p>First you will need to create a DB and user account, this can be done by running the following commands while connected to mysql - make sure that you replace the relevant values with your own.</p>
+<pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token identifier"><span class="token punctuation">`</span>HomeAssistant2021<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
+<span class="token keyword">CREATE</span> <span class="token keyword">USER</span> <span class="token string">'hass'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'xxx'</span><span class="token punctuation">;</span>
+<span class="token keyword">GRANT</span> <span class="token keyword">ALL</span> <span class="token keyword">privileges</span> <span class="token keyword">ON</span> <span class="token identifier"><span class="token punctuation">`</span>HomeAssistant2021<span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'hass'</span><span class="token variable">@'%'</span><span class="token punctuation">;</span></code></pre>
+<p>You can connect to mysql using the following command mysql -u root -p
+You should now have a DB called HomeAssistant2021 that can be accessed using the account you created.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post2/wk6ZGjH6dE-408.avif 408w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post2/wk6ZGjH6dE-408.webp 408w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post2/wk6ZGjH6dE-408.png" alt="" width="408" height="120"></picture>
+<h3 id="backup-your-db">Backup your DB</h3>
+<p>It is generally a good idea to create periodic backups of your databases and should be done for your Home Assistant DB too. <a href="https://www.richardn.ca/posts/BackingUpMariaDbViaCron/">This post</a> covers how to backup your DB via a CRON job.</p>
+<h2 id="install-studio-code-server">Install Studio Code Server</h2>
+<p>Although this step is not required, it will make things a lot easier going forward.
+Under the Addon section in Home Assistant find and install the Studio Code Server addon.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post2/L9eZhExVAG-369.avif 369w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post2/L9eZhExVAG-369.webp 369w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post2/L9eZhExVAG-369.png" alt="" width="369" height="97"></picture>
+<h2 id="configure-db-connection">Configure DB Connection</h2>
+<p>First we will need to generate a connection string for your DB, referring to the <a href="https://www.home-assistant.io/integrations/recorder/">official documentation</a> I ended up with the following connection string.</p>
+<p><code>recorder_db_url: mysql://user:pass@192.168.0.60/HomeAssistant2021?charset=utf8mb4</code></p>
+<p>I would suggest storing the connection string in your <code>secrets.yaml</code> file.</p>
+<h3 id="create-a-configuration-file">Create a configuration file</h3>
+<p>I suggest creating a new file called <code>recorder.yaml</code> in the root of your configuration folder and add the following content to it.</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">db_url</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> recorder_db_url
+<span class="token key atrule">purge_keep_days</span><span class="token punctuation">:</span> <span class="token number">7</span>
+<span class="token key atrule">commit_interval</span><span class="token punctuation">:</span> <span class="token number">0</span>
+<span class="token key atrule">exclude</span><span class="token punctuation">:</span>
+  <span class="token key atrule">domains</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> automation
+    <span class="token punctuation">-</span> updater
+  <span class="token key atrule">entities</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> sun.sun
+  <span class="token key atrule">entity_globs</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> sensor.<span class="token important">*_last_update_trigger</span>
+    <span class="token punctuation">-</span> sensor.<span class="token important">*_last_notification</span>
+    <span class="token punctuation">-</span> sensor.<span class="token important">*_last_removed_notification</span>
+    <span class="token punctuation">-</span> sensor.<span class="token important">*_volume_level_music</span>
+    <span class="token punctuation">-</span> sensor.<span class="token important">*_volume_level_call</span></code></pre>
+<p>I am excluding certain domains and entities from being recorded</p>
+<p>You can then add a reference to your configuration in configuration.yaml like so:
+recorder: <code>!include custom/recorder.yaml</code></p>
+<h3 id="validate-config-and-restart">Validate Config and Restart</h3>
+<p>After making your changes you will need to validate your configuration and restart Home Assistant.</p>
+<p>To restart Home Assistant press c on your keyboard and search for Restart Server in the context menu that appears.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post2/t4_MZgIoWD-517.avif 517w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post2/t4_MZgIoWD-517.webp 517w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post2/t4_MZgIoWD-517.png" alt="" width="517" height="156"></picture>
+<p>Before restarting Home Assistant should validate your configuration and warn if there are any issues.</p>
+<h3 id="confirm-db-is-being-used">Confirm DB is being used</h3>
+<p>Before continuing I would suggest connecting to MariaDB and confirming that Home Assistant is writing changes to the DB, this is as simple as checking to see if the DB has grown in size and for the presence of new tables.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post2/DRqUUXUeBI-402.avif 402w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post2/DRqUUXUeBI-402.webp 402w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post2/DRqUUXUeBI-402.png" alt="" width="402" height="88"></picture>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post2/ZmkMTkakoE-618.avif 618w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post2/ZmkMTkakoE-618.webp 618w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post2/ZmkMTkakoE-618.png" alt="" width="618" height="199"></picture>
+<h2 id="cleanup">Cleanup</h2>
+<p>Once you have confirmed that Home Assistant is writing content to your DB you can go ahead and remove the old <code>home_assistant_v2.db</code> file to free up some space on your server.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2022/2022-05-27/post/">HASS On Unraid: Installation</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2022/2022-05-30/post/">HASS On Unraid: DNS</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2022/2022-05-27/post2/` was built on 2025-07-03T21:40:06.959Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

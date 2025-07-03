@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>HASS On Unraid: Installation</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="hass-on-unraid-installation">HASS On Unraid: Installation</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2022-05-27">27 May 2022</time></li>
+</ul>
+
+<blockquote>
+<p>This post is <a href="https://www.richardn.ca/series/#unraid-containers-2022">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.
+{: .prompt-tip }</p>
+</blockquote>
+<h2 id="download-the-vm-image">Download the VM Image</h2>
+<p>First you will need to obtain the latest image from the Home Assistant website (<a href="https://www.home-assistant.io/installation/alternative">see this page</a>) - in my installation I am using the .qcow2 image as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post/ZKe2aPPCvN-198.avif 198w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post/ZKe2aPPCvN-198.webp 198w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post/ZKe2aPPCvN-198.png" alt="" width="198" height="52"></picture>
+<p>Once downloaded you can use a tool like <a href="https://www.7-zip.org/">7-Zip</a> to extract the contents to a working folder, you should now have the following files:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post/Qs0prxglWb-179.avif 179w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post/Qs0prxglWb-179.webp 179w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post/Qs0prxglWb-179.png" alt="" width="179" height="63"></picture>
+_This is the extracted contents of the zip file_
+<h2 id="create-the-home-assistant-vm">Create the Home Assistant VM</h2>
+<p>Next, you will need to create a new VM in Unraid making use of the Linux template and apply the appropriate configuration for your VM, in my case I used the following.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post/xC6STHV13N-548.avif 548w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post/xC6STHV13N-548.webp 548w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post/xC6STHV13N-548.png" alt="" width="548" height="393"></picture>
+<ul>
+<li><strong>VM Name</strong>: HomeAssistant</li>
+<li><strong>CPU Assignment</strong>: decided to go with 4 CPU's to start (can always add more later on)</li>
+<li><strong>Memory</strong>: Started with 8 GB - however you can get away with as little a 1 GB in a pinch</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post/rFeubMETJm-679.avif 679w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post/rFeubMETJm-679.webp 679w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post/rFeubMETJm-679.png" alt="" width="679" height="103"></picture>
+<p>Ensure that you set the Primary vDisk Location to point to the <code>.qcow2</code> image you downloaded - I would suggest placing the image in your <code>/mnt/user/domains/...</code> directory as this is the assumed location by Unraid when working with virtual machines.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post/pWNBhoaSbc-366.avif 366w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post/pWNBhoaSbc-366.webp 366w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post/pWNBhoaSbc-366.png" alt="" width="366" height="155"></picture>
+<p>Ensure that you assign the network as bridged as some of the functionality of Home Assistant will break without this - assign a MAC Address for the VM (you can use this to enforce static IPs on your router) and select the appropriate network driver.</p>
+<h3 id="adding-an-icon">Adding an Icon</h3>
+<p>You can edit the XML file for your VM as shown below to add in a custom image for Home Assistant to make your VM stand out (if you have a number of them).</p>
+<pre class="language-xml" tabindex="0"><code class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>domain</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>kvm<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">></span></span>HomeAssistant<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>uuid</span><span class="token punctuation">></span></span>054a17e7-fdc0-3238-bf05-6d00ad80b7b3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>uuid</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>metadata</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>vmtemplate</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>unraid<span class="token punctuation">"</span></span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Linux<span class="token punctuation">"</span></span> <span class="token attr-name">icon</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>/mnt/user/domains/home_assistant_2021/logo.png<span class="token punctuation">"</span></span> <span class="token attr-name">os</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>linux<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>metadata</span><span class="token punctuation">></span></span></code></pre>
+<h2 id="first-time-setup">First Time Setup</h2>
+<p>Once your VM is created and you are happy with the configuration you can start it:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post/dbQgAAFCCi-210.avif 210w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post/dbQgAAFCCi-210.webp 210w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post/dbQgAAFCCi-210.png" alt="" width="210" height="108"></picture>
+_Showing off the custom logo assigned above_
+<p>It may take some time for the initial startup to complete, you can connect to the VM using the built in VNC browser and should see the following splash screen when Home Assistant has successfully started up:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post/yEO5PcAeXZ-1203.avif 1203w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post/yEO5PcAeXZ-1203.webp 1203w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post/yEO5PcAeXZ-1203.png" alt="" width="1203" height="653"></picture>
+<p>You can now connect to Home Assistant using one of the URLs provided:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post/zY8hq_NCwy-1100.avif 1100w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post/zY8hq_NCwy-1100.webp 1100w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post/zY8hq_NCwy-1100.png" alt="" width="1100" height="715"></picture>
+<p>You will need to wait for the onboarding process to complete (it can take some time). Follow the instructions and prompts to finish the installation.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post/ASdyjExqiI-1354.avif 1354w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post/ASdyjExqiI-1354.webp 1354w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post/ASdyjExqiI-1354.png" alt="" width="1354" height="490"></picture>
+<p>You are done!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2022/2022-05-26/post/">Running RabbitMQ on Unraid</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2022/2022-05-27/post2/">HASS On Unraid: MariaDB</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2022/2022-05-27/post/` was built on 2025-07-03T21:40:06.959Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

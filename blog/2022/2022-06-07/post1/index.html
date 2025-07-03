@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>HASS On Unraid: ESPHome - Zigbee - Z-Wave</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="hass-on-unraid-esphome-zigbee-z-wave">HASS On Unraid: ESPHome - Zigbee - Z-Wave</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2022-06-07">07 June 2022</time></li>
+</ul>
+
+<p>Today I will be covering installing some must-have Add-ons when working with IoT devices at home, namely:</p>
+<ul>
+<li><a href="https://esphome.io/index.html">ESPHome</a> - control your ESP8266/ESP32 by simple yet powerful configuration files</li>
+<li><a href="https://www.zigbee2mqtt.io/">Zigbee2MQTT</a> - Zigbee to MQTT bridge, get rid of your proprietary Zigbee bridges</li>
+<li><a href="https://zwave-js.github.io/node-zwave-js/#/">Z-Wave JS</a> - Z-Wave driver written entirely in JavaScript/TypeScript</li>
+</ul>
+<p>Having these add-ons installed will open up a plethora of automation possibilities along, there is a lot to cover here so let’s dive in!</p>
+<h2 id="esphome">ESPHome</h2>
+<p>ESPHome is a configuration driven (<code>yaml files</code>) toolchain aimed at ESP8266 / ESP32 devices and allows for quick and easy IoT device deployment and management with its built in UI. My <a href="https://www.richardn.ca/posts/LoungeClockV1/">lounge-clock project</a> was coded completely using ESPHome and has been one of the simplest deployments I have done to date.</p>
+<h3 id="installation">Installation</h3>
+<p>The easiest way to install ESPHome is through the Home Assistant addon (detailed instructions can be <a href="https://esphome.io/guides/getting_started_hassio.html">found here</a>).</p>
+<p>In a nutshell, installation is as simple as adding the ESPHome repository (<code>https://github.com/esphome/home-assistant-addon</code>) to Home Assistant and installing the preferred release. I would highly recommend using the stable release.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/H30tT8GVE_-334.avif 334w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/H30tT8GVE_-334.webp 334w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/H30tT8GVE_-334.png" alt="" width="334" height="89"></picture>
+<h3 id="configuration">Configuration</h3>
+<p>When it comes to configuration there really isn't much to talk about.</p>
+<p>Generally speaking you should be able to just install the add-on and use it as-is.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/JL6GMP0awP-567.avif 567w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/JL6GMP0awP-567.webp 567w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/JL6GMP0awP-567.png" alt="" width="567" height="295"></picture>
+<blockquote>
+<p><strong>NOTE</strong>: it may be worthwhile disabling automatic updates with ESPHome as there have been a couple of breaking changes in the last 2 updates.
+{: .prompt-warning }</p>
+</blockquote>
+<h3 id="using-secrets">Using Secrets</h3>
+<p>I strongly suggest making use of secrets when working with ESPHome (accessed through the top right navigation button):</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/eEkXDfSDgl-279.avif 279w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/eEkXDfSDgl-279.webp 279w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/eEkXDfSDgl-279.png" alt="" width="279" height="46"></picture>
+<p>Secrets work exactly the same in ESPHome as they do in Home Assistant, allowing for you to version control and share your devices code without exposing any sensitive information to any forum or blog post.</p>
+<p>I like to use secrets to store global configuration that is shared between devices, for example:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token comment"># ===============================</span>
+<span class="token comment"># Global Sensor Configuration</span>
+<span class="token comment"># ===============================</span>
+<span class="token key atrule">collection_interval_dht</span><span class="token punctuation">:</span> 120s
+<span class="token key atrule">collection_interval_ldr</span><span class="token punctuation">:</span> 60s
+<span class="token key atrule">collection_interval_wifi_signal</span><span class="token punctuation">:</span> 300s</code></pre>
+<p>These values are used by various sensors deployed around my house, ensuring that they all submit data points at a known interval:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> dht
+    <span class="token key atrule">pin</span><span class="token punctuation">:</span> D4
+    <span class="token key atrule">temperature</span><span class="token punctuation">:</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"${display_name} Temperature"</span>
+      <span class="token key atrule">id</span><span class="token punctuation">:</span> temperature_boys_room
+    <span class="token key atrule">humidity</span><span class="token punctuation">:</span>
+      <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"${display_name} Humidity"</span>
+      <span class="token key atrule">id</span><span class="token punctuation">:</span> humidity_boys_room
+    <span class="token key atrule">update_interval</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> collection_interval_dht
+    
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> adc
+    <span class="token key atrule">pin</span><span class="token punctuation">:</span> A0
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"${display_name} Brightness"</span>
+    <span class="token key atrule">id</span><span class="token punctuation">:</span> boys_room_brightness
+    <span class="token key atrule">update_interval</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> collection_interval_ldr
+    <span class="token key atrule">filters</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">multiply</span><span class="token punctuation">:</span> <span class="token number">3.3</span>
+      
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> wifi_signal
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"${display_name} WiFi"</span>
+    <span class="token key atrule">update_interval</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> collection_interval_wifi_signal</code></pre>
+<p>In the example above I am making use of <a href="https://esphome.io/guides/configuration-types.html#substitutions">substitutions</a> for the sensor block allowing me to literally reuse this code over multiple devices with the correct name and IDs being substituted in at compile time.</p>
+<h2 id="zigbee2mqtt">Zigbee2MQTT</h2>
+<p>To manage the various zigbee devices at home I like to use the <a href="https://www.zigbee2mqtt.io/">Zigbee2MQTT</a> due to its simplicity and native support for MQTT out of the box.</p>
+<p>I found that the Sonoff &quot;<a href="https://itead.cc/product/zbdongle-p/?mc_cid=4ccc22dd31&amp;mc_eid=e1d31ea36e">Zigbee 3.0 USB Dongle Plus</a>&quot; works the best with Home Assistant and provided you can get your hands on one, is worth the money. If I am not mistaken it is one of the cheapest Zigbee USB Sticks out there.</p>
+<h3 id="requirements">Requirements</h3>
+<p>There are some rather specific requirements for running Zigbee2MQTT on Home Assistant and I strongly suggest checking out the <a href="https://www.home-assistant.io/integrations/zha/">documentation</a> before you get started, the main requirement being that you are using a compatible Zigbee USB stick. In my testing I found that the &quot;<a href="https://itead.cc/product/zbdongle-p/?mc_cid=4ccc22dd31&amp;mc_eid=e1d31ea36e">Zigbee 3.0 USB Dongle Plus</a>&quot; flashed with the appropriate firmware works perfectly with my setup.</p>
+<p>The following videos / documentation should help out when it comes to flashing:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=L9lC0Mse0K4">https://www.youtube.com/watch?v=L9lC0Mse0K4</a></li>
+<li><a href="https://www.youtube.com/watch?v=4S_c_m6z-RY">https://www.youtube.com/watch?v=4S_c_m6z-RY</a></li>
+<li><a href="https://www.zigbee2mqtt.io/guide/installation/03_ha_addon.html">https://www.zigbee2mqtt.io/guide/installation/03_ha_addon.html</a></li>
+</ul>
+<h3 id="unraid-configuration">Unraid Configuration</h3>
+<p>Due to the fact that I am running Home Assistant as a VM on my Unraid server additional configuration is required, namely exposing my <strong>Zigbee USB Stick</strong> to the VM.</p>
+<p>I needed to stop the Home Assistant VM and assign the appropriate device to the VM:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/XQba2NcuTI-573.avif 573w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/XQba2NcuTI-573.webp 573w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/XQba2NcuTI-573.png" alt="" width="573" height="88"></picture>
+<p>This should expose the USB stick to the VM as a serial device once started up again.</p>
+<h3 id="add-on-installation">Add-on Installation</h3>
+<p>To install the add-on add a new add-on repository with the following URL <code>https://github.com/zigbee2mqtt/hassio-zigbee2mqtt</code> (detailed instructions <a href="https://github.com/zigbee2mqtt/hassio-zigbee2mqtt#installation">here</a>), once added you can install the Zigbee2mqtt add-on as per normal.</p>
+<p>Once installed head over to configuration and ensure that all the appropriate settings are defined, in my case I am using the following.</p>
+<h4 id="socat">socat</h4>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+<span class="token key atrule">master</span><span class="token punctuation">:</span> pty<span class="token punctuation">,</span>raw<span class="token punctuation">,</span>echo=0<span class="token punctuation">,</span>link=/tmp/ttyZ2M<span class="token punctuation">,</span>mode=777
+<span class="token key atrule">slave</span><span class="token punctuation">:</span> tcp<span class="token punctuation">-</span>listen<span class="token punctuation">:</span><span class="token number">8485</span><span class="token punctuation">,</span>keepalive<span class="token punctuation">,</span>nodelay<span class="token punctuation">,</span>reuseaddr<span class="token punctuation">,</span>keepidle=1<span class="token punctuation">,</span>keepintvl=1<span class="token punctuation">,</span>keepcnt=5
+<span class="token key atrule">options</span><span class="token punctuation">:</span> <span class="token string">'-d -d'</span>
+<span class="token key atrule">log</span><span class="token punctuation">:</span> <span class="token boolean important">false</span></code></pre>
+<h4 id="mqtt">mqtt</h4>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">base_topic</span><span class="token punctuation">:</span> zigbee2mqtt
+<span class="token key atrule">server</span><span class="token punctuation">:</span> mqtt<span class="token punctuation">:</span>//192.168.0.60
+<span class="token key atrule">user</span><span class="token punctuation">:</span> xxx
+<span class="token key atrule">password</span><span class="token punctuation">:</span> xxx</code></pre>
+<h4 id="serial">serial</h4>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">port</span><span class="token punctuation">:</span> /dev/ttyUSB0</code></pre>
+<blockquote>
+<p>In Home Assistant to work out the path to your specific USB Stick go to <strong>Settings</strong> -&gt; <strong>System</strong> -&gt; <strong>Hardware</strong>, click the ellipse at the top of the UI and select <strong>All Hardware</strong>.
+{: .prompt-tip }</p>
+</blockquote>
+<h4 id="additional">additional</h4>
+<p>You will also need to define a <code>network_key</code> for your network - this can be done through the &quot;<strong>edit yaml</strong>&quot; option on the configuration screen, ensure that you backup your network key somewhere safe in case you need to do a reinstall - it will save you from having to re-adopt all your devices again.</p>
+<h3 id="usage">Usage</h3>
+<p>Once installed you can go ahead and start the add-on:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/I2d7Si0WD5-559.avif 559w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/I2d7Si0WD5-559.webp 559w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/I2d7Si0WD5-559.png" alt="" width="559" height="218"></picture>
+<p>In the side menu there should be a link to <strong>Zigbee2MQTT</strong>, to add a device, press the &quot;<strong>Permit join (All)</strong>&quot; button at the top of the UI and follow your device specific pairing instructions.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/Grq88BGyvK-603.avif 603w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/Grq88BGyvK-603.webp 603w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/Grq88BGyvK-603.png" alt="" width="603" height="292"></picture>
+<h2 id="z-wave-js">Z-Wave JS</h2>
+<p>I have a couple of door locks that can be controlled via Z-Wave so I decided to invest in a &quot;<strong>Zooz 700 Series Z-Wave Plus S2 USB Stick</strong>&quot; to use with <a href="https://www.home-assistant.io/integrations/zwave_js/">Z-Wave JS</a>.</p>
+<p>I ran into an odd issue with Unraid and sharing multiple serial based USB sticks with a container that I still have yet to resolve (any help \ suggestions here would be appreciated). Thankfully I have an old Ubuntu server used for <a href="https://www.richardn.ca/posts/BackingUpMariaDbViaCron/">DB backups</a> that is more than capable of running <a href="https://www.portainer.io/">Portainer</a> allowing me to run the <a href="https://hub.docker.com/r/zwavejs/zwavejs2mqtt">zwavejs/zwavejs2mqtt</a> Docker container.</p>
+<h3 id="obtaining-usb-device-id">Obtaining USB Device ID</h3>
+<p>The first thing you will need to do is work out the path to your USB Serial Device so we can expose it to our container. Running the following command should list all serial devices plugged into your server:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">ls</span> /dev/serial/by-id/</code></pre>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/V1gDm9IiDD-792.avif 792w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/V1gDm9IiDD-792.webp 792w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/V1gDm9IiDD-792.png" alt="" width="792" height="51"></picture>
+<p>In my case I will be using <code>/dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_xxx</code>.</p>
+<h3 id="portainer-configuration">Portainer Configuration</h3>
+<p>Create a new container in Portainer using the following configuration:</p>
+<ul>
+<li><strong>Name</strong>: zwavejs</li>
+<li><strong>Repo Image</strong>: <code>zwavejs/zwavejs2mqtt:latest</code></li>
+<li><strong>Port</strong>: 3000 - 3000 (TCP)</li>
+<li><strong>Port</strong>: 8091 - 8091 (TCP)</li>
+<li><strong>Path</strong>: <code>/usr/src/app/store</code> -&gt; <strong>local data store</strong></li>
+<li><strong>Network</strong>: bridge mode</li>
+<li><strong>Variable</strong>: <code>ZWAVEJS_EXTERNAL_CONFIG</code> = <code>/usr/src/app/store/.config-db</code></li>
+<li><strong>Resource</strong>: <code>/dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_xxx</code> =&gt; <code>/dev/serial/by-id/usb-Silicon_Labs_CP2102N_USB_to_UART_Bridge_Controller_xxx</code></li>
+</ul>
+<p>Once done you should be able to start the container and connect to it on port 8091 (in my case http://192.168.0.101:8091/) to configure the container.</p>
+<p>Please refer to the <a href="https://zwave-js.github.io/zwavejs2mqtt/#/">official documentation</a> for any specific configuration options not covered above.</p>
+<h3 id="adding-z-wave-js-to-home-assistant">Adding Z-Wave JS to Home Assistant</h3>
+<p>To add Z-Wave JS to Home Assistant I just followed the <a href="https://www.home-assistant.io/integrations/zwave_js/#installing-and-configuring-the-z-wave-js-integration-in-home-assistant">documentation</a> and added a new Z-Wave JS integration using a websocket connection to my Ubuntu server: <code>ws://192.168.0.101:3000</code>.</p>
+<p>You may need to restart Home Assistant once added to see the changes, however once completed you should now see your Z-Wave JS integration.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/Q8jbtmzlPs-302.avif 302w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/Q8jbtmzlPs-302.webp 302w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/Q8jbtmzlPs-302.png" alt="" width="302" height="160"></picture>
+<h3 id="managing-devices">Managing Devices</h3>
+<p>Management of devices can be done through the web UI or Home Assistant depending on your preference. I find I prefer using Home Assistant for this, but your mileage may vary.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/nW9h2hmm62-747.avif 747w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/nW9h2hmm62-747.webp 747w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/nW9h2hmm62-747.png" alt="" width="747" height="199"></picture>
+<h2 id="in-closing">In Closing</h2>
+<p>That’s all there is to it, hopefully you found this post useful.</p>
+<p>Please feel free to leave any feedback or comments below.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2022/2022-06-06/post/">HASS On Unraid: MQTT</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2022/2022-06-07/post2/">Lounge Clock (v 1.0)</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2022/2022-06-07/post1/` was built on 2025-07-03T21:40:06.960Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

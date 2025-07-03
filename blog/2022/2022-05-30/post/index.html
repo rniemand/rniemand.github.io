@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>HASS On Unraid: DNS</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="hass-on-unraid-dns">HASS On Unraid: DNS</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2022-05-30">30 May 2022</time></li>
+</ul>
+
+<blockquote>
+<p>This post is <a href="https://www.richardn.ca/series/#unraid-containers-2022">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.
+{: .prompt-tip }</p>
+</blockquote>
+<p>Today I will be covering setting up DNS and HTTPS on your local Home Assistance instance making use of <a href="https://www.duckdns.org/">Duck DNS</a> and <a href="https://letsencrypt.org/">Let's Encrypt</a>.</p>
+<p>The process is pretty simple and requires only a few steps to complete.</p>
+<h2 id="static-ip-address-and-port-forwarding">Static IP Address and port forwarding</h2>
+<p>First you will need to set a static IP Address for your Home Assistant server, generally you would do this at your router level reserving a static lease for the MAC Address of your server.</p>
+<p>Once you have a static IP Address you will need to forward all traffic on <code>TCP_443</code> (<code>HTTPS</code>) to your Home Assistant server's IP Address (again, usually done through your router).</p>
+<h2 id="create-a-duck-dns-domain">Create a Duck DNS Domain</h2>
+<p>Next you will need to head over to Duck DNS and create a domain to use with your Home Assistance instance.</p>
+<h2 id="configuring-home-assistant">Configuring Home Assistant</h2>
+<p>Next you will need to create a new file in your configuration folder called http.yaml to store the required configuration settings.</p>
+<p>Add the following contents to <code>http.yaml</code>:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">ssl_certificate</span><span class="token punctuation">:</span> /ssl/fullchain.pem
+<span class="token key atrule">ssl_key</span><span class="token punctuation">:</span> /ssl/privkey.pem
+<span class="token key atrule">server_port</span><span class="token punctuation">:</span> <span class="token number">443</span></code></pre>
+<p>You can include this configuration in Home Assistant by adding the following line to your configuration.yaml file: <code>http: !include custom/http.yaml</code></p>
+<h3 id="install-duck-dns-addon">Install Duck DNS Addon</h3>
+<p>Under Home Assistant add ons, find and install the Duck DNS plugin:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-30/post/F43fohmRIh-585.avif 585w"><source type="image/webp" srcset="/blog/2022/2022-05-30/post/F43fohmRIh-585.webp 585w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-30/post/F43fohmRIh-585.png" alt="" width="585" height="337"></picture>
+<p>Once installed follow the prompts when setting up the Add-On making sure to substitute your token where necessary. In addition, please ensure that the rest of your configuration looks like this:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">accept_terms</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+<span class="token key atrule">algo</span><span class="token punctuation">:</span> secp384r1
+<span class="token key atrule">certfile</span><span class="token punctuation">:</span> fullchain.pem
+<span class="token key atrule">keyfile</span><span class="token punctuation">:</span> privkey.pem</code></pre>
+<p>It should now be safe to restart Home Assistant for the changes to take effect.</p>
+<blockquote>
+<p><strong>NOTE</strong>: you will no longer be able to access Home Assistant on HTTP
+{: .prompt-warning }</p>
+</blockquote>
+<p>You should now be able to access Home Assistant over HTTPS.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2022/2022-05-27/post2/">HASS On Unraid: MariaDB</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2022/2022-05-30/post2/">HASS On Unraid: Google TTS</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2022/2022-05-30/post/` was built on 2025-07-03T21:40:06.959Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

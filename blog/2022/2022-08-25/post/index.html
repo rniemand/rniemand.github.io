@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Voxelab Aries 3D Printer with Cura</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="voxelab-aries-3d-printer-with-cura">Voxelab Aries 3D Printer with Cura</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2022-08-25">25 August 2022</time></li>
+</ul>
+
+<p>Recently I bought myself a new 3D Printer, more specifically a new shiny &quot;<a href="https://www.voxelab3dp.com/product/aries-high-end-fdm-3d-printer-for-beginners?cID=29">Voxelab Aries 3D Printer</a>&quot; which <code>imho</code> is a pretty good value printer for its price point (<em>paid ~ CAD$ 400</em> all in). My only complaints with the printer is the fact that the firmware is closed source and the provided slicer leaves a lot behind in terms of functionality when compared to <a href="https://ultimaker.com/software/ultimaker-cura">Cura</a> or similar slicing software.</p>
+<p>In this post I will cover getting the printer up and running in Cura along with providing a suggested Cura profile that you can use as a template.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/Ileg2fvjht-600.avif 600w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/Ileg2fvjht-600.webp 600w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/Ileg2fvjht-600.jpeg" alt="" width="600" height="600"></picture>
+<p>During my research I stumbled upon <a href="https://www.reddit.com/r/VoxelabAries/comments/tavi0i/cura_profile_for_the_aries/">this post</a> where <a href="https://www.reddit.com/user/deEvilUrge/">/u/deEvilUrge</a> provided some insight into his interaction with <a href="https://www.voxelab3dp.com/">Voxelab3dp</a> and the recommended settings to use with Cura, which i happily jotted down to test with my printer, and after some tweaking I have come up with a somewhat more refined version of those initial settings.</p>
+<h2 id="cura-configuration">Cura Configuration</h2>
+<h3 id="defining-your-printer">Defining your Printer</h3>
+<p>Once you have Cura installed you can add a new printer following these settings:</p>
+<p>Add a new printer to Cura (<code>Preferences</code> -&gt; <code>Configure Cura</code> -&gt; <code>Printers</code> -&gt; <code>Add New</code>):</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/mLRejSTn5e-768.avif 768w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/mLRejSTn5e-768.webp 768w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/mLRejSTn5e-768.png" alt="" width="768" height="144"></picture>
+<p>On the next screen:</p>
+<ol>
+<li>Select &quot;<strong>Add a non-networked printer</strong>&quot;</li>
+<li>Select Custom</li>
+<li>Ensure that “Custom FFF printer” is selected</li>
+<li>Enter in a name for your printer</li>
+<li>Click next</li>
+</ol>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/_S__0eBBpV-755.avif 755w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/_S__0eBBpV-755.webp 755w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/_S__0eBBpV-755.png" alt="" width="755" height="279"></picture>
+<p>Ensure that you enter in the following settings the <strong>Printer Settings</strong> section:</p>
+<ul>
+<li>X (Width): <code>200 mm</code></li>
+<li>Y (Depth): <code>200 mm</code></li>
+<li>Z (Height): <code>200 mm</code></li>
+<li>Build Plate Shape: <code>Rectangular</code></li>
+<li>Origin at Center: <code>Ticked</code></li>
+<li>Heated Bed: <code>Ticked</code></li>
+<li>G-Code flavour: <code>Marlin</code></li>
+</ul>
+<p>Ensure that the following setting are entered into the <strong>Printhead Settings</strong> section:</p>
+<ul>
+<li>X min: <code>-26 mm</code></li>
+<li>Y min: <code>-28 mm</code></li>
+<li>X max: <code>32 mm</code></li>
+<li>Y max: <code>40.5 mm</code></li>
+<li>Gantry Height: <code>30.1 mm</code></li>
+<li>Numbe of extruders: <code>1</code></li>
+<li>Apply Extruder offsets to G-Code: <code>Ticked</code></li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/v6wXeRKNmv-746.avif 746w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/v6wXeRKNmv-746.webp 746w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/v6wXeRKNmv-746.png" alt="" width="746" height="381"></picture>
+<p>Along with the following <strong>Extruder 1</strong> configuration:</p>
+<ul>
+<li>Nozzle size: <code>0.4 mm</code></li>
+<li>Compatabile material diameter: <code>1.75 mm</code></li>
+<li>Nozzle offset X: <code>0.0 mm</code></li>
+<li>Nozzle offset Y: <code>0.0 mm</code></li>
+<li>Cooling Fan Number: <code>0</code></li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/2Hs10qv3Hw-750.avif 750w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/2Hs10qv3Hw-750.webp 750w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/2Hs10qv3Hw-750.png" alt="" width="750" height="283"></picture>
+<h3 id="importing-my-starter-profile">Importing my starter profile</h3>
+<p>Once you have your printer defined, navigate to (<code>Preferences</code> -&gt; <code>Configure Cura</code> -&gt; <code>Profiles</code> -&gt; <code>Import</code>):</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/hh-oCtrJ5K-769.avif 769w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/hh-oCtrJ5K-769.webp 769w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/hh-oCtrJ5K-769.png" alt="" width="769" height="189"></picture>
+<p>Download and import my <a href="https://github.com/rniemand/code-samples/tree/main/3d-printing/Voxelab-Aries">Voxelab-Aries-BaseProfile.curaprofile</a> profile, which looks a little something like this:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/YSYiwJ664K-421.avif 421w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/YSYiwJ664K-421.webp 421w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/YSYiwJ664K-421.png" alt="" width="421" height="366"></picture>
+_Global Profile Settings_
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/_o9qF_0wtg-419.avif 419w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/_o9qF_0wtg-419.webp 419w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/_o9qF_0wtg-419.png" alt="" width="419" height="372"></picture>
+_Extruder Settings_
+<h3 id="using-the-profile">Using the Profile</h3>
+<p>Ensure that you have your printer selected in Cura along with the desired material. Select the <code>Aries Default Print Profile</code> profile and make any required changes to the slicer for your model.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/nljIiZKw2I-1273.avif 1273w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/nljIiZKw2I-1273.webp 1273w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/nljIiZKw2I-1273.png" alt="" width="1273" height="838"></picture>
+<blockquote>
+<p>Below are some sample prints using the base profile - this should be a good starting point for most people.
+{: .prompt-tip }</p>
+</blockquote>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/k-sJTmS7iQ-500.avif 500w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/k-sJTmS7iQ-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/k-sJTmS7iQ-500.jpeg" alt="" width="500" height="387"></picture>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/Di-bAsqGV0-500.avif 500w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/Di-bAsqGV0-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/Di-bAsqGV0-500.jpeg" alt="" width="500" height="354"></picture>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/yjgfUq77J9-500.avif 500w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/yjgfUq77J9-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/yjgfUq77J9-500.jpeg" alt="" width="500" height="349"></picture>
+<picture><source type="image/avif" srcset="/blog/2022/2022-08-25/post/MhNEQD-00t-400.avif 400w"><source type="image/webp" srcset="/blog/2022/2022-08-25/post/MhNEQD-00t-400.webp 400w"><img loading="lazy" decoding="async" src="/blog/2022/2022-08-25/post/MhNEQD-00t-400.jpeg" alt="" width="400" height="577"></picture>
+<h2 id="in-closing">In Closing</h2>
+<p>Overall I am happy with the quality of the <strong>Voxelab Aries 3D Printer</strong>, and having the option to replace the default slicer with Cura is a no-brainer.</p>
+<p>I hope you found this post helpful and happy printing!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2022/2022-07-18/post/">Legacy Blog Posts (2011)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2022/2022-11-25/post/">Updating Chirpy</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2022/2022-08-25/post/` was built on 2025-07-03T21:40:06.960Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

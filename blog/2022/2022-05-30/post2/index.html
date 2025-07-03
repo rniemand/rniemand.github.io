@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>HASS On Unraid: Google TTS</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="hass-on-unraid-google-tts">HASS On Unraid: Google TTS</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2022-05-30">30 May 2022</time></li>
+</ul>
+
+<blockquote>
+<p>This post is <a href="https://www.richardn.ca/series/#unraid-containers-2022">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.
+{: .prompt-tip }</p>
+</blockquote>
+<p>Today I will cover setting up TTS on Home Assistant using the Google Cast integration.</p>
+<h2 id="basic-discovery">Basic Discovery</h2>
+<p>Out of the box Home Assistant should automatically discover any <a href="https://www.home-assistant.io/integrations/cast/">Google Cast</a> compatible devices on your home network and present you with a notification similar to the one below under the Devices &amp; Services section.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-30/post2/PPtN24dOAX-277.avif 277w"><source type="image/webp" srcset="/blog/2022/2022-05-30/post2/PPtN24dOAX-277.webp 277w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-30/post2/PPtN24dOAX-277.png" alt="" width="277" height="183"></picture>
+_Blegh: HDR screen grabbing :(_
+<p>Configuration is as simple as clicking on the &quot;Configure&quot; button and following the prompts.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-30/post2/qc3friFRfV-421.avif 421w"><source type="image/webp" srcset="/blog/2022/2022-05-30/post2/qc3friFRfV-421.webp 421w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-30/post2/qc3friFRfV-421.png" alt="" width="421" height="172"></picture>
+<p>Once done your devices will be available in Home Assistant under the Google Cast integration.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-30/post2/5TKE_0FAqH-263.avif 263w"><source type="image/webp" srcset="/blog/2022/2022-05-30/post2/5TKE_0FAqH-263.webp 263w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-30/post2/5TKE_0FAqH-263.png" alt="" width="263" height="172"></picture>
+<h2 id="tts-configuration">TTS Configuration</h2>
+<p>Next up I created a new configuration file called custom\tts.yaml with the following configuration:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token comment"># https://www.home-assistant.io/integrations/tts/</span>
+<span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> google_translate
+  <span class="token key atrule">base_url</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> core_base_url
+  <span class="token key atrule">time_memory</span><span class="token punctuation">:</span> <span class="token number">43200</span> <span class="token comment"># 12 Hours</span></code></pre>
+<p>Be sure to use your home's HTTPS URL if you are using HTTPS</p>
+<p>You can include this configuration in your main configuration.yaml file using the below import: <code>tts: !include custom/tts.yaml</code></p>
+<p>Save your changes and restart Home Assistant for the configuration to take effect.
+You should now be able to use the TTS through the new Media Browser by selecting the Targeted Device -&gt; Google TTS -&gt; Enter in your message:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-30/post2/Yye0YAbOCp-936.avif 936w"><source type="image/webp" srcset="/blog/2022/2022-05-30/post2/Yye0YAbOCp-936.webp 936w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-30/post2/Yye0YAbOCp-936.png" alt="" width="936" height="282"></picture>
+<p>That's all there is to it.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2022/2022-05-30/post/">HASS On Unraid: DNS</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2022/2022-05-31/post/">SonarQube and Github Actions</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2022/2022-05-30/post2/` was built on 2025-07-03T21:40:06.959Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>SonarQube and Github Actions</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="sonarqube-and-github-actions">SonarQube and Github Actions</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2022-05-31">31 May 2022</time></li>
+</ul>
+
+<p>Today I will be covering my <a href="https://www.sonarqube.org/">SonarQube</a> &amp; <a href="https://github.com/features/actions">Github Actions</a> integration that I use for the majority of my builds at home.</p>
+<h2 id="basic-setup">Basic Setup</h2>
+<p>This section will run through setting up the required Docker containers to run SonarQube and its associated database, for my home lab I am making use of <a href="https://unraid.net/">Unraid</a> so my configuration may differ slightly from <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> and <a href="https://www.portainer.io/">Portainer.io</a> however the settings and concepts should be the same.</p>
+<h2 id="ms-sql-server">MS-SQL Server</h2>
+<p>SonarQube needs a DB to store data (along with its local ElasticSearch instance). I found that running MS-SQL Server worked well for me.</p>
+<p>Below is the configuration that I am using at home:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/Xf75e9irjt-895.avif 895w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/Xf75e9irjt-895.webp 895w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/Xf75e9irjt-895.png" alt="" width="895" height="64"></picture>
+<ul>
+<li><strong>Repo</strong>: <code>mcr.microsoft.com/mssql/server:2019-latest</code></li>
+<li><strong>Port</strong>: <code>1433</code> -&gt; <code>1433</code> (TCP)</li>
+<li><strong>Variable</strong>: <code>ACCEPT_EULA</code> = &quot;Y&quot;</li>
+<li><strong>Variable</strong>: <code>SA_PASSWORD</code> = &quot;xxx&quot;</li>
+<li><strong>Variable</strong>: <code>MSSQL_PID</code> = &quot;Developer&quot;</li>
+<li><strong>Path</strong>: <code>/var/opt/mssql/data</code> -&gt; <code>/mnt/user/appdata/sql-server/data/</code> (RW)</li>
+<li><strong>Path</strong>: <code>/var/opt/mssql/log</code> -&gt; <code>/mnt/user/appdata/sql-server/log/</code> (RW)</li>
+<li><strong>Path</strong>: <code>/var/opt/mssql/secrets</code> -&gt; <code>/mnt/user/appdata/sql-server/secrets/</code> (RW)</li>
+</ul>
+<p>Once the container is up and running I would suggest connecting to it using <a href="https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16">SQL Server Management Studio</a> and adding a new SQL Server managed user for SonarQube to use (I created an user account with the name sonar for this purpose).</p>
+<h2 id="sonarqube-setup">SonarQube Setup</h2>
+<p>Next we need to setup the SonarQube container, the below settings work well for me:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/C21QU3O3lP-915.avif 915w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/C21QU3O3lP-915.webp 915w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/C21QU3O3lP-915.png" alt="" width="915" height="73"></picture>
+<ul>
+<li><strong>Repo</strong>: <code>sonarqube</code></li>
+<li><strong>Port</strong>: <code>9000</code> -&gt; <code>9000</code> (TCP)</li>
+<li><strong>Variable</strong>: <code>SONAR_ES_BOOTSTRAP_CHECKS_DISABLE</code> = &quot;true&quot;</li>
+<li><strong>Variable</strong>: <code>SONAR_JDBC_URL</code> = &quot;jdbc:sqlserver://192.168.0.60;databaseName=SonarQube&quot;</li>
+<li><strong>Variable</strong>: <code>SONAR_JDBC_USERNAME</code> = &quot;sonar&quot;</li>
+<li><strong>Variable</strong>: <code>SONAR_JDBC_PASSWORD</code> = &quot;xxx&quot;</li>
+<li><strong>Path</strong>: <code>/opt/sonarqube/data</code> -&gt; <code>/mnt/user/appdata/sonarqube/data</code> (RW)</li>
+<li><strong>Path</strong>: <code>/opt/sonarqube/logs</code> -&gt; <code>/mnt/user/appdata/sonarqube/logs</code> (RW)</li>
+<li><strong>Path</strong>: <code>/opt/sonarqube/extensions</code> -&gt; <code>/mnt/user/appdata/sonarqube/extensions</code> (RW)</li>
+</ul>
+<p>You should now be able to log into SonarQube locally using the configured port and server's URL, follow the prompts to complete the setup of your SonarQube instance.</p>
+<h2 id="firewall-settings">Firewall Settings</h2>
+<p>If you are wanting to run SonarQube externally with a CI-CD service you will need to allow external access to it through your router's firewall.</p>
+<p>Personally I make use of a service called <a href="https://www.duckdns.org/">Duck DNS</a> (as part of my Home Assistant installation) so I just needed to open up the relevant port on my router to allow TCP 9000 traffic into my home, ensure that the port forwards to the bound IP Address of your SonarQube instance, my configuration looks something like this:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/wr37bxjM_v-917.avif 917w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/wr37bxjM_v-917.webp 917w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/wr37bxjM_v-917.png" alt="" width="917" height="286"></picture>
+<p>The configuration may vary depending on your router, so if you are stuck I would suggest doing a Google search for your router model number and &quot;port forwarding&quot;.</p>
+<h2 id="build-configuration">Build Configuration</h2>
+<p>Once you have exposed SonarQube externally you can continue onto setting up your build in Github.</p>
+<p>Through a lot of trial and error I came up with the following scripts that work well for me (feel free to use them) that break up the various tasks associated with the build process and work well with my configuration.</p>
+<p>This is a simple build process and I am planning on revamping it in the future, but for now this is working for me.</p>
+<h3 id="build-scripts">Build Scripts</h3>
+<p>The following build scripts are included with the majority of my projects:</p>
+<ul>
+<li><code>.github/ci-build.ps1</code> (<a href="https://github.com/rniemand/code-samples/blob/main/blog-posts/2022/ci-cd/ci-build.ps1">see it here</a>) responsible for restoring and building your project - this could be replaced with the appropriate Github actions if you prefer - I do like having some control over the process.</li>
+<li><code>.github/ci-test.ps1</code> (<a href="https://github.com/rniemand/code-samples/blob/main/blog-posts/2022/ci-cd/ci-test.ps1">see it here</a>) discovers and runs all tests for my projects - at the moment I am enforcing all my tests end with *.T1.Tests as I would like to end up with a proper testing flow for my projects. You can tweak this behaviour in the script pretty easily. This script also produces coverage reports using <a href="https://github.com/danielpalme/ReportGenerator">reportgenerator</a> for use with SonarQube.</li>
+</ul>
+<p>These scripts are still a WIP and will change in the future.</p>
+<h3 id="github-workflow">Github Workflow</h3>
+<p>Once you have your build scripts defined you will need a way to tie them all together in Github, enter in <a href="https://github.com/features/actions">Actions</a>.</p>
+<p>Actions are YAML driven workflows that you can control by simply adding in files to your projects .github/workflows/ folder.</p>
+<p>Generally I make use of <a href="https://github.com/rniemand/code-samples/blob/main/blog-posts/2022/ci-cd/workflows/sonarqube.yml">this workflow</a> for the majority of my SonarQube builds, the steps can be broken down to the following actions:</p>
+<ul>
+<li>Install <code>JDK</code> (needed by SonarQube)</li>
+<li>Checks out the repository locally</li>
+<li>Caches and installs SonarQube (tooling, scanner, etc.)</li>
+<li>Runs my <code>build</code> and <code>test</code> scripts</li>
+<li>Submit build information back to my SonarQube server</li>
+<li>(<em>Optionally</em>) packages and pushes to NuGet</li>
+</ul>
+<h3 id="github-actions">Github Actions</h3>
+<p>To ensure that there is no sensitive information made public with my build I make use of <a href="https://docs.github.com/en/actions/security-guides/encrypted-secrets">Secrets</a> with the build and define values as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/V3pVjylVyg-1037.avif 1037w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/V3pVjylVyg-1037.webp 1037w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/V3pVjylVyg-1037.png" alt="" width="1037" height="663"></picture>
+<p>Generally I need to define the following secrets for my build to work:</p>
+<ul>
+<li><code>SONAR_HOST_URL</code> = &quot;http://foobar.com:9000&quot;</li>
+<li><code>SONAR_PROJECT</code> = &quot;rn-netcore-common&quot;</li>
+<li><code>SONAR_TOKEN</code> = &quot;xxxx&quot;</li>
+</ul>
+<p>These values are substituted into the build using the <code>$</code> placeholders allowing me to reuse most of my build scripts.</p>
+<p>Unless you are paying for a SonarQube licence you are most likely only going to want your analysis to run on your repository's main/master branch (this is already part of <a href="https://github.com/rniemand/code-samples/blob/main/blog-posts/2022/ci-cd/workflows/sonarqube.yml">my default workflow</a>).</p>
+<p>With everything set up your workflow should trigger on the next push \ merge to your master branch:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/3k5suxhywM-732.avif 732w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/3k5suxhywM-732.webp 732w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/3k5suxhywM-732.png" alt="" width="732" height="183"></picture>
+<p>Once the build has been completed you should start seeing feedback in your SonarQube instance:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/ve9j_2zY8o-1527.avif 1527w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/ve9j_2zY8o-1527.webp 1527w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/ve9j_2zY8o-1527.png" alt="" width="1527" height="783"></picture>
+<p>It is really that simple.</p>
+<blockquote>
+<p>Your build will fail if Github is unable to reach your SonarQube server, so make sure that you are hosting it on a server that is generally on all the time to avoid failing builds.
+{: .prompt-warning }</p>
+</blockquote>
+<h3 id="project-configuration">Project Configuration</h3>
+<p>It is recommended to ensure that all *.csproj files have a unique ProjectGuid defined to work properly with SonarQube.</p>
+<p>You can do this by adding the following configuration to each .csproj file in your project.</p>
+<pre class="language-xml" tabindex="0"><code class="language-xml"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>PropertyGroup</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>TargetFramework</span><span class="token punctuation">></span></span>net6.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>TargetFramework</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ProjectGuid</span><span class="token punctuation">></span></span>7...A<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ProjectGuid</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>PropertyGroup</span><span class="token punctuation">></span></span></code></pre>
+<blockquote>
+<p>You will need to use a unique GUID each time
+{: .prompt-info }</p>
+</blockquote>
+<h2 id="visual-studio-integration">Visual Studio Integration</h2>
+<p>You can install <a href="https://www.sonarlint.org/">SonarLint</a> as an addon into Visual Studio to get additional code analysis while you are working from SonarQube.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/RrhikpBkne-558.avif 558w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/RrhikpBkne-558.webp 558w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/RrhikpBkne-558.png" alt="" width="558" height="134"></picture>
+<blockquote>
+<p>To continue with these steps you will need to have completed a build in Github, or already have a SonarQube project setup.
+{: .prompt-info }</p>
+</blockquote>
+<p>Once installed, open the Teams window in VS and click on the SonarQube connection to create a new one.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/hdZSPvLbj1-419.avif 419w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/hdZSPvLbj1-419.webp 419w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/hdZSPvLbj1-419.png" alt="" width="419" height="123"></picture>
+<p>You will be prompted for a Server URL and credentials to use with the server, enter in the following information:</p>
+<ul>
+<li><strong>Server URL</strong>: The base URL for your local SonarQube server</li>
+<li><strong>User</strong>: Create a new token in SonarQube and enter it into the space provided</li>
+<li><strong>Password</strong>: if you are using a token you can leave this blank</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/7lie9TMzr8-595.avif 595w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/7lie9TMzr8-595.webp 595w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/7lie9TMzr8-595.png" alt="" width="595" height="196"></picture>
+<p>Click OK to create the connection and select the appropriate project from the list that appears:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/q9zjXw3snn-392.avif 392w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/q9zjXw3snn-392.webp 392w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/q9zjXw3snn-392.png" alt="" width="392" height="162"></picture>
+<p>Once your project has synchronised with SonarQube you should start seeing intellisense suggestions from SonarQube :)</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/hN8xPMZ0Rb-806.avif 806w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/hN8xPMZ0Rb-806.webp 806w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/hN8xPMZ0Rb-806.png" alt="" width="806" height="159"></picture>
+<p>It's really that simple.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-05-31/post/mHA_cZjFnK-852.avif 852w"><source type="image/webp" srcset="/blog/2022/2022-05-31/post/mHA_cZjFnK-852.webp 852w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-31/post/mHA_cZjFnK-852.png" alt="" width="852" height="151"></picture>
+<h2 id="in-closing">In Closing</h2>
+<p>This is by no means the best implementation of CI-CD and there is a lot of room for improvement to the overall process, however this works for me and removes a lot of the processes involved in managing NuGet \ Docker projects with automation.</p>
+<p>Once I have baselined all my projects the following changes will be coming to this pipeline:</p>
+<ul>
+<li>Automatic versioning of builds (manual at the moment - want to use <a href="https://semver.org/">semantic versioning</a>)</li>
+<li>Introduction of build breakers for failing tests</li>
+<li>Proper flow control based on previous steps outcome</li>
+<li>Layering of the build workflows - flows calling flows (think of a chef)</li>
+<li>etc.</li>
+</ul>
+<p>Please feel free to comment \ make use of \ improve this process as I am still learning!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2022/2022-05-30/post2/">HASS On Unraid: Google TTS</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2022/2022-06-06/post/">HASS On Unraid: MQTT</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2022/2022-05-31/post/` was built on 2025-07-03T21:40:06.959Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

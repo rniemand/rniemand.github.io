@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Lounge Clock (v 1.0)</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="lounge-clock-v-1-0">Lounge Clock (v 1.0)</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2022-06-07">07 June 2022</time></li>
+</ul>
+
+<p>In this post I will cover how I built my lounge clock using <a href="https://esphome.io/">ESPHome</a>, <a href="https://www.home-assistant.io/">Home Assistant</a>, <a href="https://www.richardn.ca/posts/InstallingMqttOnUbuntu/">MQTT</a> and a whole lot of other technologies, I think that the end result looks pretty good for my first attempt:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/fko1cPjAys-800.avif 800w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/fko1cPjAys-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/fko1cPjAys-800.jpeg" alt="" width="800" height="538"></picture>
+<h2 id="bill-of-material">Bill of Material</h2>
+<p>The following tools \ materials are required should you want to make your own:</p>
+<ul>
+<li>3D Printer - or a 3D printing service near you</li>
+<li>4x <a href="https://github.com/rniemand/code-samples/tree/main/projects/lounge-clock">7-Segment display PCB's</a> - more information below</li>
+<li>Piece of wood to mount the clock on</li>
+<li>ESP8266 - preferably the Wemos D1 Mini</li>
+<li>Some wires to connect everything together</li>
+<li>2 Part Epoxy - I find it works best with PLA</li>
+<li>Hot glue gun (and glue)</li>
+<li>DHT11</li>
+<li>2x 10K resistors</li>
+<li>1x LDR</li>
+</ul>
+<h2 id="custom-pcb">Custom PCB</h2>
+<p>Using <a href="https://easyeda.com/editor">Easy EDA</a> I was able to come up with the following circuit board:</p>
+<p>&lt;img src=&quot;./002.jpg){: w=&quot;350&quot; &quot; alt=&quot;&quot; /&gt;</p>
+<p>It's a pretty simple board that makes use of some <a href="https://www.aliexpress.com/wholesale?catId=0&amp;initiative_id=SB_20220607051521&amp;SearchText=ws2812b&amp;spm=a2g0o.home.1000002.0">WS2812b</a> SMD LEDS wired in the traditional 7-segment pattern:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/f_0pff2f0v-225.avif 225w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/f_0pff2f0v-225.webp 225w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/f_0pff2f0v-225.png" alt="" width="225" height="322"></picture>
+<p>For fabrication I made use of <a href="https://jlcpcb.com/">JLCPCB</a> and their <a href="https://jlcpcb.com/capabilities/Capabilities">pick and place</a> service, all in 10 boards assembled cost me <code>$27.00</code> (not too bad!).</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/zc_CX2BXkF-800.avif 800w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/zc_CX2BXkF-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/zc_CX2BXkF-800.png" alt="" width="800" height="385"></picture>
+<p>I have made the Gerber files available <a href="https://github.com/rniemand/code-samples/tree/main/projects/lounge-clock/1.0">here</a> if you would like to make your own.</p>
+<h2 id="3d-printing">3D Printing</h2>
+<p>There is a <strong>LOT</strong> of 3D printing required for this project, namely:</p>
+<ul>
+<li>2x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/01%20-%202x%20-%20Double%20Segment%20Holder.stl">Double 7-Segment risers</a> - used to group 2 segments together</li>
+<li>(Optional) 1x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/02%20-%201x%20-%20Doublle%20Segment%20Hole%20Stencil.stl">Double 7-Segment risers template</a> - used for drilling holes</li>
+<li>4x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/03%20-%204x%20-%20Segment%20Cover.stl">7-Segment covers</a> - in black if possible for the best results</li>
+<li>28x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/04%20-%2028x%20-%20Segment%20Diffuser.stl">Segments</a> - I would print more as they break easily</li>
+<li>1x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/05%20-%201x%20-%20Dots%20Holder.stl">Dots holder</a> - used to hold 2 additional <code>WS2812 LEDs</code></li>
+<li>1x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/06%20-%201x%20-%20Dots%20Cover.stl">Dots cover</a> - in black if possible for the best results</li>
+<li>2x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/07%20-%202x%20-%20Dots%20Diffuser.stl">Dots segments</a> - plus a couple of spares</li>
+<li>2x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/08%20-%202x%20-%20Double%20Segment%20Cover.stl">Double 7-Segment covers</a> - my attempt at cleaning up the mess at the end :)</li>
+</ul>
+<p>The assembly is pretty straight forward (like Lego for adults) and I left enough space to route all the required wires through the risers to give the clock a neater look - although I do not know what happened to mine!</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/aoaCfJkVhw-850.avif 850w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/aoaCfJkVhw-850.webp 850w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/aoaCfJkVhw-850.jpeg" alt="" width="850" height="321"></picture>
+<p>I would put aside ~18 hours for all the printing to be completed (depending on your printing profile).</p>
+<h2 id="assembly">Assembly</h2>
+<p>Unfortunately I did not take any pictures of the assembly process, however it is pretty easy.</p>
+<p>Each 7-Segment board has a <code>DIN</code> (Digital In) and <code>DOUT</code> (Digital Out) solder point, which need to be daisy chained from one board to another.</p>
+<p>On the PCB all the <code>GND</code> points are all connected together, along with the <code>VCC</code> points to make routing power a lot easier. When connecting the boards you just need to follow this pattern if you are using the <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/1.0/clock-code.yaml">source code</a> I provide.</p>
+<pre><code>DIN -&gt; [7-Seg] -&gt; [7-Seg] -&gt; [7-Seg] -&gt; [7-Seg] -&gt; [.] -&gt; [.]
+</code></pre>
+<p>Where the following is true:</p>
+<ul>
+<li><code>7-Seg</code> - represents a 7-Segment PCB</li>
+<li><code>[.]</code> - represents a single <strong>WS2812x</strong> LED</li>
+</ul>
+<p>The entire assemby should be mounted onto a backing board (using the stencil to make the appropriate holes), and the additional components should be connected to the <code>ESP8266</code> similar to the diagram below:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/FQqx5c_4Bz-800.avif 800w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/FQqx5c_4Bz-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/FQqx5c_4Bz-800.png" alt="" width="800" height="607"></picture>
+_**NOTE** the single LED represents all the PCBs_
+<pre><code>D3       WS2812B        Lights
+D1       DHT11          Temperature
+A0       ADC - LDR      Brightness
+</code></pre>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/XsHME65Fee-800.avif 800w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/XsHME65Fee-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/XsHME65Fee-800.jpeg" alt="" width="800" height="356"></picture>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/IfhuBPnziu-800.avif 800w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/IfhuBPnziu-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/IfhuBPnziu-800.jpeg" alt="" width="800" height="298"></picture>
+<p>Like most <code>DIY</code> projects it may not be pretty, but it works!</p>
+<blockquote>
+<p><strong>FYI</strong>: the yellow tape on the spacers are to stop the plastic rubbing on my walls
+{: .prompt-info }</p>
+</blockquote>
+<h2 id="source-code">Source Code</h2>
+<p>The source code use for my clock is an adaptation of the code <a href="https://3dmixers.com/m/250988-led-clock-7-segments-">found here</a> and I take no credit for the original code, only the modifications to it - <a href="https://3dmixers.com/user/thestovedoc/portfolio">thestovedoc</a> deserves the credit!</p>
+<p>The modified code can be <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/1.0/clock-code.yaml">found here</a> and requires that you either replace the <code>!secret ...</code> placeholders, or inline them into the code before uploading it to the <code>ESP8266</code>.</p>
+<h3 id="segment-values">Segment Values</h3>
+<p>As mentioned above the <strong>7-Segment</strong> PCB's follow the standard layout (<code>A, B, C, D, E, F, G</code>) to make defining numbers a lot easier.</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/f_0pff2f0v-225.avif 225w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/f_0pff2f0v-225.webp 225w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/f_0pff2f0v-225.png" alt="" width="225" height="322"></picture>
+<p>Below is the number range used in this project as an example:</p>
+<pre><code>int digitsLeds[11][ledsInDigitCount] = {
+// A B C D E F G
+  {1,1,1,1,1,1,0}, // 0
+  {0,1,1,0,0,0,0}, // 1
+  {1,1,0,1,1,0,1}, // 2
+  {1,1,1,1,0,0,1}, // 3
+  {0,1,1,0,0,1,1}, // 4
+  {1,0,1,1,0,1,1}, // 5
+  {1,0,1,1,1,1,1}, // 6
+  {1,1,1,0,0,0,0}, // 7
+  {1,1,1,1,1,1,1}, // 8
+  {1,1,1,1,0,1,1}, // 9
+  {0,0,0,0,0,0,0}, // 10 -&gt; ALL_OFF!
+};
+</code></pre>
+<h2 id="home-assistant-setup">Home Assistant Setup</h2>
+<p>Setting everything up in Home Assistant is pretty simple once you have flashed the firmware to your <code>ESP8266</code> using the <a href="https://esphome.io/">ESPHome</a>:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/7DiQIj3r1s-802.avif 802w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/7DiQIj3r1s-802.webp 802w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/7DiQIj3r1s-802.png" alt="" width="802" height="243"></picture>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/VmGigJjIK5-710.avif 710w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/VmGigJjIK5-710.webp 710w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/VmGigJjIK5-710.png" alt="" width="710" height="208"></picture>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/UvB0wOBI4h-556.avif 556w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/UvB0wOBI4h-556.webp 556w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/UvB0wOBI4h-556.png" alt="" width="556" height="153"></picture>
+<h3 id="card-control">Card Control</h3>
+<p>To allow for easier control of the clock I added the following card to my dashboard:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/fzIwkjQ_mx-632.avif 632w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/fzIwkjQ_mx-632.webp 632w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/fzIwkjQ_mx-632.png" alt="" width="632" height="328"></picture>
+_It's not that pretty, but it gets the job done!_
+<p>Working left to right:</p>
+<ul>
+<li><code>Clock Control</code> - allows for quick control of the clocks brightness</li>
+<li><code>H</code> - (hours) short press to toggle, long press to adjust</li>
+<li><code>:</code> - (dots) short press to toggle, long press to adjust</li>
+<li><code>M</code> - (minutes) short press to toggle, long press to adjust</li>
+<li><code>Leading 0</code> - used to toggle the leading <code>0</code> (24 hour \ 12 hour format)</li>
+<li><code>Blinking</code> - used to toggle the blinking of the <code>:</code> as it can be annoying when watching TV</li>
+<li><code>12\24</code> - toggles between 12 and 24 hour time format</li>
+<li><code>Clock Mode</code> - quickly enables the clock mode - there are other effects on the clock</li>
+<li><code>Lights</code> - group of all the lights making up the lounge clock</li>
+</ul>
+<p>The backing code is shown below:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">type</span><span class="token punctuation">:</span> horizontal<span class="token punctuation">-</span>stack
+<span class="token key atrule">cards</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> light
+    <span class="token key atrule">entity</span><span class="token punctuation">:</span> light.lounge_clock
+  <span class="token punctuation">-</span> <span class="token key atrule">square</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">columns</span><span class="token punctuation">:</span> <span class="token number">3</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> grid
+    <span class="token key atrule">cards</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">show_name</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">show_icon</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> button
+        <span class="token key atrule">tap_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> toggle
+        <span class="token key atrule">entity</span><span class="token punctuation">:</span> light.lounge_hours_lights
+        <span class="token key atrule">hold_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> more<span class="token punctuation">-</span>info
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> HH
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>alpha<span class="token punctuation">-</span>h
+        <span class="token key atrule">show_state</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">show_name</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">show_icon</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> button
+        <span class="token key atrule">tap_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> toggle
+        <span class="token key atrule">entity</span><span class="token punctuation">:</span> light.lounge_dots_lights
+        <span class="token key atrule">hold_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> more<span class="token punctuation">-</span>info
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">':'</span>
+        <span class="token key atrule">show_state</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">show_name</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">show_icon</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> button
+        <span class="token key atrule">tap_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> toggle
+        <span class="token key atrule">entity</span><span class="token punctuation">:</span> light.lounge_minutes_lights
+        <span class="token key atrule">hold_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> more<span class="token punctuation">-</span>info
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> MM
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>alpha<span class="token punctuation">-</span>m
+        <span class="token key atrule">show_state</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">show_name</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">show_icon</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> button
+        <span class="token key atrule">tap_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> toggle
+        <span class="token key atrule">entity</span><span class="token punctuation">:</span> switch.lounge_leading_zero
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> Zero
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> <span class="token string">''</span>
+        <span class="token key atrule">show_state</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">show_name</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">show_icon</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> button
+        <span class="token key atrule">tap_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> toggle
+        <span class="token key atrule">entity</span><span class="token punctuation">:</span> switch.lounge_dots_blink
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> Blink
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>car<span class="token punctuation">-</span>light<span class="token punctuation">-</span>dimmed
+        <span class="token key atrule">show_state</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">show_name</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">show_icon</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> button
+        <span class="token key atrule">tap_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> toggle
+        <span class="token key atrule">entity</span><span class="token punctuation">:</span> switch.lounge_24_hour_format
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">'24'</span>
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>hours<span class="token punctuation">-</span><span class="token number">24</span>
+        <span class="token key atrule">show_state</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">show_name</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">show_icon</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> button
+        <span class="token key atrule">tap_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> call<span class="token punctuation">-</span>service
+          <span class="token key atrule">service</span><span class="token punctuation">:</span> light.turn_on
+          <span class="token key atrule">service_data</span><span class="token punctuation">:</span>
+            <span class="token key atrule">effect</span><span class="token punctuation">:</span> Time Effect
+          <span class="token key atrule">target</span><span class="token punctuation">:</span>
+            <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> light.lounge_clock
+        <span class="token key atrule">entity</span><span class="token punctuation">:</span> <span class="token string">''</span>
+        <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>clock<span class="token punctuation">-</span>digital
+        <span class="token key atrule">hold_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> none
+      <span class="token punctuation">-</span> <span class="token key atrule">show_name</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">show_icon</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+        <span class="token key atrule">type</span><span class="token punctuation">:</span> button
+        <span class="token key atrule">tap_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> more<span class="token punctuation">-</span>info
+        <span class="token key atrule">entity</span><span class="token punctuation">:</span> light.lounge_clock_all_lights
+        <span class="token key atrule">hold_action</span><span class="token punctuation">:</span>
+          <span class="token key atrule">action</span><span class="token punctuation">:</span> none</code></pre>
+<h3 id="collected-data">Collected Data</h3>
+<p>In addition to displaying the time, the clock also collects and submits the following data:</p>
+<picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/Ztw3Lgpd-Y-328.avif 328w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/Ztw3Lgpd-Y-328.webp 328w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/Ztw3Lgpd-Y-328.png" alt="" width="328" height="438"></picture>
+<ul>
+<li><code>Brightness</code> - handled by the <strong>LDR</strong> - measured in voltage (<code>HIGHER</code> = brighter)</li>
+<li><code>Humidity</code> - measured by the <strong>DHT11</strong></li>
+<li><code>Temperature</code> - measured by the <strong>DHT11</strong></li>
+<li><code>WiFi Signal</code> - built in measure with ESPHome</li>
+</ul>
+<p>This data can be used in your home automations, some examples that spring to mind:</p>
+<ul>
+<li>Use the collected temperature data to control your thermostat</li>
+<li>Change the brightness of the clock based on ambient lighting</li>
+<li>Climate control using the <code>Temperature</code> and <code>Humidity</code> values</li>
+<li>Use the collected <code>WiFi Signal</code> to guage on how a repeater is working in your home</li>
+<li>etc.</li>
+</ul>
+<h2 id="in-closing">In Closing</h2>
+<p>This was a fun project to work on, and allowed me to mess around with things like:</p>
+<ul>
+<li>PCB design and fabrication</li>
+<li>3D modeling (using Fusion 360)</li>
+<li>Coding (C++ lambdas)</li>
+<li>ESPHome + Home Assistant</li>
+<li>MQTT (using mosquitto)</li>
+<li>3D Printing and fabrication</li>
+</ul>
+<p>I found this to be a good starter project for taking my Home Assistant &amp; fabrication to the next level.</p>
+<p>As always, please feel free to leave any comments \ suggestions below.</p>
+<p>Happy Hacking.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2022/2022-06-07/post1/">HASS On Unraid: ESPHome - Zigbee - Z-Wave</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2022/2022-06-10/post/">HASS On Unraid: Times of Day Automations</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2022/2022-06-07/post2/` was built on 2025-07-03T21:40:06.960Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
