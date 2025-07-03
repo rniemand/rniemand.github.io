@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Alert Maker Revival</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="alert-maker-revival">Alert Maker Revival</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-06-19">19 June 2018</time></li>
+</ul>
+
+<p>While migrating some of my blog posts over from my old blog to this one I stumbled upon a program I wrote in 2011 when I started learning C# (to give you an idea of the age of this guy, it was written in .net 2.0!).</p>
+<p>With some nostalgia I opened the project in VS and ran it, to my surprise it worked with no issues.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-19/post/c7fY9RUXgP-287.avif 287w"><source type="image/webp" srcset="/blog/2018/2018-06-19/post/c7fY9RUXgP-287.webp 287w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-19/post/c7fY9RUXgP-287.png" alt="" width="287" height="311"></picture>
+<p>While looking through the original source code I cringed at all the bad practices in play (and the nasty 4 space tabs!) - I decided it was high time to upgrade the project to run under .net 4.5, add some comments to the code, fix the poor naming conventions used and add it to source control.</p>
+<p>I created the <a href="https://github.com/rniemand/Alert-Maker">following repository</a> on GitHub should you want to mess around with the code a bit. I have also compiled the code and created a <a href="https://github.com/rniemand/Alert-Maker/releases/tag/1.0.0">v 1.0.0 release</a> in case you don’t want to compile it.</p>
+<h2 id="what-does-it-do">What does it do?</h2>
+<p>In a nutshell the Alert Maker application does just what its name says, it will allow the user to write a custom event log entry into a targeted Windows event log. This was useful to me at the time as I was developing custom management packs for SCOM 2007 R2 and I needed a quick way to trigger monitored events.</p>
+<p>In addition to being able to write custom messages to an event log I had also added the ability to create your own event source to use when writing these entries (again this was needed for my management pack development).</p>
+<h2 id="usage">Usage</h2>
+<p>Usage is pretty simple, all you need to do is complete the “Form” by selecting \ filling in the information you wish the see in the targeted event log like so:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-19/post/WYK-M5KN1V-284.avif 284w"><source type="image/webp" srcset="/blog/2018/2018-06-19/post/WYK-M5KN1V-284.webp 284w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-19/post/WYK-M5KN1V-284.png" alt="" width="284" height="314"></picture>
+<p>Once you are happy with the selected values, click the Create Event button to fire it off. Your event should land in the targeted log file under the desired source:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-19/post/uaY4a-iFPL-599.avif 599w"><source type="image/webp" srcset="/blog/2018/2018-06-19/post/uaY4a-iFPL-599.webp 599w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-19/post/uaY4a-iFPL-599.png" alt="" width="599" height="194"></picture>
+<p>That’s pretty much all there is to it, hopefully you found this little trip down memory lane somewhat interesting, or at worst found a use for this application.</p>
+<p>Feel free to fork the code and make any changes you want to it, I also accept pull requests :)</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-03-22/post/">Flashing Tasmota on Sonoff (Revised)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2018/2018-06-27/post/">Home Assistant From Scratch - Installation</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2018/2018-06-19/post/` was built on 2025-07-03T19:17:39.003Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

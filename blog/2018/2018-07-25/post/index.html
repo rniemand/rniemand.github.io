@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Home Assistant From Scratch - History</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="home-assistant-from-scratch-history">Home Assistant From Scratch - History</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-07-25">25 July 2018</time></li>
+</ul>
+
+<blockquote>
+<p>This is one <strong><a href="https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.
+{: .prompt-tip }</p>
+</blockquote>
+<p>Today I would like to cover the History component of Home Assistant, and show you how to ignore certain entities or domains altogether through it.</p>
+<h2 id="new-terminology">New Terminology</h2>
+<p>In this post I will be talking about <code>entities</code> and <code>domains</code> in Home Assistant, these are relatively simple terms which you are familiar with already, albeit you didn't know the proper names for them.</p>
+<h3 id="entities">Entities</h3>
+<p>An entity in Home Assistant is anything that you can interact with, for example one of the <a href="https://www.richardn.ca/posts/HomeAssistantFromScratchHue/">Philips Hue lights we added in an earlier post</a>. All objects in Home Assistant inherit from the <a href="https://github.com/home-assistant/core/blob/dev/homeassistant/helpers/entity.py">entity base class</a>, and can be seen in the states section of the developer tools.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post/DDXsknqOvD-250.avif 250w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post/DDXsknqOvD-250.webp 250w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post/DDXsknqOvD-250.png" alt="" width="250" height="132"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post/p2dvEL-Wq0-727.avif 727w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post/p2dvEL-Wq0-727.webp 727w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post/p2dvEL-Wq0-727.png" alt="" width="727" height="301"></picture>
+<p>It is these names (I like to think of them as the entity's fully qualified name) that we use to configure certain aspects of Home Assistant - like creating groups, views or automatons. A fully qualified name of an entity follows the <code>&lt;domain&gt;.&lt;entity_id&gt;</code> naming convention.</p>
+<h3 id="domains">Domains</h3>
+<p>Entities are grouped together into collections known as <code>domains</code> in Home Assistant, making them easier to manage, and helps provide some insight into what a particular entity does (e.g. deck is less helpful when compared to <code>light.deck</code>).</p>
+<p>Again we have already seen domains in action when creating the custom light group back in <a href="https://www.richardn.ca/posts/HomeAssistantFromScratchHue/">this post</a>, with the groups we created again being added to the group domain.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post/7YSTf6gU1H-604.avif 604w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post/7YSTf6gU1H-604.webp 604w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post/7YSTf6gU1H-604.png" alt="" width="604" height="104"></picture>
+<p>This concept is useful in Home Assistant (as you will see later) as it allows you to exclude / include a dynamic collection of entities rather than listing them one at a time.</p>
+<h2 id="world-clock-sensor">World Clock Sensor</h2>
+<p>I am going to add the <a href="https://www.home-assistant.io/integrations/worldclock/">world clock sensor</a> to Home Assistant to allow me to keep tabs on the time in Canada and South Africa. We do this by adding the following lines to the configuration.yaml file ...</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> worldclock
+    <span class="token key atrule">time_zone</span><span class="token punctuation">:</span> Canada/Mountain
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> World Clock Canada
+
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> worldclock
+    <span class="token key atrule">time_zone</span><span class="token punctuation">:</span> Africa/Johannesburg
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> World Clock South Africa</code></pre>
+<p>... and grouping them like so:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">time_group</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> Date &amp; Time
+  <span class="token key atrule">entities</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> sensor.world_clock_canada
+    <span class="token punctuation">-</span> sensor.world_clock_south_africa</code></pre>
+<p>This will result in the following new panel on your Home Assistant dashboard.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post/uE0v_0l0wu-500.avif 500w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post/uE0v_0l0wu-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post/uE0v_0l0wu-500.png" alt="" width="500" height="182"></picture>
+<h2 id="history-component">History Component</h2>
+<p>The <a href="https://www.home-assistant.io/integrations/history/">history component</a> will track everything that is going on within Home Assistant and allows the user to browse through it. It depends on the <a href="https://www.home-assistant.io/integrations/recorder/">recorder component</a> for storing the data and uses the same database setting.</p>
+<p>As you can see the history component is great as it allows us to query the state of any component in Home Assistant from the past, what is not so great is the fact that every component in Home Assistant is tracked automatically, including every state change. For something that changes as often as a clock, or for entities we don't care about, this is a waste of storage and can slow down your database (depending on where it is hosted).</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post/OOiCk291hl-603.avif 603w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post/OOiCk291hl-603.webp 603w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post/OOiCk291hl-603.png" alt="" width="603" height="74"></picture>
+<p>We are already getting data stored in history for our clock, let's stop that!</p>
+<h3 id="ignoring-a-specific-entity">Ignoring a specific entity</h3>
+<p>Unfortunately for me the world clock sensor is part of the <code>sensor's</code> domain so we cannot exclude it by the domain name - if we were to do this we would lose all sensor information, what we need to do in this case is exclude our clocks by <code>entity</code> name.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post/ULVUmHbPuz-608.avif 608w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post/ULVUmHbPuz-608.webp 608w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post/ULVUmHbPuz-608.png" alt="" width="608" height="83"></picture>
+<p>To exclude an entity from the history component is as simple as adding it to the exclusion list like shown in the documentation:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">history</span><span class="token punctuation">:</span>
+  <span class="token key atrule">exclude</span><span class="token punctuation">:</span>
+    <span class="token key atrule">entities</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> sensor.world_clock_canada
+      <span class="token punctuation">-</span> sensor.world_clock_south_africa</code></pre>
+<p>After validating your configuration to ensure that you didn't make any typos, restart Home Assistant for the changes to take effect. If done correctly you will no longer have any new history entries being recorded for your world_clockcomponents.</p>
+<blockquote>
+<p><strong>Note</strong>: You will need to wait a day or so for the data to be removed from the history view, this is because we stopped new data from being recorded and did not delete the recorded data from the DB.
+{: .prompt-info }</p>
+</blockquote>
+<h3 id="ignoring-a-domain">Ignoring a domain</h3>
+<p>In some cases you may not want to collect history for a group of entities in Home Assistant, for me this is all items in the group domain. As mentioned earlier domains are the leading bit in an entity name (e.g. <code>mediaplayer.loungespeaker</code> - the domain is <code>media_player</code>), you can get an idea of all the domains you are using through the States View.</p>
+<p>Like with single entities, you can exclude a domain through the exclude option on the history component, so in my case I can exclude all groups with the following configuration:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">history</span><span class="token punctuation">:</span>
+  <span class="token key atrule">exclude</span><span class="token punctuation">:</span>
+    <span class="token key atrule">domains</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> group</code></pre>
+<p>After a quick validation of my configuration, a restart of Home Assistant (and some time for the history to roll over to the next day) - I no longer have any group history :)</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post/q4SNnJnkwb-800.avif 800w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post/q4SNnJnkwb-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post/q4SNnJnkwb-800.png" alt="" width="800" height="456"></picture>
+<h2 id="in-closing">In Closing</h2>
+<p>As always, I hope that you found this post interesting and helpful. I am always looking for any feedback, comments or suggestions to help provide better content.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-07-19/post/">Home Assistant From Scratch - Presence Detection</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2018/2018-07-25/post2/">Home Assistant From Scratch - Weather and System Monitoring</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2018/2018-07-25/post/` was built on 2025-07-03T19:17:39.003Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

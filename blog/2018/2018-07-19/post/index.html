@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Home Assistant From Scratch - Presence Detection</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="home-assistant-from-scratch-presence-detection">Home Assistant From Scratch - Presence Detection</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-07-19">19 July 2018</time></li>
+</ul>
+
+<blockquote>
+<p>This is one <strong><a href="https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.
+{: .prompt-tip }</p>
+</blockquote>
+<p>Today we are going to make our Home Assistant deployment a bit smarter by adding in presence detection. For this I am going to be making use of the <a href="https://www.home-assistant.io/integrations/google_maps/">Google Maps Location Sharing</a> component as I find it to be more reliable than my old self-hosted OwnTracks instance, and both my wife's phone and mine already have Google Maps installed with location sharing enabled (so there is no need to install another application on Rae's phone).</p>
+<h2 id="core-configuration">Core Configuration</h2>
+<p>Below are the steps required to get up and running with the Google Maps Location Sharing component.</p>
+<blockquote>
+<p><strong>Note</strong>: I strongly recommend creating a new Google account to be used with Home Assistant for this, mainly due to the fact that you will need to share your location with it.
+{: .prompt-info }</p>
+</blockquote>
+<h3 id="google-account-configuration">Google Account Configuration</h3>
+<p>You will also need to enable <a href="https://myaccount.google.com/lesssecureapps?pli=1&amp;rapt=AEjHL4PmYNJjr7LhnWj_lt7RNWbWlRF2t9o63ABWOnZ4_hKtad_9LXD3C0v9ie3V7MeagABgpmi8r_v91ZUSqz64rMhfEoO86A">less secure application sign in</a> for the new account, along with approving the login on the <a href="https://myaccount.google.com/device-activity">device activity</a> overview page after your initial spin up of Home Assistant with Google Maps location sharing enabled.</p>
+<p>I noticed when I initially created the account it took a day or so before HASS was able to log into the new account properly to retrieve our device location. I would suggest creating the account, following the steps below and giving it a day or so for your settings to take effect.</p>
+<p>Once your account is created, open up Google Maps on your phone, enable location sharing and share your location with your new account - be sure to share your location as ongoing.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-19/post/62VtSJfTca-400.avif 400w"><source type="image/webp" srcset="/blog/2018/2018-07-19/post/62VtSJfTca-400.webp 400w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-19/post/62VtSJfTca-400.png" alt="" width="400" height="800"></picture>
+<h3 id="hass-configuration">HASS Configuration</h3>
+<p>Enabling Google Maps Location Sharing in Home Assistant (HASS) is as simple as adding the following 2 lines into your secrets.yaml file...</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">google_user</span><span class="token punctuation">:</span> xxx@gmail.com
+<span class="token key atrule">google_pass</span><span class="token punctuation">:</span> dddd</code></pre>
+<p>... the below into your <code>configuration.yaml</code> file ...</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">device_tracker</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> google_maps
+    <span class="token key atrule">username</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> google_user
+    <span class="token key atrule">password</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> google_pass</code></pre>
+<p>... validating your configuration and restarting Home Assistant, when Home Assistant comes back up you should see all people sharing their location with your new Google account as shown below.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-19/post/QFIKUxbU9O-256.avif 256w"><source type="image/webp" srcset="/blog/2018/2018-07-19/post/QFIKUxbU9O-256.webp 256w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-19/post/QFIKUxbU9O-256.png" alt="" width="256" height="101"></picture>
+<h3 id="known-devices-yaml">known_devices.yaml</h3>
+<p>Home Assistant will generate a new file called <code>known_devices.yaml</code> (if there isn't already one) which it uses to store information about discovered devices. The contents of the file should look something like this:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">google_maps_&lt;random_uuid></span><span class="token punctuation">:</span>
+  <span class="token key atrule">hide_if_away</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span>
+  <span class="token key atrule">mac</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> &lt;random_uuid<span class="token punctuation">></span>
+  <span class="token key atrule">picture</span><span class="token punctuation">:</span> https<span class="token punctuation">:</span>//l<span class="token punctuation">...</span>/photo.jpg
+  <span class="token key atrule">track</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
+<p>This file (<code>known_devices.yaml</code>) is specific to your Home Assistant setup and should not be committed to source control, it is safe to add to your .gitignore file.</p>
+<p>If you wish to change the display names for your tracked users, this is the file to do it in, simply enter in the desired name for the user into the name property, reload Home Assistant and voila.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-19/post/tj0Bijbm2A-232.avif 232w"><source type="image/webp" srcset="/blog/2018/2018-07-19/post/tj0Bijbm2A-232.webp 232w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-19/post/tj0Bijbm2A-232.png" alt="" width="232" height="81"></picture>
+<h2 id="zones">Zones</h2>
+<p>Home Assistant allows us to configure custom zones through the <a href="https://www.home-assistant.io/integrations/zone/">zone component</a>.</p>
+<blockquote>
+<p>Zones allow you to specify certain regions on earth. When a device tracker sees a device to be within a zone, the state will take the name from the zone. Zones can also be used as a trigger or condition inside automation setups.
+{: .prompt-info }</p>
+</blockquote>
+<p>Let's see this in action by defining a Gym zone to see how active I am (spoiler - not very).</p>
+<h3 id="creating-a-gym-zone">Creating a Gym zone</h3>
+<p>First thing you will need in order to define a zone is the longitude and latitude coordinates for your desired zone. I find the best way to get these values is by finding the desired area on Google Maps and extracting the values from the URL.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-19/post/CAXiml1tu8-667.avif 667w"><source type="image/webp" srcset="/blog/2018/2018-07-19/post/CAXiml1tu8-667.webp 667w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-19/post/CAXiml1tu8-667.png" alt="" width="667" height="176"></picture>
+<p><code>https://www.google.co.za/maps/@53.5292089,-113.291217,18.25z</code></p>
+<p>So my latitude should be 53.5292089 and longitude should be -113.291217 - give or take. I can now create my custom zone in the configuration.yaml file like so:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">zone</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Gym
+    <span class="token key atrule">latitude</span><span class="token punctuation">:</span> <span class="token number">53.5301052</span>
+    <span class="token key atrule">longitude</span><span class="token punctuation">:</span> <span class="token number">-113.2932228</span>
+    <span class="token key atrule">radius</span><span class="token punctuation">:</span> <span class="token number">150</span>
+    <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>dumbbell</code></pre>
+<p>After validating my configuration and restarting Home Assistant the gym popped up on the map and Rae's location was updated to reflect the new name.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-19/post/f6Uc4OwRRY-485.avif 485w"><source type="image/webp" srcset="/blog/2018/2018-07-19/post/f6Uc4OwRRY-485.webp 485w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-19/post/f6Uc4OwRRY-485.png" alt="" width="485" height="363"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-19/post/k0rfLYWCOB-239.avif 239w"><source type="image/webp" srcset="/blog/2018/2018-07-19/post/k0rfLYWCOB-239.webp 239w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-19/post/k0rfLYWCOB-239.png" alt="" width="239" height="82"></picture>
+<p>You can repeat this process as many times as you need, just make sure to follow the examples on the zone components page when defining more than one zone.</p>
+<h2 id="history">History</h2>
+<p>The last bit of customization I would like to do today would be to address the names that appear in the history view for our devices.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-19/post/lzJaO5ixHd-1127.avif 1127w"><source type="image/webp" srcset="/blog/2018/2018-07-19/post/lzJaO5ixHd-1127.webp 1127w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-19/post/lzJaO5ixHd-1127.png" alt="" width="1127" height="176"></picture>
+<p>To do this, simply add in the below configuration for each device you want to rename into your customization.yaml file ...</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">device_tracker.google_maps_&lt;guid></span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> Richard</code></pre>
+<p>... validate configuration, and restart Home Assistant.</p>
+<p>Initially this change did not work for me and the devices kept their auto generated names, however the next day the changes took effect.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-19/post/fVRHhc7HUw-799.avif 799w"><source type="image/webp" srcset="/blog/2018/2018-07-19/post/fVRHhc7HUw-799.webp 799w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-19/post/fVRHhc7HUw-799.png" alt="" width="799" height="158"></picture>
+<p>I suspect that this has something to do with the way history is recorded in the DB, but don't be discouraged if your change doesn't show up immediately either.</p>
+<h2 id="in-closing">In Closing</h2>
+<p>As always I hope that you found this post interesting and welcome all comments, questions and feedback.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-07-17/post/">Home Assistant From Scratch - MySQL</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2018/2018-07-25/post/">Home Assistant From Scratch - History</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2018/2018-07-19/post/` was built on 2025-07-03T19:17:39.003Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

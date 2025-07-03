@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Home Assistant From Scratch - Speedtest.net</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="home-assistant-from-scratch-speedtest-net">Home Assistant From Scratch - Speedtest.net</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-07-03">03 July 2018</time></li>
+</ul>
+
+<blockquote>
+<p>This is one <strong><a href="https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.
+{: .prompt-tip }</p>
+</blockquote>
+<p>In preparation for an upcoming blog post on the recorder and history component we are going to need some historical data to work with. I would like to keep tabs on the performance of our internet connection using the <a href="https://www.home-assistant.io/integrations/speedtestdotnet/">speedtest.net component</a>, we will be doing this in the following steps:</p>
+<ul>
+<li>Add the Speedtest.net sensor to Home Assistant</li>
+<li>Create a group to display the measured values</li>
+<li>Trigger initial data collection through a service</li>
+<li>Customize our group</li>
+</ul>
+<h2 id="process">Process</h2>
+<h3 id="speedtest-net-sensor">Speedtest.net sensor</h3>
+<p>Looking at the speedtest sensor's documentation adding the sensor as a new platform under the sensor node. Once added there are a couple of options available on the conditions that you would like to monitor, in my case I am going to be collecting information about ping, download and upload speeds.</p>
+<p>To do this we will need to add the following configuration to the <code>configuration.yaml</code> file:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> speedtest
+    <span class="token key atrule">monitored_conditions</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ping
+      <span class="token punctuation">-</span> download
+      <span class="token punctuation">-</span> upload
+    <span class="token key atrule">minute</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token number">0</span>
+      <span class="token punctuation">-</span> <span class="token number">15</span>
+      <span class="token punctuation">-</span> <span class="token number">30</span>
+      <span class="token punctuation">-</span> <span class="token number">45</span></code></pre>
+<p>The above configuration will run a speed test every 15 min (0, 15, 30 and 45 past the hour), these counters will be stored via the recorder &amp; history components.</p>
+<p>After a quick configuration check and reload of Home Assistant we can see our new counters in the status area:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/tHWuy9qVeu-284.avif 284w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/tHWuy9qVeu-284.webp 284w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/tHWuy9qVeu-284.png" alt="" width="284" height="101"></picture>
+<h3 id="create-a-group">Create a group</h3>
+<p>I would prefer to have these counters displayed as a card in Home Assistant rather than in the status area. To do this we can simply create a group, list the components that we would like to see in the group and reload the core components of Home Assistant.</p>
+<p>To create our group we will first need the component id's of our new counters, you can get the id's through the states view under the developer tools.</p>
+<p>We will define our group as below in the <code>groups.yaml</code> file:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">internet_speed</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> Internet Speed
+  <span class="token key atrule">entities</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> sensor.speedtest_download
+    <span class="token punctuation">-</span> sensor.speedtest_upload
+    <span class="token punctuation">-</span> sensor.speedtest_ping</code></pre>
+<p>After reloading the groups we are presented with the following:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/RTg1FUitFk-502.avif 502w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/RTg1FUitFk-502.webp 502w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/RTg1FUitFk-502.png" alt="" width="502" height="230"></picture>
+<h3 id="triggering-data-collection">Triggering data collection</h3>
+<p>At the moment we don't have any data from Speedtest (as it only collects every 15 min) so we can trigger the collection manually to get our initial counters.</p>
+<p>Most components in Home Assistant expose services which can be called either through code or via custom automation rules. Services can range from something as simple as getting \ setting a state on a component or running a complex command for the targeted entity.</p>
+<p>You can easily see a list of all available services that you can call in Home Assistant through the services developer tool which is listed under the Developer tools section in the main menu.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/Drksy0S4Tl-304.avif 304w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/Drksy0S4Tl-304.webp 304w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/Drksy0S4Tl-304.png" alt="" width="304" height="123"></picture>
+<p>The service we are interested in calling is the sensor.update_speedtest service, to do this select it from the drop down list and click the call service button to execute it.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/DbCNDeIaJ_-519.avif 519w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/DbCNDeIaJ_-519.webp 519w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/DbCNDeIaJ_-519.png" alt="" width="519" height="254"></picture>
+<p>Some services may require additional parameters to function correctly, if that is the case (as with the recorder component) the service will list all available parameters and a description for each one. Passing parameters to a service is as simple as creating a JSON object containing each parameter that you want to post as a property.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/2Vc5u4J9FQ-917.avif 917w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/2Vc5u4J9FQ-917.webp 917w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/2Vc5u4J9FQ-917.png" alt="" width="917" height="385"></picture>
+<p><code>{ &quot;keep_days&quot;: 7, &quot;repack&quot;: false }</code></p>
+<h3 id="customizing-our-counters">Customizing our counters</h3>
+<p>Lastly I would like to do some basic customization of the collected counters, namely I would like to rename them and add a custom icon per value.</p>
+<p>We can make these changes in the customize.yaml file by adding the following lines:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor.speedtest_download</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> Download Speed
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>cloud<span class="token punctuation">-</span>download
+
+<span class="token key atrule">sensor.speedtest_upload</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> Upload Speed
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>cloud<span class="token punctuation">-</span>upload
+
+<span class="token key atrule">sensor.speedtest_ping</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> Ping
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>mixcloud</code></pre>
+<p>After a quick configuration validation and reloading of Home Assistants core components our counters look a lot better:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/jUrQcA1HBa-500.avif 500w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/jUrQcA1HBa-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/jUrQcA1HBa-500.png" alt="" width="500" height="234"></picture>
+<p>Clicking on any of the counters (after a while) will result in a graph containing the collected data - this data comes from the history component.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/M_bcVZRVUI-469.avif 469w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/M_bcVZRVUI-469.webp 469w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/M_bcVZRVUI-469.png" alt="" width="469" height="576"></picture>
+<h2 id="committing-changes">Committing Changes</h2>
+<p>If you are using some form of source control, now would be a good time to commit your changes.</p>
+<h2 id="final-thoughts">Final thoughts</h2>
+<p>This was one of the last posts where I will dive into so much detail around simple configuration tasks in Home Assistant. I will elaborate any topics that require it, but for now please keep the following in mind:</p>
+<ul>
+<li><code>configuration.yaml</code> - stores all configuration relating to adding new components and sensors to Home Assistant</li>
+<li><code>customize.yaml</code> - allows the customization of all your entities (e.g. name, icons and visibility)</li>
+<li><code>groups.yaml</code> - use to group entities together and create views</li>
+<li><code>automations.yaml</code> - place where you create and store custom automation rules</li>
+<li><code>secrest.yaml</code> - used to store sensitive data that you don't want to commit to your configuration repository (provided it's ignored via the .gitignore file).</li>
+</ul>
+<p>I hope that you found this post helpful, and as always I welcome any comments, feedback and questions below.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-07-02/post/">Home Assistant From Scratch - Hue Lights</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2018/2018-07-16/post/">Home Assistant From Scratch - MQTT</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2018/2018-07-03/post/` was built on 2025-07-03T19:17:39.003Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

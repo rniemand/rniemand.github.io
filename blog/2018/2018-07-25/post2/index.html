@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Home Assistant From Scratch - Weather and System Monitoring</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="home-assistant-from-scratch-weather-and-system-monitoring">Home Assistant From Scratch - Weather and System Monitoring</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-07-25">25 July 2018</time></li>
+</ul>
+
+<blockquote>
+<p>This is one <strong><a href="https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.
+{: .prompt-tip }</p>
+</blockquote>
+<p>Today I am adding in two new sensors which will be used in some upcoming automation rules in Home Assistant, namely:</p>
+<ul>
+<li><a href="https://www.home-assistant.io/integrations/darksky/">Dark Sky</a> - weather information</li>
+<li><a href="https://www.home-assistant.io/integrations/systemmonitor/">System Monitor</a> - host computer performance counters</li>
+</ul>
+<p>Seeing that we have already done a lot of work with sensors and basic configuration in Home Assistant I am just going to list the configuration I used, along with the relevant configuration commits on GitHub. If you would like more information on why things are done a certain way feel free to <a href="https://www.richardn.ca/series/#home-assistant-from-scratch-2018">browse all the posts</a> leading up to this one.</p>
+<h2 id="dark-sky">Dark Sky</h2>
+<p>Dark Sky is a weather data provider with a free API (based on usage). It integrates well into Home Assistant, and unless otherwise configured will use your default coordinates to fetch local weather data.</p>
+<p>You will need a developer account to use the sensor, with the registration process being quick and easy to follow, once you have a key you are good to go.</p>
+<h3 id="configuring-dark-sky">Configuring Dark Sky</h3>
+<p>First, add your API key to <code>secrets.yaml</code> like so:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">darksky_api</span><span class="token punctuation">:</span> xxx</code></pre>
+<p>Next, create a new sensor as shown below in the <code>configuration.yaml</code> file (feel free to swap out any monitored conditions you want):</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> darksky
+    <span class="token key atrule">api_key</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> darksky_api
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> DarkSky
+    <span class="token key atrule">monitored_conditions</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> temperature
+      <span class="token punctuation">-</span> cloud_cover
+      <span class="token punctuation">-</span> humidity
+      <span class="token punctuation">-</span> pressure
+      <span class="token punctuation">-</span> temperature_high
+      <span class="token punctuation">-</span> temperature_low</code></pre>
+<p>Next, let's create a group (<code>groups.yaml</code>) to display the data nicely on a card - note you will need to restart Home Assistant to get the entity names if you are using different conditions:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">darksky_group</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> DarkSky
+  <span class="token key atrule">entities</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> sensor.darksky_temperature
+    <span class="token punctuation">-</span> sensor.darksky_humidity
+    <span class="token punctuation">-</span> sensor.darksky_daytime_high_temperature
+    <span class="token punctuation">-</span> sensor.darksky_overnight_low_temperature
+    <span class="token punctuation">-</span> sensor.darksky_pressure
+    <span class="token punctuation">-</span> sensor.darksky_cloud_coverage</code></pre>
+<p>Finally, we can &quot;pretty up&quot; the display names and icons via <code>customize.yaml</code>:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor.darksky_cloud_coverage</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> <span class="token string">"Cloud Coverage"</span>
+<span class="token key atrule">sensor.darksky_daytime_high_temperature</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> <span class="token string">"Day High"</span>
+<span class="token key atrule">sensor.darksky_humidity</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> <span class="token string">"Humidity"</span>
+<span class="token key atrule">sensor.darksky_overnight_low_temperature</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> <span class="token string">"Day Low"</span>
+<span class="token key atrule">sensor.darksky_pressure</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> <span class="token string">"Pressure"</span>
+<span class="token key atrule">sensor.darksky_temperature</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> <span class="token string">"Temperature"</span></code></pre>
+<p>After verifying your configuration and reloading Home Assistant you should have a Dark Sky card like so:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post2/V8Gsd0knSD-450.avif 450w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post2/V8Gsd0knSD-450.webp 450w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post2/V8Gsd0knSD-450.png" alt="" width="450" height="405"></picture>
+<h2 id="system-monitor">System Monitor</h2>
+<p><a href="https://www.home-assistant.io/integrations/systemmonitor/">System Monitor</a> allows you to collect performance counters from your host computer (regardless of the platform).</p>
+<p>There are a lot of good code examples on the documentation page for most OS's - in my case I am running Home Assistant on linux (Raspberry Pi to be more precise) so depending on what you are using, your configuration may look a little bit different.</p>
+<h3 id="configuring-system-monitor">Configuring System Monitor</h3>
+<p>First we will need to define the sensor in configuration.yaml like so:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> systemmonitor
+    <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> disk_use_percent
+        <span class="token key atrule">arg</span><span class="token punctuation">:</span> /config
+      <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> memory_use_percent
+      <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> load_1m
+      <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> network_in
+        <span class="token key atrule">arg</span><span class="token punctuation">:</span> eth0
+      <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> network_out
+        <span class="token key atrule">arg</span><span class="token punctuation">:</span> eth0
+      <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> processor_use
+      <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> last_boot</code></pre>
+<p>Then, we will need to group the counters (groups.yaml) so that they show up nicely on a card:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">host_system_group</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> Host System
+  <span class="token key atrule">entities</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> sensor.disk_use_percent_config
+    <span class="token punctuation">-</span> sensor.last_boot
+    <span class="token punctuation">-</span> sensor.load_1m
+    <span class="token punctuation">-</span> sensor.memory_use_percent
+    <span class="token punctuation">-</span> sensor.network_in_eth0
+    <span class="token punctuation">-</span> sensor.network_out_eth0
+    <span class="token punctuation">-</span> sensor.processor_use</code></pre>
+<p>Finally we will need to verify our configuration changes and restart Home Assistant, if all went well you should have a new card for your Host Information:</p>
+<h2 id="in-closing">In Closing</h2>
+<p>Right now (and if you have been following these posts) our Home Assistant dashboard is getting pretty cluttered (we will be doing something about that soon). I still have yet to scratch the surface of this product, but I am getting some immediate benefit with what I have done so far.</p>
+<p>In the next post we will be adding support for OctoPrint to Home Assistant, followed by creating views (tabs essentially) and breaking up our configuration into smaller, more manageable parts.</p>
+<p>I hope that you found this post interesting and, as always, I welcome any feedback, comments or suggestions you may have.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-07-25/post/">Home Assistant From Scratch - History</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2018/2018-10-09/post/">Home Assistant From Scratch - Octoprint</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2018/2018-07-25/post2/` was built on 2025-07-03T19:17:39.003Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

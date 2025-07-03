@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Setting up ESP8266 on Arduino</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="setting-up-esp8266-on-arduino">Setting up ESP8266 on Arduino</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-03-19">19 March 2018</time></li>
+</ul>
+
+<p>This is a quick reference post to get you up and running with an ESP8266 / ESP32using the Arduino IDE.</p>
+<h2 id="get-arduino">Get Arduino</h2>
+<p>You can download the latest version of Arduino <a href="https://www.arduino.cc/en/software">here</a>, be sure to select the correct version of the IDE for your computer.</p>
+<ul>
+<li>https://www.arduino.cc/en/Main/Software</li>
+</ul>
+<p>Once you have downloaded the IDE, install it as you would any other application.</p>
+<h2 id="add-esp8266-package-source">Add ESP8266 package Source</h2>
+<p>Open the Arduino IDE and navigate to <code>File</code> -&gt; <code>Preferences</code>.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-19/post/nXH7g2C0bZ-219.avif 219w"><source type="image/webp" srcset="/blog/2018/2018-03-19/post/nXH7g2C0bZ-219.webp 219w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-19/post/nXH7g2C0bZ-219.png" alt="" width="219" height="326"></picture>
+<p>Locate the <code>Additional Board Manager URL's</code> section...</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-19/post/NdzFJTPiq0-706.avif 706w"><source type="image/webp" srcset="/blog/2018/2018-03-19/post/NdzFJTPiq0-706.webp 706w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-19/post/NdzFJTPiq0-706.png" alt="" width="706" height="96"></picture>
+<p>... and enter in the following <code>json</code> feed URL</p>
+<ul>
+<li>http://arduino.esp8266.com/stable/package_esp8266com_index.json</li>
+</ul>
+<p>This is the latest package feed for the <a href="https://github.com/esp8266/Arduino">ESP8266 project</a> (the micro-controller powering your Sonoff switch) and is required to flash the Tasmota firmware.</p>
+<h2 id="install-the-boards-package">Install the boards package</h2>
+<p>Next you will need to install the <code>ESP8266 boards package</code> which includes all the required files &amp; tooling needed to compile and upload your sketches to your microcontroller.</p>
+<p>To do this navigate to <code>Tools</code> -&gt; <code>Board: xxx</code> -&gt; <code>Boards Manager..</code> from the Arduino IDE's main menu.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-19/post/fXtr80Ybjd-653.avif 653w"><source type="image/webp" srcset="/blog/2018/2018-03-19/post/fXtr80Ybjd-653.webp 653w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-19/post/fXtr80Ybjd-653.png" alt="" width="653" height="251"></picture>
+<p>Search for and install the <code>esp8266</code> boards from the ESP8266 Community, the download is approximately 200 Mb so it may take a while to complete depending on your internet connection.</p>
+<h2 id="blink">Blink</h2>
+<p>After you have installed the <code>ESP8266</code> boards you should now load up the obligatory Blink / Hello World tutorial from the newly installed board examples.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-19/post/B21oQileb--595.avif 595w"><source type="image/webp" srcset="/blog/2018/2018-03-19/post/B21oQileb--595.webp 595w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-19/post/B21oQileb--595.png" alt="" width="595" height="329"></picture>
+<p>Ensure that your board settings are correct for your ESP - this can vary a lot depending on your development board, but thankfully there are a lot of pre-configured settings for all of the common ESP boards.</p>
+<p>Finally hit the upload button and wait for the upload to finish. If your board is blinking the built in LED you are done, if not now would be a good time to do some troubleshooting. The most common issue in my experience with sketch uploading failing is due to some incorrect parameters for the board, here Google is your friend and should have you back up and running in no time!</p>
+<p>Good luck, and happy coding!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-03-15/post/">NodeRED on DietPi</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2018/2018-03-22/post/">Flashing Tasmota on Sonoff (Revised)</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2018/2018-03-19/post/` was built on 2025-07-03T19:17:39.002Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

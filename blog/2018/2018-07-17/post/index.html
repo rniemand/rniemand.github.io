@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Home Assistant From Scratch - MySQL</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="home-assistant-from-scratch-mysql">Home Assistant From Scratch - MySQL</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-07-17">17 July 2018</time></li>
+</ul>
+
+<blockquote>
+<p>This is one <strong><a href="https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.
+{: .prompt-tip }</p>
+</blockquote>
+<p>Today I would like to cover switching from the default SQLite database that Home Assistant uses over to MySQL - there is a slight performance update when making this switch, not to mention that it frees up valuable resources on my Raspberry Pi.</p>
+<h2 id="why-use-mysql">Why use MySQL?</h2>
+<p>My main driver for switching from SQLite to MySQL is performance and resources. If you have been following <a href="https://www.richardn.ca/series/#home-assistant-from-scratch-2018">this series</a> you will know that I am running my Home Assistant setup on a Raspberry Pi (through <a href="https://www.home-assistant.io/getting-started">hass.io</a>) for ease of use. This works amazingly well, however the throughput of the default database suffers due to the limited resources on the Pi.</p>
+<p>I already have a <a href="https://www.mysql.com/products/community/">MySQL Community Edition</a> server running on my home network complete with weekly backups of some select databases. So for me it makes sense to create a new home_assistant schema on my server and gain the performance benefits over SQLite.</p>
+<p>For the remainder of this post I am going to presume that you have an instance of MySQL running somewhere on your home network (<a href="https://dev.mysql.com/doc/refman/8.0/en/windows-installation.html">official installation guide</a>) along with <a href="https://www.mysql.com/products/workbench/">MySQL Workbench</a> to manage your server.</p>
+<h2 id="the-process">The process</h2>
+<p>The process to switch over to MySQL is pretty straight forward, and requires only 3 lines of configuration in Home Assistant (2 if you are not using a secrets.yaml file), and will comprise of the following steps:</p>
+<ul>
+<li>Create a new database (schema) called home_assistant</li>
+<li>Create an elevated user (with remote login) called hass_user associated with the new schema</li>
+<li>Configure Home Assistant to point to your MySQL server</li>
+<li>Restart Home Assistant and enjoy</li>
+</ul>
+<h3 id="creating-the-database">Creating the database</h3>
+<p>Creating the database is as simple as connecting to your server through MySQL Workbench and clicking the create new schema shortcut, giving the schema a name and clicking create.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/DCMKngNIlG-284.avif 284w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/DCMKngNIlG-284.webp 284w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/DCMKngNIlG-284.png" alt="" width="284" height="85"></picture>
+<p>Once done you should have a new schema called home_assistant ready to go.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/Sy4gX_9uFK-548.avif 548w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/Sy4gX_9uFK-548.webp 548w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/Sy4gX_9uFK-548.png" alt="" width="548" height="250"></picture>
+<h3 id="creating-the-hass-user-account">Creating the hass_user account</h3>
+<p>To create the hass_user account simply click on the Users and Privileges link found under the Navigator pane followed by the Add Account button at the far bottom.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/a4dwS06Har-217.avif 217w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/a4dwS06Har-217.webp 217w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/a4dwS06Har-217.png" alt="" width="217" height="141"></picture>
+<p>Be sure to generate a strong password for the account, along with allowing all hosts <code>%</code> to connect as this user - this is important as the user account will be coming in from your Home Assistant server and not your MySQL server's localhost.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/5Up1BkyESM-644.avif 644w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/5Up1BkyESM-644.webp 644w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/5Up1BkyESM-644.png" alt="" width="644" height="292"></picture>
+<p>In terms of privileges for the account, be sure to select what makes sense for your user (I was not 100% sure what to grant, so I gave my account DBA rights). I would suggest limiting the privileges for your setup, but my MySQL server does not face the internet, and the box it is running on is pretty boring to potential attackers.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/fuJVSv7vkp-504.avif 504w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/fuJVSv7vkp-504.webp 504w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/fuJVSv7vkp-504.png" alt="" width="504" height="246"></picture>
+<p>Click OK to create the user account.</p>
+<h3 id="configuring-home-assistant">Configuring Home Assistant</h3>
+<p>We will need to configure the <a href="https://www.home-assistant.io/integrations/recorder/">recorder component</a> and tell it to store \ retrieve all state and history information from MySQL instead of the default SQLite database.</p>
+<p>In order to do this we will need to create a connection string for MySQL using the following structure: <code>mysql://&lt;user&gt;:&lt;pass&gt;@&lt;host&gt;/&lt;schema&gt;</code></p>
+<p>In my case I would end up with a MySQL connection string looking something like this: <code>mysql://hass_user:PASS@10.0.0.50/home_assistant</code></p>
+<p>I highly recommend storing any sensitive information like connection strings in your secrets.yaml file, and then referring to the secret value in your configuration. To do this we will add our new connection string to the secrets.yaml like so ...</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">db_mysql</span><span class="token punctuation">:</span> mysql<span class="token punctuation">:</span>//hass_user<span class="token punctuation">:</span>PASS@10.0.0.50/home_assistant</code></pre>
+<p>... and then configure the recorder component in our configuration.yaml file like so (note: you may need to add in the recorder component to your file as it is omitted from configuration by default):</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">recorder</span><span class="token punctuation">:</span>
+  <span class="token key atrule">db_url</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> db_mysql</code></pre>
+<p>Once done be sure to validate your configuration and restart Home Assistant.</p>
+<h3 id="enjoy-the-boost">Enjoy the boost</h3>
+<p>After Home Assistant comes back up you should see that there are some new tables in your database, along with all the current state information for your home setup.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/VZLKWW0jGo-543.avif 543w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/VZLKWW0jGo-543.webp 543w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/VZLKWW0jGo-543.png" alt="" width="543" height="244"></picture>
+<p>That's it, you are now using MySQL - now would be a good time to remove the default &quot;home-assistant_v2.db&quot; file from your Raspberry Pi.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/k4u_WpqRty-711.avif 711w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/k4u_WpqRty-711.webp 711w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/k4u_WpqRty-711.png" alt="" width="711" height="395"></picture>
+<p>Home Assistant will feel really fast now, this is mainly due to the fact that you have lost all your state information and will need to build it back up. However things should remain pretty quick even when things are back to normal (data wise) as shown here:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/rMyB3VO4Q_-918.avif 918w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/rMyB3VO4Q_-918.webp 918w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/rMyB3VO4Q_-918.png" alt="" width="918" height="119"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/pQQRxyKSrj-996.avif 996w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/pQQRxyKSrj-996.webp 996w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/pQQRxyKSrj-996.png" alt="" width="996" height="459"></picture>
+<p>Hopefully you see the same performance gains as I did with the switch over to MySQL.</p>
+<h2 id="in-closing">In Closing</h2>
+<p>Although this change is not a requirement for your home setup, and depending on the size / amount of data you are collecting and reporting on may not be required I still highly recommend it. It makes management of your database a lot easier and helps reduce the amount of resources being used on your Home Assistant host device. On the flip side this can be another potential point of failure for your setup, but it is unlikely as MySQL is super stable from my personal experience.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-07-16/post/">Home Assistant From Scratch - MQTT</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2018/2018-07-19/post/">Home Assistant From Scratch - Presence Detection</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2018/2018-07-17/post/` was built on 2025-07-03T19:17:39.003Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

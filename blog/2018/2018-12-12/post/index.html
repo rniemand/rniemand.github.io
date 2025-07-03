@@ -1,0 +1,521 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Installing OctoPrint on Armbian from Source</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="installing-octoprint-on-armbian-from-source">Installing OctoPrint on Armbian from Source</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-12-12">12 December 2018</time></li>
+</ul>
+
+<p>In this post I will cover the setup and configuration of OctoPrint from scratch. I will cover everything from installing OctoPrint to getting a webcam up and running. This post is a bit longer than my normal ones but I need to cover a lot of ground here. This is a collection of commands from various sources online, I have credited the original authors in each section.</p>
+<h2 id="installing-octoprint">Installing Octoprint</h2>
+<p>I claim no credit to this process, the majority of the steps are from <a href="https://www.youtube.com/watch?v=LzLb_FnXu70">this YouTube video</a> which was a big help in getting up and running.</p>
+<h3 id="flashing-armbian">Flashing Armbian</h3>
+<p>You will need to download the version of Armbian that is compatible with your device, in my case that is the Orange Pi One: <code>https://www.armbian.com/orange-pi-one/</code></p>
+<p>You can find a full list of <a href="https://www.armbian.com/download/">supported devices here</a>.</p>
+<p>Once you have the image, write it to an SD card using either <a href="https://sourceforge.net/projects/win32diskimager/files/latest/download">Win32 Disk Imager</a> or <a href="https://www.balena.io/etcher/">Etcher</a>.</p>
+<p>Next, you will need to boot your device and get its assigned IP Address (in my case this was <code>10.0.0.112</code>) - there are tools like <a href="https://www.fing.com/">Fing</a> or <a href="https://angryip.org/download/#windows">Angry IP Scanner</a> that should make discovering your device's IP Address a bit easier.</p>
+<h3 id="connect-to-your-device">Connect to your Device</h3>
+<p>Connect to your device using an ssh client like <a href="https://www.putty.org/">Putty</a> or <a href="https://mobaxterm.mobatek.net/">MobaXterm</a>, the default username is <code>root</code> with a password of <code>1234</code>, you will be prompted to change this on the first login.</p>
+<p>When \ If prompted to create a user account for yourself to use.</p>
+<h3 id="installing-octoprint-prerequisites">Installing OctoPrint Prerequisites</h3>
+<p>First we need to update all installed packages for good measure.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> update
+<span class="token function">sudo</span> <span class="token function">apt-get</span> upgrade</code></pre>
+<p>Next, we need to create an <code>OctoPrint</code> user to run the service.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> adduser octoprint</code></pre>
+<p>You can use any password you like for the user as it will be removed later on in the installation process.</p>
+<p>Next, we need to add the required permissions to the OctoPrint user.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">usermod</span> <span class="token parameter variable">-a</span> <span class="token parameter variable">-G</span> <span class="token function">tty</span> octoprint
+<span class="token function">sudo</span> <span class="token function">usermod</span> <span class="token parameter variable">-a</span> <span class="token parameter variable">-G</span> dialout octoprint</code></pre>
+<p>Then add him to the list of <code>sudo</code> users:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> adduser octoprint <span class="token function">sudo</span></code></pre>
+<p>Next, edit the sudo file and add the following line:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> visudo
+octoprint <span class="token assign-left variable">ALL</span><span class="token operator">=</span><span class="token punctuation">(</span>ALL<span class="token punctuation">)</span> NOPASSWD:ALL</code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/Um8spChewi-532.avif 532w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/Um8spChewi-532.webp 532w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/Um8spChewi-532.png" alt="" width="532" height="87"></picture>
+<ul>
+<li>CTRL + O to save the file</li>
+<li>CTRL + X to exit</li>
+</ul>
+<p>Remove the password from the OctoPrint user with the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">passwd</span> octoprint <span class="token parameter variable">-d</span></code></pre>
+<p>Install required supporting software:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token function">git</span> python-pip python-dev python-setuptools psmisc virtualenv</code></pre>
+<p>Switch over to the OctoPrint user account</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">su</span> octoprint</code></pre>
+<p>Switch to home directory</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token builtin class-name">cd</span> ~</code></pre>
+<p>Download and install py-serial:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">wget</span> https://pypi.python.org/packages/source/p/pyserial/pyserial-2.7.tar.gz
+<span class="token function">tar</span> <span class="token parameter variable">-zxf</span> pyserial-2.7.tar.gz
+<span class="token builtin class-name">cd</span> pyserial-2.7
+<span class="token function">sudo</span> python setup.py <span class="token function">install</span>
+<span class="token builtin class-name">cd</span> ~</code></pre>
+<h3 id="installing-octoprint-2">Installing OctoPrint</h3>
+<p>As the OctoPrint user navigate to your home directory and clone the latest copy of Octoprint:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token builtin class-name">cd</span> ~
+<span class="token function">git</span> clone https://github.com/foosel/OctoPrint.git
+<span class="token builtin class-name">cd</span> OctoPrint</code></pre>
+<p>Start up they python virtual environment (<code>virtualenv</code>)</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">virtualenv venv</code></pre>
+<p>Use python to setup and compile OctoPrint on you device</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">./venv/bin/python setup.py <span class="token function">install</span></code></pre>
+<p>Once the build has completed you can start OctoPrint using the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">~/OctoPrint/venv/bin/octoprint serve</code></pre>
+<p>Once started you should be able to connect to OctoPrint in your web browser using the following URL <code>http://&lt;device-ip-address&gt;:5000</code> so in my case that would be http://10.0.0.112:5000/. This will present you with the OctoPrint Setup Wizard - complete it as normal.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/AyVwbw9kUM-788.avif 788w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/AyVwbw9kUM-788.webp 788w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/AyVwbw9kUM-788.png" alt="" width="788" height="360"></picture>
+<p>Once done press CTRL and Z to kill OctoPrint in your connected ssh session.</p>
+<h3 id="auto-starting-octoprint">Auto Starting OctoPrint</h3>
+<p>Copy relevant files and configure OctoPrint to start on boot with the following commands:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">cp</span> ~/OctoPrint/scripts/octoprint.init /etc/init.d/octoprint
+<span class="token function">sudo</span> <span class="token function">chmod</span> +x /etc/init.d/octoprint
+<span class="token function">sudo</span> <span class="token function">cp</span> ~/OctoPrint/scripts/octoprint.default /etc/default/octoprint</code></pre>
+<p>Edit the default configuration for OctoPrint</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/default/octoprint</code></pre>
+<p>Change user account from <code>pi</code> to <code>octoprint</code>:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/HTwzMR5gIU-510.avif 510w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/HTwzMR5gIU-510.webp 510w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/HTwzMR5gIU-510.png" alt="" width="510" height="53"></picture>
+<p>Enable and change the daemon directory</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token assign-left variable">DAEMON</span><span class="token operator">=</span>/home/octoprint/OctoPrint/venv/bin/octoprint</code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/VvCybVWGsG-694.avif 694w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/VvCybVWGsG-694.webp 694w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/VvCybVWGsG-694.png" alt="" width="694" height="215"></picture>
+<p>Next, we need to commit the updates we made</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> update-rc.d octoprint defaults</code></pre>
+<p>Finally you can start the OctoPrint service with the following command</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">service</span> octoprint start</code></pre>
+<h2 id="webcam-setup">Webcam Setup</h2>
+<p>Next we will install <a href="https://github.com/jacksonliam/mjpg-streamer">mjpg-streamer</a> to allow us to keep an eye on our prints while away, the majority of these steps were taken from this <a href="https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-MJPEG-Streamer-Install-&amp;-Setup-&amp;-FFMpeg-Recording">amazing GitHub post</a>.</p>
+<h3 id="installing-mjpg-streamer">Installing mjpg-streamer</h3>
+<p>Let's start off by installing the required dependencies:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> cmake libjpeg8-dev
+<span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> gcc g++</code></pre>
+<p>Now clone the repo:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token builtin class-name">cd</span> /tmp
+<span class="token function">git</span> clone https://github.com/jacksonliam/mjpg-streamer.git
+<span class="token builtin class-name">cd</span> mjpg-streamer/mjpg-streamer-experimental</code></pre>
+<p>Compile <code>mjpg-streamer</code>:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">make</span>
+<span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span></code></pre>
+<p>Test to see if everything is working with the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">/usr/local/bin/mjpg_streamer <span class="token parameter variable">-i</span> <span class="token string">"input_uvc.so -r 1280x720 -d /dev/video0 -f 30 -q 80"</span> <span class="token parameter variable">-o</span> <span class="token string">"output_http.so -p 8080 -w /usr/local/share/mjpg-streamer/www"</span></code></pre>
+<p>You should be able to connect to mjpg_streamer using the following URL http://<device-ip-address>:8080/?action=stream, so in my case that would be <code>http://10.0.0.112:8080/?action=stream</code>:</device-ip-address></p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/u-Ttpao069-626.avif 626w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/u-Ttpao069-626.webp 626w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/u-Ttpao069-626.jpeg" alt="" width="626" height="474"></picture>
+<h3 id="auto-starting-mjpg-streamer">Auto starting mjpg-streamer</h3>
+<p>We will need to create a startup file:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">nano</span> /home/octoprint/mjpg-streamer.sh</code></pre>
+<p>For the contents of the file, add in the below code (from <a href="https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-MJPEG-Streamer-Install-&amp;-Setup-&amp;-FFMpeg-Recording">this post</a>):</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># chmod +x mjpg-streamer.sh</span>
+<span class="token comment"># Crontab: @reboot /home/octoprint/mjpg-streamer/mjpg-streamer.sh start</span>
+<span class="token comment"># Crontab: @reboot /home/octoprint/mjpg-streamer/mjpg-streamer-experimental/mjpg-streamer.sh start</span>
+
+<span class="token assign-left variable">MJPG_STREAMER_BIN</span><span class="token operator">=</span><span class="token string">"/usr/local/bin/mjpg_streamer"</span>  <span class="token comment"># "$(dirname $0)/mjpg_streamer"</span>
+<span class="token assign-left variable">MJPG_STREAMER_WWW</span><span class="token operator">=</span><span class="token string">"/usr/local/share/mjpg-streamer/www"</span>
+<span class="token assign-left variable">MJPG_STREAMER_LOG_FILE</span><span class="token operator">=</span><span class="token string">"<span class="token variable">${0<span class="token operator">%</span>.*}</span>.log"</span>  <span class="token comment"># "$(dirname $0)/mjpg-streamer.log"</span>
+<span class="token assign-left variable">RUNNING_CHECK_INTERVAL</span><span class="token operator">=</span><span class="token string">"2"</span> <span class="token comment"># how often to check to make sure the server is running (in seconds)</span>
+<span class="token assign-left variable">HANGING_CHECK_INTERVAL</span><span class="token operator">=</span><span class="token string">"3"</span> <span class="token comment"># how often to check to make sure the server is not hanging (in seconds)</span>
+
+<span class="token assign-left variable">VIDEO_DEV</span><span class="token operator">=</span><span class="token string">"/dev/video0"</span>
+<span class="token assign-left variable">FRAME_RATE</span><span class="token operator">=</span><span class="token string">"5"</span>
+<span class="token assign-left variable">QUALITY</span><span class="token operator">=</span><span class="token string">"80"</span>
+<span class="token assign-left variable">RESOLUTION</span><span class="token operator">=</span><span class="token string">"1280x720"</span>  <span class="token comment"># 160x120 176x144 320x240 352x288 424x240 432x240 640x360 640x480 800x448 800x600 960x544 1280x720 1920x1080 (QVGA, VGA, SVGA, WXGA)   #  lsusb -s 001:006 -v | egrep "Width|Height" # https://www.textfixer.com/tools/alphabetical-order.php  # v4l2-ctl --list-formats-ext  # Show Supported Video Formates</span>
+<span class="token assign-left variable">PORT</span><span class="token operator">=</span><span class="token string">"8080"</span>
+<span class="token assign-left variable">YUV</span><span class="token operator">=</span><span class="token string">"yes"</span>
+
+<span class="token comment">################INPUT_OPTIONS="-r ${RESOLUTION} -d ${VIDEO_DEV} -f ${FRAME_RATE} -q ${QUALITY} -pl 60hz"</span>
+<span class="token assign-left variable">INPUT_OPTIONS</span><span class="token operator">=</span><span class="token string">"-r <span class="token variable">${RESOLUTION}</span> -d <span class="token variable">${VIDEO_DEV}</span> -q <span class="token variable">${QUALITY}</span> -pl 60hz --every_frame 2"</span>  <span class="token comment"># Limit Framerate with  "--every_frame ", ( mjpg_streamer --input "input_uvc.so --help" )</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">${YUV}</span>"</span> <span class="token operator">==</span> <span class="token string">"true"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token assign-left variable">INPUT_OPTIONS</span><span class="token operator">+=</span><span class="token string">" -y"</span>
+<span class="token keyword">fi</span>
+
+<span class="token assign-left variable">OUTPUT_OPTIONS</span><span class="token operator">=</span><span class="token string">"-p <span class="token variable">${PORT}</span> -w <span class="token variable">${MJPG_STREAMER_WWW}</span>"</span>
+
+<span class="token comment"># ==========================================================</span>
+<span class="token keyword">function</span> <span class="token function-name function">running</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token function">ps</span> aux <span class="token operator">|</span> <span class="token function">grep</span> <span class="token variable">${MJPG_STREAMER_BIN}</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token variable">${VIDEO_DEV}</span> <span class="token operator">></span>/dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token builtin class-name">return</span> <span class="token number">0</span>
+    <span class="token keyword">else</span>
+        <span class="token builtin class-name">return</span> <span class="token number">1</span>
+    <span class="token keyword">fi</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function-name function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> running<span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] already started"</span>
+        <span class="token builtin class-name">return</span> <span class="token number">1</span>
+    <span class="token keyword">fi</span>
+
+    <span class="token builtin class-name">export</span> <span class="token assign-left variable">LD_LIBRARY_PATH</span><span class="token operator">=</span><span class="token string">"<span class="token variable"><span class="token variable">$(</span><span class="token function">dirname</span> $MJPG_STREAMER_BIN<span class="token variable">)</span></span>:."</span>
+
+    <span class="token builtin class-name">echo</span> <span class="token string">"Starting: [<span class="token variable">$VIDEO_DEV</span>] <span class="token variable">${MJPG_STREAMER_BIN}</span> -i <span class="token entity" title="\&quot;">\"</span>input_uvc.so <span class="token variable">${INPUT_OPTIONS}</span><span class="token entity" title="\&quot;">\"</span> -o <span class="token entity" title="\&quot;">\"</span>output_http.so <span class="token variable">${OUTPUT_OPTIONS}</span><span class="token entity" title="\&quot;">\"</span>"</span>
+    <span class="token variable">${MJPG_STREAMER_BIN}</span> <span class="token parameter variable">-i</span> <span class="token string">"input_uvc.so <span class="token variable">${INPUT_OPTIONS}</span>"</span> <span class="token parameter variable">-o</span> <span class="token string">"output_http.so <span class="token variable">${OUTPUT_OPTIONS}</span>"</span> <span class="token operator">>></span> <span class="token variable">${MJPG_STREAMER_LOG_FILE}</span> <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token operator">&amp;</span>
+
+    <span class="token function">sleep</span> <span class="token number">1</span>
+
+    <span class="token keyword">if</span> running<span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token operator">!=</span> <span class="token string">"nocheck"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+            check_running <span class="token operator">&amp;</span> <span class="token operator">></span> /dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token comment"># start the running checking task</span>
+            check_hanging <span class="token operator">&amp;</span> <span class="token operator">></span> /dev/null <span class="token operator"><span class="token file-descriptor important">2</span>></span><span class="token file-descriptor important">&amp;1</span> <span class="token comment"># start the hanging checking task</span>
+        <span class="token keyword">fi</span>
+
+        <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] started"</span>
+        <span class="token builtin class-name">return</span> <span class="token number">0</span>
+
+    <span class="token keyword">else</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] failed to start"</span>
+        <span class="token builtin class-name">return</span> <span class="token number">1</span>
+    <span class="token keyword">fi</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function-name function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token operator">!</span> running<span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] not running"</span>
+        <span class="token builtin class-name">return</span> <span class="token number">1</span>
+    <span class="token keyword">fi</span>
+
+    <span class="token assign-left variable">own_pid</span><span class="token operator">=</span><span class="token variable">$$</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token operator">!=</span> <span class="token string">"nocheck"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token comment"># stop the script running check task</span>
+        <span class="token function">ps</span> aux <span class="token operator">|</span> <span class="token function">grep</span> <span class="token variable">$0</span> <span class="token operator">|</span> <span class="token function">grep</span> start <span class="token operator">|</span> <span class="token function">tr</span> <span class="token parameter variable">-s</span> <span class="token string">' '</span> <span class="token operator">|</span> <span class="token function">cut</span> <span class="token parameter variable">-d</span> <span class="token string">' '</span> <span class="token parameter variable">-f</span> <span class="token number">2</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-v</span> <span class="token variable">${own_pid}</span> <span class="token operator">|</span> <span class="token function">xargs</span> <span class="token parameter variable">-r</span> <span class="token function">kill</span>
+        <span class="token function">sleep</span> <span class="token number">0.5</span>
+    <span class="token keyword">fi</span>
+
+    <span class="token comment"># stop the server</span>
+    <span class="token function">ps</span> aux <span class="token operator">|</span> <span class="token function">grep</span> <span class="token variable">${MJPG_STREAMER_BIN}</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token variable">${VIDEO_DEV}</span> <span class="token operator">|</span> <span class="token function">tr</span> <span class="token parameter variable">-s</span> <span class="token string">' '</span> <span class="token operator">|</span> <span class="token function">cut</span> <span class="token parameter variable">-d</span> <span class="token string">' '</span> <span class="token parameter variable">-f</span> <span class="token number">2</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-v</span> <span class="token variable">${own_pid}</span> <span class="token operator">|</span> <span class="token function">xargs</span> <span class="token parameter variable">-r</span> <span class="token function">kill</span>
+
+    <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] stopped"</span>
+    <span class="token builtin class-name">return</span> <span class="token number">0</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function-name function">check_running</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] starting running check task"</span> <span class="token operator">>></span> <span class="token variable">${MJPG_STREAMER_LOG_FILE}</span>
+
+    <span class="token keyword">while</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+        <span class="token function">sleep</span> <span class="token variable">${RUNNING_CHECK_INTERVAL}</span>
+
+        <span class="token keyword">if</span> <span class="token operator">!</span> running<span class="token punctuation">;</span> <span class="token keyword">then</span>
+            <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] server stopped, starting"</span> <span class="token operator">>></span> <span class="token variable">${MJPG_STREAMER_LOG_FILE}</span>
+            start nocheck
+        <span class="token keyword">fi</span>
+    <span class="token keyword">done</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function-name function">check_hanging</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] starting hanging check task"</span> <span class="token operator">>></span> <span class="token variable">${MJPG_STREAMER_LOG_FILE}</span>
+
+    <span class="token keyword">while</span> <span class="token boolean">true</span><span class="token punctuation">;</span> <span class="token keyword">do</span>
+        <span class="token function">sleep</span> <span class="token variable">${HANGING_CHECK_INTERVAL}</span>
+
+        <span class="token comment"># treat the "error grabbing frames" case</span>
+        <span class="token keyword">if</span> <span class="token function">tail</span> <span class="token parameter variable">-n2</span> <span class="token variable">${MJPG_STREAMER_LOG_FILE}</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-i</span> <span class="token string">"error grabbing frames"</span> <span class="token operator">></span> /dev/null<span class="token punctuation">;</span> <span class="token keyword">then</span>
+            <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] server is hanging, killing"</span> <span class="token operator">>></span> <span class="token variable">${MJPG_STREAMER_LOG_FILE}</span>
+            stop nocheck
+        <span class="token keyword">fi</span>
+    <span class="token keyword">done</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function-name function">help</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token builtin class-name">echo</span> <span class="token string">"Usage: <span class="token variable">$0</span> [start|stop|restart|status]"</span>
+    <span class="token builtin class-name">return</span> <span class="token number">0</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token operator">==</span> <span class="token string">"start"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    start <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token parameter variable">-1</span>
+
+<span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token operator">==</span> <span class="token string">"stop"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    stop <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token parameter variable">-1</span>
+
+<span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token operator">==</span> <span class="token string">"restart"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    stop <span class="token operator">&amp;&amp;</span> <span class="token function">sleep</span> <span class="token number">1</span>
+    start <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">exit</span> <span class="token number">0</span> <span class="token operator">||</span> <span class="token builtin class-name">exit</span> <span class="token parameter variable">-1</span>
+
+<span class="token keyword">elif</span> <span class="token punctuation">[</span> <span class="token string">"<span class="token variable">$1</span>"</span> <span class="token operator">==</span> <span class="token string">"status"</span> <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token keyword">then</span>
+    <span class="token keyword">if</span> running<span class="token punctuation">;</span> <span class="token keyword">then</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] running"</span>
+        <span class="token builtin class-name">exit</span> <span class="token number">0</span>
+    <span class="token keyword">else</span>
+        <span class="token builtin class-name">echo</span> <span class="token string">"[<span class="token variable">$VIDEO_DEV</span>] stopped"</span>
+        <span class="token builtin class-name">exit</span> <span class="token number">1</span>
+    <span class="token keyword">fi</span>
+<span class="token keyword">else</span>
+    <span class="token builtin class-name">help</span>
+<span class="token keyword">fi</span></code></pre>
+<p>We will need to make this file executable:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">chmod</span> +x /home/octoprint/mjpg-streamer.sh</code></pre>
+<p>Then add it to the CRON jobs...</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">crontab</span> <span class="token parameter variable">-e</span></code></pre>
+<p>... by adding the following line to the bottom of the file</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">@reboot /home/octoprint/mjpg-streamer.sh start</code></pre>
+<p>Save the file and exit, reboot your device to see if the webcam comes up.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/u-Ttpao069-626.avif 626w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/u-Ttpao069-626.webp 626w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/u-Ttpao069-626.jpeg" alt="" width="626" height="474"></picture>
+<h3 id="installing-ffmpeg">Installing ffmpeg</h3>
+<p>Next we will need to install ffmpeg to allow OctoPrint to render time-lapses etc, to do this all we need to do is run the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">apt-get</span> <span class="token function">install</span> ffmpeg</code></pre>
+<h2 id="configuring-octoprint">Configuring OctoPrint</h2>
+<p>We are so close to being done, the last thing we need to do is configure OctoPrint and make it aware of all our configuration. We will be doing all of this configuration through OctoPrint's web interface (http://10.0.0.112:5000/), let's get started:</p>
+<h3 id="adding-in-the-webcam">Adding in the webcam</h3>
+<p>Open settings and navigate to the Webcam &amp; Timelapse page, here we will enter in the following information:</p>
+<ul>
+<li><strong>Stream URL</strong>: http://10.0.0.112:8080/?action=stream</li>
+<li><strong>Snapshot URL</strong>: http://10.0.0.112:8080/?action=snapshot</li>
+<li><strong>Path to FFMPEG</strong>: /usr/bin/ffmpeg</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/0gG4mMeMdJ-684.avif 684w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/0gG4mMeMdJ-684.webp 684w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/0gG4mMeMdJ-684.png" alt="" width="684" height="468"></picture>
+<h3 id="server-controls">Server Controls</h3>
+<p>The next thing I would like to do is enable the server controls in OctoPrint (e.g. shutdown, restart, etc.).</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/miSxP3ET2w-269.avif 269w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/miSxP3ET2w-269.webp 269w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/miSxP3ET2w-269.png" alt="" width="269" height="167"></picture>
+<p>These can be added under the Server configuration section, all that's required here is to enter in the correct commands for the desired action, for e.g.:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/cXGc1xo04o-701.avif 701w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/cXGc1xo04o-701.webp 701w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/cXGc1xo04o-701.png" alt="" width="701" height="188"></picture>
+<ul>
+<li><strong>Restart OctoPrint</strong> - sudo service octoprint restart</li>
+<li><strong>Restart System</strong> - sudo shutdown -r now</li>
+<li><strong>Shutdown System</strong> - sudo shutdown -h now</li>
+</ul>
+<p>Once you have entered the relevant commands, save the changes so that they can take effect.</p>
+<h3 id="keeping-octoprint-up-to-date">Keeping OctoPrint up to date</h3>
+<p>Provided that you followed the installation steps listed above you should be able to update OctoPrint through the web interface whenever there is a new release of the software.</p>
+<p>Unlike the pre-configured image I am running on my Orange Pi Lite where you can update directly from the notification, you will need to manually update through the settings page which is a slight bummer.</p>
+<p>I noticed that I got a couple of warnings \ errors logged to the console while applying the latest update, however the update completed fine and everything seems to be working as expected.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/wORh3RpA1r-810.avif 810w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/wORh3RpA1r-810.webp 810w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/wORh3RpA1r-810.png" alt="" width="810" height="397"></picture>
+<h2 id="final-thoughts">Final thoughts</h2>
+<p>Although it took me the better part of 3 hours to scrape everything together for this post, it should take you no more than 20-30 min to follow along for yourself.</p>
+<p>OctoPrint is by far worth the effort and breathes new life into even the oldest of 3D printers, I love having the ability to remotely control \ monitor my printers and when paired with a Sonoff Basic and an empty print bed - you don't even need to be by your printer to start a print.</p>
+<p>As always I welcome all feedback, comments and suggestions, happy printing!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-12-11/post/">Automating .Net Core 2.x App NuGet Deployment with AppVeyor</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2023/2023-06-21/post/">Using GitHub Pages for your Personal Blog</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2018/2018-12-12/post/` was built on 2025-07-03T19:17:39.004Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

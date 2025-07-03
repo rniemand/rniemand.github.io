@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Automating .Net Core 2.x App NuGet Deployment with AppVeyor</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="automating-net-core-2-x-app-nuget-deployment-with-appveyor">Automating .Net Core 2.x App NuGet Deployment with AppVeyor</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2018-12-11">11 December 2018</time></li>
+</ul>
+
+<p>In this post I am going to cover getting one of my <code>.net core</code> projects built in <a href="https://www.appveyor.com/">AppVeyor</a> and automatically publishing to NuGet on a successful build.</p>
+<h2 id="project-structure">Project structure</h2>
+<p>As it stands my project currently looks like this:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/rqdwZEj2mo-290.avif 290w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/rqdwZEj2mo-290.webp 290w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/rqdwZEj2mo-290.png" alt="" width="290" height="115"></picture>
+<p>I have the main project (<code>Rn.Common</code>) that I wish to publish to NuGet, and a test project (<code>Rn.CommonTests</code>) that will be run before the publication to ensure nothing breaks between commits.</p>
+<p>Lastly, I only want to run the automated build \ publish flow when code is pushed into the master branch only, as I normally use this as a release branch.</p>
+<p>I originally had this working with the <code>.net framework</code> but it was obviously not compatible with <code>.net core</code>. After a couple of hours messing about, I managed to get everything working as I wanted, below is the process I followed.</p>
+<h3 id="generate-a-nuget-deployment-key">Generate a NuGet deployment key</h3>
+<p>First I headed over to <a href="https://www.nuget.org/">NuGet.org</a> and generated a deployment key to use with AppVeyor:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/kNj_nXIU1i-606.avif 606w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/kNj_nXIU1i-606.webp 606w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/kNj_nXIU1i-606.png" alt="" width="606" height="162"></picture>
+<p>Be sure to save this key in a safe place and do not expose it publicly.</p>
+<h3 id="configure-appveyor">Configure AppVeyor</h3>
+<p>Once we have the deployment key we will need to make a couple of changes to our AppVeyor project to support .net core - I already had an existing project to modify, but if you don't have one, now would be the time to create it.</p>
+<p>Under the Settings page for your project navigate to the General section and ensure that <code>.NET Core .csproj patching</code> has been enabled (as shown below):</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/EWcvfrt6eb-610.avif 610w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/EWcvfrt6eb-610.webp 610w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/EWcvfrt6eb-610.png" alt="" width="610" height="83"></picture>
+<p>Then navigate to the Environment section and create a new environment key called <code>NUGET_API_KEY</code> (or whatever you prefer) and place in your key from step (1) for its value. This way we do not need to place this key in our build script, keeping it nice and safe.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/nz9TnioDUx-392.avif 392w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/nz9TnioDUx-392.webp 392w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/nz9TnioDUx-392.png" alt="" width="392" height="82"></picture>
+<p>That's it for the AppVeyor web configuration.</p>
+<h3 id="create-an-appveyor-yml-file">Create an appveyor.yml file</h3>
+<p>Next you will need to create an appveyor.yml` file in the root of your repository with the following content:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> 1.0.<span class="token punctuation">{</span>build<span class="token punctuation">}</span>
+<span class="token key atrule">image</span><span class="token punctuation">:</span> Visual Studio 2017
+<span class="token key atrule">branches</span><span class="token punctuation">:</span>
+  <span class="token key atrule">only</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> master
+<span class="token key atrule">init</span><span class="token punctuation">:</span>
+  <span class="token comment"># Good practice, because Windows line endings are different from Unix/Linux ones</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">cmd</span><span class="token punctuation">:</span> git config <span class="token punctuation">-</span><span class="token punctuation">-</span>global core.autocrlf true
+<span class="token key atrule">build_script</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">ps</span><span class="token punctuation">:</span> ./build/package.ps1</code></pre>
+<p>Here we do the following key things:</p>
+<ul>
+<li>We set the build environment to <code>Visual Studio 2017</code> (required for .net core)</li>
+<li>We limit the build to only trigger on the master branch</li>
+<li>We call the <code>./build/package.ps1</code> to do all the heavy lifting</li>
+</ul>
+<p>That's it for my <code>appveyor.yml</code> file.</p>
+<h3 id="create-a-build-script">Create a build script</h3>
+<p>After a lot of trial and error with the appveyor.yml file I decided to use PowerShell as my main build script due to some road blocks I was getting with the yml limitations. The below is what I came up with, I will run through the main parts of the script quickly.</p>
+<p>The first thing I do is grab the build folder and build number from the available <a href="https://www.appveyor.com/docs/environment-variables/">AppVeyor variables</a>:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Script static variables</span>
+<span class="token variable">$buildDir</span> = <span class="token variable">$env</span>:APPVEYOR_BUILD_FOLDER <span class="token comment"># e.g. C:\projects\rn-common\</span>
+<span class="token variable">$buildNumber</span> = <span class="token variable">$env</span>:APPVEYOR_BUILD_VERSION <span class="token comment"># e.g. 1.0.17</span></code></pre>
+<p>Next, I define all the folders I will be working with using full paths wherever I can:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token variable">$projectDir</span> = <span class="token variable">$buildDir</span> <span class="token operator">+</span> <span class="token string">"\src\Rn.Common"</span><span class="token punctuation">;</span>
+<span class="token variable">$projectFile</span> = <span class="token variable">$projectDir</span> <span class="token operator">+</span> <span class="token string">"\Rn.Common.csproj"</span><span class="token punctuation">;</span>
+<span class="token variable">$testDir</span> = <span class="token variable">$buildDir</span> <span class="token operator">+</span> <span class="token string">"\src\Rn.CommonTests"</span><span class="token punctuation">;</span>
+<span class="token variable">$nugetFile</span> = <span class="token variable">$projectDir</span> <span class="token operator">+</span> <span class="token string">"\Rn.Common."</span> <span class="token operator">+</span> <span class="token variable">$buildNumber</span> <span class="token operator">+</span> <span class="token string">".nupkg"</span><span class="token punctuation">;</span></code></pre>
+<p>I print out the installed .net core version to make troubleshooting easier:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Display .Net Core version</span>
+<span class="token function">Write-Host</span> <span class="token string">"Checking .NET Core version"</span> <span class="token operator">-</span>ForegroundColor Green
+&amp; dotnet <span class="token operator">--</span>version</code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/51YPcwUIYy-225.avif 225w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/51YPcwUIYy-225.webp 225w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/51YPcwUIYy-225.png" alt="" width="225" height="37"></picture>
+<p>Next, I navigate to the project directory and run a restore:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Restore the main project</span>
+<span class="token function">Write-Host</span> <span class="token string">"Restoring project"</span> <span class="token operator">-</span>ForegroundColor Green
+&amp; dotnet restore <span class="token variable">$projectFile</span> <span class="token operator">--</span>verbosity m</code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/3GbT3ZV0fm-547.avif 547w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/3GbT3ZV0fm-547.webp 547w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/3GbT3ZV0fm-547.png" alt="" width="547" height="83"></picture>
+<p>The run a publish to generate the project binaries:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Publish the project</span>
+<span class="token function">Write-Host</span> <span class="token string">"Publishing project"</span> <span class="token operator">-</span>ForegroundColor Green
+&amp; dotnet publish <span class="token variable">$projectFile</span></code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/02J1Q5YiBs-519.avif 519w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/02J1Q5YiBs-519.webp 519w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/02J1Q5YiBs-519.png" alt="" width="519" height="86"></picture>
+<p>Next, I navigate to the test folder and run my tests:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Discover and run tests</span>
+<span class="token function">Write-Host</span> <span class="token string">"Running tests"</span> <span class="token operator">-</span>ForegroundColor Green
+cd <span class="token variable">$testDir</span>
+&amp; dotnet restore Rn<span class="token punctuation">.</span>CommonTests<span class="token punctuation">.</span>csproj <span class="token operator">--</span>verbosity m
+<span class="token variable">$testOutput</span> = &amp; dotnet test <span class="token punctuation">|</span> <span class="token function">Out-String</span>
+<span class="token function">Write-Host</span> <span class="token variable">$testOutput</span></code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/9u8h6RNsw7-591.avif 591w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/9u8h6RNsw7-591.webp 591w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/9u8h6RNsw7-591.png" alt="" width="591" height="138"></picture>
+<p>I capture the output of the tests and ensure that they passed with the below check - should the tests fail I will Exit the build script:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Ensure that the tests passed</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$testOutput</span><span class="token punctuation">.</span>Contains<span class="token punctuation">(</span><span class="token string">"Test Run Successful."</span><span class="token punctuation">)</span> <span class="token operator">-eq</span> <span class="token boolean">$False</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">Write-Host</span> <span class="token string">"Build failed!"</span><span class="token punctuation">;</span>
+  <span class="token keyword">Exit</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/KJQDZ22bCQ-397.avif 397w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/KJQDZ22bCQ-397.webp 397w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/KJQDZ22bCQ-397.png" alt="" width="397" height="63"></picture>
+<p>Next, I call dotnet pack to generate a NuGet package for my project using the settings defined in Visual Studio.</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Generate a NuGet package for publishing</span>
+<span class="token function">Write-Host</span> <span class="token string">"Generating NuGet Package"</span> <span class="token operator">-</span>ForegroundColor Green
+cd <span class="token variable">$projectDir</span>
+&amp; dotnet pack <span class="token operator">-</span>c Release <span class="token operator">/</span>p:PackageVersion=<span class="token variable">$buildNumber</span> <span class="token operator">-</span>o <span class="token variable">$projectDir</span></code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/rrU_kkedop-682.avif 682w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/rrU_kkedop-682.webp 682w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/rrU_kkedop-682.png" alt="" width="682" height="131"></picture>
+<p>Once that has completed, I add the generated NuGet file to AppVeyors build artefacts:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Save generated artifacts</span>
+<span class="token function">Write-Host</span> <span class="token string">"Saving Artifacts"</span> <span class="token operator">-</span>ForegroundColor Green
+<span class="token function">Push-AppveyorArtifact</span> <span class="token variable">$nugetFile</span></code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/VxqxrrvoMh-473.avif 473w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/VxqxrrvoMh-473.webp 473w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/VxqxrrvoMh-473.png" alt="" width="473" height="42"></picture>
+<p>The last thing left to do it publish the package to NuGet using our API key defined earlier and referencing the package built above:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Publish package to NuGet</span>
+<span class="token function">Write-Host</span> <span class="token string">"Publishing NuGet package"</span> <span class="token operator">-</span>ForegroundColor Green
+&amp; nuget push <span class="token variable">$nugetFile</span> <span class="token operator">-</span>ApiKey <span class="token variable">$env</span>:NUGET_API_KEY <span class="token operator">-</span>Source https:<span class="token operator">/</span><span class="token operator">/</span>www<span class="token punctuation">.</span>nuget<span class="token punctuation">.</span>org/api/v2/package</code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/TCau3gsGOQ-583.avif 583w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/TCau3gsGOQ-583.webp 583w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/TCau3gsGOQ-583.png" alt="" width="583" height="86"></picture>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token comment"># Done</span>
+<span class="token function">Write-Host</span> <span class="token string">"Done!"</span> <span class="token operator">-</span>ForegroundColor Green</code></pre>
+<p>This results in a new version of the Rn.Common package being deployed to NuGet as can be seen below.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-11/post/zopbZ8PH8Y-768.avif 768w"><source type="image/webp" srcset="/blog/2018/2018-12-11/post/zopbZ8PH8Y-768.webp 768w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-11/post/zopbZ8PH8Y-768.png" alt="" width="768" height="251"></picture>
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>This is by no way the best solution to automating the build process, however it does what I need it to do. There are some limitations with AppVeyor now, with the biggest one being that they don't support .net core 2.2 at time of writing.</p>
+<p>I welcome feedback, comments and suggestions!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-12-06/post/">Home Assistant From Scratch - Breaking up Config</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2018/2018-12-12/post/">Installing OctoPrint on Armbian from Source</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2018/2018-12-11/post/` was built on 2025-07-03T19:17:39.004Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
