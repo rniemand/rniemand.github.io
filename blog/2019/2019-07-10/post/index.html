@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Backing up MariaDB (MySQL) via CRON</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="backing-up-mariadb-mysql-via-cron">Backing up MariaDB (MySQL) via CRON</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-07-10">10 July 2019</time></li>
+</ul>
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="https://www.richardn.ca/series/#home-server-revamp-2019">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+{: .prompt-tip }</p>
+</blockquote>
+<p>Once you have your <a href="https://www.richardn.ca/posts/InstallingMariaDBOnUbuntu/">MariaDB (MySQL alternative)</a> instance up and running, it would be a good idea to automate backing up your important databases. In this post I will cover performing a simple daily backup of your databases using <a href="https://mariadb.com/kb/en/mariadb-dumpmysqldump/">mysqldump</a>.</p>
+<h2 id="create-my-cnf">Create &quot;.my.cnf&quot;</h2>
+<p>To make your backups easier I would suggest creating a <code>.my.cnf</code> file in your CRON users home directory. When <code>mysqldump</code> runs it will search for the current users' <code>.my.cnf</code> file to load additional settings (e.g. DB credentials) allowing you to omit them from the CRON jobs command.</p>
+<p>To create the .my.cnf file, log in as the desired user and run the below command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> ~/.my.cnf</code></pre>
+<p>Add the following to the file making sure to replace the <code>&lt;USER&gt;</code> and <code>&lt;PASS&gt;</code> placeholders with your credentials.</p>
+<pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">mysqldump</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">host</span> <span class="token punctuation">=</span> <span class="token value attr-value">127.0.0.1</span>
+<span class="token key attr-name">port</span> <span class="token punctuation">=</span> <span class="token value attr-value">3306</span>
+<span class="token key attr-name">user</span> <span class="token punctuation">=</span> <span class="token value attr-value">&lt;USER></span>
+<span class="token key attr-name">password</span> <span class="token punctuation">=</span> <span class="token value attr-value">&lt;PASS></span></code></pre>
+<h2 id="testing-mysqldump">Testing mysqldump</h2>
+<p>Before continuing it would be a good idea to make sure that mysqldump is able to read your configuration file and connect to your local database instance.</p>
+<p>In my case I would like to create a daily backup of my CleanHome database, to create the backup I would run the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">mysqldump CleanHome <span class="token operator">></span> <span class="token string">"CleanHome-<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%F'</span><span class="token variable">)</span></span>.sql"</span></code></pre>
+<p>If everything works as expected a backup file should appear in your current working directory.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-07-10/post/u30F29_rPe-748.avif 748w"><source type="image/webp" srcset="/blog/2019/2019-07-10/post/u30F29_rPe-748.webp 748w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-10/post/u30F29_rPe-748.png" alt="" width="748" height="88"></picture>
+<h2 id="creating-the-cron-job">Creating the CRON job</h2>
+<p>Next we need to register a daily CRON job to automatically run our mysqldump command. The easiest way to do this would be to make use of the crontab command (choosing basic if prompted):</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">crontab</span> <span class="token parameter variable">-e</span></code></pre>
+<p>Add your backup command at the end of the file, in my case I added this:</p>
+<pre><code>00 22 * * * mysqldump --databases CleanHome &gt; &quot;/home/niemandr/CleanHome-$(date '+\%F').sql&quot;
+</code></pre>
+<blockquote>
+<p><strong>Note</strong>: you need to escape special characters with an &quot;&quot; (e.g. <code>\%F</code> in the date command). You can use <a href="https://crontab.guru/#00_22_*_*_*">crontab.guru</a> to help build your CRON expression.
+{: .prompt-tip }</p>
+</blockquote>
+<p>Close the text editor making sure to save your changes.</p>
+<p>You have successfully created your backup job!</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Below are some helpful tips for troubleshooting a failing CRON job.</p>
+<h3 id="reload-all-cron-jobs">Reload all CRON jobs</h3>
+<p>Some linux distributions may not automatically refresh jobs when a change has been made (Ubuntu does BTW), if your job is not running you could try reloading with this command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">service</span> <span class="token function">cron</span> reload</code></pre>
+<h3 id="tail-your-system-log-file">Tail your system log file</h3>
+<p>You can troubleshoot a failing job by looking at your systems log file (on Ubuntu <code>/var/log/syslog</code>) for any entries containing your CRON job, in our case you can use the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">cat</span> /var/log/syslog <span class="token operator">|</span> <span class="token function">grep</span> mysqldump</code></pre>
+<p>Ideally you can schedule the job to run on the next min and tail your systems log file:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">tail</span> <span class="token parameter variable">-f</span> /var/log/syslog</code></pre>
+<p>If you are lucky you may see the reason for the failure logged.</p>
+<h2 id="in-closing">In Closing</h2>
+<p>I hope that you found this post helpful, in the not-so-far future I will be doing a follow up post that makes use of a shell script to do a lot more than just dumping the DB (I just need some time to research it).</p>
+<p>As always comments, feedback and suggestions are always welcome as it helps me and others learn.</p>
+<p>Happy hacking!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-07-03/post/">Installing Node-RED on Ubuntu</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-07-24/post/">Installing Webmin on Ubuntu</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-07-10/post/` was built on 2025-07-03T21:21:51.983Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

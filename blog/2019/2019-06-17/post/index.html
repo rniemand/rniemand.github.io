@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Installing Telegraf on Ubuntu</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="installing-telegraf-on-ubuntu">Installing Telegraf on Ubuntu</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-06-17">17 June 2019</time></li>
+</ul>
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="https://www.richardn.ca/series/#home-server-revamp-2019">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+{: .prompt-tip }</p>
+</blockquote>
+<p><a href="https://www.influxdata.com/time-series-platform/telegraf/">Telegraf</a> is the open source server agent to help you collect metrics from your stacks, sensors and systems. Following the steps below should get you up and running with Telegraf in no time. Should you want to dive a bit deeper into some of the features offered by Telegraf you may want to refer to the <a href="https://docs.influxdata.com/telegraf/v1.11/introduction/installation/">official documentation here</a>.</p>
+<h2 id="first-time-only">First Time Only</h2>
+<p>The first time you install any of the Influx Data products you will need to add their repository using the below commands:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">wget</span> -qO- https://repos.influxdata.com/influxdb.key <span class="token operator">|</span> <span class="token function">sudo</span> apt-key <span class="token function">add</span> -
+<span class="token builtin class-name">source</span> /etc/lsb-release
+<span class="token builtin class-name">echo</span> <span class="token string">"deb https://repos.influxdata.com/<span class="token variable">${DISTRIB_ID<span class="token operator">,,</span>}</span> <span class="token variable">${DISTRIB_CODENAME}</span> stable"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/influxdb.list</code></pre>
+<h2 id="installing-telegraf">Installing Telegraf</h2>
+<p>Once you have added the InfluxData source to your system, you can install Telegraf with the below command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> telegraf</code></pre>
+<h2 id="configuring-telegraf">Configuring Telegraf</h2>
+<p>Once installed, you will need to make some changes to the default configuration file that Telegraf ships with. To do this we can edit the <code>telegraf.conf</code> file.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/telegraf/telegraf.conf</code></pre>
+<h3 id="influxdb-output">InfluxDB (Output)</h3>
+<p>You will need to enable at least 1 output for Telegraf, in my case (and most commonly) this would be <a href="https://www.richardn.ca/posts/InstallingInfluxDBOnUbuntu/">InfluxDB</a>. Search for the <code>[[outputs.influxdb]]</code> configuration section and change as needed, my configuration is shown below:</p>
+<pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">[outputs.influxdb</span><span class="token punctuation">]</span></span>]
+  <span class="token key attr-name">urls</span> <span class="token punctuation">=</span> <span class="token value attr-value">["http://10.0.0.56:8086"]</span>
+  <span class="token key attr-name">database</span> <span class="token punctuation">=</span> <span class="token value attr-value">"<span class="token inner-value">telegraf</span>"</span></code></pre>
+<h3 id="net-input">net (Input)</h3>
+<p>To collect networking stats for your computer you will need to enable the [[inputs.net]] plugin. Part of the configuration for the plugin is setting the interface name for your network card (the name varies from system to system) - the easiest way to get your interface name is by listing all the networking devices on your computer and choosing the most appropriate one from the results:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">ls</span> /sys/class/net/</code></pre>
+<p>Once you have your adapter name change your configuration to match it, in my case I am using the following configuration:</p>
+<pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">[inputs.net</span><span class="token punctuation">]</span></span>]
+  <span class="token key attr-name">interfaces</span> <span class="token punctuation">=</span> <span class="token value attr-value">["eno1"]</span></code></pre>
+<h3 id="default-input">Default (Input)</h3>
+<p>When installing Telegraf on my system the following plugins seemed to be enabled by default (though your mileage may vary):</p>
+<ul>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/cpu/README.md">inputs.cpu</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/disk/README.md">inputs.disk</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/kernel/README.md">inputs.kernel</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/mem/README.md">inputs.mem</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/processes/README.md">inputs.processes</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/swap/README.md">inputs.swap</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/system/README.md">inputs.system</a></li>
+</ul>
+<p>A complete list of Telegraf plugins can be found <a href="https://docs.influxdata.com/telegraf/v1.11/plugins/plugin-list/">here</a>.</p>
+<h2 id="service-management">Service Management</h2>
+<p>You can use the below commands to manage the Telegraf service after making configuration changes.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> systemctl status telegraf.service
+<span class="token function">sudo</span> systemctl start telegraf.service
+<span class="token function">sudo</span> systemctl stop telegraf.service
+<span class="token function">sudo</span> systemctl restart telegraf.service</code></pre>
+<blockquote>
+<p>Make sure you remember to restart the service after making configuration changes.
+{: .prompt-tip }</p>
+</blockquote>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Should you run into any issues with starting Telegraf, or you are missing data you can always run the below command to get the last couple of messages from Telegraf:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> systemctl status telegraf.service</code></pre>
+<p>Should the above not provide you any insight you could always run cat and grep on syslog to listen for new Telegraf events and print them to your screen:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">tail</span> <span class="token parameter variable">-f</span> /var/log/syslog <span class="token operator">|</span> <span class="token function">grep</span> telegraf</code></pre>
+<p>In my case I had set the incorrect URL for InfluxDB :/</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-06-17/post/LQv9S3RLPb-1168.avif 1168w"><source type="image/webp" srcset="/blog/2019/2019-06-17/post/LQv9S3RLPb-1168.webp 1168w"><img loading="lazy" decoding="async" src="/blog/2019/2019-06-17/post/LQv9S3RLPb-1168.png" alt="" width="1168" height="225"></picture>
+<h2 id="all-done">All Done</h2>
+<p>Hopefully you find this post helpful!</p>
+<p>Feel free to leave any feedback or comments below, or if you spot an issue let me know so I can fix it. Happy monitoring!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-06-15/post/">Installing MariaDB (MySQL) on Ubuntu</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-06-18/post/">Installing Chronograf on Ubuntu</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-06-17/post/` was built on 2025-07-03T21:21:51.982Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Installing MariaDB (MySQL) on Ubuntu</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="installing-mariadb-mysql-on-ubuntu">Installing MariaDB (MySQL) on Ubuntu</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-06-15">15 June 2019</time></li>
+</ul>
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="https://www.richardn.ca/series/#home-server-revamp-2019">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+{: .prompt-tip }</p>
+</blockquote>
+<p>This post covers the basics of installing MariaDB (an alternative to MySQL) on Ubuntu Server in an hopefully easy to follow format. I have broken the process up into smaller sections to make following along a lot easier.</p>
+<h2 id="installation">Installation</h2>
+<p>The first thing you will need to do is ensure that your server is up to date using the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token parameter variable">-y</span> upgrade</code></pre>
+<p>Once updated you can install MariaDB with the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token parameter variable">-y</span> <span class="token function">install</span> mariadb-server mariadb-client</code></pre>
+<p>Once installed you can confirm everything is working correctly by checking the state of the service:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> systemctl status mariadb.service</code></pre>
+<p>Let's stop the service so we can make some additional configuration changes:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> systemctl stop mariadb.service</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>The default configuration file can be found at <code>/etc/mysql/mariadb.conf.d/50-server.cnf</code>, you can run the below command to edit it:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> <span class="token function">nano</span> /etc/mysql/mariadb.conf.d/50-server.cnf</code></pre>
+<p>For me the only change I needed to make was to set the <code>bind-address</code> to <code>0.0.0.0</code> (all interfaces) to allow external access, however you may want to look through the configuration file and make additional changes to suit your setup.</p>
+<p>Once done, you will need to run the <code>mysql_secure_installation</code> script as sudo - this will guide you through all the recommended security settings for your installation.</p>
+<p>You will need to start MariaDB first before running the secure installation script.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> systemctl start mariadb.service
+$ <span class="token function">sudo</span> /usr/bin/mysql_secure_installation</code></pre>
+<h3 id="connecting-to-the-db">Connecting to the DB</h3>
+<p>You can connect to MariaDB using the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> mysql <span class="token parameter variable">-u</span> root <span class="token parameter variable">-p</span></code></pre>
+<h3 id="creating-users">Creating Users</h3>
+<p>You can create an user account with the below commands (be sure to replace the <code>&lt;USER&gt;</code> and <code>&lt;PASSWORD&gt;</code> placeholders):</p>
+<pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">USER</span> <span class="token string">'&lt;USER>'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'&lt;PASSWORD>'</span><span class="token punctuation">;</span>
+<span class="token keyword">GRANT</span> <span class="token keyword">USAGE</span> <span class="token keyword">ON</span> <span class="token operator">*</span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'&lt;USER>'</span><span class="token variable">@'%'</span> IDENTIFIED <span class="token keyword">BY</span> <span class="token string">'&lt;PASSWORD>'</span><span class="token punctuation">;</span>
+FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span></code></pre>
+<h3 id="creating-db">Creating DB</h3>
+<p>You can create a DB with the below command (be sure to replace the <code>&lt;DB_NAME&gt;</code> placeholder):</p>
+<pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token identifier"><span class="token punctuation">`</span>&lt;DB_NAME><span class="token punctuation">`</span></span><span class="token punctuation">;</span></code></pre>
+<h3 id="assigning-an-user-to-a-db">Assigning an User to a DB</h3>
+<p>Use the below commands to assign an user to a specific DB (make sure you replace <code>&lt;DB_NAME&gt;</code>, <code>&lt;USER&gt;</code> and <code>&lt;HOST&gt;</code>):</p>
+<pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token keyword">GRANT</span> <span class="token keyword">ALL</span> <span class="token keyword">privileges</span> <span class="token keyword">ON</span> <span class="token identifier"><span class="token punctuation">`</span>&lt;DB_NAME><span class="token punctuation">`</span></span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">TO</span> <span class="token string">'&lt;USER>'</span><span class="token variable">@'&lt;HOST>'</span><span class="token punctuation">;</span>
+FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span></code></pre>
+<p>You can use <code>%</code> for <code>&lt;HOST&gt;</code> to allow access from anywhere - however it is a lot safer to lock down access to known, safe IP Addresses.</p>
+<h2 id="quick-reference">Quick Reference</h2>
+<p>Some helpful commands and paths to save you time.</p>
+<h3 id="data-directory">Data Directory</h3>
+<p><code>/var/lib/mysql/</code></p>
+<h3 id="service-management">Service Management</h3>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> systemctl start mariadb.service
+<span class="token function">sudo</span> systemctl stop mariadb.service
+<span class="token function">sudo</span> systemctl restart mariadb.service
+<span class="token function">sudo</span> systemctl status mariadb.service</code></pre>
+<h3 id="connecting-to-mariadb">Connecting to MariaDB</h3>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> mysql <span class="token parameter variable">-u</span> root <span class="token parameter variable">-p</span></code></pre>
+<h3 id="creating-a-db">Creating a DB</h3>
+<pre class="language-shell" tabindex="0"><code class="language-shell">CREATE DATABASE <span class="token variable"><span class="token variable">`</span><span class="token operator">&lt;</span>DB_NAME<span class="token operator">></span><span class="token variable">`</span></span><span class="token punctuation">;</span></code></pre>
+<h3 id="creating-an-user-and-assign-a-db">Creating an User and assign a DB</h3>
+<pre class="language-shell" tabindex="0"><code class="language-shell">CREATE <span class="token environment constant">USER</span> <span class="token string">'&lt;USER>'</span> IDENTIFIED BY <span class="token string">'&lt;PASSWORD>'</span><span class="token punctuation">;</span>
+GRANT USAGE ON <span class="token variable"><span class="token variable">`</span><span class="token operator">&lt;</span>DB_NAME<span class="token operator">></span><span class="token variable">`</span></span>.* TO <span class="token string">'&lt;USER>'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'&lt;PASSWORD>'</span><span class="token punctuation">;</span>
+GRANT ALL privileges ON <span class="token variable"><span class="token variable">`</span><span class="token operator">&lt;</span>DB_NAME<span class="token operator">></span><span class="token variable">`</span></span>.* TO <span class="token string">'&lt;USER>'</span>@<span class="token string">'&lt;HOST>'</span><span class="token punctuation">;</span>
+FLUSH PRIVILEGES<span class="token punctuation">;</span></code></pre>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-06-14/post2/">Setting Static IP Address (Ubuntu)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-06-17/post/">Installing Telegraf on Ubuntu</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-06-15/post/` was built on 2025-07-03T21:21:51.982Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

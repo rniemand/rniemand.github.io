@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Installing Grafana on Ubuntu</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="installing-grafana-on-ubuntu">Installing Grafana on Ubuntu</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-07-02">02 July 2019</time></li>
+</ul>
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="https://www.richardn.ca/series/#home-server-revamp-2019">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+{: .prompt-tip }</p>
+</blockquote>
+<p>Once you have a running instance of <a href="https://www.richardn.ca/posts/InstallingInfluxDBOnUbuntu/">InfluxDB</a> being populated with that sweet, sweet <a href="https://www.richardn.ca/posts/InstallingTelegrafOnUbuntu/">Telegraf</a> data, you are going to need a way to visualise it all, this is where <a href="https://grafana.com/">Grafana</a> comes in. Grafana is by far one of the best dash-boarding systems out there and is simple to use.</p>
+<p>In this post I will cover the steps needed to get Grafana up and running on your Ubuntu Server installation, let's dive in.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Before you begin it is a good idea to make sure that you have the latest version of libfontconfig1 installed as my initial installation failed as it was missing on my system, installation is as simple as running:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> libfontconfig1</code></pre>
+<p>Should you run into an error with the above you can run the below command (if the above succeeded you can skip this command):</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> --fix-broken <span class="token function">install</span></code></pre>
+<h2 id="download-and-install">Download and Install</h2>
+<p>Next, you will need to grab the appropriate installation package from <a href="https://grafana.com/grafana/download">the official Grafana release page</a>, in my case this was <code>grafana_6.2.2_amd64.deb</code>. Log onto your server and download the installation package using wget:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">wget</span> https://dl.grafana.com/oss/release/grafana_6.2.2_amd64.deb</code></pre>
+<p>Once downloaded you can install it with the command below:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> dpkg <span class="token parameter variable">-i</span> grafana_6.2.2_amd64.deb</code></pre>
+<p>After the installation has completed you can remove the package from your system as you no longer need it:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">rm</span> <span class="token parameter variable">-f</span> grafana_6.2.2_amd64.deb</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>The main Grafana configuration file live in /etc/grafana/grafana.ini and you can edit it with your favourite bash editor:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/grafana/grafana.ini</code></pre>
+<p>The only real configuration changes I make are shown below, this is mainly binding to <code>0.0.0.0</code> and ensuring that the default port is set to <code>3000</code>.</p>
+<pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">server</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">http_addr</span> <span class="token punctuation">=</span> <span class="token value attr-value">0.0.0.0</span>
+<span class="token key attr-name">http_port</span> <span class="token punctuation">=</span> <span class="token value attr-value">3000</span></code></pre>
+<p>There are loads more configuration options to play around with, but as stated above these are the ones I most often mess around with.</p>
+<h2 id="creating-a-service">Creating a Service</h2>
+<p>You can enable the Grafana service with the following commands:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> grafana-server
+<span class="token function">sudo</span> systemctl daemon-reload</code></pre>
+<p>You can start and stop Grafana with the following commands:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> systemctl start grafana-server
+<span class="token function">sudo</span> systemctl stop grafana-server</code></pre>
+<p>Querying the status of Grafana is as simple as:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> systemctl status grafana-server</code></pre>
+<h2 id="first-time-configuration">First Time Configuration</h2>
+<p>Provided you left the default port unchanged, you should be able to connect to Grafana on <code>http://&lt;server_ip&gt;:3000/</code>, in my case that would be: <code>http://10.0.0.51:3000</code></p>
+<p>You should be greeted with the following login screen.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-07-02/post/IDsKgtjdwx-816.avif 816w"><source type="image/webp" srcset="/blog/2019/2019-07-02/post/IDsKgtjdwx-816.webp 816w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-02/post/IDsKgtjdwx-816.png" alt="" width="816" height="313"></picture>
+<p>Login using <code>admin</code> with default password <code>admin</code> (you will be prompted to change it on login).</p>
+<p>Congratulations, you now have a working Grafana instance!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-06-18/post/">Installing Chronograf on Ubuntu</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-07-03/post/">Installing Node-RED on Ubuntu</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-07-02/post/` was built on 2025-07-03T21:21:51.983Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

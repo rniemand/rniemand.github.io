@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Running Grafana locally on HTTPS</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="running-grafana-locally-on-https">Running Grafana locally on HTTPS</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-01-17">17 January 2019</time></li>
+</ul>
+
+<p>I am currently developing a custom data-source for <a href="https://grafana.com/">Grafana</a> and needed to run the server in HTTPS mode in order to test out a rather odd use-case, this is just a quick post on how I did it - hopefully this saves you some time in the future.</p>
+<h2 id="generating-the-certificates">Generating the certificates</h2>
+<p>Following the <a href="https://letsencrypt.org/docs/certificates-for-localhost/">steps outlined here</a>, I decided to spin up an Ubuntu <a href="https://www.docker.com/">Docker</a> container for this, making sure to map the /home directory to a folder on my PC for easy access.</p>
+<pre><code>docker run -it --rm -v C:\docker-data\ubuntu:/home ubuntu
+</code></pre>
+<p>Once booted I installed openssh with the following command:</p>
+<pre><code>apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get install -y openssl
+</code></pre>
+<p>Once installed be sure to change to your home directory:</p>
+<pre><code>cd /home
+</code></pre>
+<p>Then run the below to generate a certificate for localhost:</p>
+<pre><code>openssl req -x509 -out localhost.crt -keyout localhost.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=localhost' -extensions EXT -config &lt;( \
+   printf &quot;[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth&quot;)
+</code></pre>
+<p>This should generate the following files in your mapped /home folder:</p>
+<ul>
+<li>localhost.crt</li>
+<li>localhost.key</li>
+</ul>
+<p>Copy these files to somewhere where your Grafana server can access them.</p>
+<h2 id="configure-grafana">Configure Grafana</h2>
+<p>In order to use the certificates you will need to make the following changes to your Grafana's <code>defaults.ini</code> file:</p>
+<pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">server</span><span class="token punctuation">]</span></span>
+<span class="token key attr-name">protocol</span> <span class="token punctuation">=</span> <span class="token value attr-value">https</span>
+<span class="token key attr-name">cert_file</span> <span class="token punctuation">=</span> <span class="token value attr-value">D:\WRK\grafana-5.4.2\localhost.crt</span>
+<span class="token key attr-name">cert_key</span> <span class="token punctuation">=</span> <span class="token value attr-value">D:\WRK\grafana-5.4.2\localhost.key</span></code></pre>
+<p>Save and close the file - that's it from the Grafana side.</p>
+<h3 id="trusting-the-certificate">Trusting the certificate</h3>
+<p>If you were to browse to your server on https now - your browser would throw up an error page saying that the certificate is not valid \ trusted. We can solve this by importing the localhost.crt file into the computer's rusted Root Certification Authorities.</p>
+<p>Note this is not recommended for production environments - but is the path of least resistance for us developers :)</p>
+<ul>
+<li>Open a Run dialog</li>
+<li>Enter in <code>mmc</code> and click OK</li>
+<li>Click File then Add/Remove Snap-in</li>
+<li>Select Certificates from the available snap-ins and click the Add &gt; button</li>
+<li>Select Computer Account on the screen that appears and click Next &gt;</li>
+<li>Ensure that Local Computer is selected on the next screen and click Finish</li>
+<li>Click OK to close the add snap-in dialog</li>
+<li>Using the left hand side panel navigate to Certificates -&gt; Trusted Root Certification Authorities -&gt; Certificates</li>
+<li>Right click on the Certificated folder and select All Tasks -&gt; Import from the context menu</li>
+<li>On the Certificate Import Wizard screen click Next</li>
+<li>Browse for the and select your localhost.crt on the next screen, then click Next</li>
+<li>Leave everything as is on the next screen - click Next</li>
+<li>Review the pending changes and click Finish to import your certificate</li>
+</ul>
+<p>If all goes well you should see a localhost certificate in the list:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-17/post/q-sz4b23hX-696.avif 696w"><source type="image/webp" srcset="/blog/2019/2019-01-17/post/q-sz4b23hX-696.webp 696w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-17/post/q-sz4b23hX-696.png" alt="" width="696" height="243"></picture>
+<p>You're done with the import - you can now close the console.</p>
+<h2 id="testing-it-all-out">Testing it all out</h2>
+<p>You can now navigate to your Grafana's server address on https (in my case that's https://localhost:3000/?orgId=1) - your browser should pick up the certificate and allow the connection as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-17/post/jcjqhdkclt-407.avif 407w"><source type="image/webp" srcset="/blog/2019/2019-01-17/post/jcjqhdkclt-407.webp 407w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-17/post/jcjqhdkclt-407.png" alt="" width="407" height="297"></picture>
+<blockquote>
+<p><strong>VIP</strong>: you may need to restart your browser as I know Chrome for a fact needs a restart to pick up changes to certificates - don't panic if it fails initially you probably just need to restart your browser.
+{: .prompt-warning }</p>
+</blockquote>
+<p>You are done!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-01-16/post/">Over the top Door Monitoring (RF, Node-RED and HASS)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-03-27/post/">Installing Telegraf on DietPi / ARM (Revised)</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-01-17/post/` was built on 2025-07-03T21:21:51.981Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

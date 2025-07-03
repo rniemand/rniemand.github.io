@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Over the top Door Monitoring (RF, Node-RED and HASS)</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="over-the-top-door-monitoring-rf-node-red-and-hass">Over the top Door Monitoring (RF, Node-RED and HASS)</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-01-16">16 January 2019</time></li>
+</ul>
+
+<p>I work out of the basement at home and often don't hear when my wife gets back from work or my daughter gets back from school. I wanted a way to be notified when either the front door (or back door in this case) gets opened so I can head upstairs and greet them.</p>
+<p>I happened to have some <a href="https://www.aliexpress.com/item/32862123837.html">433 Mhz RF door sensors</a> lying around and decided to try setting up an audible alert on the basement Google Home when the door opens, this post is just a quick explanation of the flow I ended up using.</p>
+<p>With no doubt there are easier ways to go about solving this problem, but the solution I ended up using made the most sense to me at the time.</p>
+<h2 id="the-hardware">The Hardware</h2>
+<p>As mentioned above the star of the show are the 433 Mhz RF door sensors I bought from China:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/I7Zz72uXJO-307.avif 307w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/I7Zz72uXJO-307.webp 307w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/I7Zz72uXJO-307.png" alt="" width="307" height="357"></picture>
+<p>Unfortunately the model I selected only sends a single code (others offer a code for the <code>open</code> and <code>closed</code> state) - so I had to do some dirty hacking around this (see the Node-RED flows).</p>
+<p>I have a <a href="https://itead.cc/product/sonoff-rf-bridge-433/">Sonoff RF Bridge</a> running <a href="https://github.com/arendst/Tasmota">Tasmota</a> which intercepts all 433 MHz RF signals and relays them to my MQTT broker allowing me to use the switches in my Home Automation setup.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/iJsJF69fsi-465.avif 465w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/iJsJF69fsi-465.webp 465w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/iJsJF69fsi-465.jpeg" alt="" width="465" height="468"></picture>
+<p>The rest of the hardware used in the project consists of:</p>
+<ul>
+<li>Raspberry Pi 3 running Home Assistant</li>
+<li>Google Home - used for notifications</li>
+<li><a href="https://nanopi.io/nanopi-neo2.html">NanoPi NEO2</a> running Node-RED &lt;- this is an awesome $20 SBC!</li>
+</ul>
+<h2 id="node-red-flow">Node-RED Flow</h2>
+<p>As mentioned above the RF sensors I am using only send a code when the contact is broken (i.e. the door is opened). I would like the door to return to a closed state after 2 min so a re-trigger is possible, and a more accurate state for the door is recorded in Home Assistant.</p>
+<p>The simplest solution I came up with here was to:</p>
+<ul>
+<li>Create a flow to listen for the door open messages and schedule a closed message 2 min from its arrival</li>
+<li>Create a flow to publish the closed message at the correct time</li>
+</ul>
+<h3 id="schedule-reset-message">Schedule Reset Message</h3>
+<p>Here is the flow to schedule the reset (closed) messages in Node-RED.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/tCoc92KCbU-1068.avif 1068w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/tCoc92KCbU-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/tCoc92KCbU-1068.png" alt="" width="1068" height="186"></picture>
+<ul>
+<li>Subscribe to the Sonoff RF results topic (<code>tele/RF_Bridge/RESULT</code>)</li>
+<li>Convert the message body into an JSON object</li>
+<li>Switch based on the value of <code>msg.payload.RfReceived.Data</code></li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/g1LwwdtyEq-503.avif 503w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/g1LwwdtyEq-503.webp 503w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/g1LwwdtyEq-503.png" alt="" width="503" height="125"></picture>
+<p>Execute a simple JavaScript code block to schedule the reset message</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">let</span> offTime <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1000</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'door_back_offAt'</span><span class="token punctuation">,</span> offTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'door_back_state'</span><span class="token punctuation">,</span> <span class="token string">'OPEN'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="send-reset-message">Send Reset Message</h3>
+<p>The flow to send the reset message looks like this:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.avif 1249w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.webp 1249w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.png" alt="" width="1249" height="231"></picture>
+<ul>
+<li>At an interval of <code>10 seconds</code></li>
+</ul>
+<p>Run a script to determine if we need to send a reset message</p>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">let</span> doorState <span class="token operator">=</span> flow<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'door_back_state'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> turnOffAt <span class="token operator">=</span> flow<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'door_back_offAt'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> newState <span class="token operator">=</span> <span class="token string">'IGNORE'</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>doorState <span class="token operator">===</span> <span class="token string">'OPEN'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> turnOffAt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'door_front_state'</span><span class="token punctuation">,</span> <span class="token string">'CLOSED'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        newState <span class="token operator">=</span> <span class="token string">'CLOSED'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+msg<span class="token punctuation">.</span>payload <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token literal-property property">state</span><span class="token operator">:</span> newState <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">return</span> msg<span class="token punctuation">;</span></code></pre>
+<ul>
+<li>Filter to check for the CLOSED state</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/y66bVq0zvw-599.avif 599w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/y66bVq0zvw-599.webp 599w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/y66bVq0zvw-599.png" alt="" width="599" height="205"></picture>
+<p>Template to generate the reset message:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"RfReceived"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"Data"</span><span class="token operator">:</span><span class="token string">"B82346OFF"</span><span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre>
+<p>Publish the reset message via MQTT on the <code>tele/RF_Bridge/RESULT</code> topic - mocking the required structure of a decoded Sonoff RF message.</p>
+<h3 id="flows-side-by-side">Flows Side by Side</h3>
+<p>Schedule reset message flow:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/tCoc92KCbU-1068.avif 1068w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/tCoc92KCbU-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/tCoc92KCbU-1068.png" alt="" width="1068" height="186"></picture>
+<p>Send reset message flow:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.avif 1249w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.webp 1249w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.png" alt="" width="1249" height="231"></picture>
+<h2 id="home-assistant-binary-sensor">Home Assistant Binary Sensor</h2>
+<p>Although technically not required I setup a <a href="https://www.home-assistant.io/integrations/binary_sensor.mqtt">MQTT binary sensor</a> in Home Assistant to allow me to check the state history of the door:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">binary_sensor</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"Back Door"</span>
+    <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"tele/RF_Bridge/RESULT"</span>
+    <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"1E3B46"</span>
+    <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"1E3B46OFF"</span>
+    <span class="token key atrule">device_class</span><span class="token punctuation">:</span> door
+    <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token string">''</span></code></pre>
+<blockquote>
+<p><strong>Note</strong> the <code>1E3B46OFF</code> payload is the actual reset message sent from Node-RED
+{: .prompt-info }</p>
+</blockquote>
+<p>After restarting Home Assistant I now had my doors showing up:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/LH6HI_kx6F-521.avif 521w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/LH6HI_kx6F-521.webp 521w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/LH6HI_kx6F-521.png" alt="" width="521" height="287"></picture>
+<p>And after some time I was able to get state history for the doors, see that the door was open for 2 min :).</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/nNBW4EBYL8-480.avif 480w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/nNBW4EBYL8-480.webp 480w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/nNBW4EBYL8-480.png" alt="" width="480" height="357"></picture>
+<h2 id="alerting-rule">Alerting Rule</h2>
+<p>Now that I have my door in Home Assistant it was time to set up the actual alert, this was done through an Automation script, and after some playing around I ended up with the following:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> <span class="token string">"Back Door Opened"</span>
+<span class="token key atrule">initial_state</span><span class="token punctuation">:</span> <span class="token boolean important">True</span>
+
+<span class="token key atrule">trigger</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
+    <span class="token key atrule">topic</span><span class="token punctuation">:</span> tele/RF_Bridge/RESULT
+
+<span class="token key atrule">condition</span><span class="token punctuation">:</span>
+  <span class="token key atrule">condition</span><span class="token punctuation">:</span> template
+  <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token string">"false"</span>
+
+<span class="token key atrule">action</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">service</span><span class="token punctuation">:</span> tts.google_say
+    <span class="token key atrule">data</span><span class="token punctuation">:</span>
+      <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> media_player.gym_speaker
+      <span class="token key atrule">message</span><span class="token punctuation">:</span> Back door open</code></pre>
+<p>Broken up it's easy enough to follow:</p>
+<ul>
+<li><code>alias</code> - what you want to call the Automation in Home Assistant</li>
+<li><code>initial_state</code> - enabled by default</li>
+<li><code>trigger</code> - condition to trigger the automation, in my case this was an MQTT message</li>
+<li><code>condition</code> - used to filter out the specific MQTT payload I wanted</li>
+<li><code>action</code> - response to the trigger and condition being met</li>
+</ul>
+<p>After reloading the automatons in Home Assistant my Back Door Opened entry was listed!</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/I4xLMiDbRn-364.avif 364w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/I4xLMiDbRn-364.webp 364w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/I4xLMiDbRn-364.png" alt="" width="364" height="58"></picture>
+<h2 id="testing-it-out">Testing it out</h2>
+<p>I didn't want to keep opening and closing the door to test the flow so I ended up using <a href="https://mqttfx.jensd.de/">MQTT.fx</a> to post a bare-bones JSON payload mimicking that of the Sonoff RF bridge.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/SWVpTleVcg-472.avif 472w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/SWVpTleVcg-472.webp 472w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/SWVpTleVcg-472.png" alt="" width="472" height="178"></picture>
+<h2 id="in-closing">In closing</h2>
+<p>This is a rather complex solution to a simple problem, Ill be the first to admit that - however I love little challenges like this as it gets me thinking of new ways to solve them.</p>
+<p>The code used for Node-RED is not optimised at all (I would like to roll up the logic into a single step), but it gets the job done. The binary sensors in Home Assistant are only used for tracking the state of the door visually and are not required if you are following along at home.</p>
+<p>Hopefully you found this post interesting or amusing. I am blown away each day with the power and versatility packed into these open source projects - the community has poured a lot of love and devotion into them and it shows.</p>
+<p>Feel free to post any comments, questions or suggestions below!</p>
+<p>Happy hacking</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-01-15/post/">Running a PHP site with Docker</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-01-17/post/">Running Grafana locally on HTTPS</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-01-16/post/` was built on 2025-07-03T21:21:51.981Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

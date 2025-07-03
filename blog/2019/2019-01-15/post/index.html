@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Running a PHP site with Docker</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="running-a-php-site-with-docker">Running a PHP site with Docker</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-01-15">15 January 2019</time></li>
+</ul>
+
+<p>Today I am going to quickly cover getting a php script up and running in Docker. In case you are unfamiliar with Docker:</p>
+<blockquote>
+<p>Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
+{: .prompt-info }</p>
+</blockquote>
+<p>Before getting started you will need to make sure that the following requirements are met:</p>
+<ul>
+<li>You have a CPU capable of running Docker (most modern CPU should work)</li>
+<li>Ideally you are on a <code>x64</code> based CPU architecture</li>
+<li>You have the appropriate version of <a href="https://www.docker.com/products/docker-desktop/">Docker Desktop</a> installed for your OS.</li>
+</ul>
+<p>Once that is all sorted, you are good to go.</p>
+<h2 id="find-a-base-container">Find a base container</h2>
+<p>Docker uses the concept of containers to store and run your applications - and is not intended to run a secondary OS like VirtualBox. <a href="https://www.virtualbox.org/">VirtualBox</a> allows you to run a secondary OS on your host computer by emulating the hardware of a virtual computer and intercepting low level system calls, Docker on the other hand uses the host OS (or runs a common one if needed) to run a sand-boxed application intercepting and passing system calls to the host OS to handle giving it a smaller resource overhead when compared to VirtualBox.</p>
+<p>That being said, when you want to run an application like PHP you will either need to find a base container to work from (recommended) or create your own container from scratch. Going the path of least resistance I am going to use a pre-built PHP image. You can use <a href="https://hub.docker.com/">https://hub.docker.com/</a> to search for pre-built containers as a starting point for your application - be sure to make sure that your chosen container is from a reputable source and is being actively maintained. For now I am going to be making use of <a href="https://hub.docker.com/_/php">this container</a>:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-15/post/OuKStTBUmn-942.avif 942w"><source type="image/webp" srcset="/blog/2019/2019-01-15/post/OuKStTBUmn-942.webp 942w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-15/post/OuKStTBUmn-942.png" alt="" width="942" height="195"></picture>
+<h2 id="select-a-container-version">Select a container version</h2>
+<p>Once you have found a base container to work with, you will need to choose a minimum version of the container to use with your application. This is simply done by scrolling down on the containers information page and looking for the tags section on the Description tab.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-15/post/y2Tlb1h7ji-796.avif 796w"><source type="image/webp" srcset="/blog/2019/2019-01-15/post/y2Tlb1h7ji-796.webp 796w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-15/post/y2Tlb1h7ji-796.png" alt="" width="796" height="292"></picture>
+<blockquote>
+<p><strong>Note</strong> The tag versions go from more specific to super vague when reading left to right. You can use a very restrictive tag like 7.3.0-apache to lock into a specific PHP version, or 7-apache for the latest version of PHP 7.
+{: .prompt-tip }</p>
+</blockquote>
+<p>In my case I am going to go with <code>7.3.0-apache</code>.</p>
+<p>This will form the base container we are going to use for our application and we will refer to this as the FROM directive in our Dockerfile later on.</p>
+<h2 id="creating-a-dockerfile">Creating a Dockerfile</h2>
+<p>You can run a Docker container ad-hock from the command line, or via a Dockerfile file. Both mechanisms have their merits, but for now I am going to be using the Dockerfile method as this would allow me to commit my application to source control for other developers to use.</p>
+<p>I will start this by creating a new folder on my computer to store my container in along with the PHP source files for development. In the root of my new folder I create a blank text file and rename it to Dockerfile making sure to remove the .txt extension, and add the following configuration to the file:</p>
+<pre class="language-dockerfile" tabindex="0"><code class="language-dockerfile"><span class="token instruction"><span class="token keyword">FROM</span> php:7.3.0-apache</span>
+<span class="token instruction"><span class="token keyword">COPY</span> src/ /var/www/html</span>
+<span class="token instruction"><span class="token keyword">EXPOSE</span> 80</span></code></pre>
+<p>This file will be used to describe the application to Docker:</p>
+<ul>
+<li><strong>FROM</strong> - tells Docker that we are going to be using the php:7.3.0-apache base container.</li>
+<li><strong>COPY</strong> - used to copy all files from a src folder to the /var/www/html folder of the docker container (you can normally get a list of all available paths on the selected containers information page).</li>
+<li><strong>EXPOSE</strong> - used to expose port 80 (HTTP) from the container to the host computer.</li>
+</ul>
+<p>That's pretty much it for the Dockerfile, lastly let's add some content to the PHP file we are going to be running (<code>src/index.php</code>):</p>
+<pre class="language-php" tabindex="0"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
+<span class="token keyword">echo</span> <span class="token string single-quoted-string">'Hello World'</span><span class="token punctuation">;</span>
+</span></code></pre>
+<h2 id="building-and-running">Building and Running</h2>
+<p>You need to build your Dockerfile in order to run it - in our case it is as simple as running the following command:</p>
+<pre><code>docker build -t hello-world .
+</code></pre>
+<blockquote>
+<p><strong>Note</strong> I use <code>.</code> here are is am already in the folder containing the Dockerfile
+{: .prompt-info }</p>
+</blockquote>
+<p>This will interrogate your Dockerfile and pull down all the required images to build your container (this may take a while the first time you do this).</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-15/post/4yeH8ddKZ8-805.avif 805w"><source type="image/webp" srcset="/blog/2019/2019-01-15/post/4yeH8ddKZ8-805.webp 805w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-15/post/4yeH8ddKZ8-805.png" alt="" width="805" height="466"></picture>
+<p>Once completed you can run your container using:</p>
+<pre><code>docker run -p 5001:80 hello-world
+</code></pre>
+<ul>
+<li><code>-p</code> allows us to map a port from the host computer to the container, in my case localhost:5001 -&gt; container:80.</li>
+<li><code>CTRL + C</code> will kill the apache process and shut down the container.</li>
+</ul>
+<p>Now you should be able to browse to http://localhost:5001 on your computer and see our &quot;Hello World&quot; message.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-15/post/apO0jJ303c-279.avif 279w"><source type="image/webp" srcset="/blog/2019/2019-01-15/post/apO0jJ303c-279.webp 279w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-15/post/apO0jJ303c-279.png" alt="" width="279" height="94"></picture>
+<h2 id="using-volumes">Using Volumes</h2>
+<p>One thing to note here is that no matter what changes we make to the index.php file after we build, they do not reflect in our application. This is due to the fact that when we built our application using the Dockerfile, Docker made a copy of index.php at that point in time and persisted it to our container. Although this is excellent for production, it will not do for development cases as we will want to make changes to the file as we go.</p>
+<p>This is where volumes come in as they allow the linking of folders from the host system to the container. Also any changes made to these mounted folders are synchronised between the host and container. We can override /var/www/html as shown below:</p>
+<pre><code>docker run -p 5001:80 -v C:\Users\niema\Desktop\docker\src\:/var/www/html hello-world
+</code></pre>
+<blockquote>
+<p><strong>Note</strong> you will need to replace C:\Users\niema\Desktop\docker\src\ with your desired source directory.
+{: .prompt-tip }</p>
+</blockquote>
+<p>Now any changes that we make to index.php are reflected in our application.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-15/post/ZAtCzjfGn--264.avif 264w"><source type="image/webp" srcset="/blog/2019/2019-01-15/post/ZAtCzjfGn--264.webp 264w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-15/post/ZAtCzjfGn--264.png" alt="" width="264" height="82"></picture>
+<h2 id="in-closing">In Closing</h2>
+<p>I am still pretty new to Docker so please take this post with a pinch of salt, it was written to the best of my understanding at the time.</p>
+<p>Docker makes it easy to experiment with different development environments and saves the hassle of setting up the tools needed to run them, for production it offers a consistent experience between the development environment and server. It is lightweight and relatively simple to use!</p>
+<p>As always I welcome any feedback, comments and questions!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-01-04/post/">Installing InfluxDB on Windows</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-01-16/post/">Over the top Door Monitoring (RF, Node-RED and HASS)</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-01-15/post/` was built on 2025-07-03T21:21:51.981Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

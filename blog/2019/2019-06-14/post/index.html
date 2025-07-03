@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Installing InfluxDB on Ubuntu</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="installing-influxdb-on-ubuntu">Installing InfluxDB on Ubuntu</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-06-14">14 June 2019</time></li>
+</ul>
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="https://www.richardn.ca/series/#home-server-revamp-2019">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+{: .prompt-tip }</p>
+</blockquote>
+<p>This is a brief guide to get <a href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a> up and running on Ubuntu Server, you can refer to the <a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/">official documentation</a> should you run into any issues.</p>
+<h2 id="installation">Installation</h2>
+<p>Installing InfluxDB on Ubuntu is pretty straightforward and can be completed in a few simple steps.</p>
+<h3 id="first-time-only">First Time Only</h3>
+<p>The first time you install any of the Influx Data products you will need to add their repository using the below commands:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> <span class="token function">wget</span> -qO- https://repos.influxdata.com/influxdb.key <span class="token operator">|</span> <span class="token function">sudo</span> apt-key <span class="token function">add</span> -
+$ <span class="token builtin class-name">source</span> /etc/lsb-release
+$ <span class="token builtin class-name">echo</span> <span class="token string">"deb https://repos.influxdata.com/<span class="token variable">${DISTRIB_ID<span class="token operator">,,</span>}</span> <span class="token variable">${DISTRIB_CODENAME}</span> stable"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/influxdb.list</code></pre>
+<h3 id="install-influxdb">Install InfluxDB</h3>
+<p>After updating apt-get you can install InfluxDB with the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> influxdb</code></pre>
+<h3 id="configure-influxdb">Configure InfluxDB</h3>
+<p>Should you want to make any changes to the default configuration you can edit the configuration file with the following command:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> <span class="token function">nano</span> /etc/influxdb/influxdb.conf</code></pre>
+<p>The most common changes I make to this file when installing InfluxDB are:</p>
+<ul>
+<li>Enable the HTTP endpoint</li>
+<li>Set the bind address to <code>0.0.0.0</code></li>
+</ul>
+<h3 id="starting-the-service">Starting the service</h3>
+<p>Once installed you can start, stop and restart InfluxDB with the below commands:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> systemctl start influxd.service
+$ <span class="token function">sudo</span> systemctl stop influxd.service
+$ <span class="token function">sudo</span> systemctl restart influxd.service</code></pre>
+<h3 id="testing-install">Testing Install</h3>
+<p>To confirm InfluxDB is working (and the HTTP endpoint is enabled) you can try listing all databases using the following URL template (http://&lt;server_ip&gt;:8086/query?q=show databases), in my case that would be: <code>http://10.0.0.52:8086/query?q=show%20databases</code></p>
+<p>You should see something like the below if all went well:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-06-14/post/y4ioxvrz8g-514.avif 514w"><source type="image/webp" srcset="/blog/2019/2019-06-14/post/y4ioxvrz8g-514.webp 514w"><img loading="lazy" decoding="async" src="/blog/2019/2019-06-14/post/y4ioxvrz8g-514.png" alt="" width="514" height="289"></picture>
+<p>If you have any issues resolving your InfluxDB URL you can try running the following command on your server to see if there are any errors relating to InfluxDB</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">tail</span> <span class="token parameter variable">-f</span> /var/log/syslog <span class="token operator">|</span> <span class="token function">grep</span> influx</code></pre>
+<p>Hopefully it will shed some more light on the issue.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-06-14/post/aP4tHd27qu-805.avif 805w"><source type="image/webp" srcset="/blog/2019/2019-06-14/post/aP4tHd27qu-805.webp 805w"><img loading="lazy" decoding="async" src="/blog/2019/2019-06-14/post/aP4tHd27qu-805.png" alt="" width="805" height="252"></picture>
+<h2 id="quick-reference">Quick Reference</h2>
+<p>Some helpful commands and paths to save you some time.</p>
+<ul>
+<li><a href="https://www.influxdata.com/products/influxdb-overview/">Official Site</a></li>
+<li><a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/">InfluxDB Docs</a></li>
+</ul>
+<h3 id="configuration-file">Configuration File</h3>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> <span class="token function">nano</span> /etc/influxdb/influxdb.conf</code></pre>
+<h3 id="service-management">Service Management</h3>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">sudo</span> systemctl start influxd.service
+$ <span class="token function">sudo</span> systemctl stop influxd.service
+$ <span class="token function">sudo</span> systemctl restart influxd.service</code></pre>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<pre class="language-shell" tabindex="0"><code class="language-shell">$ <span class="token function">tail</span> <span class="token parameter variable">-f</span> /var/log/syslog <span class="token operator">|</span> <span class="token function">grep</span> influx</code></pre>
+<h3 id="data-directories">Data Directories</h3>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token comment"># Where the metadata/raft database is stored</span>
+<span class="token function">dir</span> <span class="token operator">=</span> <span class="token string">"/var/lib/influxdb/meta"</span>
+<span class="token comment"># The directory where the TSM storage engine stores TSM files.</span>
+<span class="token function">dir</span> <span class="token operator">=</span> <span class="token string">"/var/lib/influxdb/data"</span>
+<span class="token comment"># The directory where the TSM storage engine stores WAL files.</span>
+wal-dir <span class="token operator">=</span> <span class="token string">"/var/lib/influxdb/wal"</span></code></pre>
+<h3 id="ports">Ports</h3>
+<ul>
+<li><code>TCP</code> port <code>8086</code> client-server communication (InfluxDB HTTP API).</li>
+<li><code>TCP</code> port <code>8088</code> RPC service (for backup and restore operations).</li>
+</ul>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-06-13/post/">Setting Date and Time (Ubuntu)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-06-14/post2/">Setting Static IP Address (Ubuntu)</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-06-14/post/` was built on 2025-07-03T21:21:51.982Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

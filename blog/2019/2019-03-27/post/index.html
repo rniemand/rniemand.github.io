@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Installing Telegraf on DietPi / ARM (Revised)</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="installing-telegraf-on-dietpi-arm-revised">Installing Telegraf on DietPi / ARM (Revised)</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-03-27">27 March 2019</time></li>
+</ul>
+
+<p>Today I would like to cover getting up and running with <a href="https://www.influxdata.com/time-series-platform/telegraf/">Telegraf</a> on my SBC computers, namely most arm/arm64 based Debian distros.</p>
+<p>This will be a brief post just covering the commands \ &quot;hacks&quot; used to get it all sorted.</p>
+<h2 id="uninstalling-optional">Uninstalling (Optional)</h2>
+<p>I had initially done a manual installation of Telegraf which needed to be removed:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">systemctl stop telegraf.service
+systemctl disable telegraf.service
+systemctl daemon-reload</code></pre>
+<h2 id="installing-from-influxdata-com">Installing from influxdata.com</h2>
+<p>These steps are summarised from the <a href="https://docs.influxdata.com/telegraf/v1.10/introduction/installation/">official documentation</a>.</p>
+<p>Add the influxdb.key key:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">wget</span> -qO- https://repos.influxdata.com/influxdb.key <span class="token operator">|</span> <span class="token function">sudo</span> apt-key <span class="token function">add</span> -</code></pre>
+<p>Create a source entry for <code>influxdb.list</code>:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token builtin class-name">echo</span> <span class="token string">"deb [arch=arm64] https://repos.influxdata.com/debian stretch stable"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/influxdb.list</code></pre>
+<blockquote>
+<p><strong>Note</strong>: depending on your SBC architecture you may need to replace [arch=arm64] with [arch=armel] or [arch=armhf]! You can get your CPU architecture by running cat /proc/cpuinfo
+{: .prompt-tip }</p>
+</blockquote>
+<p>Run <code>apt-get update</code> and install required dependencies:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> apt-transport-https</code></pre>
+<p>Install telegraf:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> telegraf</code></pre>
+<h2 id="configuration">Configuration</h2>
+<p>By default the configuration file can be found at <code>/etc/telegraf/telegraf.conf</code>.</p>
+<p>You will need to edit this file to point Telegraf to your local InfluxDb server and add any modules you require:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">nano</span> /etc/telegraf/telegraf.conf</code></pre>
+<h2 id="running-as-a-service">Running as a service</h2>
+<p>Enabling the telegraf service should be as easy as issuing the following commands:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">systemctl start telegraf
+systemctl status telegraf</code></pre>
+<p>Optionally you can run the below command to enable the service if it was not done as part of the installation:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">systemctl <span class="token builtin class-name">enable</span> telegraf</code></pre>
+<h2 id="notes">Notes</h2>
+<p>The official repository I used for discovering the supported CPU architectures is here: <a href="https://repos.influxdata.com/debian/dists/stretch/stable/">https://repos.influxdata.com/debian/dists/stretch/stable/</a>.</p>
+<p>Once running you should start seeing your hosts appearing in Chronograf.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-03-27/post/xtqSLOitsV-806.avif 806w"><source type="image/webp" srcset="/blog/2019/2019-03-27/post/xtqSLOitsV-806.webp 806w"><img loading="lazy" decoding="async" src="/blog/2019/2019-03-27/post/xtqSLOitsV-806.png" alt="" width="806" height="192"></picture>
+<p>Hopefully you found this post helpful and as always, I welcome any comments, questions and feedback.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-01-17/post/">Running Grafana locally on HTTPS</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-04-02/post/">Collecting Sonoff Pow data in Home Assistant</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-03-27/post/` was built on 2025-07-03T21:21:51.981Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

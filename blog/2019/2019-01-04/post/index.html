@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Installing InfluxDB on Windows</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="installing-influxdb-on-windows">Installing InfluxDB on Windows</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2019-01-04">04 January 2019</time></li>
+</ul>
+
+<p>Today I would like to cover installing <a href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a> on a Windows computer. In case you didn't know &quot;InfluxDB is a high-performance data store written specifically for time series data&quot;, and this is extremely useful when working with <code>Home Automation</code> data like system up-time, temperature, etc.</p>
+<p>All the downloads for the <a href="https://www.influxdata.com/time-series-platform/">TICK Stack</a> (the InfluxData platform) can be found <a href="https://portal.influxdata.com/downloads/">here</a>, but today we will only be covering getting up and running with <a href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a>.</p>
+<h2 id="download-and-first-run">Download and first run</h2>
+<p>Downloading InfluxDB is as simple as going to the downloads page and clicking the InfluxDB <a href="https://portal.influxdata.com/downloads/">download link</a> as shown below (at the time of writing this was for version <code>1.7.2</code>).</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/yBCaOfEqeF-288.avif 288w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/yBCaOfEqeF-288.webp 288w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/yBCaOfEqeF-288.png" alt="" width="288" height="220"></picture>
+<p>Once downloaded you will need to make a folder on your computer to extract and tune everything from - there are no installers for the TICK stack, rather a zip file containing everything that you need to get up and running. For the purposes of this tutorial I will be using the following folder (<code>c:\Program Files\InfluxData\</code>) as my root directory.</p>
+<h3 id="extract-the-zip-file">Extract the ZIP file</h3>
+<p>Let's create a folder called influxdb and extract the contents of the <code>influxdb.1.7.2_windows_amd64.zip</code> file into it.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/3xLIwEqm1z-340.avif 340w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/3xLIwEqm1z-340.webp 340w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/3xLIwEqm1z-340.png" alt="" width="340" height="121"></picture>
+<p>Once done it should look something like this:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/gEDUWmsY-D-492.avif 492w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/gEDUWmsY-D-492.webp 492w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/gEDUWmsY-D-492.png" alt="" width="492" height="161"></picture>
+<h3 id="configuring-influxdb">Configuring InfluxDB</h3>
+<p>Next we will need to edit the <code>influxdb.conf</code> in order to set the relevant folders and settings when running on Windows. I would recommend creating a folder outside of the main InfluxDB directory to store your data as it will make upgrading and backups a lot easier (in my case this is <code>c:\Program Files\InfluxData\influx-data\</code>). You will need to make the following changes to your influxdb.conf file (along with creating the folder paths).</p>
+<h4 id="change-the-meta-dir">Change the META dir</h4>
+<p>Locate and change the meta directory as shown below (remember to create the folder if it is missing).</p>
+<pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">meta</span><span class="token punctuation">]</span></span>
+  <span class="token comment"># Where the metadata/raft database is stored</span>
+  <span class="token key attr-name">dir</span> <span class="token punctuation">=</span> <span class="token value attr-value">"<span class="token inner-value">D:/Program Files/InfluxData/influxdb-data/meta</span>"</span></code></pre>
+<h4 id="change-the-data-wal-dir">Change the DATA + WAL dir</h4>
+<p>Locate and change the data directory as shown below:</p>
+<pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">data</span><span class="token punctuation">]</span></span>
+  <span class="token comment"># The directory where the TSM storage engine stores TSM files.</span>
+  <span class="token key attr-name">dir</span> <span class="token punctuation">=</span> <span class="token value attr-value">"<span class="token inner-value">D:/Program Files/InfluxData/influxdb-data/data</span>"</span>
+  ...
+  <span class="token key attr-name">wal-dir</span> <span class="token punctuation">=</span> <span class="token value attr-value">"<span class="token inner-value">D:/Program Files/InfluxData/influxdb-data/wal</span>"</span></code></pre>
+<h4 id="configure-logging-if-you-want-it">Configure logging (if you want it)</h4>
+<p>If you would like to enable \ configure logging below are some of the most common settings you will need to modify.</p>
+<pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token key attr-name">logging-enabled</span> <span class="token punctuation">=</span> <span class="token value attr-value">true</span>
+<span class="token key attr-name">trace-logging-enabled</span> <span class="token punctuation">=</span> <span class="token value attr-value">false</span>
+<span class="token key attr-name">query-log-enabled</span> <span class="token punctuation">=</span> <span class="token value attr-value">true</span></code></pre>
+<h4 id="enable-the-http-endpoint">Enable the HTTP endpoint</h4>
+<p>If you would like to make use of the HTTP endpoint (in most cases you do), you can enable it via the below configuration key:</p>
+<pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">http</span><span class="token punctuation">]</span></span>
+  <span class="token comment"># Determines whether HTTP endpoint is enabled.</span>
+  <span class="token key attr-name">enabled</span> <span class="token punctuation">=</span> <span class="token value attr-value">true</span></code></pre>
+<h3 id="first-time-run">First Time Run</h3>
+<p>Provided that the HTTP Endpoint was enabled above, you can test to see if everything is configured correctly by simply running the influxd.exe from your installation directory.</p>
+<p>Watch the launched console for any errors relating to the configuration properties you have changed, once everything is happy you can navigate to 'http://localhost:8086/query/' in your browser and should be greeted with some form of response from InfluxDB.</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/752rChheOJ-416.avif 416w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/752rChheOJ-416.webp 416w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/752rChheOJ-416.png" alt="" width="416" height="141"></picture>
+<h2 id="running-as-a-service">Running as a service</h2>
+<p>To run InfluxDB as a Windows service I find it easiest to use <a href="https://nssm.cc/download">nssm</a> (<code>the Non-Sucking Service Manager</code>) with the configuration detailed below.</p>
+<p>To install the service you will need to copy nssm.exe to a location on your PC (I suggest placing it in the root InfluxData directory we created earlier c:\Program Files\InfluxData\nssm.exe) and launching the installer through an elevated command prompt window using this command:</p>
+<pre><code>nssm install
+</code></pre>
+<p>On the Application tab enter in the following:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/fa8vNhI6ZS-437.avif 437w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/fa8vNhI6ZS-437.webp 437w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/fa8vNhI6ZS-437.png" alt="" width="437" height="236"></picture>
+<ul>
+<li><strong>Path</strong>: c:\Program Files\InfluxData\influxdb\influxd.exe</li>
+<li><strong>Startup Directory</strong>: c:\Program Files\InfluxData\influxdb\</li>
+<li><strong>Arguments</strong>: -config &quot;C:\Program Files\InfluxData\influxdb\influxdb.conf&quot;</li>
+<li><strong>Service Name</strong>: influxdb</li>
+</ul>
+<p>On the Details tab enter in the following:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/e6EUD0uCA8-454.avif 454w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/e6EUD0uCA8-454.webp 454w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/e6EUD0uCA8-454.png" alt="" width="454" height="271"></picture>
+<ul>
+<li><strong>Name</strong>: InfluxDB</li>
+<li><strong>Description</strong>: anything you would like</li>
+<li><strong>Startup Type</strong>: Automatic</li>
+</ul>
+<p>Once done, click Install Service - that's it!</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/3i0Xq61rb0-574.avif 574w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/3i0Xq61rb0-574.webp 574w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/3i0Xq61rb0-574.png" alt="" width="574" height="67"></picture>
+<p>You should now be able to start the influxdb service as you would any other Windows service and you should still have access to the HTTP endpoint (http://localhost:8086/query/).</p>
+<h2 id="windows-firewall">Windows Firewall</h2>
+<p>If you are planning on running InfluxDB on a remote server (like I am doing) you will need to add a firewall rule to allow connections to it (default port 8086) - this is as simple as opening the advanced firewall rules in windows and completing the new rule wizard as follows:</p>
+<p>Create a Port based rule ...</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/L4KzlDCU05-685.avif 685w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/L4KzlDCU05-685.webp 685w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/L4KzlDCU05-685.png" alt="" width="685" height="297"></picture>
+<p>... specifying the port as 8086 ...</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/XJQdiCjasI-500.avif 500w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/XJQdiCjasI-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/XJQdiCjasI-500.png" alt="" width="500" height="128"></picture>
+<p>... allowing the connection from your selected domains ...</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/LdkePOkwg6-474.avif 474w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/LdkePOkwg6-474.webp 474w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/LdkePOkwg6-474.png" alt="" width="474" height="167"></picture>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/yi84meeOnV-480.avif 480w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/yi84meeOnV-480.webp 480w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/yi84meeOnV-480.png" alt="" width="480" height="166"></picture>
+<p>... and giving the rule a meaningful name :)</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/sbOGvHnCa1-478.avif 478w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/sbOGvHnCa1-478.webp 478w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/sbOGvHnCa1-478.png" alt="" width="478" height="137"></picture>
+<p>This should allow remote access to InfluxDB:</p>
+<picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/IF5ki6_N33-403.avif 403w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/IF5ki6_N33-403.webp 403w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/IF5ki6_N33-403.png" alt="" width="403" height="106"></picture>
+<h2 id="in-closing">In Closing</h2>
+<p>Setting up InfluxDB is super simple (albeit there are a few steps to follow) and should take you no longer than 10 min if following this guide.</p>
+<p>InfluxDB is an awesome time-series database and performs fast even on the oldest hardware \ single board computers, and when paired with <a href="https://grafana.com/">Grafana</a> makes an awesome addition to my home automation monitoring.</p>
+<p>As always I welcome any feedback, questions or comments on my posts and will do my best to respond in a timely manner. I hope you found this post helpful!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2018/2018-12-12/post/">Installing OctoPrint on Armbian from Source</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2019/2019-01-15/post/">Running a PHP site with Docker</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2019/2019-01-04/post/` was built on 2025-07-03T21:21:51.981Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
