@@ -1,6 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+body {
+	/* font-size: 1rem; */
+	font-family: "Open Sans", sans-serif;
+	font-optical-sizing: auto;
+}
+
 div.main-content {
 	margin-top: 4rem;
 }
+
 .blog-list a {
 	text-decoration: none;
 }
