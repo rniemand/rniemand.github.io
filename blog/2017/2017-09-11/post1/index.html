@@ -227,7 +227,7 @@ pre[class*="language-diff-"] {
 </ul>
 
 <p>I have been watching a lot of videos about home automation lately and found that <a href="https://www.home-assistant.io/">Home Assistant</a> (<code>HASS</code>) seems to be the most popular choice when it comes to consolidating all of your IoT enabled devices. Hass offers a clean, powerful and easy to use interface that displays all of your nodes / sensory data through a consistent, mobile friendly viewport with support for over 800 unique inputs into the system.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post/j7oSwvmRrK-353.avif 353w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post/j7oSwvmRrK-353.webp 353w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post/j7oSwvmRrK-353.png" alt="" width="353" height="327"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post1/j7oSwvmRrK-353.avif 353w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post1/j7oSwvmRrK-353.webp 353w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post1/j7oSwvmRrK-353.png" alt="" width="353" height="327"></picture>
 <p>I was sold on this pretty much straight away and wanted to get up and running as soon as possible. I downloaded and installed the latest stable release of <a href="https://www.python.org/">Python</a> (ensuring to add the python executable to my system <code>PATH</code>) and ran the install command:</p>
 <pre><code>pip3 install homeassistant
 </code></pre>
@@ -249,14 +249,14 @@ asyncio.base_futures.InvalidStateError: Result is not ready.
 <pre><code>pip3 install netifaces
 </code></pre>
 <p>This too failed, and when looking at the output it became apparent that I was missing <code>Microsoft Visual C++ 14.0</code>:</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post/85cP27xDU8-663.avif 663w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post/85cP27xDU8-663.webp 663w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post/85cP27xDU8-663.png" alt="" width="663" height="333"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post1/85cP27xDU8-663.avif 663w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post1/85cP27xDU8-663.webp 663w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post1/85cP27xDU8-663.png" alt="" width="663" height="333"></picture>
 <p>This is simple enough to fix, and after a quick search on Google I found the relevant build of Microsoft Visual C++ 14.0 for my system here. I downloaded them and ran the installer:</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post/oj7N2WhtIi-465.avif 465w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post/oj7N2WhtIi-465.webp 465w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post/oj7N2WhtIi-465.png" alt="" width="465" height="219"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post1/oj7N2WhtIi-465.avif 465w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post1/oj7N2WhtIi-465.webp 465w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post1/oj7N2WhtIi-465.png" alt="" width="465" height="219"></picture>
 <p>Once completed I re-opened a new command prompt window and attempted to install netifaces again:</p>
 <pre><code>pip3 install netifaces
 </code></pre>
 <p>Great success, the installation went through without any hitches:</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post/EI8Ebfkrk9-665.avif 665w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post/EI8Ebfkrk9-665.webp 665w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post/EI8Ebfkrk9-665.png" alt="" width="665" height="181"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post1/EI8Ebfkrk9-665.avif 665w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post1/EI8Ebfkrk9-665.webp 665w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post1/EI8Ebfkrk9-665.png" alt="" width="665" height="181"></picture>
 <p>I re-ran the installer for HASS and it completed successfully, now I just need to start plugging in all my devices :)</p>
 <p>Hopefully this will save you some time in the future when setting everything up on windows.</p>
 
@@ -272,7 +272,7 @@ asyncio.base_futures.InvalidStateError: Result is not ready.
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-09-11/post/` was built on 2025-07-03T21:48:26.981Z -->
+		<!-- This page `/blog/2017/2017-09-11/post1/` was built on 2025-07-03T21:54:25.602Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

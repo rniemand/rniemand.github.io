@@ -288,9 +288,9 @@ pre[class*="language-diff-"] {
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token class-name"><span class="token keyword">var</span></span> db <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">TestDbContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token class-name"><span class="token keyword">var</span></span> users <span class="token operator">=</span> db<span class="token punctuation">.</span>Users<span class="token punctuation">.</span><span class="token function">ToList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <p>Adding in a break-point just after our select statement shows that we have successfully created and connected to our SQLite database, however we have no data to work with.</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-08-25/post/ONjCWp-cdo-421.avif 421w"><source type="image/webp" srcset="/blog/2016/2016-08-25/post/ONjCWp-cdo-421.webp 421w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-25/post/ONjCWp-cdo-421.png" alt="" width="421" height="291"></picture>
+<picture><source type="image/avif" srcset="/blog/2016/2016-08-25/post1/ONjCWp-cdo-421.avif 421w"><source type="image/webp" srcset="/blog/2016/2016-08-25/post1/ONjCWp-cdo-421.webp 421w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-25/post1/ONjCWp-cdo-421.png" alt="" width="421" height="291"></picture>
 <p>Success, our database file exists!</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-08-25/post/pC3z9eFliD-594.avif 594w"><source type="image/webp" srcset="/blog/2016/2016-08-25/post/pC3z9eFliD-594.webp 594w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-25/post/pC3z9eFliD-594.png" alt="" width="594" height="88"></picture>
+<picture><source type="image/avif" srcset="/blog/2016/2016-08-25/post1/pC3z9eFliD-594.avif 594w"><source type="image/webp" srcset="/blog/2016/2016-08-25/post1/pC3z9eFliD-594.webp 594w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-25/post1/pC3z9eFliD-594.png" alt="" width="594" height="88"></picture>
 <h2 id="adding-a-database-initializer">Adding a database initializer</h2>
 <p>Next up we will add in some code to populate some seed data when our database is created. However, to do this, we will need to delete the database in order for this code to run - it is designed to run only when the database is created. We can automate this for testing purposes by adding the following lines of code at the start of the <code>Main</code> method.</p>
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">if</span> <span class="token punctuation">(</span>File<span class="token punctuation">.</span><span class="token function">Exists</span><span class="token punctuation">(</span><span class="token string">"app.db"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
@@ -321,11 +321,11 @@ pre[class*="language-diff-"] {
     Database<span class="token punctuation">.</span><span class="token function">SetInitializer</span><span class="token punctuation">(</span>sqliteConnectionInitializer<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Let's do a quick test run to make sure that everything is working, bearing in mind that the database will be deleted when the application starts (so if you are using any tool to browse it, please close that now).</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-08-25/post/R6Z2opx8_f-449.avif 449w"><source type="image/webp" srcset="/blog/2016/2016-08-25/post/R6Z2opx8_f-449.webp 449w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-25/post/R6Z2opx8_f-449.png" alt="" width="449" height="339"></picture>
+<picture><source type="image/avif" srcset="/blog/2016/2016-08-25/post1/R6Z2opx8_f-449.avif 449w"><source type="image/webp" srcset="/blog/2016/2016-08-25/post1/R6Z2opx8_f-449.webp 449w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-25/post1/R6Z2opx8_f-449.png" alt="" width="449" height="339"></picture>
 <p>Success, we now have our seeded <code>Richard Niemand</code> user indicating that our seeder code is working as expected.</p>
 <h2 id="exploring-the-database">Exploring the Database</h2>
 <p>If you would like to explore the generated SQLite database you can do so with any SQLite compatible tool (I am using <a href="https://sqlitestudio.pl/?act=download">SQLite Studio</a> in the screenshot below).</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-08-25/post/YdB7ft7Uma-598.avif 598w"><source type="image/webp" srcset="/blog/2016/2016-08-25/post/YdB7ft7Uma-598.webp 598w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-25/post/YdB7ft7Uma-598.png" alt="" width="598" height="236"></picture>
+<picture><source type="image/avif" srcset="/blog/2016/2016-08-25/post1/YdB7ft7Uma-598.avif 598w"><source type="image/webp" srcset="/blog/2016/2016-08-25/post1/YdB7ft7Uma-598.webp 598w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-25/post1/YdB7ft7Uma-598.png" alt="" width="598" height="236"></picture>
 <p>As you can see, we have our expected <code>Users</code> table along with an Entity <code>Framework</code> generated <code>History</code> table.</p>
 
 <ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2016/2016-08-16/post/">*.NDS Rom Info Scraping (C#)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2016/2016-08-25/post2/">OWIN - Mapping Attribute Routes (Web API 2)</a></li>
@@ -340,7 +340,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2016/2016-08-25/post/` was built on 2025-07-03T21:48:26.979Z -->
+		<!-- This page `/blog/2016/2016-08-25/post1/` was built on 2025-07-03T21:54:25.600Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
