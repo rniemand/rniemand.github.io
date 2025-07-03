@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Mosquitto on Windows</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="mosquitto-on-windows">Mosquitto on Windows</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-06-07">07 June 2017</time></li>
+</ul>
+
+<p>After discovering the joys and simplicity of using <strong>MQTT</strong> on IoT enabled devices such as an NodeMCU ESP8266 I decided I wanted to host my own local (and with the right configuration public) instance of <a href="https://mosquitto.org/download/">mosquitto</a> for my devices to make use of. This post covers the basics of getting everything up and running on a Windows environment.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>There are 3 prerequisites when it comes to installing mosquitto locally:</p>
+<ul>
+<li><a href="https://slproweb.com/products/Win32OpenSSL.html">Open SSL</a></li>
+<li>pthreads</li>
+<li><a href="https://mosquitto.org/download/">Mosquitto</a></li>
+</ul>
+<p>First, download and install <strong>Open SSL</strong> (I used <code>Win64OpenSSL_Light-1_0_2L.exe</code>), please take note of the installation directory.</p>
+<pre><code>C:\OpenSSL-Win32
+</code></pre>
+<p>Next you will need to grab <code>pthreadVC2.dll</code> from <code>ftp://sourceware.org/pub/pthreads-win32/dll-latest/dll/x64/</code>, all you need is the <code>pthreadVC2.dll</code> file.</p>
+<p>Lastly you will need to grab the latest version of mosquitto (in my case this was <code>mosquitto-1.4.12-install-win32.exe</code>).</p>
+<h2 id="installing">Installing</h2>
+<p>Installation of mosquitto is a bit tricky, and I find that the following process works well for myself.</p>
+<p>First you need to install <code>Open SSL</code> - feel free to change the installation directory, but be sure to take note of where you are installing it to (in my case: <code>C:\OpenSSL-Win32</code>).</p>
+<p>Next install mosquitto as you would normally, again taking note of the installation directory (in my case: <code>C:\Program Files (x86)\mosquitto</code>), complete and close the installer.</p>
+<p>Finally you will need to copy the following files into your mosquitto installation directory:</p>
+<p>From: C:\OpenSSL-Win64:</p>
+<ul>
+<li>libeay32.dll</li>
+<li>ssleay32.dll</li>
+</ul>
+<p>From: Download:</p>
+<ul>
+<li>pthreadVC2.dll</li>
+</ul>
+<p>You should now be able to run mosquito with the following command line:</p>
+<pre><code>mosquitto.exe -v
+</code></pre>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-07/post/Yu7IBMyz6d-951.avif 951w"><source type="image/webp" srcset="/blog/2017/2017-06-07/post/Yu7IBMyz6d-951.webp 951w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-07/post/Yu7IBMyz6d-951.png" alt="" width="951" height="420"></picture>
+<h2 id="securing">Securing</h2>
+<p>I highly recommend securing mosquitto if you are planning to use it on the web. It is simple to do and should only take a few moments.</p>
+<p>Open a command window in the context of your mosquitto installation directory and enter the following command.</p>
+<pre><code>mosquitto_passwd.exe -c pwfile user
+</code></pre>
+<p>Be sure to replace pwfile with the name of the password file you want to create, and user with your desired username. Once the command is completed you should have a password file with the specified user in it.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-07/post/OnD8zoQrkO-1181.avif 1181w"><source type="image/webp" srcset="/blog/2017/2017-06-07/post/OnD8zoQrkO-1181.webp 1181w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-07/post/OnD8zoQrkO-1181.png" alt="" width="1181" height="357"></picture>
+<p>To add another user to the file you use the command:</p>
+<pre><code>mosquitto_passwd.exe pwfile newuser
+</code></pre>
+<p>Lastly we need to update the <code>mosquitto.conf</code> file and make it aware of the password file you created. Find the following lines in the config file and update them as required, in my case:</p>
+<pre><code>password_file pwfile
+allow_anonymous false
+</code></pre>
+<p>You are done locking down mosquitto!</p>
+<h2 id="running">Running</h2>
+<p>Lastly we will need to run mosquitto using the updated configuration file, to do this you can simply open a command window in the context of your mosquitto installation directory and run the following command:</p>
+<pre><code>mosquitto -c mosquitto.conf
+</code></pre>
+<p>This is far from ideal, but it's a step in the right direction. I am planning on creating another post on how to run mosquitto as a service (should you not want to use the provided broker service that is installed by default). For now I find that creating a bat file with the following commands does the job quite nicely.</p>
+<pre><code>cd &quot;C:\Program Files (x86)\mosquitto\&quot;
+mosquitto.exe -v -c mosquitto.conf
+</code></pre>
+<p>That's all there is to it.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2017/2017-05-04/post/">Serial Tester (Arduino Tool)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2017/2017-06-08/post/">Running Mosquitto as a Windows Service</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2017/2017-06-07/post/` was built on 2025-07-03T18:56:30.386Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

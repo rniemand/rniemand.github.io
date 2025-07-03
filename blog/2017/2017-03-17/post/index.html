@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Pro Mini Digital Clock using DS3231</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="pro-mini-digital-clock-using-ds3231">Pro Mini Digital Clock using DS3231</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-03-17">17 March 2017</time></li>
+</ul>
+
+<p>In this tutorial I am going to be making a simple digital clock using an <strong>Arduino Pro Mini 168</strong> and a <strong>DS3231 RTC clock module</strong>. To keep the wiring simple I am going to be talking to both devices on <a href="https://learn.sparkfun.com/tutorials/i2c">I2C</a>. Because we are using I2C for the communication to both the display and the clock we are able to reduce the complexity of wiring it all together.</p>
+<h2 id="components-list">Components list</h2>
+<p>If you would like to build this yourself you are going to need the following components.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/Zk-8EV6ztX-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/Zk-8EV6ztX-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/Zk-8EV6ztX-800.jpeg" alt="" width="800" height="600"></picture>
+<ul>
+<li><a href="https://www.banggood.com/120pcs-Multicolored-Dupont-Wire-Male-to-Female-Male-to-Male-Female-to-Female-Jumper-Wire-Kit-p-1262667.html?p=5T250523689812015082">Jumper wires</a> (a mix of <code>male -&gt; male</code>, <code>male -&gt; female</code>)</li>
+<li><a href="https://www.banggood.com/RobotDyn-Graphic-LCD-12864-Adapter-Module-Backlight-Control-Board-I2C-MCP23017-Driver-Expander-5V-p-1244353.html?imageAb=1&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">I2C LCD driver board</a></li>
+<li><a href="https://www.banggood.com/3Pcs-Pro-Mini-ATMEGA328P-Module-3_3V-8M-Interactive-Development-Board-p-1193820.html?imageAb=1&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">Arduino Pro Mini 168 5v</a></li>
+<li><a href="https://www.aliexpress.com/item/32357804531.html">16x2 LCD Module</a></li>
+<li><a href="https://www.banggood.com/3Pcs-8_5x5_5cm-400-Tie-Points-400-Holes-Solderless-Breadboard-Bread-Board-p-1278571.html?p=5T250523689812015082&amp;cur_warehouse=CN">400 Tie Points Breadboard</a></li>
+<li><a href="https://www.banggood.com/DS3231-AT24C32-IIC-High-Precision-Real-Time-Clock-Module-p-81066.html?imageAb=1&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=HK">DS3231 RTC Module</a></li>
+<li>Some ISP - I just use an original UNO with the chip removed</li>
+</ul>
+<blockquote>
+<p><strong>NOTE</strong>: The Arduino UNO is an optional component, I wanted to use the Pro Mini for the final product to keep the build small, however there is nothing stopping you from using the UNO directly. Just be sure that you select the appropriate configuration in the Arduino IDE when flashing the code.
+{: .prompt-info }</p>
+</blockquote>
+<h2 id="arduino-ide-setup">Arduino IDE Setup</h2>
+<p>Next up we will need to ensure that our development environment is configured correctly.</p>
+<h3 id="importing-libraries">Importing Libraries</h3>
+<p>You will need to add the following libraries to your Arduino IDE if you haven't already done so.</p>
+<ul>
+<li><code>LiquidCrystal I2C</code> - by Frank de Brabander</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/oKZxbADaM5-954.avif 954w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/oKZxbADaM5-954.webp 954w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/oKZxbADaM5-954.png" alt="" width="954" height="115"></picture>
+<ul>
+<li><code>RTClib</code> - by Adafruit</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/zma9fWEZca-952.avif 952w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/zma9fWEZca-952.webp 952w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/zma9fWEZca-952.png" alt="" width="952" height="99"></picture>
+<p>That's all we are going to need for this build.</p>
+<h3 id="data-sheets">Data Sheets</h3>
+<p>Should you want to learn a little bit more about the devices / modules used in this build I have included a couple of links to their data sheets.</p>
+<ul>
+<li>DS3231 RTC module</li>
+<li><a href="https://www.openhacks.com/uploadsproductos/eone-1602a1.pdf">1602A1 - 16x2 LCD Screen</a></li>
+</ul>
+<h2 id="breadboarding">Breadboarding</h2>
+<p>Let's jump right in and start pacing all our components onto our breadboard.</p>
+<h3 id="basic-component-layout">Basic component layout</h3>
+<p>Below is the most optimal layout I could come up with given the space restrictions on my selected breadboard.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/JqJfgBttp--800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/JqJfgBttp--800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/JqJfgBttp--800.jpeg" alt="" width="800" height="536"></picture>
+<p>As you can see it is a tight fit once everything is placed on the breadboard, but thankfully everything fits. I had to be careful when placing the <code>LCD driver</code> and <code>Pro Mini</code> as the LED pins from the driver module were bridging the additional <code>analog</code> pins on the Pro Mini.</p>
+<p>I would recommend double checking everything before powering on the final product to ensure that there are no unwanted connections.</p>
+<h3 id="i2c-bus">I2C &quot;Bus&quot;</h3>
+<p>The first wires we are going to add are for the <code>I2C bus</code>. I decided to make use of the power supply rails as they run the entirety of the board allowing for easy access to the I2C bus from anywhere on the board.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/vkhlZRzKjX-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/vkhlZRzKjX-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/vkhlZRzKjX-800.jpeg" alt="" width="800" height="461"></picture>
+<h3 id="rtc-clock-module">RTC Clock Module</h3>
+<p>Next up we are going to connect the RTC Clocks <code>SCL</code> and <code>SDA</code> lines to the I2C bus as shown below.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/jEbZneqi3u-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/jEbZneqi3u-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/jEbZneqi3u-800.jpeg" alt="" width="800" height="502"></picture>
+<p>Then we are going to supply power to the clock via the VCC and GND pins on the Pro Mini.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/-aLZWnBYUd-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/-aLZWnBYUd-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/-aLZWnBYUd-800.jpeg" alt="" width="800" height="481"></picture>
+<h3 id="lcd-driver">LCD Driver</h3>
+<p>Next we are going to add the VCC and GND wires required to power the LCD driver board. For simplicity sake I am connecting these to the same pins used for the RTC module. They can be seen in the picture below (Red VCC and Brown GND).</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/lhsScGVmoL-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/lhsScGVmoL-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/lhsScGVmoL-800.jpeg" alt="" width="800" height="470"></picture>
+<p>Once we have the power connected to the LCD we will need to hook up its SCLand SDA lines to the I2C bus. This is done below using the Yellow and Red wires.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/IxhDeIFvyV-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/IxhDeIFvyV-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/IxhDeIFvyV-800.jpeg" alt="" width="800" height="549"></picture>
+<h3 id="connecting-the-uno">Connecting the UNO</h3>
+<p>Now it's time to move onto uploading our code to the Pro Mini. To do this I am going to be using my Arduino UNO and <a href="https://www.richardn.ca/posts/FlashingATmega168/">the flashing process described here</a>. The hook up between the devices are as follows:</p>
+<pre><code>RESET ................. (RST on Pro Mini)
+5v .................... (VCC on Pro Mini)
+GND ................... (GND on Pro Mini)
+TX (1) ................ (TXO on Pro Mini)
+RX (2) ................ (RXI on Pro Mini)
+</code></pre>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/Bkx-fUmZl1-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/Bkx-fUmZl1-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/Bkx-fUmZl1-800.jpeg" alt="" width="800" height="600"></picture>
+<p>Another view showing the pin connections to the Arduino UNO.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/BEjADfB8eg-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/BEjADfB8eg-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/BEjADfB8eg-800.jpeg" alt="" width="800" height="492"></picture>
+<h2 id="the-code">The Code</h2>
+<p>I threw together the below code using the provided examples from the RTC library and the I2C LCD library. It is far from perfect, but it gets the job done.</p>
+<pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;Wire.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"RTClib.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;LiquidCrystal_I2C.h></span></span>
+
+LiquidCrystal_I2C   <span class="token function">lcd</span><span class="token punctuation">(</span><span class="token number">0x27</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+RTC_DS3231          rtc<span class="token punctuation">;</span>
+
+<span class="token keyword">char</span> daysOfTheWeek<span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"Sun"</span><span class="token punctuation">,</span> <span class="token string">"Mon"</span><span class="token punctuation">,</span> <span class="token string">"Tue"</span><span class="token punctuation">,</span> <span class="token string">"Wed"</span><span class="token punctuation">,</span> <span class="token string">"Thu"</span><span class="token punctuation">,</span> <span class="token string">"Fri"</span><span class="token punctuation">,</span> <span class="token string">"Sat"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">char</span> monthsOfTheYear<span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token string">"Jan"</span><span class="token punctuation">,</span> <span class="token string">"Feb"</span><span class="token punctuation">,</span> <span class="token string">"Mar"</span><span class="token punctuation">,</span> <span class="token string">"Apr"</span><span class="token punctuation">,</span> <span class="token string">"May"</span><span class="token punctuation">,</span> <span class="token string">"Jun"</span><span class="token punctuation">,</span> <span class="token string">"Jul"</span><span class="token punctuation">,</span> <span class="token string">"Aug"</span><span class="token punctuation">,</span> <span class="token string">"Sep"</span><span class="token punctuation">,</span> <span class="token string">"Oct"</span><span class="token punctuation">,</span> <span class="token string">"Nov"</span><span class="token punctuation">,</span> <span class="token string">"Dec"</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">setup</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  Wire<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  Serial<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token number">9600</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">setupLcd</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">setupRtc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Use this to set the correct time on the RTC module</span>
+  <span class="token comment">// setTime(2017, 3, 15, 22, 02, 0);</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">loop</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  DateTime now <span class="token operator">=</span> rtc<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Date row</span>
+  lcd<span class="token punctuation">.</span><span class="token function">setCursor</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>daysOfTheWeek<span class="token punctuation">[</span>now<span class="token punctuation">.</span><span class="token function">dayOfTheWeek</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>now<span class="token punctuation">.</span><span class="token function">day</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">10</span> <span class="token operator">?</span> <span class="token string">"0"</span> <span class="token operator">+</span> <span class="token function">String</span><span class="token punctuation">(</span>now<span class="token punctuation">.</span><span class="token function">day</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> now<span class="token punctuation">.</span><span class="token function">day</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>monthsOfTheYear<span class="token punctuation">[</span>now<span class="token punctuation">.</span><span class="token function">month</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Time row</span>
+  lcd<span class="token punctuation">.</span><span class="token function">setCursor</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>now<span class="token punctuation">.</span><span class="token function">hour</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">10</span> <span class="token operator">?</span> <span class="token string">"0"</span> <span class="token operator">+</span> <span class="token function">String</span><span class="token punctuation">(</span>now<span class="token punctuation">.</span><span class="token function">hour</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> now<span class="token punctuation">.</span><span class="token function">hour</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>now<span class="token punctuation">.</span><span class="token function">minute</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">10</span> <span class="token operator">?</span> <span class="token string">"0"</span> <span class="token operator">+</span> <span class="token function">String</span><span class="token punctuation">(</span>now<span class="token punctuation">.</span><span class="token function">minute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> now<span class="token punctuation">.</span><span class="token function">minute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>now<span class="token punctuation">.</span><span class="token function">second</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">10</span> <span class="token operator">?</span> <span class="token string">"0"</span> <span class="token operator">+</span> <span class="token function">String</span><span class="token punctuation">(</span>now<span class="token punctuation">.</span><span class="token function">second</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">:</span> now<span class="token punctuation">.</span><span class="token function">second</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">//Serial.println();</span>
+  <span class="token function">delay</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">setupLcd</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// put your setup code here, to run once:</span>
+  lcd<span class="token punctuation">.</span><span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// initialize the lcd</span>
+  <span class="token comment">// Print a message to the LCD.</span>
+  lcd<span class="token punctuation">.</span><span class="token function">backlight</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  lcd<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"Booting..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">setupRtc</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>rtc<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Serial<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Couldn't find RTC"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">setTime</span><span class="token punctuation">(</span><span class="token keyword">int</span> y<span class="token punctuation">,</span> <span class="token keyword">int</span> m<span class="token punctuation">,</span> <span class="token keyword">int</span> d<span class="token punctuation">,</span> <span class="token keyword">int</span> h<span class="token punctuation">,</span> <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token keyword">int</span> s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  Serial<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Setting time"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  rtc<span class="token punctuation">.</span><span class="token function">adjust</span><span class="token punctuation">(</span><span class="token function">DateTime</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> m<span class="token punctuation">,</span> d<span class="token punctuation">,</span> h<span class="token punctuation">,</span> i<span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<h3 id="setting-the-initial-time">Setting the initial time</h3>
+<p>If you are using the RTC Clock Module for the first time there is a high likelihood that the module has the incorrect time set (if its even set at all).</p>
+<p>In order for the clock to keep the correct time (even when there is no power coming from the Arduino) it draws power from a coin cell battery. Using this battery the clock is able to keep time regardless of the overall power state of the circuit you are building. If you are working with the clock for the first time, or the battery has run dry you are going to need to set the correct time on it.</p>
+<p>In the code listing above you will see the following lines commented out under the <code>setup()</code> method.</p>
+<pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token comment">// Use this to set the correct time on the RTC module</span>
+<span class="token comment">// setTime(2017, 3, 15, 22, 02, 0);</span></code></pre>
+<p>To update the time on the clock will be as simple as uncommenting the second line, adjusting the time (year, month, day, hour, min, sec) and timing the upload / initial boot of the clock with the date you specified. Once you have booted the clock and have it showing the correct time you will need to comment out the last line again and reupload the sketch to prevent the time from being overwritten again.</p>
+<p>I am going to be posting a follow up post soon that will allow the clock to be adjusted using Serial, but opted to leave that out here for brevity (this is already a long post).</p>
+<h2 id="first-boot">First boot</h2>
+<p>Ensure that you have the appropriate board and programmer selected in the Arduino IDE then click upload.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/6Ut4X_13kC-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/6Ut4X_13kC-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/6Ut4X_13kC-800.jpeg" alt="" width="800" height="600"></picture>
+<p>If everything went well, you should see the current time being displayed on the LCD panel.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-17/post/Itbxb7G43M-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/post/Itbxb7G43M-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/post/Itbxb7G43M-800.jpeg" alt="" width="800" height="600"></picture>
+<p><strong>NOTE</strong>: If you had to manually set the time using the method described above, please comment out the appropriate line and re-upload your sketch.</p>
+<p>Congratulations, you now have a working Arduino powered clock.</p>
+<h2 id="powering-the-clock">Powering the Clock</h2>
+<p>In order to keep this post as short as possible I have created a new post called <a href="https://www.richardn.ca/posts/PoweringYourArduinoProjects/">powering your Arduino projects</a> that cover this topic in a lot more detail.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2017/2017-03-15/post/">Programming an ATTiny85 with an Arduino Uno</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2017/2017-04-05/post/">Arduino Board Pinouts</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2017/2017-03-17/post/` was built on 2025-07-03T18:56:30.386Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

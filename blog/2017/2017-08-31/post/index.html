@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Anet A8 - My first 3D printer</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="anet-a8-my-first-3d-printer">Anet A8 - My first 3D printer</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-08-31">31 August 2017</time></li>
+</ul>
+
+<p>About 2 months ago I finally received one of my biggest packages from China to date, that was an <a href="https://www.banggood.com/Anet-A8-DIY-3D-Printer-Kit-1_75mm-or-0_4mm-Support-ABS-or-PLA-or-HIPS-p-1130694.html?imageAb=2&amp;akmClientCountry=CA&amp;cur_warehouse=CN">Anet A8 3D printer</a> from <a href="https://www.banggood.com/">BangGood</a> for around $239.99including shipping. I had a small issue with customs over the price of the printer / import duties which added about 3 additional weeks onto the shipping time.</p>
+<p>With the customs issue it took my printer about 6 weeks to arrive, and came decorated with some free <a href="https://www.sars.gov.za/">SARS</a> tape (thanks customs).</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/97ynd5ke8_-1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/97ynd5ke8_-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/97ynd5ke8_-1068.jpeg" alt="" width="1068" height="801"></picture>
+<p>I was pretty impressed with how the printer was packed, and everything has its place in the box with more than sufficient padding. There were no missing parts, and everything required to assemble the printer was included in the box.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/N2kbM8lR_g-1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/N2kbM8lR_g-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/N2kbM8lR_g-1068.jpeg" alt="" width="1068" height="801"></picture>
+<h2 id="assembly">Assembly</h2>
+<p>The build was pretty straight forward, and the supplied build instructions (included on the 8 Gb SD Card that came with the printer) were enough to get up and running. I much prefer video instructions when it comes to building things and ended up following these to complete my printer build:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=-tiHfzBQZpI">Anet A8 Assembly - Part 1</a></li>
+<li><a href="https://www.youtube.com/watch?v=EbNocv6-OOQ">Anet A8 Assembly - Part 2</a></li>
+</ul>
+<p>Below are some progress photos of the build process:</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/7bVOwW1ew2-1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/7bVOwW1ew2-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/7bVOwW1ew2-1068.jpeg" alt="" width="1068" height="801"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/zzPOedjewe-601.avif 601w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/zzPOedjewe-601.webp 601w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/zzPOedjewe-601.jpeg" alt="" width="601" height="801"></picture>
+<p>The frame of the printer is pretty compact, to give you a reference for size the build plate (with the yellow tape sitting on top) is 220 mm x 220 mm.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/dddjF_Odfb-1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/dddjF_Odfb-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/dddjF_Odfb-1068.jpeg" alt="" width="1068" height="801"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/LpWlobORMY-1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/LpWlobORMY-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/LpWlobORMY-1068.jpeg" alt="" width="1068" height="801"></picture>
+<p>A quick power on test confirmed that I didn't wire up any of the components incorrectly, and I made use of the auto-home (home all) command in the UI to confirm that all the stepper motors were receiving power.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/baSPrdiqfN-1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/baSPrdiqfN-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/baSPrdiqfN-1068.jpeg" alt="" width="1068" height="801"></picture>
+<blockquote>
+<p>The total time it took me to build the printer was around 4-5 hours, I decided to take my time and ran numerous checks during the build process to ensure that I did not make any silly mistakes.
+{: .prompt-tip }</p>
+</blockquote>
+<blockquote>
+<p><strong>FYI</strong>: you need to be careful with tightening all screws and belts. Too much tension can lead to a cracked frame. Also be extra careful to match all polarity when wiring up the controller boards.
+{: .prompt-info }</p>
+</blockquote>
+<h2 id="upgrades">Upgrades</h2>
+<p>By itself the Anet A8 is an amazing entry level (learning) printer given its low barrier to entry, and is able to produce pretty good quality prints. It has a heated print bed allowing it to print in a multitude of materials PLA, ABS, HIPS, WOOD, PVA and Nylon, however I mainly print in PLA as it is a lot easier to work with in my opinion.</p>
+<p>So far I have added / printed the following upgrades for the printer:</p>
+<ul>
+<li><a href="https://www.thingiverse.com/thing:1935151">Extruder Button Upgrade</a> - makes the button a lot easier on your fingers to push down</li>
+<li><a href="https://www.thingiverse.com/thing:1620630">Center Nozzle Fan Upgrade</a> - allows for better cooling of your print</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/7n9pUipxZ6-601.avif 601w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/7n9pUipxZ6-601.webp 601w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/7n9pUipxZ6-601.jpeg" alt="" width="601" height="801"></picture>
+<ul>
+<li><a href="https://www.thingiverse.com/thing:2373970">Anet A8 Fan Holder</a> - allows for quick replacement of the filament.</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/qDj69aH4tO-601.avif 601w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/qDj69aH4tO-601.webp 601w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/qDj69aH4tO-601.jpeg" alt="" width="601" height="801"></picture>
+<ul>
+<li>Heat bed printing mat - although I found that my prints stuck a little too well and ended up removing it. I would recommend this if you are having adhesion issues.</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/L0uWyRmV5h-1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/L0uWyRmV5h-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/L0uWyRmV5h-1068.jpeg" alt="" width="1068" height="801"></picture>
+<ul>
+<li>12v LED Strip - added mainly for printing at night.</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/rw72vQly9--1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/rw72vQly9--1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/rw72vQly9--1068.jpeg" alt="" width="1068" height="801"></picture>
+<ul>
+<li>Custom webcam mount for OctoPrint (I designed this one myself)</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/jO36GJHee9-1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/jO36GJHee9-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/jO36GJHee9-1068.jpeg" alt="" width="1068" height="801"></picture>
+<ul>
+<li><a href="https://www.thingiverse.com/thing:1858435">Anti Z Wobble for Anet A8</a> - adds better stability to the Z-Axis while printing</li>
+<li><a href="https://www.thingiverse.com/thing:1764285">Anet A8 filament guide</a> - simple guide for my filament before I printed a proper spool holder</li>
+<li><a href="https://www.thingiverse.com/thing:2013479">Anet A8 Mainboard Cover</a> - helps to neaten up the wires coming out of the driver board</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/lBzpCSnlvl-601.avif 601w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/lBzpCSnlvl-601.webp 601w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/lBzpCSnlvl-601.jpeg" alt="" width="601" height="801"></picture>
+<ul>
+<li><a href="https://www.thingiverse.com/thing:2441675">Anet A8 - Spool Holder</a></li>
+<li>Quick Change Universal Spool Holder</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/X1Ku5GJlvS-1204.avif 1204w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/X1Ku5GJlvS-1204.webp 1204w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/X1Ku5GJlvS-1204.jpeg" alt="" width="1204" height="847"></picture>
+<h2 id="print-quality">Print Quality</h2>
+<p>Below are some pictures showcasing the quality of prints that I have been able to achieve using the Anet A8.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/qlAEX1o9xu-1068.avif 1068w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/qlAEX1o9xu-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/qlAEX1o9xu-1068.jpeg" alt="" width="1068" height="801"></picture>
+<p>Simple project box for a LED display matrix project I was working on, unfortunately I managed to damage the matrix board and have ordered a replacement. This was printed at around 60 mm/s and had some warping issues as I printed it on a cold heat bed.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/4rq1-Ej_iY-601.avif 601w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/4rq1-Ej_iY-601.webp 601w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/4rq1-Ej_iY-601.jpeg" alt="" width="601" height="801"></picture>
+<p>iPhone cover for my mom's phone was printed at a lower speed (~40 mm/s) and came out a lot better.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/7xigwkr3aG-1024.avif 1024w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/7xigwkr3aG-1024.webp 1024w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/7xigwkr3aG-1024.jpeg" alt="" width="1024" height="1032"></picture>
+<p>Small Boston Terrier test print, here the printer struggled with the ears due to the fact I was using a fast travel speed, and not nearly enough retraction.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/e39DcXB8rB-1024.avif 1024w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/e39DcXB8rB-1024.webp 1024w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/e39DcXB8rB-1024.jpeg" alt="" width="1024" height="852"></picture>
+<p>My current print which is a case for PacketMonitor</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-31/post/F_o5kb8ekY-1024.avif 1024w"><source type="image/webp" srcset="/blog/2017/2017-08-31/post/F_o5kb8ekY-1024.webp 1024w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-31/post/F_o5kb8ekY-1024.jpeg" alt="" width="1024" height="768"></picture>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2017/2017-08-30/post/">OctoPrint MQTT Events (with samples)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2017/2017-09-11/post/">Home Assistant Missing Dependencies (Windows)</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2017/2017-08-31/post/` was built on 2025-07-03T18:56:30.387Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

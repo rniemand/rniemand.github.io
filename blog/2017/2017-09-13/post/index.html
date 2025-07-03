@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Tracking User Presence (HASS and OwnTracks)</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="tracking-user-presence-hass-and-owntracks">Tracking User Presence (HASS and OwnTracks)</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-09-13">13 September 2017</time></li>
+</ul>
+
+<p><a href="https://www.home-assistant.io/">Home Assistant</a> (<code>Hass</code>) is hands down one of the best home automation frameworks (HUBS) I have used, and offers support for over 800 devices with that number growing almost on a daily basis. It not only presents all your collected device data into a single portal, but offers a lot of automation through their scripting &amp; templating engine. After spending about a week diving into the features of Home Assistant I decided to tear everything down and start from scratch documenting my journey in order to help others get started with it.</p>
+<p>At the moment my main focus is around security and knowing what is going on at home when we are not around. I have built a couple of sensory nodes based on an ESP8266 development board (more to come in a later post) that now live in key areas of the house monitoring movement, doors &amp; windows, temperature, humidity, etc. These devices publish their information to my MQTT broker which is being monitored by Home Assistant. My main intent here is to have Home Assistant send me notifications on my mobile phone when there is movement around the house and we are not there. For this to happen I somehow need to let Home Assistant know when we are home, and when we are away so it is able to take the appropriate action when movement is detected, Enter OwnTracks.</p>
+<blockquote>
+<p>OwnTracks allows you to keep track of your own location. You can build your private location diary or share it with your family and friends. OwnTracks is open-source and uses open protocols for communication so you can be sure your data stays secure and private.
+{: .prompt-info }</p>
+</blockquote>
+<p>I installed the client on my phone,configured it to talk to my home MQTT server, and making use of my <a href="https://www.richardn.ca/posts/MQTTDumperAlpha/">MQTT dumper application</a> confirmed that it was indeed able to publish my location correctly. Now comes the fun part of getting everything up and running on Home Assistant.</p>
+<h2 id="getting-your-location">Getting your location</h2>
+<p>Home Assistant needs to know your home location in order to determine whether you are home or not, and for the most part the installer does a pretty good job at guessing your coordinates, however you will need to refine them a bit to ensure that everything works properly.</p>
+<p>To do this you will need the <code>latitude</code> and <code>longitude</code> of your home location. For mine I made use of the <a href="https://www.latlong.net/">following site</a> to work this out, but you can also do this via Google maps by pulling the values out of the URL - the site was a bit easier IMO.</p>
+<p>Once you have your coordinates you will need to add them to the configuration.yaml under the homeassistant configuration property as shown below:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">homeassistant</span><span class="token punctuation">:</span>
+  <span class="token key atrule">latitude</span><span class="token punctuation">:</span> xxx
+  <span class="token key atrule">longitude</span><span class="token punctuation">:</span> xxx</code></pre>
+<h2 id="home-assistant-and-mqtt">Home Assistant and MQTT</h2>
+<p>Next you will need to make sure that Home Assistant can talk to your MQTT server. To do this you will need to add the appropriate configuration to your configuration.yaml again:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">mqtt</span><span class="token punctuation">:</span>
+  <span class="token key atrule">broker</span><span class="token punctuation">:</span> 192.168.0.5
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
+  <span class="token key atrule">username</span><span class="token punctuation">:</span> xxx
+  <span class="token key atrule">password</span><span class="token punctuation">:</span> xxx</code></pre>
+<p>Provided all your settings are correct, Home Assistant should be able to talk to your MQTT server after a restart.</p>
+<h2 id="setup-owntracks">Setup OwnTracks</h2>
+<p>Next you will need to tell Home Assistant to track your devices via owntracks by adding in the below configuration lines into your configuration.yaml again.</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">device_tracker</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> owntracks
+    <span class="token key atrule">max_gps_accuracy</span><span class="token punctuation">:</span> <span class="token number">20</span></code></pre>
+<p>By default this will assume that you are using MQTT to track your mobile devices, and after restarting the Home Assistant service (application) you should see a new file called known_devices.yaml in your configuration directory. This file will contain an entry for each device that it discovered along with some default values for some of the key properties:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">niemandr_raesphone</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hide_if_away</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span>
+  <span class="token key atrule">mac</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> niemandr
+  <span class="token key atrule">picture</span><span class="token punctuation">:</span>
+  <span class="token key atrule">track</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">vendor</span><span class="token punctuation">:</span></code></pre>
+<p>You can customise the name of the device (in my case Richard) and add in either a URL or file path (Home Assistant will need read access to the file) to customise the icon displayed for the user:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">niemandr_richphone</span><span class="token punctuation">:</span>
+  <span class="token key atrule">hide_if_away</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span>
+  <span class="token key atrule">mac</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> Richard
+  <span class="token key atrule">picture</span><span class="token punctuation">:</span> https<span class="token punctuation">:</span>//i.imgur.com/EItQMfw.png
+  <span class="token key atrule">track</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">vendor</span><span class="token punctuation">:</span></code></pre>
+<p>After a quick restart of Home Assistant I can see my avatar, and an AWAY tag by my name (I was setting up remotely) - success!</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-13/post/voyQZnxqy0-228.avif 228w"><source type="image/webp" srcset="/blog/2017/2017-09-13/post/voyQZnxqy0-228.webp 228w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-13/post/voyQZnxqy0-228.png" alt="" width="228" height="86"></picture>
+<h2 id="zoning">Zoning</h2>
+<p>As it stands Home Assistant now knows when you are home and away, nothing more. We could leave it here, but it would be nice to know when I am at work also as there may be some automation tasks I would like to trigger when I get to work (not that I can think of any at the moment). To do this we will need to set up some <a href="https://www.home-assistant.io/integrations/zone/">zones</a>.</p>
+<p>We are going to define these in a separate file to make management of zones easier, and reference that file in our configuration.yaml by adding the following line somewhere near the bottom of it:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">zone</span><span class="token punctuation">:</span> <span class="token tag">!include</span> zones.yaml</code></pre>
+<p>This basically declares a zone configuration node and injects the contents of the referenced file zones.yaml in place of the import statement. Let's create the zones.yaml file and define all the zones you need as shown below:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Work
+  <span class="token key atrule">latitude</span><span class="token punctuation">:</span> xxx
+  <span class="token key atrule">longitude</span><span class="token punctuation">:</span> xxx
+  <span class="token key atrule">radius</span><span class="token punctuation">:</span> <span class="token number">250</span>
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>briefcase
+
+<span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Not Work
+  <span class="token key atrule">latitude</span><span class="token punctuation">:</span> xxx
+  <span class="token key atrule">longitude</span><span class="token punctuation">:</span> xxx
+  <span class="token key atrule">radius</span><span class="token punctuation">:</span> <span class="token number">250</span>
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>briefcase</code></pre>
+<p>Save the file, restart Home Assistant and if all went well you should see your new zone reflecting under your location avatar.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-13/post/vDpEj2bWdM-244.avif 244w"><source type="image/webp" srcset="/blog/2017/2017-09-13/post/vDpEj2bWdM-244.webp 244w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-13/post/vDpEj2bWdM-244.png" alt="" width="244" height="92"></picture>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>I actually had a lot of trouble getting this up and running initially - Home Assistant was refusing to update my location no matter what I did. I spent about 10 min redefining my zones, tweaking the radius, reloading the application to no success, it was only after configuring the logger to be more verbose that the issue became apparent. To enable <a href="https://www.home-assistant.io/integrations/logger/">logging</a> add the following to your configuration.yaml file:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">logger</span><span class="token punctuation">:</span>
+  <span class="token key atrule">default</span><span class="token punctuation">:</span> debug</code></pre>
+<p>After a restart the issue was plain as day!</p>
+<pre><code>2017-09-12 08:22:42 INFO (MainThread) [homeassistant.components.device_tracker.owntracks] Ignoring location update because expected GPS accuracy 25.0 is not met: {&quot;_type&quot;:&quot;location&quot;,&quot;tid&quot;:&quot;ne&quot;,&quot;acc&quot;:32,&quot;batt&quot;:79,&quot;conn&quot;:&quot;w&quot;,&quot;lat&quot;:xxx,&quot;lon&quot;:xxx,&quot;tst&quot;:1505194769}
+</code></pre>
+<p>Blegh <code>expected GPS accuracy 25.0 is not met</code>! This was a simple fix:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">device_tracker</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> owntracks
+    <span class="token key atrule">max_gps_accuracy</span><span class="token punctuation">:</span> <span class="token number">35</span></code></pre>
+<p>After a restart my wife's zone was reflecting!</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-13/post/GQWPWvNPw0-181.avif 181w"><source type="image/webp" srcset="/blog/2017/2017-09-13/post/GQWPWvNPw0-181.webp 181w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-13/post/GQWPWvNPw0-181.png" alt="" width="181" height="84"></picture>
+<p>Hopefully this saves you some time with your home setup. As always feel free to comment or ask any questions you may have below.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2017/2017-09-11/post3/">Upgrading Home Assistant (Windows Service Edition)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2017/2017-09-14/post/">Monitoring Internet Speed with Home Assistant</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2017/2017-09-13/post/` was built on 2025-07-03T18:56:30.387Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

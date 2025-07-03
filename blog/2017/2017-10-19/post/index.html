@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Monitoring a Door with Home Assistant</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="monitoring-a-door-with-home-assistant">Monitoring a Door with Home Assistant</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-10-19">19 October 2017</time></li>
+</ul>
+
+<p>Today I would like to cover setting up alerts through Home Assistant when my kitchen door is opened. In the future this will be used with the built in presence detection offered by <a href="https://www.home-assistant.io/">Home Assistant</a> to only allow these alerts through when I am not at home, or it's late at night. For now however, I am going to start off with the simplest part (the sensor and alerting).</p>
+<h2 id="the-basic-concept">The Basic Concept</h2>
+<p>We are currently renting the house that we stay in so any modifications that I make need to be reversible once we leave. Thankfully we already have an alarm system installed which I am going to be piggy-backing off for this modification. In theory the idea is pretty straight forward:</p>
+<p>I am going to be <code>3D printing</code> an enclosure for a <a href="https://en.wikipedia.org/wiki/Reed_switch">reed switch</a> which will be stuck onto the existing home alarm contacts - this will allow me to make use of the already installed magnets for the alarm system.</p>
+<p>I have posted the relevant model files on Thingiverse (<a href="https://www.thingiverse.com/thing:2542138">you can grab them here</a>) should you want to print and use them yourself. At the time all I had access to was speaker wire so the enclosure is a lot bigger than I would have liked it to be, however I will be updating the design going forward once my 0.2mm wire arrives from China. The printed enclosure came out pretty well, and the reed switch fits nice and snugly.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/NsNfQa9ACB-626.avif 626w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/NsNfQa9ACB-626.webp 626w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/NsNfQa9ACB-626.jpeg" alt="" width="626" height="180"></picture>
+<p>Next up I designed a simple enclosure for a buck converter and an <a href="https://www.banggood.com/5pcs-D1-Mini-Lite-V1_0_0-WIFI-Internet-Of-Things-Development-Board-Based-ESP8285-1MB-FLASH-p-1295715.html?imageAb=2&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">ESP8266 D1 Mini</a> module to sit in. Once printed everything fits nice and neatly into the enclosure and is held in place by some spacers. I will need to modify the design a bit though as soldering so close to the walls of the box was a bit challenging.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/SznmnIJPz1-500.avif 500w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/SznmnIJPz1-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/SznmnIJPz1-500.jpeg" alt="" width="500" height="376"></picture>
+<p>Because of the small footprint of the box it can easily be placed anywhere (and secured with double sided tape or presstic). Powering the device is as simple as plugging in a 5v mini USB cable into the hole added to the side of the case.</p>
+<h2 id="code-and-hardware-setup">Code &amp; Hardware Setup</h2>
+<p>In one of my <a href="https://www.richardn.ca/posts/MonitoringMyGateWithHassForUnder5/">previous posts</a> I created a <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2017/Gate%20Alarm">simple arduino sketch</a> to monitor our main gate, and with some minor tweaks to the code it will work perfectly for our application. You can grab the Arduino sketch <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2017/Gate%20Alarm">from here</a>, and follow the below instructions to get it up and running on your Home Automation setup.</p>
+<p>The only real changes required to the sketch is configuring the WiFi and MQTT Broker settings, this can be done by changing the values highlighted below in the sketch. In addition to the connection options you may want to play around with the DEBUG and REEDSW_PIN values to track down any issues you may run into with the sketch on your home network.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/zb5lqMquUF-621.avif 621w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/zb5lqMquUF-621.webp 621w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/zb5lqMquUF-621.png" alt="" width="621" height="488"></picture>
+<p>To upload the sketch simply use the <a href="https://www.arduino.cc/en/software">Arduino IDE</a> with the relevant board selected, once uploaded (and with debugging enabled) you can open the Arduino serial monitor to confirm that the device was able to connect to your WiFi network.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/QCWp0I_SUb-365.avif 365w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/QCWp0I_SUb-365.webp 365w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/QCWp0I_SUb-365.png" alt="" width="365" height="151"></picture>
+<p>The sketch will publish state changes for the reed switch on the <code>security/reed_switch/&lt;node&gt;</code> topic, and listen on the <code>cmd/&lt;node&gt;</code> topic for commands. At the moment there is only support for the <code>update_all</code> command.</p>
+<blockquote>
+<p><strong>Note</strong>: The value of node will be derived from the MQTT_CLIENT_NAME property
+{: .prompt-info }</p>
+</blockquote>
+<p>To issue a test command to the device open up any MQTT client (in my case I am using <a href="https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=en">MQTTLens</a>) and send an <code>update_all</code> command to the client as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/s5UInVZCJB-699.avif 699w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/s5UInVZCJB-699.webp 699w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/s5UInVZCJB-699.png" alt="" width="699" height="166"></picture>
+<p>It should reply with the current state of the reed switch.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/Asx7uavj5B-702.avif 702w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/Asx7uavj5B-702.webp 702w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/Asx7uavj5B-702.png" alt="" width="702" height="101"></picture>
+<p>For installation of the switches I made use of <a href="https://diy.bostik.com/en-ZA">prestik</a> to secure my reed switch on top of the existing one used for our home alarm system, but for a more permanent solution you may want to look at tapping into your home alarm control panel to make full use of all your sensors / <a href="https://en.wikipedia.org/wiki/Passive_infrared_sensor">PIRs</a>.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/FNu3p9F_5K-600.avif 600w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/FNu3p9F_5K-600.webp 600w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/FNu3p9F_5K-600.jpeg" alt="" width="600" height="380"></picture>
+<h2 id="home-assistant-configuration">Home Assistant Configuration</h2>
+<p>The Home Assistant portion of this setup is simple enough and can be accomplished with the following steps:</p>
+<ul>
+<li>Create an <a href="https://www.home-assistant.io/integrations/binary_sensor.mqtt">MQTT Binary Sensor</a></li>
+<li>Setup a notification channel (in my case <a href="https://www.home-assistant.io/integrations/pushover/">Pushover</a>)</li>
+<li>Create an <a href="https://www.home-assistant.io/docs/automation/">Automation rule</a> to alert on state change</li>
+</ul>
+<h3 id="mqtt-binary-sensor">MQTT Binary Sensor</h3>
+<p>When it comes to sensors in Home Assistant I prefer to create a file per sensor and include them using the below statement in my main configuration file <code>.homeassistant/configuration.yaml</code>:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">binary_sensor</span><span class="token punctuation">:</span> <span class="token tag">!include_dir_list</span> config/binary_sensors/</code></pre>
+<p>I created a new binary sensor file called <code>config\binary_sensors\reed_kitchen_door.yaml</code> which listens for changes over the <code>security/reed_switch/node_kitchen</code> topic as shown below:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
+<span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"security/reed_switch/node_kitchen"</span>
+<span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"Kitchen Door"</span>
+<span class="token key atrule">qos</span><span class="token punctuation">:</span> <span class="token number">0</span>
+<span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"OPEN"</span>
+<span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"CLOSED"</span>
+<span class="token key atrule">device_class</span><span class="token punctuation">:</span> opening</code></pre>
+<h3 id="notifications">Notifications</h3>
+<p>The notification channel is equally as simple, I created a new file called <code>config/notify.yaml</code> and entered in my current pushover configuration...</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> pushover
+  <span class="token key atrule">platform</span><span class="token punctuation">:</span> pushover
+  <span class="token key atrule">api_key</span><span class="token punctuation">:</span> ABCDEFGHJKLMNOPQRSTUVXYZ
+  <span class="token key atrule">user_key</span><span class="token punctuation">:</span> ABCDEFGHJKLMNOPQRSTUVXYZ</code></pre>
+<p>... and referenced this file in my main <code>configuration.yaml</code> with the below import statement:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">notify</span><span class="token punctuation">:</span> <span class="token tag">!include</span> config/notify.yaml</code></pre>
+<p>We now have a new notification channel called pushover to send messages over.</p>
+<h3 id="automation-rule">Automation Rule</h3>
+<p>Lastly we need to set up an automation rule to fire off a notification each time the reed switch state changes from off to on. When this occurs we will push a notification over our pushover channel.</p>
+<p>I created a new file called <code>config/automations.yaml</code> with the below rule:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">alias</span><span class="token punctuation">:</span> Monitor Kitchen Door
+  <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
+    <span class="token key atrule">platform</span><span class="token punctuation">:</span> state
+    <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.kitchen_door
+    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">'off'</span>
+  <span class="token key atrule">action</span><span class="token punctuation">:</span>
+    <span class="token key atrule">service</span><span class="token punctuation">:</span> notify.pushover
+    <span class="token key atrule">data</span><span class="token punctuation">:</span>
+      <span class="token key atrule">message</span><span class="token punctuation">:</span> <span class="token string">"Kitchen door is open"</span>
+      <span class="token key atrule">title</span><span class="token punctuation">:</span> <span class="token string">"Kitchen Door"</span>
+      <span class="token key atrule">target</span><span class="token punctuation">:</span> <span class="token string">""</span></code></pre>
+<p>This rule monitors the state of the reed switch and should its state change from off to on it will send a notification via the notify.pushover service.</p>
+<p>After restarting Home Assistant we can now see our new automation rule.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/Zx4EmL5CHV-395.avif 395w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/Zx4EmL5CHV-395.webp 395w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/Zx4EmL5CHV-395.png" alt="" width="395" height="142"></picture>
+<h2 id="testing-it-all-out">Testing it all out</h2>
+<p>The only thing left to do is to test it all out, there are 2 ways of doing this:</p>
+<ul>
+<li><strong>Simple</strong> Open the door and wait for our alert</li>
+<li><strong>Hard</strong> Fake the door state via a MQTT message</li>
+</ul>
+<p>I went with the simple approach and just opened the door, almost immediately the door's state was reflected on its panel...</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/dc-tuETb5I-499.avif 499w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/dc-tuETb5I-499.webp 499w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/dc-tuETb5I-499.png" alt="" width="499" height="143"></picture>
+<p>... and a couple of seconds later I received a push message on my phone...</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/9nX0nJDg7Y-500.avif 500w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/9nX0nJDg7Y-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/9nX0nJDg7Y-500.png" alt="" width="500" height="889"></picture>
+<p>... which is reflected on my Pebble also :)</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/WA0bM3ahqT-500.avif 500w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/WA0bM3ahqT-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/WA0bM3ahqT-500.jpeg" alt="" width="500" height="457"></picture>
+<p>It seems that everything is working as expected, and with minimal hardware / software changes I now know when someone opens my kitchen door. In the future I plan to expand this out to only notify me during certain times (or when I am not at home), but for now this will suffice.</p>
+<p>I hope that you found this post helpful and as always I welcome any comments / feedback you may have below.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2017/2017-10-03/post/">Sonoff &amp; MQTT Example (Lounge Light)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2017/2017-10-30/post/">Arduino Basics: LDR</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2017/2017-10-19/post/` was built on 2025-07-03T18:56:30.388Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

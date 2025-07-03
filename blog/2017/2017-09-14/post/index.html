@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Monitoring Internet Speed with Home Assistant</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="monitoring-internet-speed-with-home-assistant">Monitoring Internet Speed with Home Assistant</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-09-14">14 September 2017</time></li>
+</ul>
+
+<p>Continuing with my series around home automation using <a href="https://www.home-assistant.io/">Home Assistant</a> I would like to cover the <code>speedtest</code> sensor component. As the name suggests this component makes use of <a href="https://www.speedtest.net/">speedtest.net</a> to periodically test your server's internet connection and graphs the results for you to keep an eye on.</p>
+<p>When it comes to the configuration for this component I am going to be splitting up the main <code>configuration.yaml</code> file used by Home Assistant into smaller, more specific <code>*.yaml</code> files and referencing them using the <code>!include</code> keyword. This allows our configuration file to stay nice and small, and helps to break up the configuration for all your plugins. Lets begin:</p>
+<h2 id="configure-the-sensor">Configure the sensor</h2>
+<p>The <a href="https://www.home-assistant.io/integrations/speedtest/">speedtest</a> component falls under the <code>sensor</code> category in Home Assistant, and as such needs to appear in your main sensor list. We are going to break this list out of the main configuration file into a new file called <code>config/sensor.yaml</code> (I keep all my config in it's own directory to make backups easier). Let's create the <code>config/sensor.yaml</code> configuration file and add the below configuration:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> speedtest
+  <span class="token key atrule">monitored_conditions</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> ping
+    <span class="token punctuation">-</span> download
+    <span class="token punctuation">-</span> upload
+  <span class="token key atrule">minute</span><span class="token punctuation">:</span> <span class="token number">30</span></code></pre>
+<p>This will enable the <a href="https://www.home-assistant.io/integrations/speedtest/">speedtest</a> component, and monitor ping, download and upload speeds. The minute argument tells Home Assistant to run this test every 30 min, this is covered more in depth on the components page.</p>
+<p>Next we will need to reference this file back in our configuration.yaml file using the below command.</p>
+<pre><code>sensor: !include config/sensor.yaml
+</code></pre>
+<p>Basically this declares a sensor key, imports the contents of config/sensor.yamlat run time and replaces &quot;!include config/sensor.yaml&quot; with the actual referenced files content (this is why spacing in these files are so important).</p>
+<p>Save all of your files, restart Home Assistant.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-14/post/zjo3ajWk-w-332.avif 332w"><source type="image/webp" srcset="/blog/2017/2017-09-14/post/zjo3ajWk-w-332.webp 332w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-14/post/zjo3ajWk-w-332.png" alt="" width="332" height="97"></picture>
+<h2 id="creating-groups">Creating groups</h2>
+<p>I personally prefer the cards (groups) over the &quot;bubbles&quot; on the Home Assistant UI, so next I would like to move the newly added Speedtest components into their own &quot;Internet Speed&quot; card.</p>
+<p>To do this we will follow the same steps as adding the sensor, i.e. we will create a new configuration file called config/groups.yaml and declare our group in that file.</p>
+<p>To do this we will need the name of the objects created by the speedtest component, you can get these values from the states button on the main menu.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-14/post/JHxLga2rb9-253.avif 253w"><source type="image/webp" srcset="/blog/2017/2017-09-14/post/JHxLga2rb9-253.webp 253w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-14/post/JHxLga2rb9-253.png" alt="" width="253" height="148"></picture>
+<p>They should appear somewhere in the full list of items, below you can see mine:</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-14/post/TGgGebkh7h-339.avif 339w"><source type="image/webp" srcset="/blog/2017/2017-09-14/post/TGgGebkh7h-339.webp 339w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-14/post/TGgGebkh7h-339.png" alt="" width="339" height="218"></picture>
+<p>So our group we are going to be creating will need to contain the following entities.</p>
+<ul>
+<li>sensor.speedtest_download</li>
+<li>sensor.speedtest_ping</li>
+<li>sensor.speedtest_upload</li>
+</ul>
+<p>We define our group in config/groups.yaml as shown below (making sure to replace your entities names if they differ from mine):</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">internet_speed_group</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> Internet Speed
+  <span class="token key atrule">entities</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> sensor.speedtest_download
+    <span class="token punctuation">-</span> sensor.speedtest_ping
+    <span class="token punctuation">-</span> sensor.speedtest_upload</code></pre>
+<p>After a quick restart of Home Assistant we are now able to see our new Internet Speed group.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-14/post/4kd3fGQxar-505.avif 505w"><source type="image/webp" srcset="/blog/2017/2017-09-14/post/4kd3fGQxar-505.webp 505w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-14/post/4kd3fGQxar-505.png" alt="" width="505" height="243"></picture>
+<p>Things are starting to shape up, however there is one last bit of customization I would like to do, and that is changing the default names of the speedtest components.</p>
+<h2 id="renaming-things">Renaming things</h2>
+<p>To change the name of any object in Home Assistant you will need to make use of the customize property, which is nested under the root homeassistant configuration node. To keep things simple we will create a new file called config/customize.yaml and reference it back in using the below import statement.</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">homeassistant</span><span class="token punctuation">:</span>
+  <span class="token key atrule">customize</span><span class="token punctuation">:</span> <span class="token tag">!include</span> config/customize.yaml</code></pre>
+<p>We will make use of the object ids discovered previously to target and rename our sensors. The contents of config/customize.yaml looks like this:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor.speedtest_download</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> Download Rate
+<span class="token key atrule">sensor.speedtest_ping</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> Last Ping
+<span class="token key atrule">sensor.speedtest_upload</span><span class="token punctuation">:</span>
+  <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> Upload Rate</code></pre>
+<p>Along with the name you can also change the icon, visible state, unit of measurement and more - <a href="https://www.home-assistant.io/docs/configuration/customizing-devices/">full documentation can be found here</a>. To keep this post short, we will just focus on the names for now.</p>
+<p>After a quick restart of Home Assistant I can see that my name changes were a success.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-14/post/aQhfNrzpxB-403.avif 403w"><source type="image/webp" srcset="/blog/2017/2017-09-14/post/aQhfNrzpxB-403.webp 403w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-14/post/aQhfNrzpxB-403.png" alt="" width="403" height="236"></picture>
+<p>Clicking on the Download Rate property will pop up a graph with all your recorded data (this was after 24 hours, yours will need +- 30 min to get the first data point).</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-14/post/ftrkvv6uo0-369.avif 369w"><source type="image/webp" srcset="/blog/2017/2017-09-14/post/ftrkvv6uo0-369.webp 369w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-14/post/ftrkvv6uo0-369.png" alt="" width="369" height="353"></picture>
+<p>Finally checking on the history component, we can see that all our speedtest data is being recorded as expected.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-14/post/udGaEq8y3o-657.avif 657w"><source type="image/webp" srcset="/blog/2017/2017-09-14/post/udGaEq8y3o-657.webp 657w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-14/post/udGaEq8y3o-657.png" alt="" width="657" height="368"></picture>
+<p>I hope that you found this post helpful, and as always I look forward to any comments, suggestions or questions below!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2017/2017-09-13/post/">Tracking User Presence (HASS and OwnTracks)</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2017/2017-09-14/post2/">Wondrous OctoPrint &amp; My OrangePi Lite</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2017/2017-09-14/post/` was built on 2025-07-03T18:56:30.387Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

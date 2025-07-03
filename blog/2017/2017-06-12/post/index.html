@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Installing Node-RED as a Windows Service</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="installing-node-red-as-a-windows-service">Installing Node-RED as a Windows Service</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-06-12">12 June 2017</time></li>
+</ul>
+
+<p>In this post I am going to cover installing, configuring and running Node-REDas a Windows service. <a href="https://nodered.org/">Node-RED</a> is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways, and is especially useful for home automation through IoT. There is a lot to cover, so let's dive right in.</p>
+<h2 id="installing-node-red">Installing Node-RED</h2>
+<p>Installation is pretty straight forward and requires only 2 simple steps, more <a href="https://nodered.org/docs/getting-started/local">detailed installation notes</a> are available on the official Node-RED site should you need them.</p>
+<p>The first thing you will need is any stable version of <a href="https://nodejs.org/en/">node.js</a> installed. At the time of writing this article <code>v6.10.3</code> was the latest stable build.</p>
+<p>Once node.js is installed, open a command window and enter in the following command to install Node-RED.</p>
+<pre><code>npm install -g --unsafe-perm node-red
+</code></pre>
+<p>That's it Node-RED is installed and ready to be used, to launch it run &quot;node-red&quot; from the same command line.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-12/post/UdmgS7hEt_-680.avif 680w"><source type="image/webp" srcset="/blog/2017/2017-06-12/post/UdmgS7hEt_-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-12/post/UdmgS7hEt_-680.png" alt="" width="680" height="466"></picture>
+<h2 id="securing-node-red">Securing Node-RED</h2>
+<p>It is a good idea to secure your Node-RED installation with an username and password, especially if you would like it to be public facing. To secure Node-RED you will need to modify your <code>settings.js</code> file which is located in your users directory, in my case this is:</p>
+<pre><code>C:\Users\Administrator\.node-red\settings.js
+</code></pre>
+<p>Locate the <code>adminAuth</code> section in the file and uncomment it. You will notice that there is a <code>password</code> property with a hashed password value assigned to it, we are going to need to generate a new hash for your password to replace it with. The Node-RED creators provide a tool for doing just this, and can be installed and run using the following console commands:</p>
+<pre><code>npm install -g node-red-admin
+node-red-admin hash-pw
+</code></pre>
+<p>You will be prompted for your password 2 times and after the second time the <code>node-red-admin</code> tool will print out a hash value. The output value needs to find its way back into your <code>settings.js</code> file.</p>
+<p>You will also need to modify the <code>userDir</code> property and hard-code its value to your <code>.node-red</code> folder. You need to specify the full path to the directory because when running Node-RED as a service the working directory may differ breaking any relative paths you may have defined. In my case I set <code>userDir</code> to the following:</p>
+<pre><code>userDir: 'C:/Users/Administrator/.node-red/'
+</code></pre>
+<p>Save and close the settings file.</p>
+<h2 id="the-node-red-service">The Node-RED Service</h2>
+<p>You will need to download a tool called <a href="https://nssm.cc/download">NSSM</a> in order to run Node-RED as a service - I covered NSSM in more detail in <a href="https://www.richardn.ca/posts/RunningMosquittoAsAWindowsService/">this post</a>, however for now, all you need to do is download the latest version (<code>nssm 2.24-101-g897c7ad</code>) and copy either the 32-bit or 64-bit executable to any folder on your computer.</p>
+<p>In a command line, navigate to the folder containing <code>nssm.exe</code> and run the following command:</p>
+<pre><code>nssm install
+</code></pre>
+<p>This will present you with a dialog box similar to the one below.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-12/post/yHyaTgON9V-447.avif 447w"><source type="image/webp" srcset="/blog/2017/2017-06-12/post/yHyaTgON9V-447.webp 447w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-12/post/yHyaTgON9V-447.png" alt="" width="447" height="247"></picture>
+<p>On the Application tab enter in the below values, making sure that you adjust the paths where necessary.</p>
+<ul>
+<li><strong>Path</strong>: C:\Users\Administrator\AppData\Roaming\npm\node-red.cmd</li>
+<li><strong>Startup Dir</strong>: C:\Users\Administrator.node-red\</li>
+<li><strong>Arguments</strong>: --settings &quot;C:\Users\Administrator.node-red\settings.js&quot;</li>
+<li><strong>Name</strong>: node-red</li>
+</ul>
+<p>On the Details tab, give the service a name and set its startup type to <code>Automatic (Delayed Start)</code> - this will ensure that Node-RED starts with Windows, but only once your computer has had some time to settle.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-12/post/_HzNr-oxbH-715.avif 715w"><source type="image/webp" srcset="/blog/2017/2017-06-12/post/_HzNr-oxbH-715.webp 715w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-12/post/_HzNr-oxbH-715.png" alt="" width="715" height="104"></picture>
+<p>You now have a Node-RED service - under service manager, click the Start Service button to start your Node-RED service.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Should you run into any problems starting your new Node-RED service (like stopping immediately after starting it) you can follow the below steps to make identifying the issue a lot easier.</p>
+<p>Navigate to the folder where you place the nssm.exe executable and run the following command.</p>
+<pre><code>nssm edit node-red
+</code></pre>
+<p>This will present you with an edit screen like the one shown below.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-12/post/X3XpWmDzGV-448.avif 448w"><source type="image/webp" srcset="/blog/2017/2017-06-12/post/X3XpWmDzGV-448.webp 448w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-12/post/X3XpWmDzGV-448.png" alt="" width="448" height="247"></picture>
+<p>If you navigate to the I/O tab you will see options for stdin, stdout and stderror streams. These are used mainly on *NIX based systems, but node.js provides some implementation of them and so does nssm. If you provide a path to a .txt file like shown above (although I forgot to add the extension), save and restart your Node-RED service, the files will be created and any console output from Node-RED will be redirected to the file specified, e.g.:</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-12/post/V99PpLy37w-832.avif 832w"><source type="image/webp" srcset="/blog/2017/2017-06-12/post/V99PpLy37w-832.webp 832w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-12/post/V99PpLy37w-832.png" alt="" width="832" height="396"></picture>
+<p>Hopefully Node-RED will provide you with some reason for failure in this file that will make troubleshooting a lot easier.</p>
+<p>Please do not forget to run nssm edit node-red again once you have resolved your issue, and remove these values.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Node-RED is an amazing tool, and opens up a ton of possibilities through a simple drag and drop UI. There is a lot more to Node-RED that initially meets the eye, and coupled with something like <code>MQTT</code> gives you so much more power.</p>
+<p>Below is the controller flow, and UI designed with Node-RED to control a MP3 player board via an ESP8266 (post coming soon)</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-12/post/iU4e-emr1w-930.avif 930w"><source type="image/webp" srcset="/blog/2017/2017-06-12/post/iU4e-emr1w-930.webp 930w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-12/post/iU4e-emr1w-930.png" alt="" width="930" height="488"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-12/post/v0jGN7mxt2-367.avif 367w"><source type="image/webp" srcset="/blog/2017/2017-06-12/post/v0jGN7mxt2-367.webp 367w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-12/post/v0jGN7mxt2-367.png" alt="" width="367" height="389"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-06-12/post/7S7bJnL210-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-06-12/post/7S7bJnL210-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-06-12/post/7S7bJnL210-800.jpeg" alt="" width="800" height="501"></picture>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2017/2017-06-08/post/">Running Mosquitto as a Windows Service</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2017/2017-08-03/post/">Changing Sonoff Firmware (Visual Guide)</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2017/2017-06-12/post/` was built on 2025-07-03T18:56:30.386Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

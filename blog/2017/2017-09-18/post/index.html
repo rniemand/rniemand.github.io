@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Monitoring Phone Battery with OwnTracks &amp; Home Assistant</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="monitoring-phone-battery-with-owntracks-and-home-assistant">Monitoring Phone Battery with OwnTracks &amp; Home Assistant</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2017-09-18">18 September 2017</time></li>
+</ul>
+
+<p>Following on from a <a href="https://www.richardn.ca/posts/MonitoringHostSystemWithHass/">previous post</a> I would like to extend the functionality of <a href="https://www.home-assistant.io/">Home Assistant</a> using the <a href="https://www.home-assistant.io/integrations/owntracks/">OwnTracks</a> plugin to get an idea of how full my phone battery is. This information could be used to send an alert to you should your battery drop too low and you are at home, or let you know that your spouse's battery is low when they are out and about (the only limit here is your imagination).</p>
+<p>In order to accomplish this I will need to know a couple of things, mainly what data is being sent by OwnTracks, and how to get at this bits of it I want.</p>
+<h2 id="owntracks-payload">OwnTracks payload</h2>
+<p>First we will need to see exactly what is being sent over the wire when OwnTracks &quot;calls home&quot; and identify where in that payload the phone battery level is stored. To do this I made use of my <a href="https://www.richardn.ca/posts/MQTTDumperAlpha/">MQTT dumper application</a> filtering it to the owntracks/# publications, I forced my phone to check in and recoded the data sent over the wire:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"_type"</span><span class="token operator">:</span> <span class="token string">"location"</span><span class="token punctuation">,</span>
+  <span class="token property">"tid"</span><span class="token operator">:</span> <span class="token string">"xt"</span><span class="token punctuation">,</span>
+  <span class="token property">"acc"</span><span class="token operator">:</span> <span class="token number">22</span><span class="token punctuation">,</span>
+  <span class="token property">"batt"</span><span class="token operator">:</span> <span class="token number">15</span><span class="token punctuation">,</span>
+  <span class="token property">"conn"</span><span class="token operator">:</span> <span class="token string">"w"</span><span class="token punctuation">,</span>
+  <span class="token property">"lat"</span><span class="token operator">:</span> xxx<span class="token punctuation">,</span>
+  <span class="token property">"lon"</span><span class="token operator">:</span> xxx<span class="token punctuation">,</span>
+  <span class="token property">"tst"</span><span class="token operator">:</span> <span class="token number">1505225118</span><span class="token punctuation">,</span>
+  <span class="token property">"_cp"</span><span class="token operator">:</span> <span class="token boolean">true</span>
+<span class="token punctuation">}</span></code></pre>
+<p>It seems that the batt property is what we are looking for, and a quick cross-check with the <a href="https://owntracks.org/booklet/tech/json/">OwnTracks booklet</a> confirmed my suspicion:</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-18/post/rKY1wLlZ3--720.avif 720w"><source type="image/webp" srcset="/blog/2017/2017-09-18/post/rKY1wLlZ3--720.webp 720w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-18/post/rKY1wLlZ3--720.png" alt="" width="720" height="255"></picture>
+<blockquote>
+<p>Something to note here &quot;iOS,Android/integer/percent/optional&quot;
+{: .prompt-info }</p>
+</blockquote>
+<p>There is a possibility that this value won't always be there, and this is due to the fact that you can enable / disable advanced reporting in the application. We will need to make sure that this case is catered for when we attempt to collect this information.</p>
+<h2 id="tracking-battery-usage">Tracking battery usage</h2>
+<p>In order to store and present this information in Home Assistant we will need to make use of a sensor, more specifically the <a href="https://www.home-assistant.io/integrations/sensor.mqtt">mqtt sensor</a>. This sensor will allow us to subscribe to any MQTT topic and collect data from it, with the added bonus of being able to manipulate this data using the <a href="https://www.home-assistant.io/docs/configuration/templating/">templating engine</a> built into Home Assistant.</p>
+<p>I created this sensor in my config/sensor.yaml file, with the following config:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
+  <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> owntracks/xxx/xxx
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> Phone Battery (Richard)
+  <span class="token key atrule">unit_of_measurement</span><span class="token punctuation">:</span> <span class="token string">'%'</span>
+  <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token punctuation">...</span></code></pre>
+<p>Most of it is self-explanatory with the exception of the value_template, which I am sure most of you can work out. Basically this template first checks that we have some battery information to extract (value_json.batt) and providing we do it will extract it, should there be no information to extract it will use the last known value of the battery. I found that sometimes OwnTracks would check in without sending battery information, this is just a safeguard against that.</p>
+<p>After restarting Home Assistant, and checking in with my phone I am able to see my battery information!</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-18/post/K-vG0WXfx0-260.avif 260w"><source type="image/webp" srcset="/blog/2017/2017-09-18/post/K-vG0WXfx0-260.webp 260w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-18/post/K-vG0WXfx0-260.png" alt="" width="260" height="115"></picture>
+<h2 id="tracking-wifi-mobile">Tracking WiFi / Mobile</h2>
+<p>Using the same approach as above I was able to add the following sensor to Home Assistant to track what type of connection my phone was using to call home (either WiFi or mobile data). This information could be used to alert you when you are at home and not on the WiFi network, and possibly save you some money :).</p>
+<p>This sensor is configured as below, using very similar logic to the battery code:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
+  <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> owntracks/niemandr/hwnxt
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> Connection (Richard)
+  <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token punctuation">...</span></code></pre>
+<p>After another restart of Home Assistant (notice a trend here) I was able to see my WiFi / mobile connection information.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-18/post/_Y5D2n4K3L-341.avif 341w"><source type="image/webp" srcset="/blog/2017/2017-09-18/post/_Y5D2n4K3L-341.webp 341w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-18/post/_Y5D2n4K3L-341.png" alt="" width="341" height="110"></picture>
+<h2 id="tracking-gps-accuracy">Tracking GPS accuracy</h2>
+<p>The last bit of useful data from the &quot;call home&quot; payload of OwnTracks is the GPS accuracy value. Personally I have yet to think of a useful flow involving this data, but I am collecting it nonetheless just in case.</p>
+<p>To track this information you will need to add another sensor with the following configuration:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
+  <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> owntracks/niemandr/hwnxt
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> GPS Accuracy
+  <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token punctuation">...</span></code></pre>
+<p>After restarting Home Assistant I can now see my GPS accuracy in meters I believe:</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-18/post/OeClq-OLAu-298.avif 298w"><source type="image/webp" srcset="/blog/2017/2017-09-18/post/OeClq-OLAu-298.webp 298w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-18/post/OeClq-OLAu-298.png" alt="" width="298" height="112"></picture>
+<h2 id="create-a-nice-card">Create a nice card</h2>
+<p>To better display this information on the Home Assistant UI (and to stop cluttering up the top bar) I like to group related values together in cards (or groups). To do this I added the following group to my config/groups.yaml file:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">richard_phone_group</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> Richard Phone
+  <span class="token key atrule">entities</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> sensor.connection_richard
+    <span class="token punctuation">-</span> sensor.gps_accuracy
+    <span class="token punctuation">-</span> sensor.phone_battery_richard
+    <span class="token punctuation">-</span> device_tracker.niemandr_hwnxt</code></pre>
+<p>Restart Home Assistant and voila:</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-18/post/LmUuPVCHkl-500.avif 500w"><source type="image/webp" srcset="/blog/2017/2017-09-18/post/LmUuPVCHkl-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-18/post/LmUuPVCHkl-500.png" alt="" width="500" height="284"></picture>
+<p>If you want to you can create a new TAB with the below view for quick access to your mobile data should you want to track multiple users:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">phone_overview_group</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> Phones Overview
+  <span class="token key atrule">view</span><span class="token punctuation">:</span> yes
+  <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>cellphone<span class="token punctuation">-</span>android
+  <span class="token key atrule">entities</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> device_tracker.niemandr_hwnxt
+    <span class="token punctuation">-</span> group.phone_richard_group</code></pre>
+<p>Not too bad for 20 min of effort :)</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-18/post/lvcUbF4pPf-639.avif 639w"><source type="image/webp" srcset="/blog/2017/2017-09-18/post/lvcUbF4pPf-639.webp 639w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-18/post/lvcUbF4pPf-639.png" alt="" width="639" height="354"></picture>
+<p>Hopefully you found this post useful and as always I look forward to any comments, questions and suggestions below.</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2017/2017-09-15/post/">Monitoring Host System with Home Assistant</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2017/2017-09-19/post/">Monitoring my Gate with Home Assistant for under $5</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2017/2017-09-18/post/` was built on 2025-07-03T18:56:30.388Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
