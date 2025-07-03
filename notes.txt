@@ -1,5 +1,8 @@
 <img src="./001.png" alt="">
 
+- \\192.168.0.60\Backups\GitHub\rniemand.github.io\_posts\2017
+- \\192.168.0.60\Backups\GitHub\rniemand.github.io\assets\img\2017
+- D:\Dev\rniemand.github.io\content\blog\2017
 
 ---js
 const title = "Using GitHub Pages for your Personal Blog";
