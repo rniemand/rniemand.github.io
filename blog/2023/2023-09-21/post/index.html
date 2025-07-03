@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Simple Toast Messages using SvelteStrap</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="simple-toast-messages-using-sveltestrap">Simple Toast Messages using SvelteStrap</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2023-09-21">21 September 2023</time></li>
+</ul>
+
+<p>In this post I will cover creating a simple toast message implementation for your next svelte application using <a href="https://sveltestrap.js.org/">SvelteStrap</a> and a simple toast manager service written in TypeScript.</p>
+<h2 id="components">Components</h2>
+<p>You will need to add the following components to your project.</p>
+<h3 id="toastmanager-ts">ToastManager.ts</h3>
+<p>This file houses the <code>ToastManager</code> class which is used to manage toast notifications (<code>NlpToastMessage</code>) instances and displays them using the custom <code>&lt;TopNavigation /&gt;</code> component listed below.</p>
+<p>The manager is backed by a <a href="https://svelte.dev/docs/svelte-store">Writable Svelte Store</a> and internally tracks what toast messages should be displayed along with handling dismiss events on the individual messages.</p>
+<p>This class can be extended to add any additional functionality you may need for your specific implementation, for me this works perfectly.</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">import</span> <span class="token punctuation">{</span> writable<span class="token punctuation">,</span> <span class="token keyword">type</span> <span class="token class-name">Writable</span> <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"svelte/store"</span><span class="token punctuation">;</span>
+<span class="token keyword">export</span> <span class="token keyword">const</span> toasts<span class="token operator">:</span> Writable<span class="token operator">&lt;</span>NlpToastMessage<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span> <span class="token operator">=</span> <span class="token function">writable</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">NlpToastMessage</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> id<span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>
+    <span class="token keyword">private</span> _manager<span class="token operator">:</span> ToastManager<span class="token punctuation">,</span>
+    <span class="token keyword">public</span> title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+    <span class="token keyword">public</span> body<span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">|</span> <span class="token keyword">undefined</span><span class="token punctuation">,</span>
+    <span class="token keyword">public</span> color<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+    <span class="token keyword">public</span> autoHide<span class="token operator">:</span> <span class="token builtin">boolean</span> <span class="token operator">=</span> <span class="token boolean">false</span>
+  <span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token function-variable function">setId</span> <span class="token operator">=</span> <span class="token punctuation">(</span>id<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>id <span class="token operator">=</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function-variable function">dismiss</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token keyword">this</span><span class="token punctuation">.</span>_manager<span class="token punctuation">.</span><span class="token function">dismiss</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ToastManager</span> <span class="token punctuation">{</span>
+  <span class="token keyword">public</span> toasts<span class="token operator">:</span> NlpToastMessage<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">private</span> _toastId<span class="token operator">:</span> <span class="token builtin">number</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token keyword">private</span> _toasts<span class="token operator">:</span> Writable<span class="token operator">&lt;</span>NlpToastMessage<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+  <span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token punctuation">(</span>toast<span class="token operator">:</span> NlpToastMessage<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    toast<span class="token punctuation">.</span><span class="token function">setId</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>_toastId<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>toasts<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>toast<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_toasts<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>toasts<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token function-variable function">dismiss</span> <span class="token operator">=</span> <span class="token punctuation">(</span>toast<span class="token operator">:</span> NlpToastMessage<span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> idx <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>toasts<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span>toast<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>toasts<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>idx<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>_toasts<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>toasts<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> manager <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ToastManager</span><span class="token punctuation">(</span>toasts<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">toastSuccess</span> <span class="token operator">=</span> <span class="token punctuation">(</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  body<span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">|</span> <span class="token keyword">undefined</span> <span class="token operator">=</span> <span class="token keyword">undefined</span><span class="token punctuation">,</span>
+  autoHide<span class="token operator">:</span> <span class="token builtin">boolean</span> <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">)</span> <span class="token operator">=></span>
+  manager<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NlpToastMessage</span><span class="token punctuation">(</span>manager<span class="token punctuation">,</span> title<span class="token punctuation">,</span> body<span class="token punctuation">,</span> <span class="token string">"success"</span><span class="token punctuation">,</span> autoHide<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">const</span> <span class="token function-variable function">toastError</span> <span class="token operator">=</span> <span class="token punctuation">(</span>
+  title<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">,</span>
+  body<span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">|</span> <span class="token keyword">undefined</span> <span class="token operator">=</span> <span class="token keyword">undefined</span><span class="token punctuation">,</span>
+  autoHide<span class="token operator">:</span> <span class="token builtin">boolean</span> <span class="token operator">=</span> <span class="token boolean">true</span>
+<span class="token punctuation">)</span> <span class="token operator">=></span> manager<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NlpToastMessage</span><span class="token punctuation">(</span>manager<span class="token punctuation">,</span> title<span class="token punctuation">,</span> body<span class="token punctuation">,</span> <span class="token string">"danger"</span><span class="token punctuation">,</span> autoHide<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<h3 id="toastmanager-svelte">ToastManager.svelte</h3>
+<p>This is the custom component that wraps the <a href="https://sveltestrap.js.org/?path=/story/components-toast--toast">Toast SvelteStrap</a> component and places all added toast messages in the bottom corner of your application using the <code>position-fixed bottom-0 end-0 p-3</code> <a href="https://getbootstrap.com/">BootStrap</a> styles.</p>
+<p>When the component is mounted it subscribes to the toasts store exposed from <code>ToastManager.ts</code> (and unsubscribes when the component is unmounted). Each toast message added to the store is rendered in the <a href="https://svelte.dev/docs/logic-blocks">each loop</a>.</p>
+<p>By default all toasts will automatically close after 5 seconds (unless configured not to in the <code>NlpToastMessage</code> constructor), clicking the close icon on a toast will trigger the dismiss method on the manager and remove the toast notification immediately.</p>
+<pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ts<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+  <span class="token keyword">import</span> <span class="token punctuation">{</span> onMount <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"svelte"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> <span class="token punctuation">{</span> Toast<span class="token punctuation">,</span> ToastBody<span class="token punctuation">,</span> ToastHeader <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"sveltestrap"</span><span class="token punctuation">;</span>
+  <span class="token keyword">import</span> <span class="token punctuation">{</span> NlpToastMessage<span class="token punctuation">,</span> toasts <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./ToastManager"</span><span class="token punctuation">;</span>
+  <span class="token keyword">let</span> <span class="token literal-property property">toastMessages</span><span class="token operator">:</span> NlpToastMessage<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+  <span class="token function">onMount</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> toasts<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">_entries</span><span class="token operator">:</span> NlpToastMessage<span class="token punctuation">[</span><span class="token punctuation">]</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+      toastMessages <span class="token operator">=</span> _entries<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>toast-container position-fixed bottom-0 end-0 p-3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  {#each toastMessages as entry}
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Toast</span> <span class="token attr-name">autohide</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ToastHeader</span> <span class="token attr-name">icon</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{entry.color}<span class="token punctuation">"</span></span> <span class="token attr-name">toggle</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{entry.dismiss}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+      {entry.title}
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ToastHeader</span><span class="token punctuation">></span></span>
+    {#if entry.body}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ToastBody</span><span class="token punctuation">></span></span>{entry.body}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ToastBody</span><span class="token punctuation">></span></span>{/if}
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Toast</span><span class="token punctuation">></span></span>
+  {/each}
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+<h2 id="usage">Usage</h2>
+<p>Usage is pretty simple, all you need to do is add the <code>&lt;ToastManager /&gt;</code> component anywhere in your application (I would suggest adding this to your layout file).</p>
+<pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ToastManager</span> <span class="token punctuation">/></span></span></code></pre>
+<p>You can create a toast message by calling one of the exposed ToastManager.ts methods:</p>
+<ul>
+<li>toastSuccess(<code>title: string</code>[[, <code>body: string|undefined</code>], <code>autoHide: boolean</code>])</li>
+<li>toastError(<code>title: string</code>[[, <code>body: string|undefined</code>], <code>autoHide: boolean</code>])</li>
+</ul>
+<p>An example is shown below:</p>
+<pre class="language-typescript" tabindex="0"><code class="language-typescript"><span class="token keyword">const</span> <span class="token function-variable function">addTask</span> <span class="token operator">=</span> <span class="token keyword">async</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> response <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">new</span> <span class="token class-name">UserTasksClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addTask</span><span class="token punctuation">(</span>userTask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>response<span class="token punctuation">.</span>success<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">toastSuccess</span><span class="token punctuation">(</span><span class="token string">"Task Added"</span><span class="token punctuation">,</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>userTask<span class="token punctuation">.</span>taskName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> has been created</span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    userTask <span class="token operator">=</span> <span class="token function">createNewTask</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">onTaskAdded</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">toggle</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token function">toastError</span><span class="token punctuation">(</span><span class="token string">"Error Adding Task"</span><span class="token punctuation">,</span> response<span class="token punctuation">.</span>error <span class="token operator">||</span> <span class="token string">"Unknown error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>It is that simple.</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-21/post/MgpQTSZBLg-364.avif 364w"><source type="image/webp" srcset="/blog/2023/2023-09-21/post/MgpQTSZBLg-364.webp 364w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-21/post/MgpQTSZBLg-364.png" alt="" width="364" height="99"></picture>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2023/2023-09-20/post/">SonarQube in Docker</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2024/2024-07-31/AspNetDockerCerts/">Using Certificates with ASP.Net Core under Docker</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2023/2023-09-21/post/` was built on 2025-07-03T21:48:26.992Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

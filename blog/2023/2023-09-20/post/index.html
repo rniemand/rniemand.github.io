@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>SonarQube in Docker</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="sonarqube-in-docker">SonarQube in Docker</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2023-09-20">20 September 2023</time></li>
+</ul>
+
+<p>In this post I will cover the basics of getting SonarQube running in a Docker container and walk you through setting up a simple ci-cd script to build and analyse a .net core project.</p>
+<h2 id="requirements">Requirements</h2>
+<h3 id="jdk">JDK</h3>
+<p>You will need java installed on your system in order to run SonarQube, you can download the latest version of Java from <a href="https://www.oracle.com/ca-en/java/technologies/downloads/">here</a>.</p>
+<p>Install or extract the Java package to a known location on your system, in my case I went with installing the JDK which ended up unpacking it’s contents to <code>C:\Program Files\Java\jdk-21</code>.</p>
+<p>Add a new System Environment variable called <strong>JAVA_HOME</strong> with the following path: <code>C:\Program Files\Java\jdk-21</code>.</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/oxDg2o-BXN-741.avif 741w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/oxDg2o-BXN-741.webp 741w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/oxDg2o-BXN-741.png" alt="" width="741" height="190"></picture>
+<p>Add the following path to the systems <strong>PATH</strong> environment variable: <code>C:\Program Files\Java\jdk-21\bin</code>.</p>
+<p>Open up a console and type <code>java -version</code> to ensure that everything is working as expected.</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/6EZa2uvBnM-730.avif 730w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/6EZa2uvBnM-730.webp 730w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/6EZa2uvBnM-730.png" alt="" width="730" height="103"></picture>
+<h3 id="docker-desktop">Docker Desktop</h3>
+<p>Download and install Docker Desktop from the <a href="https://www.docker.com/products/docker-desktop/">following link</a>.</p>
+<p>Ensure that you have WSL enabled and all the other guff needed for Docker to run.</p>
+<p>You will most likely need to restart your computer.</p>
+<h3 id="ssms-or-equivalent">SSMS or Equivalent</h3>
+<p>You will need SSMS or something similar to connect to the created Docker SQL instance and create the initial SonarQube database, if you would like to you can download SSMS at the <a href="https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16">following link</a>.</p>
+<h3 id="net-sdk">.NET SDK</h3>
+<p>You will need the .net SDK along with any targeted frameworks installed, you can download the .net SDK if you need it from <a href="https://dotnet.microsoft.com/en-us/download/visual-studio-sdks">here</a>.</p>
+<h2 id="docker-environment-setup">Docker Environment Setup</h2>
+<h3 id="docker-compose-file">Docker Compose File</h3>
+<p>The complete Docker compose file is shown below, to follow along copy the below to a file on your system called <code>docker-compose.yaml</code>.</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">"3.6"</span>
+
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">db</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> mcr.microsoft.com/mssql/server<span class="token punctuation">:</span>2019<span class="token punctuation">-</span>latest
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">ACCEPT_EULA</span><span class="token punctuation">:</span> <span class="token string">"Y"</span>
+      <span class="token key atrule">SA_PASSWORD</span><span class="token punctuation">:</span> <span class="token string">"saP@ssw0rd"</span>
+      <span class="token key atrule">MSSQL_PID</span><span class="token punctuation">:</span> <span class="token string">"Developer"</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./mssql/data<span class="token punctuation">:</span>/var/opt/mssql/data
+      <span class="token punctuation">-</span> ./mssql/log<span class="token punctuation">:</span>/var/opt/mssql/log
+      <span class="token punctuation">-</span> ./mssql/secrets<span class="token punctuation">:</span>/var/opt/mssql/secrets
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 1433<span class="token punctuation">:</span><span class="token number">1433</span>
+
+  <span class="token key atrule">sonarqube</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> sonarqube
+    <span class="token key atrule">restart</span><span class="token punctuation">:</span> always
+    <span class="token key atrule">environment</span><span class="token punctuation">:</span>
+      <span class="token key atrule">SONAR_ES_BOOTSTRAP_CHECKS_DISABLE</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">SONAR_JDBC_URL</span><span class="token punctuation">:</span> jdbc<span class="token punctuation">:</span>sqlserver<span class="token punctuation">:</span>//db;databaseName=SonarQube;trustServerCertificate=true;
+      <span class="token key atrule">SONAR_JDBC_USERNAME</span><span class="token punctuation">:</span> sa
+      <span class="token key atrule">SONAR_JDBC_PASSWORD</span><span class="token punctuation">:</span> <span class="token string">"saP@ssw0rd"</span>
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> ./sonarqube/data<span class="token punctuation">:</span>/opt/sonarqube/data
+      <span class="token punctuation">-</span> ./sonarqube/logs<span class="token punctuation">:</span>/opt/sonarqube/logs
+      <span class="token punctuation">-</span> ./sonarqube/extensions<span class="token punctuation">:</span>/opt/sonarqube/extensions
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> 9000<span class="token punctuation">:</span><span class="token number">9000</span>
+    <span class="token key atrule">depends_on</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token string">"db"</span></code></pre>
+<h3 id="initial-container-configuration">Initial Container Configuration</h3>
+<p>Open a terminal window and navigate to the folder where you saved your <code>docker-compose.yaml</code> file, to start the container run the below command.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">docker-compose</span> up</code></pre>
+<p>This will take some time for the initial start (subsequent starts will be a lot quicker), also note that the initial start of the container will result in a lot of errors being logged to the console - mainly due to the fact that SonarQube is unable to find the configures SQL database (we are about to resolve that issue now).</p>
+<p>Using SSMS or something similar connect to your containers SQL instance using the <code>sa</code> password of <code>saP@ssw0rd</code>.</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/uGHuk30tbw-464.avif 464w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/uGHuk30tbw-464.webp 464w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/uGHuk30tbw-464.png" alt="" width="464" height="225"></picture>
+<p>Once connected run the below query to create the expected SonarQube database:</p>
+<pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token keyword">USE</span> <span class="token punctuation">[</span>master<span class="token punctuation">]</span>
+GO
+<span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token punctuation">[</span>SonarQube<span class="token punctuation">]</span>
+ <span class="token keyword">COLLATE</span> SQL_Latin1_General_CP1_CS_AS
+GO
+<span class="token keyword">ALTER</span> <span class="token keyword">DATABASE</span> <span class="token punctuation">[</span>SonarQube<span class="token punctuation">]</span> <span class="token keyword">SET</span> RECOVERY <span class="token keyword">SIMPLE</span>
+GO</code></pre>
+<p>You should now have a SonarQube database in the <strong>SQL_Latin1_General_CP1_CS_AS</strong> coalition and a recovery mode of simple.</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/4NhTr2-SD1-884.avif 884w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/4NhTr2-SD1-884.webp 884w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/4NhTr2-SD1-884.png" alt="" width="884" height="218"></picture>
+<p>After a while SonarQube should start to run its initial seeding of the DB, this is due to the fact that the SonarQube docker service is configured to always restart. If SonarQube does not seed the database you can try restarting the container to see if that helps.</p>
+<p>You should now be able to navigate to SonarQube on <code>http://localhost:9000/</code> and log in with the default user <code>admin</code> and password <code>admin</code> - make sure that you change your password to something that you can remember.</p>
+<h3 id="subsequent-starting-and-stopping">Subsequent Starting and Stopping</h3>
+<p>Once you have completed the initial setup as instructed above subsequent starting and stopping of the container can be done using the following commands.</p>
+<blockquote>
+<p>These commands need to be run from the folder that you saved your <code>docker-compose.yaml</code> file in.
+{: .prompt-info }</p>
+</blockquote>
+<p>To start the container:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">docker-compose</span> up <span class="token parameter variable">-d</span></code></pre>
+<p>To stop the container:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">docker-compose</span> down</code></pre>
+<h2 id="sonarqube-setup">SonarQube Setup</h2>
+<h3 id="create-project">Create Project</h3>
+<p>To create a new project navigate to: <code>http://localhost:9000/projects/create?mode=manual</code>.</p>
+<p>Enter in the details for your project and click next, choose your preferred settings when prompted on the next screen - generally I just use the global settings.</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/d3V6okITBo-714.avif 714w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/d3V6okITBo-714.webp 714w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/d3V6okITBo-714.png" alt="" width="714" height="490"></picture>
+<p>You should now have a test project to work with.</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/qYZtjartwE-764.avif 764w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/qYZtjartwE-764.webp 764w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/qYZtjartwE-764.png" alt="" width="764" height="200"></picture>
+<h3 id="token-generation">Token Generation</h3>
+<p>To generate tokens head over to your accounts security page: <code>http://localhost:9000/account/security</code>.</p>
+<p>Complete the form to generate a token - feel free to select a different token type when prompted (I am just using a global analysis token for brevity).</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/eQgQR91m1k-665.avif 665w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/eQgQR91m1k-665.webp 665w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/eQgQR91m1k-665.png" alt="" width="665" height="104"></picture>
+<p>Be sure to save the token returned as you won't be able to see it again!</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/MyhaKWOREA-642.avif 642w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/MyhaKWOREA-642.webp 642w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/MyhaKWOREA-642.png" alt="" width="642" height="109"></picture>
+<p>In my case the generated token is: <code>sqa_6ac0644c998766a46a0f11ee0205cad162e5318d</code>.</p>
+<h2 id="build-process-setup">Build Process Setup</h2>
+<h3 id="once-off-setup">Once Off Setup</h3>
+<p>You will need to have the <strong>sonarscanner</strong> <code>dotnet tool</code> installed globally, if you do not have it installed you can use the following command to rectify that:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">dotnet tool <span class="token function">install</span> <span class="token parameter variable">--global</span> dotnet-sonarscanner</code></pre>
+<h3 id="build-scripts">Build Scripts</h3>
+<h4 id="sonarqube-ps1">sonarqube.ps1</h4>
+<p>To make the build process a lot simpler I tend to use a helper script aptly named <code>sonarqube.ps1</code> with the following body:</p>
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token keyword">param</span> <span class="token punctuation">(</span>
+  <span class="token namespace">[Parameter(Mandatory=$false)]</span>
+  <span class="token namespace">[string]</span> <span class="token variable">$project</span> = <span class="token string">"test"</span><span class="token punctuation">,</span>
+  <span class="token namespace">[Parameter(Mandatory=$false)]</span>
+  <span class="token namespace">[string]</span> <span class="token variable">$sqUrl</span> = <span class="token string">"http://localhost:9000"</span><span class="token punctuation">,</span>
+  <span class="token namespace">[Parameter(Mandatory=$true)]</span>
+  <span class="token namespace">[string]</span> <span class="token variable">$sqToken</span>
+<span class="token punctuation">)</span>
+<span class="token variable">$rootDir</span>        = <span class="token variable">$PSScriptRoot</span><span class="token punctuation">;</span>
+<span class="token variable">$artifactsDir</span>   = <span class="token namespace">[IO.Path]</span>::GetFullPath<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">Join-Path</span> <span class="token variable">$rootDir</span> <span class="token string">"../artifacts/"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$coverageDir</span>    = <span class="token namespace">[IO.Path]</span>::GetFullPath<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">Join-Path</span> <span class="token variable">$artifactsDir</span> <span class="token string">"test-coverage/"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token variable">$sqReportPaths</span>  = <span class="token punctuation">(</span><span class="token variable">$coverageDir</span> <span class="token operator">+</span> <span class="token string">"**/coverage.opencover.xml"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+dotnet sonarscanner <span class="token keyword">begin</span> <span class="token operator">/</span>k:<span class="token variable">$project</span> <span class="token operator">/</span>d:sonar<span class="token punctuation">.</span>host<span class="token punctuation">.</span>url=<span class="token variable">$sqUrl</span>  <span class="token operator">/</span>d:sonar<span class="token punctuation">.</span>login=<span class="token variable">$sqToken</span> <span class="token operator">/</span>d:sonar<span class="token punctuation">.</span>cs<span class="token punctuation">.</span>opencover<span class="token punctuation">.</span>reportsPaths=<span class="token variable">$sqReportPaths</span>
+<span class="token punctuation">.</span><span class="token operator">/</span>ci-test<span class="token punctuation">.</span>ps1
+dotnet sonarscanner <span class="token keyword">end</span> <span class="token operator">/</span>d:sonar<span class="token punctuation">.</span>login=<span class="token variable">$sqToken</span></code></pre>
+<h4 id="ci-test-ps1">ci-test.ps1</h4>
+<p>I generally make use of a <code>ci-test.ps1</code> file to orchestrate the build and test pipeline (it is a bit long winded and may not work for everyone), an example of the build script can be seen <a href="https://github.com/rniemand/RnCore.Abstractions/blob/master/.github/ci-test.ps1">here</a>.</p>
+<p>In all honesty, a simple <code>dotnet build</code> should suffice in place of the call to <code>ci-test.ps1</code> in the <code>sonarqube.ps1</code> file - you will lose the coverage reports etc. though, but with some determination you should be able to create a custom build script that works for you.</p>
+<h3 id="running-build-process">Running Build Process</h3>
+<p>Armed with your build script and now running SonarQube instance you can kick off your first build and analyse using the sonarqube.ps1 file and your generated token.</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">.<span class="token punctuation">\</span>sonarqube.ps1 <span class="token parameter variable">-sqToken</span> <span class="token string">"sqa_6ac0644c998766a46a0f11ee0205cad162e5318d"</span></code></pre>
+<p>Once the process has completed your test project should now be updated with the results of the code analysis run.</p>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/6sftyimzVd-857.avif 857w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/6sftyimzVd-857.webp 857w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/6sftyimzVd-857.png" alt="" width="857" height="184"></picture>
+<picture><source type="image/avif" srcset="/blog/2023/2023-09-20/post/HrED9GMVxN-1215.avif 1215w"><source type="image/webp" srcset="/blog/2023/2023-09-20/post/HrED9GMVxN-1215.webp 1215w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-20/post/HrED9GMVxN-1215.png" alt="" width="1215" height="464"></picture>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2023/2023-09-19/post/">Svelte Tips and Tricks</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2023/2023-09-21/post/">Simple Toast Messages using SvelteStrap</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2023/2023-09-20/post/` was built on 2025-07-03T21:48:26.992Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
