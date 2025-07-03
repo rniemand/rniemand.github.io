@@ -1,9 +1,7 @@
 ---
 title: Arduino Board Pinouts
 date: 2017-04-05
-# categories: [cheat sheets]
-# tags: [arduino]
-# toc: true
+tags: [arduino]
 ---
 
 ## ESP8266

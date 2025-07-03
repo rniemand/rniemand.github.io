@@ -1,9 +1,7 @@
 ---
 title: SQLite and Dapper in C#
 date: 2016-07-29
-# categories: [.net]
-# tags: [sqlite,dapper]
-# toc: true
+tags: [.net,sqlite,dapper]
 ---
 In this article I am going to cover the basics of running **SQLite** and [Dapper](https://github.com/DapperLib/Dapper) in a `C#` console application. There is a lot of code below which may be highly opinionated (so please bear that in mind while reading it) with links to an example application on Github below should you wish to see it all in action.
 

@@ -1,9 +1,7 @@
 ---
 title: Installing InfluxDB on Windows
 date: 2019-01-04
-#categories: [monitoring]
-#tags: [influxdb,windows]
-#toc: true
+tags: [monitoring,influxdb,windows]
 ---
 
 Today I would like to cover installing [InfluxDB](https://www.influxdata.com/products/influxdb-overview/) on a Windows computer. In case you didn't know "InfluxDB is a high-performance data store written specifically for time series data", and this is extremely useful when working with `Home Automation` data like system up-time, temperature, etc.

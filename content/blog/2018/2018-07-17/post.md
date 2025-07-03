@@ -1,9 +1,7 @@
 ---
 title: Home Assistant From Scratch - MySQL
 date: 2018-07-17
-#categories: [home assistant]
-#tags: [mysql,mariadb]
-#toc: true
+tags: [home assistant,mysql,mariadb]
 ---
 
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.

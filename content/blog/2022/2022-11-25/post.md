@@ -1,9 +1,7 @@
 ---
 title: Updating Chirpy
 date: 2022-11-25
-#categories: []
-#tags: []
-#toc: true
+tags: [blog]
 ---
 
 This is a simple post covering the steps required to update the [Chirpy Jekyll Theme](https://github.com/cotes2020/jekyll-theme-chirpy) used by this blog, along with listing some useful pages and tools used for writing my blog posts.

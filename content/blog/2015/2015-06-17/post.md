@@ -1,9 +1,7 @@
 ---
 title: Remote Access Home
 date: 2015-06-17
-# categories: [networking]
-# tags: [dns]
-# toc: true
+tags: [dns,networking]
 ---
 
 ## Understanding DNS

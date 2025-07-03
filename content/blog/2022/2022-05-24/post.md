@@ -1,9 +1,7 @@
 ---
 title: Portainer Cheat Sheet
 date: 2022-05-24
-#categories: [cheat sheets]
-#tags: [portainer]
-#toc: true
+tags: [portainer]
 ---
 
 Below is a quick cheat sheet for getting up and running with [Portainer](https://www.portainer.io/), generally I make use of [Unraid](https://unraid.net/) for running my [Docker](https://www.docker.com/products/docker-desktop/) containers however when it comes to running [Z-Wave JS](https://github.com/zwave-js) I needed to run it on another computer that had a free USB port :)

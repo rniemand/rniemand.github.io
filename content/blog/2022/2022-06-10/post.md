@@ -1,9 +1,7 @@
 ---
 title: 'HASS On Unraid: Times of Day Automations'
 date: 2022-06-10
-#categories: [home assistant]
-#tags: []
-#toc: true
+tags: [home assistant]
 ---
 
 In this post I will explore the concepts of Helpers in Home Assistant and the potential that they can unlock with your automations.

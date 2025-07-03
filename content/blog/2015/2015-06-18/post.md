@@ -1,9 +1,7 @@
 ---
 title: Hosting Web API and Static Content with OWIN
 date: 2015-06-18
-# categories: [.net]
-# tags: [owin,hosting]
-# toc: true
+tags: [owin,hosting,.net]
 ---
 
 ## Setting up the project

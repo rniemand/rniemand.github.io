@@ -1,9 +1,7 @@
 ---
 title: OWIN - Mapping Attribute Routes (Web API 2)
 date: 2016-08-25
-# categories: [.net]
-# tags: [owin,routing]
-# toc: true
+tags: [.net]
 ---
 So last night I was playing around with OWIN and a small self-hosted application that made use of WebAPI 2. Everything was working fine until I tried to make use of the `[RoutePrefix("")]` and `[Route("")]` decorators on my controller (they just were not mapping). After a bit of digging I found out that you need to call `config.MapHttpAttributeRoutes()` in your OWIN `Startup` class and that should fix the mapping issue.
 

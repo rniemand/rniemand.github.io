@@ -1,9 +1,7 @@
 ---
 title: Monitoring my Gate with Home Assistant for under $5
 date: 2017-09-19
-#categories: [home assistant]
-#tags: [project]
-#toc: true
+tags: [home assistant]
 ---
 
 Today I would like to cover some simple security related monitoring in Home Assistant using the below components for under $5.00:

@@ -1,9 +1,7 @@
 ---
 title: Upgrading Home Assistant (Windows Service Edition)
 date: 2017-09-11
-#categories: [home assistant]
-#tags: [windows]
-#toc: true
+tags: [home assistant,windows]
 ---
 
 I have been using [Home Assistant](https://www.home-assistant.io/) for about a week and already there is a new version of the software available. From what I can make out the [project](https://github.com/home-assistant/core) is extremely active with a fortnightly release cycle. Generally the update process is pretty simple, however I am running my Home Assistant instance as a windows service covered in [my previous blog post](https://www.richardn.ca/posts/RunningHomeAssistantAsAWindowsService/).

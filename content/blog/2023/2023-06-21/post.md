@@ -1,10 +1,7 @@
----js
-const title = "Using GitHub Pages for your Personal Blog";
-const date = "2023-06-20";
-const draft = false;
-// categories: [github,tutorial]
-// tags: [blog]
-// toc: true
+---
+title: Using GitHub Pages for your Personal Blog
+date: 2023-06-20
+tags: [blog,github]
 ---
 
 In this post I will cover the process I used to get this blog ([https://www.richardn.ca/](https://www.richardn.ca/)) running under a custom domain on [GitHub Pages](https://pages.github.com/) along with getting Google Analytics and Adsense working with the [chirpy-starter template](https://github.com/cotes2020/chirpy-starter).

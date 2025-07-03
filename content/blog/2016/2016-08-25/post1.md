@@ -1,9 +1,7 @@
 ---
 title: Getting started with SQLite and Entity Framework
 date: 2016-08-25
-# categories: [.net]
-# tags: [sqlite,ef]
-# toc: true
+tags: [.net,sqlite]
 ---
 I am starting development on a **ROM File management** project that requires me to break my ties with **SQL Server** and **IIS** (I will cover the IIS portion in a later post) to make the application more accessible to my target audience. In addition to reducing the number of external dependencies, this approach is going to allow me to eventually wrap the application up as a windows service allowing it to run in the background.
 

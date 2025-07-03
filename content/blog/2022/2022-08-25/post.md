@@ -1,9 +1,7 @@
 ---
 title: Voxelab Aries 3D Printer with Cura
 date: 2022-08-25
-#categories: [3d printing]
-#tags: [cura]
-#toc: true
+tags: [cura,3d printing]
 ---
 
 Recently I bought myself a new 3D Printer, more specifically a new shiny "[Voxelab Aries 3D Printer](https://www.voxelab3dp.com/product/aries-high-end-fdm-3d-printer-for-beginners?cID=29)" which `imho` is a pretty good value printer for its price point (*paid ~ CAD$ 400* all in). My only complaints with the printer is the fact that the firmware is closed source and the provided slicer leaves a lot behind in terms of functionality when compared to [Cura](https://ultimaker.com/software/ultimaker-cura) or similar slicing software.

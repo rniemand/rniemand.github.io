@@ -1,9 +1,7 @@
 ---
 title: Home Assistant From Scratch - Octoprint
 date: 2018-10-09
-#categories: [home assistant]
-#tags: [octoprint]
-#toc: true
+tags: [home assistant,octoprint]
 ---
 
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.

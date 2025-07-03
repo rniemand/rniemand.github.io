@@ -1,9 +1,7 @@
 ---
 title: Installing Telegraf on Ubuntu
 date: 2019-06-17
-#categories: [monitoring]
-#tags: [ubuntu,telegraf]
-#toc: true
+tags: [monitoring,ubuntu,telegraf]
 ---
 
 > **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!

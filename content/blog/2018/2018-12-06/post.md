@@ -1,9 +1,7 @@
 ---
 title: Home Assistant From Scratch - Breaking up Config
 date: 2018-12-06
-#categories: [home assistant]
-#tags: []
-#toc: true
+tags: [home assistant]
 ---
 
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.

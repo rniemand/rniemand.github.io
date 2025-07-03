@@ -1,9 +1,7 @@
 ---
 title: Pro Mini Digital Clock using DS3231
 date: 2017-03-17
-# categories: [arduino]
-# tags: [project,ds3231]
-# toc: true
+tags: [arduino,ds3231]
 ---
 In this tutorial I am going to be making a simple digital clock using an **Arduino Pro Mini 168** and a **DS3231 RTC clock module**. To keep the wiring simple I am going to be talking to both devices on [I2C](https://learn.sparkfun.com/tutorials/i2c). Because we are using I2C for the communication to both the display and the clock we are able to reduce the complexity of wiring it all together.
 

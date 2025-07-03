@@ -1,9 +1,7 @@
 ---
 title: Sonoff & MQTT Example (Lounge Light)
 date: 2017-10-03
-#categories: [iot]
-#tags: [mqtt,sonoff]
-#toc: true
+tags: [iot,mqtt,sonoff]
 ---
 
 A while back I got brave and [changed the firmware on the Sonoff switch](https://www.richardn.ca/posts/ChangingSonoffFirmwareVisualGuide/) connected to my lounge light to use it in my home automation. I followed [these instructions](https://github.com/arendst/Tasmota) when uploading the firmware and was up and running in about 10 minutes.

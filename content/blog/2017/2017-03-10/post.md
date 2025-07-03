@@ -1,9 +1,7 @@
 ---
 title: Flashing ATmega 168 (Pro Mini) with an Arduino UNO
 date: 2017-03-10
-# categories: [arduino]
-# tags: [flashing]
-# toc: true
+tags: [arduino]
 ---
 In preparation for my post on building a pong game on Arduino I wanted to flash the game code to the smallest Arduino compatible board I had lying around (my `ATmega 168 Pro Mini` I got from [AliExpress](https://www.aliexpress.com/item/32579326448.html?spm=2114.13010608.0.0.flKfAz)). I immediately ran into a problem as the board has no built-in flasher due to its form factor. After some Googling I found out it was possible to flash the board using an Arduino UNOusing the below process.
 

@@ -1,9 +1,7 @@
 ---
 title: Home Assistant From Scratch - Installation
 date: 2018-06-27
-#categories: [home assistant]
-#tags: []
-#toc: true
+tags: [home assistant]
 ---
 
 This series of posts will cover setting up my Home Assistant setup from scratch back to, and beyond my old setup I was running back in South Africa. Our little family picked up and moved to Canada at the end of 2017 and recently purchased a property, now I have free reign to re-imagine my Home Automation setup from the ground up. Rather than me just doing it, I thought that it would be beneficial to document everything for someone just starting out and finding everything a bit overwhelming.

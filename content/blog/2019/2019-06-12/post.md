@@ -1,9 +1,7 @@
 ---
 title: Home Servers Revamp (a Quick Update)
 date: 2019-06-12
-#categories: [misc]
-#tags: []
-#toc: true
+tags: [homelab]
 ---
 
 I have been needing to rebuild some of the core components of my Home Automation stack for quite some time now, but have been struggling to find the time to do it. I have also been wanting to try committing to running everything on Linux (where possible) as I am starting to work with it more and more with my work.

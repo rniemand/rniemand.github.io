@@ -6,13 +6,22 @@ layout: layouts/base.njk
 <style>{% include "css/prism-diff.css" %}</style>
 <h1>{{ title }}</h1>
 
-<ul class="post-metadata">
-	<li><time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time></li>
-	{%- for tag in tags | filterTagList %}
-	{%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-	<li><a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a>{%- if not loop.last %}, {% endif %}</li>
-	{%- endfor %}
-</ul>
+<div class="p-1 mb-1 d-flex post-meta">
+	{%- if tags | filterTagList | length > 0 %}
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+			{%- for tag in tags | filterTagList %}
+			{%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+				<a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a>{%- if not loop.last %}, {% endif %}
+			{%- endfor %}
+		</span>
+	{%- endif %}
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
+	</span>
+</div>
 
 {{ content | safe }}
 

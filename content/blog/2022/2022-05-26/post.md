@@ -1,9 +1,7 @@
 ---
 title: Running RabbitMQ on Unraid
 date: 2022-05-26
-#categories: [rabbitmq]
-#tags: [unraid]
-#toc: true
+tags: [unraid,rabbitmq]
 ---
 
 > This post is [part of a series](https://www.richardn.ca/series/#unraid-containers-2022) covering running various containers on [Unraid](https://unraid.net/).

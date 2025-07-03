@@ -1,9 +1,7 @@
 ---
 title: Install MySQL on DietPi (Debian)
 date: 2018-10-17
-#categories: [database]
-#tags: [dietpi,mysql,mariadb]
-#toc: true
+tags: [database,dietpi,mysql,mariadb]
 ---
 
 ## Base Installation

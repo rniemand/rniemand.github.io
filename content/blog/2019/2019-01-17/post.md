@@ -1,9 +1,7 @@
 ---
 title: Running Grafana locally on HTTPS
 date: 2019-01-17
-#categories: [monitoring]
-#tags: [grafana]
-#toc: true
+tags: [monitoring,grafana]
 ---
 
 I am currently developing a custom data-source for [Grafana](https://grafana.com/) and needed to run the server in HTTPS mode in order to test out a rather odd use-case, this is just a quick post on how I did it - hopefully this saves you some time in the future.

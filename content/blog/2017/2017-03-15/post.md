@@ -1,9 +1,7 @@
 ---
 title: Programming an ATTiny85 with an Arduino Uno
 date: 2017-03-15
-# categories: [arduino]
-# tags: [flashing]
-# toc: true
+tags: [arduino]
 ---
 I recently received a couple of [ATTINY85 micro controllers](https://www.banggood.com/ATTINY85-Mini-Usb-MCU-Development-Board-p-971122.html?imageAb=1&p=5T250523689812015082&akmClientCountry=CA&cur_warehouse=CN) from BangGood in hopes of shrinking down some of my Arduino projects in the future. Initially I was a bit stumped on how to "flash (program)" these chips, and the USB adapter I bought for the process was DOA. After an hour or so on Google I had my first "Blink" sketch up and running on my ATTiny! I decided to make this post as a reminder to myself and to help others who may want to get up and running quickly with their own ATTiny85.
 

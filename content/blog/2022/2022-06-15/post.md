@@ -1,9 +1,7 @@
 ---
 title: 'Ceiling Fan Remote Hacking'
 date: 2022-06-15
-#categories: [home assistant]
-#tags: [cc1101,esp8266]
-#toc: true
+tags: [cc1101,esp8266,home assistant]
 ---
 
 In this post I will be covering how I modified the "[owenb321/hampton-bay-fan-mqtt](https://github.com/owenb321/hampton-bay-fan-mqtt)" to work with some "**Home Decorations #1001 415 438**" fans I had installed a while back. The fans make use of a pretty standard remote control "model number: **TX028C-S**", however the only repository I found did not produce compatible codes for the fans prompting me to create this offshoot of the repo.

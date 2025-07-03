@@ -1,9 +1,7 @@
 ---
 title: 'HASS On Unraid: Google TTS'
 date: 2022-05-30
-#categories: [home assistant]
-#tags: [unraid,tts]
-#toc: true
+tags: [home assistant,unraid,tts]
 ---
 
 > This post is [part of a series](https://www.richardn.ca/series/#unraid-containers-2022) covering running various containers on [Unraid](https://unraid.net/).

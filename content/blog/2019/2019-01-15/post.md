@@ -1,9 +1,7 @@
 ---
 title: Running a PHP site with Docker
 date: 2019-01-15
-#categories: [docker]
-#tags: [php]
-#toc: true
+tags: [docker,php]
 ---
 
 Today I am going to quickly cover getting a php script up and running in Docker. In case you are unfamiliar with Docker:

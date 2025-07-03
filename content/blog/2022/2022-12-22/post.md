@@ -1,9 +1,7 @@
 ---
 title: 'Docsify for your projects'
 date: 2022-12-22
-#categories: []
-#tags: []
-#toc: true
+tags: [docsify]
 ---
 
 This post is a starter post for `docsify` and it's usage - this is a work in progress and will be updated periodically when I stumble upon anything that I find interesting.

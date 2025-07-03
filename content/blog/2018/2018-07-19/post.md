@@ -1,9 +1,7 @@
 ---
 title: Home Assistant From Scratch - Presence Detection
 date: 2018-07-19
-#categories: [home assistant]
-#tags: []
-#toc: true
+tags: [home assistant]
 ---
 
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.

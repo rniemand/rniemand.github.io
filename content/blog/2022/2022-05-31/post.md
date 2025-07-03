@@ -1,9 +1,7 @@
 ---
 title: SonarQube and Github Actions
 date: 2022-05-31
-#categories: [ci-cd]
-#tags: [sonarqube,github]
-#toc: true
+tags: [ci-cd,sonarqube,github]
 ---
 
 Today I will be covering my [SonarQube](https://www.sonarqube.org/) & [Github Actions](https://github.com/features/actions) integration that I use for the majority of my builds at home.

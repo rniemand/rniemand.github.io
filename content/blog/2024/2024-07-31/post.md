@@ -1,10 +1,7 @@
----js
-const title = "Using Certificates with ASP.Net Core under Docker";
-const date = "2024-07-31";
-const draft = false;
-// categories: [docker, tutorial]
-// tags: []
-// toc: true
+---
+title: Using Certificates with ASP.Net Core under Docker
+date: 2024-07-31
+tags: [blog,docker]
 ---
 
 This post serves as a quick reference guide to getting custom certificates working for a Docker based asp.net core application.

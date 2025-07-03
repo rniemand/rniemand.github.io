@@ -1,9 +1,7 @@
 ---
 title: Anet A8 - My first 3D printer
 date: 2017-08-31
-# categories: [3d printing]
-# tags: []
-# toc: true
+tags: [3d printing]
 ---
 
 About 2 months ago I finally received one of my biggest packages from China to date, that was an [Anet A8 3D printer](https://www.banggood.com/Anet-A8-DIY-3D-Printer-Kit-1_75mm-or-0_4mm-Support-ABS-or-PLA-or-HIPS-p-1130694.html?imageAb=2&akmClientCountry=CA&cur_warehouse=CN) from [BangGood](https://www.banggood.com/) for around $239.99including shipping. I had a small issue with customs over the price of the printer / import duties which added about 3 additional weeks onto the shipping time.

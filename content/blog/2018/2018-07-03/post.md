@@ -1,9 +1,7 @@
 ---
 title: Home Assistant From Scratch - Speedtest.net
 date: 2018-07-03
-#categories: [home assistant]
-#tags: []
-#toc: true
+tags: [home assistant]
 ---
 
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.

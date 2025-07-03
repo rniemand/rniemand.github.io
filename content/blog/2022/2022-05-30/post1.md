@@ -1,9 +1,7 @@
 ---
 title: 'HASS On Unraid: DNS'
 date: 2022-05-30
-#categories: [home assistant]
-#tags: [unraid,dns]
-#toc: true
+tags: [home assistant,unraid,dns]
 ---
 
 > This post is [part of a series](https://www.richardn.ca/series/#unraid-containers-2022) covering running various containers on [Unraid](https://unraid.net/).

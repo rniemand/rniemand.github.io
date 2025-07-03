@@ -1,9 +1,7 @@
 ---
 title: Home Assistant From Scratch - Weather and System Monitoring
 date: 2018-07-25
-#categories: [home assistant]
-#tags: []
-#toc: true
+tags: [home assistant]
 ---
 
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.

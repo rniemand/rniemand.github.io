@@ -1,9 +1,7 @@
 ---
 title: Pong (or my first attempt at JS game development)
 date: 2016-07-29
-# categories: [game development]
-# tags: [javascript,pong]
-# toc: true
+tags: [javascript]
 ---
 Ever since I was a little boy, I have always been fascinated with computer games and the way they work. How someone could wield a bunch of `0s` and `1s` into some of the games that shaped my childhood. I could never grasp how `3D rendering engines` worked (and admittedly still can't), and how the garbled text when opening the games files in `notepad` did this sorcery (I was young and had no clue about compilers etc.).
 

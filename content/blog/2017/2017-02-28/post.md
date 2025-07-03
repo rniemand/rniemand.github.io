@@ -1,9 +1,7 @@
 ---
 title: Arduino Data Type Usage Examples
 date: 2017-02-28
-# categories: [cheat sheets]
-# tags: [arduino]
-# toc: true
+tags: [arduino]
 ---
 This is a quick reference page based on the [Official Arduino Reference Guide](https://www.arduino.cc/) aimed at giving useful data type usage examples.
 

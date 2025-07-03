@@ -1,9 +1,7 @@
 ---
 title: 'Legacy Blog Posts (2011)'
 date: 2022-07-18
-#categories: []
-#tags: []
-#toc: true
+tags: [blog]
 ---
 
 This is a collection of all my old blog posts from 2011 with links to the exported `.pdf` versions of each post - most (if not all of them) are probably out of date by now, howerver I found it interesting to look back at some of my older entires.

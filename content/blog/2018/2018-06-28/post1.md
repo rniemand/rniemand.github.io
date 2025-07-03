@@ -1,9 +1,7 @@
 ---
 title: Home Assistant From Scratch - Setting Up Plex
 date: 2018-06-28
-#categories: [home assistant]
-#tags: [plex]
-#toc: true
+tags: [home assistant,plex]
 ---
 
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.

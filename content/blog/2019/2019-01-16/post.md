@@ -1,9 +1,7 @@
 ---
 title: Over the top Door Monitoring (RF, Node-RED and HASS)
 date: 2019-01-16
-#categories: [home assistant]
-#tags: [project,node-red,mqtt,mosquitto]
-#toc: true
+tags: [home assistant,project,node-red,mqtt,mosquitto]
 ---
 
 I work out of the basement at home and often don't hear when my wife gets back from work or my daughter gets back from school. I wanted a way to be notified when either the front door (or back door in this case) gets opened so I can head upstairs and greet them.

@@ -1,9 +1,7 @@
 ---
 title: Home Assistant Missing Dependencies (Windows)
 date: 2017-09-11
-#categories: [home assistant]
-#tags: [windows]
-#toc: true
+tags: [home assistant,windows]
 ---
 
 I have been watching a lot of videos about home automation lately and found that [Home Assistant](https://www.home-assistant.io/) (`HASS`) seems to be the most popular choice when it comes to consolidating all of your IoT enabled devices. Hass offers a clean, powerful and easy to use interface that displays all of your nodes / sensory data through a consistent, mobile friendly viewport with support for over 800 unique inputs into the system.

@@ -1,9 +1,7 @@
 ---
 title: NodeRED on DietPi
 date: 2018-03-15
-#categories: [iot]
-#tags: [node-red,dietpi]
-#toc: true
+tags: [iot,node-red,dietpi]
 ---
 
 Today I set out to get Node-RED up and running on a [NanoPi NEO2](https://wiki.friendlyarm.com/wiki/index.php/NanoPi_NEO2) to help automate some simple tasks in my home automation setup.

@@ -1,9 +1,7 @@
 ---
 title: Pong - Update 2
 date: 2016-08-02
-# categories: [game development]
-# tags: [javascript,pong]
-# toc: true
+tags: [javascript]
 ---
 
 Following on from my [last post](https://www.richardn.ca/posts/Pong/) I have made some minor tweaks to my pong game, and have addressed some of the issues that I picked up during the first phase of development, namely:

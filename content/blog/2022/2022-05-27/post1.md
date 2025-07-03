@@ -1,9 +1,7 @@
 ---
 title: 'HASS On Unraid: Installation'
 date: 2022-05-27
-#categories: [home assistant]
-#tags: [unraid]
-#toc: true
+tags: [home assistant,unraid]
 ---
 
 > This post is [part of a series](https://www.richardn.ca/series/#unraid-containers-2022) covering running various containers on [Unraid](https://unraid.net/).

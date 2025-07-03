@@ -1,9 +1,7 @@
 ---
 title: Wondrous OctoPrint & My OrangePi Lite
 date: 2017-09-14
-#categories: [3d printing]
-#tags: [octoprint]
-#toc: true
+tags: [3d printing,octoprint]
 ---
 
 Recently I bought [my first 3D printer](https://www.richardn.ca/posts/AnetA8MyFirst3DPrinter/) and could not be happier with it, or at least that's what I thought... While watching some YouTube videos around 3D printing I stumbled upon an amazing project called [OctoPrint](https://octoprint.org/) which blew my mind. OctoPrint's tagline is "The snappy web interface for your 3D printer", and boy does it live up to that statement!

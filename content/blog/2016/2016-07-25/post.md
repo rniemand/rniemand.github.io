@@ -1,9 +1,7 @@
 ---
 title: Singleton Pattern in TypeScript
 date: 2016-07-25
-# categories: [patterns]
-# tags: [typescript,singleton]
-# toc: true
+tags: [typescript]
 ---
 
 Below is an awesome singleton pattern implementation I found deep in the bowels of [StackOverflow](https://stackoverflow.com/) using [TypeScript](https://www.typescriptlang.org/) (adapted from my favourite `C#` implementation).

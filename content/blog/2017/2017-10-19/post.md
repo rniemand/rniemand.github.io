@@ -1,9 +1,7 @@
 ---
 title: Monitoring a Door with Home Assistant
 date: 2017-10-19
-#categories: [home assistant]
-#tags: [project]
-#toc: true
+tags: [home assistant,project]
 ---
 
 Today I would like to cover setting up alerts through Home Assistant when my kitchen door is opened. In the future this will be used with the built in presence detection offered by [Home Assistant](https://www.home-assistant.io/) to only allow these alerts through when I am not at home, or it's late at night. For now however, I am going to start off with the simplest part (the sensor and alerting).

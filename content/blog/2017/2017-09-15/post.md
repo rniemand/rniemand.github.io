@@ -1,9 +1,7 @@
 ---
 title: Monitoring Host System with Home Assistant
 date: 2017-09-15
-#categories: [home assistant]
-#tags: []
-#toc: true
+tags: [home assistant]
 ---
 
 Today I am going to be covering the [system monitor sensor](https://www.home-assistant.io/integrations/systemmonitor/) for Home Assistant, specifically how to use it to monitor the underlying host computer (or system). This component exposes CPU, disk, memory and network values to Home Assistant for monitoring and alerting.

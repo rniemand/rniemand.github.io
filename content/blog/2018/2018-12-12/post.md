@@ -1,9 +1,7 @@
 ---
 title: Installing OctoPrint on Armbian from Source
 date: 2018-12-12
-#categories: [3d printing]
-#tags: [octoprint,dietpi]
-#toc: true
+tags: [3d printing,octoprint,dietpi]
 ---
 
 In this post I will cover the setup and configuration of OctoPrint from scratch. I will cover everything from installing OctoPrint to getting a webcam up and running. This post is a bit longer than my normal ones but I need to cover a lot of ground here. This is a collection of commands from various sources online, I have credited the original authors in each section.

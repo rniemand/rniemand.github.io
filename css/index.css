@@ -13,3 +13,7 @@ div.main-content {
 .blog-list a {
 	text-decoration: none;
 }
+
+.post-meta .post-date time {
+	color: #52a0d7;
+}

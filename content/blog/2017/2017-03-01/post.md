@@ -1,9 +1,7 @@
 ---
 title: Arduino + Nokia 5110 Screen
 date: 2017-03-01
-# categories: [arduino]
-# tags: []
-# toc: true
+tags: [arduino]
 ---
 Today my goal is to get up and running with a **Nokia 5110 LCD module** and as little `Arduino` code as possible. The `Nokia 5110 LCD` module is a great little screen and offers a resolution of `84 x 48` pixels (that's 84 pixels across and 48 down). It's great for easily displaying data from your projects, and is widely used by hobbyists around the world (i.e. has a lot of support and is cheap).
 

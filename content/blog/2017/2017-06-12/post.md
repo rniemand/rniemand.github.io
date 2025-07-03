@@ -1,9 +1,7 @@
 ---
 title: Installing Node-RED as a Windows Service
 date: 2017-06-12
-# categories: [iot]
-# tags: [windows,node-red]
-# toc: true
+tags: [iot,windows,node-red]
 ---
 
 In this post I am going to cover installing, configuring and running Node-REDas a Windows service. [Node-RED](https://nodered.org/) is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways, and is especially useful for home automation through IoT. There is a lot to cover, so let's dive right in.

@@ -1,9 +1,7 @@
 ---
 title: 'HASS On Unraid: MariaDB'
 date: 2022-05-27
-#categories: [home assistant]
-#tags: [unraid,mariadb,mysql]
-#toc: true
+tags: [home assistant,unraid,mariadb,mysql]
 ---
 
 > This post is [part of a series](https://www.richardn.ca/series/#unraid-containers-2022) covering running various containers on [Unraid](https://unraid.net/).

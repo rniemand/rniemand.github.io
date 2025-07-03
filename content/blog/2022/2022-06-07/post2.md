@@ -1,9 +1,7 @@
 ---
 title: 'Lounge Clock (v 1.0)'
 date: 2022-06-07
-#categories: [home assistant,esphome]
-#tags: [mqtt,mosquitto,3d printing,iot,project]
-#toc: true
+tags: [home assistant,esphome,mqtt,mosquitto,3d printing,iot,project]
 ---
 
 In this post I will cover how I built my lounge clock using [ESPHome](https://esphome.io/), [Home Assistant](https://www.home-assistant.io/), [MQTT](https://www.richardn.ca/posts/InstallingMqttOnUbuntu/) and a whole lot of other technologies, I think that the end result looks pretty good for my first attempt:
