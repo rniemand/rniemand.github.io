@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Running Satisfactory Dedicated Server</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="running-satisfactory-dedicated-server">Running Satisfactory Dedicated Server</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2021-10-28">28 October 2021</time></li>
+</ul>
+
+<p>With the release of Satisfactory Update 5 comes the addition of dedicated servers, something interesting on the <a href="https://satisfactory.fandom.com/wiki/Dedicated_servers#Running_manually_within_a_Docker_container">official wiki</a> something interesting caught my eye - the ability to run the server as a Docker Container which is amazing!</p>
+<blockquote>
+<p><strong>TL;DR</strong>: you can make use of the niemandr/satisfactory-server Docker container listed below to run the server - this is updated daily
+{: .prompt-tip }</p>
+</blockquote>
+<blockquote>
+<p><strong>Sad News</strong>: this is no longer maintained by me as there is a better way to do this
+{: .prompt-warning }</p>
+</blockquote>
+<p>At home I am running an old <code>HP DL180G6</code> using <a href="https://unraid.net/">Unraid</a> (equipped with 24 cores, 128 GB RAM) and a handful of Docker containers. Generally this server just sits there idling, so this is a perfect candidate for running a dedicated Satisfactory Server.</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-28/post/C25GYprfHB-913.avif 913w"><source type="image/webp" srcset="/blog/2021/2021-10-28/post/C25GYprfHB-913.webp 913w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-28/post/C25GYprfHB-913.png" alt="" width="913" height="301"></picture>
+<blockquote>
+<p><strong>Note</strong>: The first spike is me testing out the server with my SO, and the second one is my nightly snapshot \ verification of my server.
+{: .prompt-info }</p>
+</blockquote>
+<p>To make things a lot easier I decided to make use of <a href="https://github.com/features/actions">Github Actions</a> to automate the build and publish the result to <a href="https://hub.docker.com/">Docker Hub</a> using the following configuration:</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">name</span><span class="token punctuation">:</span> Docker Image CI
+<span class="token key atrule">on</span><span class="token punctuation">:</span>
+  <span class="token key atrule">push</span><span class="token punctuation">:</span>
+    <span class="token key atrule">branches</span><span class="token punctuation">:</span> <span class="token punctuation">[</span> main <span class="token punctuation">]</span>
+  <span class="token key atrule">schedule</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">cron</span><span class="token punctuation">:</span> <span class="token string">"30 23 * * *"</span>
+<span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">build</span><span class="token punctuation">:</span>
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@master
+    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Publish to Registry
+      <span class="token key atrule">uses</span><span class="token punctuation">:</span> jerray/publish<span class="token punctuation">-</span>docker<span class="token punctuation">-</span>action@master
+      <span class="token key atrule">with</span><span class="token punctuation">:</span>
+        <span class="token key atrule">username</span><span class="token punctuation">:</span> $
+        <span class="token key atrule">password</span><span class="token punctuation">:</span> $
+        <span class="token key atrule">repository</span><span class="token punctuation">:</span> niemandr/satisfactory<span class="token punctuation">-</span>server</code></pre>
+<h2 id="running-the-server">Running the server</h2>
+<p>To run the server from a command line you can use:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">docker</span> run <span class="token parameter variable">-p</span> <span class="token number">15000</span>:15000/udp <span class="token parameter variable">-p</span> <span class="token number">7777</span>:7777/udp <span class="token parameter variable">-p</span> <span class="token number">15777</span>:15777/udp <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span><span class="token operator">=</span>satisfactory <span class="token parameter variable">-v</span> C:/docker-data/satisfactory:/home/steam/Satisfactory-dedicated niemandr/satisfactory-server:latest</code></pre>
+<p>This will download and start the container using <code>C:\docker-data\satisfactory</code> as a DATA folder.</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-28/post/yOjxATHj_y-772.avif 772w"><source type="image/webp" srcset="/blog/2021/2021-10-28/post/yOjxATHj_y-772.webp 772w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-28/post/yOjxATHj_y-772.png" alt="" width="772" height="111"></picture>
+<h2 id="running-on-unraid">Running on Unraid</h2>
+<p>For Unraid, the setup is a lot simpler:</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-28/post/nTIJEO9wlt-750.avif 750w"><source type="image/webp" srcset="/blog/2021/2021-10-28/post/nTIJEO9wlt-750.webp 750w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-28/post/nTIJEO9wlt-750.png" alt="" width="750" height="199"></picture>
+<ul>
+<li><strong>Name</strong>: Whatever you would like to call your server</li>
+<li><strong>Repository</strong>: Must be niemandr/satisfactory-server</li>
+<li><strong>Network Type</strong>: Bridge</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-28/post/lN5YjbifWR-959.avif 959w"><source type="image/webp" srcset="/blog/2021/2021-10-28/post/lN5YjbifWR-959.webp 959w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-28/post/lN5YjbifWR-959.png" alt="" width="959" height="300"></picture>
+<p>At the moment some ports for the server cannot be changed (see the <a href="https://satisfactory.fandom.com/wiki/Dedicated_servers#Running_manually_within_a_Docker_container">wiki</a>) so the following ports need to be exposed:</p>
+<ul>
+<li><code>15777</code> - Dedicated server port (can be changed)</li>
+<li><code>15000</code> - BeaconPort</li>
+<li><code>7777</code> - Base game port?</li>
+</ul>
+<p>If you wish to expose your server to the internet you will need to make sure that you forward all incoming UDP traffic on those ports specifically as the server does not support port-mapping at the moment.</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-28/post/c_AfgwBmU4-476.avif 476w"><source type="image/webp" srcset="/blog/2021/2021-10-28/post/c_AfgwBmU4-476.webp 476w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-28/post/c_AfgwBmU4-476.png" alt="" width="476" height="300"></picture>
+<p>Happy Pioneering</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2021/2021-10-25/post2/">Updating Pi-hole</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2023/2023-06-21/post/">Using GitHub Pages for your Personal Blog</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2021/2021-10-28/post/` was built on 2025-07-03T21:25:04.306Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>

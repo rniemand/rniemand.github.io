@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Running Home Assistant On Unraid</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		
+		<style>/* This is an arbitrary CSS string added to the bundle */
+div.main-content {
+	margin-top: 4rem;
+}
+.blog-list a {
+	text-decoration: none;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="running-home-assistant-on-unraid">Running Home Assistant On Unraid</h1>
+
+<ul class="post-metadata">
+	<li><time datetime="2021-10-25">25 October 2021</time></li>
+</ul>
+
+<p>I have been running <a href="https://www.home-assistant.io/">Home Assistant</a> for years, and absolutely love it. By far the easiest way to run Home Assistant is using the official <a href="https://www.home-assistant.io/installation/linux">Home Assistant Operating System</a>, specifically the <code>.qcow2</code> image paired with my local <a href="https://unraid.net/">Unraid</a> server.</p>
+<p>As there are literally thousands of posts out there covering the deployment of Home Assistant online, this post is more of a quick reference for those people who want to get up and running quickly, let's dive in:</p>
+<h2 id="grab-the-latest-image">Grab the latest image</h2>
+<p>First we will need to grab the latest build of <a href="https://www.home-assistant.io/installation/linux">Home Assistant Operating System</a>.</p>
+<p>We are interested in the <code>.qcow2</code> image as stated above.</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post/TJLGU8GecB-457.avif 457w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post/TJLGU8GecB-457.webp 457w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post/TJLGU8GecB-457.png" alt="" width="457" height="126"></picture>
+<p>You will need to upload the image to your Unraid's domains domain folder (or wherever you store your VM images).</p>
+<h2 id="vm-setup">VM Setup</h2>
+<p>Once you have the image downloaded, head over to the VMS tab in Unraid and create a new Linux VM with the following configuration.</p>
+<ul>
+<li><strong>Name</strong>: HomeAssistant</li>
+<li><strong>Memory</strong>: 2GB (or more)</li>
+<li><strong>CPU(s)</strong>: Assign an amount that makes sense to you (I am using 4)</li>
+<li><strong>Machine</strong>: Q35-5.1 (or whatever is latest)</li>
+<li><strong>BIOS</strong>: OVFM</li>
+<li><strong>Primary vDisk</strong>: <code>/mnt/user/domains/homeassistant/hassosova-5.13.qcow2</code></li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post/aGV_vO4c9z-816.avif 816w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post/aGV_vO4c9z-816.webp 816w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post/aGV_vO4c9z-816.png" alt="" width="816" height="124"></picture>
+<ul>
+<li><strong>Network MAC</strong>: Anything that you want (I just used the suggested value)</li>
+<li><strong>USB Devices</strong>: Here you can select any USB devices you wish to pass through to Home Assistant</li>
+</ul>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post/9wmjgByjZR-781.avif 781w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post/9wmjgByjZR-781.webp 781w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post/9wmjgByjZR-781.png" alt="" width="781" height="156"></picture>
+<p>That covers all the configuration needed for the VM.</p>
+<blockquote>
+<p><strong>Note</strong>: don't start the VM yet - we still need to do some additional configuration on our router first!
+{: .prompt-warning }</p>
+</blockquote>
+<h2 id="router-configuration">Router Configuration</h2>
+<p>To make things easy, I would suggest setting a static IP address for Home Assistant on your router - again this can vary a LOT depending on the make and model of your router. Ideally we are wanting to get the following configured:</p>
+<ul>
+<li><strong>Static IP Address</strong> - this will ensure that we can always access Home Assistant on a known IP Address</li>
+<li><strong>Port Forwarding</strong> - (optional) Allow external access to Home Assistant from the outside world - super useful if you are running presence detection</li>
+</ul>
+<p>For my router I assigned <code>192.168.0.100</code> to Home Assistant as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post/0W3SLp9BHi-521.avif 521w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post/0W3SLp9BHi-521.webp 521w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post/0W3SLp9BHi-521.png" alt="" width="521" height="374"></picture>
+<p>Additionally I have re-mapped the default port <code>8123</code> to <code>443</code> (https) and forwarded all incoming TCP traffic to my Home Assistant server as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post/8x8RgmNhXC-527.avif 527w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post/8x8RgmNhXC-527.webp 527w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post/8x8RgmNhXC-527.png" alt="" width="527" height="331"></picture>
+<blockquote>
+<p><strong>Note</strong>: You don't need to change the default port, I am making use of some integrations that require Home Assistant to be running on 443.
+{: .prompt-info }</p>
+</blockquote>
+<h2 id="pi-hole-dhcp-dns-configuration-optional">Pi-hole / DHCP / DNS Configuration (Optional)</h2>
+<p>I run <a href="https://pi-hole.net/">Pi-hole</a> locally to block adverts on my internal network, along with this I am using Pi-hole as a DHCP server so I need to ensure that I add a reservation for Home Assistant (based on the VMS MAC Address) as shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post/2SMxPD1hh2-616.avif 616w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post/2SMxPD1hh2-616.webp 616w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post/2SMxPD1hh2-616.png" alt="" width="616" height="150"></picture>
+<p>Adding this reservation will ensure that my VM is assigned the correct IP Address when it first boots.</p>
+<p>Additionally I need to add a DNS record for my external Home Assistant URL to make client configuration easier (this may not be required on your end). Basically this allows me to use the same URL for Home Assistant for all my devices regardless of what network they are connected to:</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post/SqtWBm1uPU-557.avif 557w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post/SqtWBm1uPU-557.webp 557w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post/SqtWBm1uPU-557.png" alt="" width="557" height="177"></picture>
+<p>That covers the optional DNS / DHCP configuration.</p>
+<h2 id="onboarding">Onboarding</h2>
+<p>It's that simple, your next step is to start the VM and configure your new Home Assistant server.</p>
+<p>It may take some time for the VM to complete its initial boot (as there are a lot of once off scripts \ configuration that need to run), you can make use of the VNC Remote utility to see exactly where you are in the initial boot process should the need arise.</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post/xBgQ0rJQiK-198.avif 198w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post/xBgQ0rJQiK-198.webp 198w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post/xBgQ0rJQiK-198.png" alt="" width="198" height="91"></picture>
+<p>Once everything is completed the VM should default to the following screen.</p>
+<picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post/50jrChXmA--832.avif 832w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post/50jrChXmA--832.webp 832w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post/50jrChXmA--832.png" alt="" width="832" height="223"></picture>
+<p>Happy hacking!</p>
+
+<ul class="links-nextprev"><li class="links-nextprev-prev">← Previous<br> <a href="/blog/2019/2019-11-04/post/">Installing MQTT on Ubuntu</a></li><li class="links-nextprev-next">Next →<br><a href="/blog/2021/2021-10-25/post2/">Updating Pi-hole</a></li>
+</ul>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2021/2021-10-25/post/` was built on 2025-07-03T21:25:04.306Z -->
+		<script type="module" src="/dist/WlufSHogYa.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
