@@ -2,6 +2,8 @@
 title: Simple Toast Messages using SvelteStrap
 date: 2023-09-21
 tags: [svelte]
+banner: blue.png
+logo: svelte.png
 ---
 
 In this post I will cover creating a simple toast message implementation for your next svelte application using [SvelteStrap](https://sveltestrap.js.org/) and a simple toast manager service written in TypeScript.

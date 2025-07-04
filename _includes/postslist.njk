@@ -1,9 +1,25 @@
-<ol class="list-group list-group-numbered blog-list mt-3 mb-4">
+<ol class="list-group blog-list mt-3 mb-4">
 	{%- for post in postslist | reverse %}
-	<li class="list-group-item d-flex justify-content-between align-items-start">
-		<div class="ms-2 me-auto">
-			<div class="fw-bold"><a href="{{ post.url }}" class="postlist-link">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a></div>
-			<time class="postlist-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("LLLL yyyy") }}</time>
+	<li class="list-group-item justify-content-between align-items-start">
+		<div class="ms-2">
+			<div class="fw-bold d-flex">
+				<div>
+					<a href="{{ post.url }}" class="postlist-link">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
+					<div>
+						<i class="bi bi-clock"></i>
+						<time class="postlist-date" datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate("LLLL yyyy") }}</time>
+					</div>
+				</div>
+				
+				<div class="p-2 flex-grow-1">&nbsp;</div>
+				{%- if post.data.logo -%}
+					<img src="{{post | postLogo}}" alt="logo" width="50" />
+				{%- endif -%}
+			</div>
+			
+			{%- if post.data.banner -%}
+				<img class="mt-1" src="{{post | postBanner}}" alt="banner" width="100%" />
+			{%- endif -%}
 		</div>
 	</li>
 	{%- endfor %}

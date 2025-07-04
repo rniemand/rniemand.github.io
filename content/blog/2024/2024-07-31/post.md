@@ -2,6 +2,9 @@
 title: Using Certificates with ASP.Net Core under Docker
 date: 2024-07-31
 tags: [blog,docker]
+text: Hello World
+banner: blue.png
+logo: docker.png
 ---
 
 This post serves as a quick reference guide to getting custom certificates working for a Docker based asp.net core application.
