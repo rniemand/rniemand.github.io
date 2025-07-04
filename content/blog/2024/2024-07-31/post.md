@@ -3,7 +3,7 @@ title: Using Certificates with ASP.Net Core under Docker
 date: 2024-07-31
 tags: [blog,docker]
 text: Hello World
-banner: blue.png
+#banner: blue.png
 logo: docker.png
 ---
 

@@ -2,7 +2,7 @@
 title: Simple Toast Messages using SvelteStrap
 date: 2023-09-21
 tags: [svelte]
-banner: blue.png
+#banner: blue.png
 logo: svelte.png
 ---
 
