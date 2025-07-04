@@ -15,12 +15,18 @@ export default function (eleventyConfig) {
 		return JSON.stringify(Object.keys(data), null, "\t")
 	});
 
-	eleventyConfig.addFilter('postBanner', (post) => {
-		return '../img/post-banners/' + post.data.banner;
+	eleventyConfig.addFilter('postBanner', (post, page) => {
+		let climbDirs = page.url.split('/').length - 1;
+		let finalPath = '';
+		for(let i=0; i<climbDirs; i++) finalPath += '../';
+		return finalPath + 'img/post-banners/' + post.data.banner;
 	});
 
-	eleventyConfig.addFilter('postLogo', (post) => {
-		return '../img/post-logos/' + post.data.logo;
+	eleventyConfig.addFilter('postLogo', (post, page) => {
+		let climbDirs = page.url.split('/').length - 1;
+		let finalPath = '';
+		for(let i=0; i<climbDirs; i++) finalPath += '../';
+		return finalPath + 'img/post-logos/' + post.data.logo;
 	});
 
 	// Get the first `n` elements of a collection.
