@@ -5,14 +5,16 @@ eleventyNavigation:
   order: 2
 pagination:
   data: collections.posts
-  size: 10
+  size: 15
   reverse: true
-  resolve: values
 ---
-<h1>Archive</h1>
+<h1>Blog Post Archive</h1>
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
+{% set postslist = pagination.items %}
+{% include "postslist.njk" %}
+
+<nav>
+  <ul class="pagination justify-content-end">
 	{%- for pageEntry in pagination.pages %}
     	<li class="page-item {% if page.url == pagination.hrefs[ loop.index0 ] %}active{% endif %}">
 			<a class="page-link" href="{{ pagination.hrefs[ loop.index0 ] }}"{% if page.url == pagination.hrefs[ loop.index0 ] %} aria-current="page"{% endif %}>{{ loop.index }}</a>
@@ -20,8 +22,3 @@ pagination:
 	{%- endfor %}
   </ul>
 </nav>
-
-{% set postslist = pagination.items %}
-{% include "postslist.njk" %}
-
-
