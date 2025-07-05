@@ -2,6 +2,7 @@
 title: Running Home Assistant On Unraid
 date: 2021-10-25
 tags: [home assistant,unraid]
+logo: hass.png
 ---
 
 I have been running [Home Assistant](https://www.home-assistant.io/) for years, and absolutely love it. By far the easiest way to run Home Assistant is using the official [Home Assistant Operating System](https://www.home-assistant.io/installation/linux), specifically the `.qcow2` image paired with my local [Unraid](https://unraid.net/) server.

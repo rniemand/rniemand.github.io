@@ -2,6 +2,7 @@
 title: Monitoring Temperature with MQTT and Home Assistant
 date: 2017-09-26
 tags: [home assistant]
+logo: hass.png
 ---
 
 Today I will be looking at collecting and presenting temperature and humidity published by a couple of `DHT11 & ESP8266` microcontrollers around the house. The code used to generate the messages will be covered at a later stage, however to get up and running quickly in your home I would suggest making use of the [ESP Easy](https://www.letscontrolit.com/wiki/index.php/Main_Page) project as it's really simple to get up and running with.

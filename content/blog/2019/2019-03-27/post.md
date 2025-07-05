@@ -2,6 +2,7 @@
 title: Installing Telegraf on DietPi / ARM (Revised)
 date: 2019-03-27
 tags: [monitoring,dietpi,telegraf]
+logo: telegraf.png
 ---
 
 Today I would like to cover getting up and running with [Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) on my SBC computers, namely most arm/arm64 based Debian distros.

@@ -2,6 +2,7 @@
 title: Alert Maker Revival
 date: 2018-06-19
 tags: [.net]
+logo: dotnet.png
 ---
 
 While migrating some of my blog posts over from my old blog to this one I stumbled upon a program I wrote in 2011 when I started learning C# (to give you an idea of the age of this guy, it was written in .net 2.0!).

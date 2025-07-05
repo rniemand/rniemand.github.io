@@ -2,6 +2,7 @@
 title: Arduino Board Pinouts
 date: 2017-04-05
 tags: [arduino]
+logo: arduino.png
 ---
 
 ## ESP8266

@@ -2,6 +2,7 @@
 title: Monitoring Phone Battery with OwnTracks & Home Assistant
 date: 2017-09-18
 tags: [home assistant]
+logo: hass.png
 ---
 
 Following on from a [previous post](https://www.richardn.ca/posts/MonitoringHostSystemWithHass/) I would like to extend the functionality of [Home Assistant](https://www.home-assistant.io/) using the [OwnTracks](https://www.home-assistant.io/integrations/owntracks/) plugin to get an idea of how full my phone battery is. This information could be used to send an alert to you should your battery drop too low and you are at home, or let you know that your spouse's battery is low when they are out and about (the only limit here is your imagination).

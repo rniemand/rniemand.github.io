@@ -2,6 +2,7 @@
 title: Home Assistant From Scratch - MQTT
 date: 2018-07-16
 tags: [home assistant,mqtt,mosquitto]
+logo: hass.png
 ---
 
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.

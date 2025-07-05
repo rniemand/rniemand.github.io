@@ -2,6 +2,7 @@
 title: Monitoring Internet Speed with Home Assistant
 date: 2017-09-14
 tags: [home assistant]
+logo: hass.png
 ---
 
 Continuing with my series around home automation using [Home Assistant](https://www.home-assistant.io/) I would like to cover the `speedtest` sensor component. As the name suggests this component makes use of [speedtest.net](https://www.speedtest.net/) to periodically test your server's internet connection and graphs the results for you to keep an eye on.

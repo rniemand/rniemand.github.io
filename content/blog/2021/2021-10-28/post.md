@@ -2,6 +2,7 @@
 title: Running Satisfactory Dedicated Server
 date: 2021-10-28
 tags: [gaming,docker,satisfactory]
+logo: satisfactory.png
 ---
 
 With the release of Satisfactory Update 5 comes the addition of dedicated servers, something interesting on the [official wiki](https://satisfactory.fandom.com/wiki/Dedicated_servers#Running_manually_within_a_Docker_container) something interesting caught my eye - the ability to run the server as a Docker Container which is amazing!

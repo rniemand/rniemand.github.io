@@ -2,6 +2,7 @@
 title: OctoPrint MQTT Events (with samples)
 date: 2017-08-30
 tags: [3d printing,octoprint]
+logo: octoprint.png
 ---
 
 Below you will find a list of all the MQTT events published by the [MQTT OctoPrint plugin](https://plugins.octoprint.org/plugins/mqtt/). I made use of my `MQTT-Dumper` application I created in [my previous post](https://www.richardn.ca/posts/MQTTDumperAlpha/) to do this, and have taken the time to format some of the responses.

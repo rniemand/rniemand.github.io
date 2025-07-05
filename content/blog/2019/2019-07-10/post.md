@@ -2,6 +2,7 @@
 title: Backing up MariaDB (MySQL) via CRON
 date: 2019-07-10
 tags: [database,ubuntu,mysql,mariadb]
+logo: mariadb.png
 ---
 
 > **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!

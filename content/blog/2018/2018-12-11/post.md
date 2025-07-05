@@ -2,6 +2,7 @@
 title: Automating .Net Core 2.x App NuGet Deployment with AppVeyor
 date: 2018-12-11
 tags: [ci-cd,appveyor]
+logo: appveyor.png
 ---
 
 In this post I am going to cover getting one of my `.net core` projects built in [AppVeyor](https://www.appveyor.com/) and automatically publishing to NuGet on a successful build.

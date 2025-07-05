@@ -17,3 +17,38 @@ https://github.com/11ty/eleventy-base-blog
 Configuration
     https://www.11ty.dev/docs/data-configuration/
 
+Logos
+    logo: 3dprinter.png
+    logo: appveyor.png
+    logo: arduino.png
+    logo: blog.png
+    logo: chronograf.png
+    logo: docsify.png
+    logo: dotnet.png
+    logo: esp8266.png
+    logo: esphome.png
+    logo: git.png
+    logo: github.png
+    logo: grafana.png
+    logo: hass.png
+    logo: influxdb.png
+    logo: javascript.png
+    logo: mariadb.png
+    logo: mysql.png
+    logo: mqtt.png
+    logo: node-red.png
+    logo: octoprint.png
+    logo: php.png
+    logo: pihole.png
+    logo: portainer.png
+    logo: rabbitmq.png
+    logo: satisfactory.png
+    logo: sonarqube.png
+    logo: sonoff.png
+    logo: server.png
+    logo: svelte.png
+    logo: tasmota.png
+    logo: telegraf.png
+    logo: typescript.png
+    logo: ubuntu.png
+    logo: webmin.png

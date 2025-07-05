@@ -2,6 +2,7 @@
 title: 'Flashing Tasmota on Sonoff (Revised)'
 date: 2018-03-22
 tags: [arduino,flashing,tasmota]
+logo: tasmota.png
 ---
 
 This post is an update to my previous "[Changing Sonoff Firmware (Visual Guide)](https://www.richardn.ca/posts/ChangingSonoffFirmwareVisualGuide/)", and is based on the following [Youtube video](https://www.youtube.com/watch?v=c2IUIUnxjUY&list=PLsc3WxZ0b5g2Y9AoWrJTPKy7-Q0GZAhIH&index=2) which makes use of a much simpler flashing method.

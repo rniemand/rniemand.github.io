@@ -2,6 +2,7 @@
 title: Powering your Arduino Projects
 date: 2017-04-26
 tags: [arduino]
+logo: arduino.png
 ---
 This is a complimentary post for my [Arduino digital clock project](https://www.richardn.ca/posts/ProMiniDigitalClockUsingDS3231/), and aims to provide some insight into powering your Arduino projects once they have left the prototyping stage. I am by no means an expert when it comes to this subject, in fact, I am still learning myself. I decided to jot down my findings from various posts online in hopes that others may find it useful.
 

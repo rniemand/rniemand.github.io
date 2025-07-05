@@ -2,6 +2,7 @@
 title: 'Installing Mosquitto on (DietPi / Raspbian / Debian)'
 date: 2018-01-08
 tags: [iot,mqtt,mosquitto,dietpi]
+logo: mqtt.png
 ---
 
 At the end of December last year my family and I immigrated to Canada (from South Africa) for a fresh start and to allow my wife to be closer to her family. We decided to only bring the essentials with us to make things easier and to reduce the cost of the immigration. Now that we are starting to find our feet I have decided to pick up where I left off with my endeavours into home automation and to start setting up [Home Assistant](https://www.home-assistant.io/) again, starting with my MQTT Broker of choice - [Mosquitto](https://mosquitto.org/).

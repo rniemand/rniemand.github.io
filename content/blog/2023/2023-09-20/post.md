@@ -2,6 +2,7 @@
 title: SonarQube in Docker
 date: 2023-09-20
 tags: [docker, sonarqube]
+logo: sonarqube.png
 ---
 
 In this post I will cover the basics of getting SonarQube running in a Docker container and walk you through setting up a simple ci-cd script to build and analyse a .net core project.

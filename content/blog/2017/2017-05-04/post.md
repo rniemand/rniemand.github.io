@@ -2,6 +2,7 @@
 title: Serial Tester (Arduino Tool)
 date: 2017-05-04
 tags: [.net]
+logo: dotnet.png
 ---
 
 Inspired by a [youtube video](https://www.youtube.com/watch?v=J5vQFLjXk2I) I wanted to start communicating with my Arduino via a serial connection from my computer. Having a connection from my `computer` -> `Arduino` opens up a whole lot of new and exciting projects (e.g. external CPU / Memory display ...).

@@ -2,6 +2,7 @@
 title: Upgrading Home Assistant on DietPi
 date: 2018-02-15
 tags: [home assistant,dietpi]
+logo: hass.png
 ---
 
 This is a quick post on how to update [Home Assistant](https://www.home-assistant.io/) running on [DietPi](https://dietpi.com/) or any other `Debian` build of Linux (e.g. `Raspbian`).

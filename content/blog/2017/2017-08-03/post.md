@@ -2,6 +2,7 @@
 title: Changing Sonoff Firmware (Visual Guide)
 date: 2017-08-03
 tags: [arduino,sonoff]
+logo: sonoff.png
 ---
 
 About a year ago I discovered [Sonoff WiFi switches](https://sonoff.tech/product/diy-smart-switch/basicr2/) on [AliExpress](https://www.aliexpress.com/) and was able to pick up a couple of them for $10. These devices are basically IoT connected smart switches that you can control via your smartphone, or their website, and for the most part work pretty well right out of the box for most consumers. Until recently I was more than happy to use them "as is" with the shipped firmware and mobile application, and it was only when I wanted to integrate these switches into my home automation did I find the shipped firmware and software quite limiting.

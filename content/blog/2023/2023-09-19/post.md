@@ -2,6 +2,7 @@
 title: Svelte Tips and Tricks
 date: 2023-09-19
 tags: [svelte]
+logo: svelte.png
 ---
 
 ## Vite Related Tips

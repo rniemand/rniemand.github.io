@@ -2,6 +2,7 @@
 title: 'Arduino Basics: LDR'
 date: 2017-10-30
 tags: [arduino]
+logo: arduino.png
 ---
 
 This is the first (in the hopes of many) Arduino Basics posts that I am planning to do. My goal today is to read the value from a [LDR](https://en.wikipedia.org/wiki/Photoresistor) and display its current value on the Arduino Serial Monitor.

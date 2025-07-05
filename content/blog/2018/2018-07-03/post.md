@@ -2,6 +2,7 @@
 title: Home Assistant From Scratch - Speedtest.net
 date: 2018-07-03
 tags: [home assistant]
+logo: hass.png
 ---
 
 > This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.

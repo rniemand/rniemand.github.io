@@ -2,6 +2,7 @@
 title: 'Home Assistant + ESP Easy + DHT11 = :)'
 date: 2017-12-10
 tags: [home assistant,espeasy]
+logo: hass.png
 ---
 
 Today I would like to look into an awesome project called [ESPEasy](https://www.letscontrolit.com/wiki/index.php/ESPEasy) and how one may use it to publish temperature data collected via a `DHT11` or similar module.

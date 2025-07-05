@@ -2,6 +2,7 @@
 title: MQTT Dumper (Alpha)
 date: 2017-08-29
 tags: [.net]
+logo: dotnet.png
 ---
 
 **MQTT Dumper** is a simple utility (well, `console application` at the moment) that I put together in about an hour to help me spy on the communication of all my IoT devices at home. Currently the utility has the below features:

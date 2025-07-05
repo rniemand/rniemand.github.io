@@ -2,6 +2,7 @@
 title: Arduino Cheat Sheet
 date: 2017-02-27
 tags: [arduino]
+logo: arduino.png
 ---
 The majority of content found on this cheat sheet comes from the [official Arduino documentation](https://www.arduino.cc/), if you find that something is lacking please comment and I will update this post accordingly.
 

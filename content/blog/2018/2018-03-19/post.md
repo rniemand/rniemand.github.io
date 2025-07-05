@@ -2,6 +2,7 @@
 title: Setting up ESP8266 on Arduino
 date: 2018-03-19
 tags: [arduino,esp8266]
+logo: esp8266.png
 ---
 
 This is a quick reference post to get you up and running with an ESP8266 / ESP32using the Arduino IDE.

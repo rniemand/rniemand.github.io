@@ -2,6 +2,7 @@
 title: Tracking User Presence (HASS and OwnTracks)
 date: 2017-09-13
 tags: [home assistant]
+logo: hass.png
 ---
 
 [Home Assistant](https://www.home-assistant.io/) (`Hass`) is hands down one of the best home automation frameworks (HUBS) I have used, and offers support for over 800 devices with that number growing almost on a daily basis. It not only presents all your collected device data into a single portal, but offers a lot of automation through their scripting & templating engine. After spending about a week diving into the features of Home Assistant I decided to tear everything down and start from scratch documenting my journey in order to help others get started with it.

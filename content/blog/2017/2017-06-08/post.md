@@ -2,6 +2,7 @@
 title: Running Mosquitto as a Windows Service
 date: 2017-06-08
 tags: [iot,windows,mqtt]
+logo: mqtt.png
 ---
 
 In [my last post](https://www.richardn.ca/posts/MosquittoOnWindows/) I ran over the required steps to get `mosquitto` up and running on a Windows environment. Now somewhere during my initial install I managed to break the Mosquitto Broker service that was installed by default, and ended up removing it using an elevated command window and the `SC delete NAME` command.

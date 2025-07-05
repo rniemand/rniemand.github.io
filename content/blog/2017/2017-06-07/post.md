@@ -2,6 +2,7 @@
 title: Mosquitto on Windows
 date: 2017-06-07
 tags: [iot,windows,mqtt]
+logo: mqtt.png
 ---
 
 After discovering the joys and simplicity of using **MQTT** on IoT enabled devices such as an NodeMCU ESP8266 I decided I wanted to host my own local (and with the right configuration public) instance of [mosquitto](https://mosquitto.org/download/) for my devices to make use of. This post covers the basics of getting everything up and running on a Windows environment.

@@ -2,6 +2,7 @@
 title: 'HASS On Unraid: ESPHome - Zigbee - Z-Wave'
 date: 2022-06-07
 tags: [home assistant,esphome,zigbee,zwave]
+logo: hass.png
 ---
 
 Today I will be covering installing some must-have Add-ons when working with IoT devices at home, namely:

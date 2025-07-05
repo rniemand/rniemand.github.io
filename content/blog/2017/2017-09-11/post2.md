@@ -2,6 +2,7 @@
 title: Running Home Assistant as a Windows Service
 date: 2017-09-11
 tags: [windows,home assistant]
+logo: hass.png
 ---
 
 In this post I will cover some simple steps on how to get [Home Assistant](https://www.home-assistant.io/) as a service on windows. I will be making use of a nifty utility called [nssm](https://nssm.cc/) (the `Non-Sucking Service Manager`) which lives up to its name. Before you begin you will need to have the following prerequisites met:

@@ -2,6 +2,7 @@
 title: Collecting Sonoff Pow data in Home Assistant
 date: 2019-04-02
 tags: [home assistant,mqtt,mosquitto]
+logo: sonoff.png
 ---
 
 This post covers the process of collecting performance data from most Sonoff devices, in this instance I will be working with my Sonoff Pow R2.

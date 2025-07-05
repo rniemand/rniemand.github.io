@@ -2,6 +2,7 @@
 title: MySQL and Home Assistant
 date: 2018-02-16
 tags: [home assistant,mysql,mariadb]
+logo: hass.png
 ---
 
 To get the best performance out of [Home Assistant](https://www.home-assistant.io/) I always like to make use of [MySQL](https://www.mysql.com/) as a data store hosted on another computer / device (connected via LAN). Previously I was running my entire Home Assistant setup on a Windows server, but since I moved to Canada I have made the jump to running it on an Orange Pi One and could not be happier.

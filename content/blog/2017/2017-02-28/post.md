@@ -2,6 +2,7 @@
 title: Arduino Data Type Usage Examples
 date: 2017-02-28
 tags: [arduino]
+logo: arduino.png
 ---
 This is a quick reference page based on the [Official Arduino Reference Guide](https://www.arduino.cc/) aimed at giving useful data type usage examples.
 
