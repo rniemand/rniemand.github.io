@@ -8,9 +8,15 @@ pagination:
   size: 10
   reverse: true
 ---
+<h1>RichardN</h1>
+
+<p>Welcome to my blog, I am in the process of porting it over to <a href="https://www.11ty.dev/" target="_blank">11ty</a>, so things may be broken for a while.</p>
+<p>Everything should be up and running in the next couple of weeks or so, time permitting.</p>
+<p>Feel free to browse around.</p>
+
 {% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(5) %}
-<h1>Latest {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h1>
+<h2>Latest {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h2>
 
 {% set postslist = collections.posts | head(-1 * 5) %}
 {% set postslistCounter = postsCount %}
