@@ -2,7 +2,7 @@
 title: Remote Access Home
 date: 2015-06-17
 tags: [dns,networking]
-logo: wifi.png
+logo: homelab.png
 ---
 
 ## Understanding DNS
