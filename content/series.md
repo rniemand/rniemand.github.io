@@ -6,6 +6,7 @@ eleventyNavigation:
 ---
 
 # Series
+Below is a collection of some of my posts that follow a serial manner.
 
 ## Home Assistant
 

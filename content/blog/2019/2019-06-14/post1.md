@@ -5,7 +5,7 @@ tags: [monitoring,ubuntu,influxdb]
 logo: influxdb.png
 ---
 
-> **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+> **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
 {: .prompt-tip }
 
 This is a brief guide to get [InfluxDB](https://www.influxdata.com/products/influxdb-overview/) up and running on Ubuntu Server, you can refer to the [official documentation](https://docs.influxdata.com/influxdb/v1.7/introduction/installation/) should you run into any issues.

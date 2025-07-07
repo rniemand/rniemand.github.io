@@ -23,7 +23,7 @@ Next up I designed a simple enclosure for a buck converter and an [ESP8266 D1 Mi
 Because of the small footprint of the box it can easily be placed anywhere (and secured with double sided tape or presstic). Powering the device is as simple as plugging in a 5v mini USB cable into the hole added to the side of the case.
 
 ## Code & Hardware Setup
-In one of my [previous posts](https://www.richardn.ca/posts/MonitoringMyGateWithHassForUnder5/) I created a [simple arduino sketch](https://github.com/rniemand/code-samples/tree/main/blog-posts/2017/Gate%20Alarm) to monitor our main gate, and with some minor tweaks to the code it will work perfectly for our application. You can grab the Arduino sketch [from here](https://github.com/rniemand/code-samples/tree/main/blog-posts/2017/Gate%20Alarm), and follow the below instructions to get it up and running on your Home Automation setup.
+In one of my [previous posts](/blog/2017/2017-09-19/post/) I created a [simple arduino sketch](https://github.com/rniemand/code-samples/tree/main/blog-posts/2017/Gate%20Alarm) to monitor our main gate, and with some minor tweaks to the code it will work perfectly for our application. You can grab the Arduino sketch [from here](https://github.com/rniemand/code-samples/tree/main/blog-posts/2017/Gate%20Alarm), and follow the below instructions to get it up and running on your Home Automation setup.
 
 The only real changes required to the sketch is configuring the WiFi and MQTT Broker settings, this can be done by changing the values highlighted below in the sketch. In addition to the connection options you may want to play around with the DEBUG and REEDSW_PIN values to track down any issues you may run into with the sketch on your home network.
 

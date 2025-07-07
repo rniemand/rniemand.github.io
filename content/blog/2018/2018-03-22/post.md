@@ -5,7 +5,7 @@ tags: [arduino,flashing,tasmota]
 logo: tasmota.png
 ---
 
-This post is an update to my previous "[Changing Sonoff Firmware (Visual Guide)](https://www.richardn.ca/posts/ChangingSonoffFirmwareVisualGuide/)", and is based on the following [Youtube video](https://www.youtube.com/watch?v=c2IUIUnxjUY&list=PLsc3WxZ0b5g2Y9AoWrJTPKy7-Q0GZAhIH&index=2) which makes use of a much simpler flashing method.
+This post is an update to my previous "[Changing Sonoff Firmware (Visual Guide)](/blog/2017/2017-08-03/post/)", and is based on the following [Youtube video](https://www.youtube.com/watch?v=c2IUIUnxjUY&list=PLsc3WxZ0b5g2Y9AoWrJTPKy7-Q0GZAhIH&index=2) which makes use of a much simpler flashing method.
 
 All credits to `Justin` from [DrZzs](https://www.youtube.com/channel/UC7G4tLa4Kt6A9e3hJ-HO8ng/featured) - keep up the good work!
 
@@ -19,7 +19,7 @@ If you are planning to follow along with this blog post, you will require the fo
 <img src="./001.jpg" alt="" />
 
 ## ESP8266 tools & Arduino
-To save on some time and to try to keep this post short, I am going to assume that you have the `ESP8266 community tools` already installed alongside your Arduino IDE, if you do not [this post](https://www.richardn.ca/posts/SettingUpEsp8266OnArduino/) will get you up and running quickly.
+To save on some time and to try to keep this post short, I am going to assume that you have the `ESP8266 community tools` already installed alongside your Arduino IDE, if you do not [this post](/blog/2018/2018-03-19/post/) will get you up and running quickly.
 
 ## Download Tasmota
 You are going to need the latest `stable` build of the Tasmota firmware, you can download it from the link below (please be sure to download the Source Code (zip) release).
@@ -34,7 +34,7 @@ Once downloaded, extract the contents of the zip file to a local folder on your 
 {: .prompt-warning }
 
 ## Configure Tasmota
-This is the section where all the magic happens, and shows how much work has been put into the actual Tasmota firmware by the developers. Unlike my [original flashing guide](https://www.richardn.ca/posts/ChangingSonoffFirmwareVisualGuide/) this method is 100 times simpler and more robust should your network become completely unreachable to your Sonoff device.
+This is the section where all the magic happens, and shows how much work has been put into the actual Tasmota firmware by the developers. Unlike my [original flashing guide](/blog/2017/2017-08-03/post/) this method is 100 times simpler and more robust should your network become completely unreachable to your Sonoff device.
 
 The only configuration change we are going to make to the Tasmota firmware is tell it to enter into `WIFI_MANAGER` mode whenever it is unable to connect to any of the configured WiFi networks, in this case the Sonoff will enter Access Point (`AP`) mode and host its own WiFi network for you to connect to and configure the device. No more hacking about configuration ever!
 

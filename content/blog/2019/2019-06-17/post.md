@@ -5,7 +5,7 @@ tags: [monitoring,ubuntu,telegraf]
 logo: telegraf.png
 ---
 
-> **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+> **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
 {: .prompt-tip }
 
 [Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) is the open source server agent to help you collect metrics from your stacks, sensors and systems. Following the steps below should get you up and running with Telegraf in no time. Should you want to dive a bit deeper into some of the features offered by Telegraf you may want to refer to the [official documentation here](https://docs.influxdata.com/telegraf/v1.11/introduction/installation/).
@@ -34,7 +34,7 @@ sudo nano /etc/telegraf/telegraf.conf
 ```
 
 ### InfluxDB (Output)
-You will need to enable at least 1 output for Telegraf, in my case (and most commonly) this would be [InfluxDB](https://www.richardn.ca/posts/InstallingInfluxDBOnUbuntu/). Search for the `[[outputs.influxdb]]` configuration section and change as needed, my configuration is shown below:
+You will need to enable at least 1 output for Telegraf, in my case (and most commonly) this would be [InfluxDB](/blog/2019/2019-06-14/post1/). Search for the `[[outputs.influxdb]]` configuration section and change as needed, my configuration is shown below:
 
 ```ini
 [[outputs.influxdb]]

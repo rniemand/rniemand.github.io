@@ -5,7 +5,7 @@ tags: [home assistant,windows]
 logo: hass.png
 ---
 
-I have been using [Home Assistant](https://www.home-assistant.io/) for about a week and already there is a new version of the software available. From what I can make out the [project](https://github.com/home-assistant/core) is extremely active with a fortnightly release cycle. Generally the update process is pretty simple, however I am running my Home Assistant instance as a windows service covered in [my previous blog post](https://www.richardn.ca/posts/RunningHomeAssistantAsAWindowsService/).
+I have been using [Home Assistant](https://www.home-assistant.io/) for about a week and already there is a new version of the software available. From what I can make out the [project](https://github.com/home-assistant/core) is extremely active with a fortnightly release cycle. Generally the update process is pretty simple, however I am running my Home Assistant instance as a windows service covered in [my previous blog post](/blog/2017/2017-09-11/post2/).
 
 This is a quick post on the process you will need to take if you are doing the same:
 

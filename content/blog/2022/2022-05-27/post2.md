@@ -5,10 +5,10 @@ tags: [home assistant,unraid,mariadb,mysql]
 logo: hass.png
 ---
 
-> This post is [part of a series](https://www.richardn.ca/series/#unraid-containers-2022) covering running various containers on [Unraid](https://unraid.net/).
+> This post is [part of a series](/series/) covering running various containers on [Unraid](https://unraid.net/).
 {: .prompt-tip }
 
-In this post I will cover configuring Home Assistant to use [MariaDB](https://mariadb.com/) rather than the default SQLite DB, you can refer to [this post](https://www.richardn.ca/posts/InstallingMariaDBOnUbuntu/) for instructions on how to set up MariaDB on Ubuntu.
+In this post I will cover configuring Home Assistant to use [MariaDB](https://mariadb.com/) rather than the default SQLite DB, you can refer to [this post](/blog/2019/2019-06-15/post/) for instructions on how to set up MariaDB on Ubuntu.
 
 ## Create DB and User
 First you will need to create a DB and user account, this can be done by running the following commands while connected to mysql - make sure that you replace the relevant values with your own.
@@ -25,7 +25,7 @@ You should now have a DB called HomeAssistant2021 that can be accessed using the
 <img src="./010.png" alt="" />
 
 ### Backup your DB
-It is generally a good idea to create periodic backups of your databases and should be done for your Home Assistant DB too. [This post](https://www.richardn.ca/posts/BackingUpMariaDbViaCron/) covers how to backup your DB via a CRON job.
+It is generally a good idea to create periodic backups of your databases and should be done for your Home Assistant DB too. [This post](/blog/2019/2019-07-10/post/) covers how to backup your DB via a CRON job.
 
 ## Install Studio Code Server
 Although this step is not required, it will make things a lot easier going forward.

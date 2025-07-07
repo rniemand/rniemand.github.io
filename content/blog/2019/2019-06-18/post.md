@@ -5,13 +5,13 @@ tags: [chronograf,ubuntu]
 logo: chronograf.png
 ---
 
-> **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+> **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
 {: .prompt-tip }
 
 Today I will be covering getting [Chronograf](https://www.influxdata.com/time-series-platform/chronograf/) up and running on Ubuntu.
 
 ## Installation
-**Note**: You will need to have a working [InfluxDB 1.x](https://www.richardn.ca/posts/InstallingInfluxDBOnUbuntu/) instance deployed to follow along!
+**Note**: You will need to have a working [InfluxDB 1.x](/blog/2019/2019-06-14/post1/) instance deployed to follow along!
 
 First you will need to pick the latest version of Chronograf for your system from this list and download it on the target machine (at the time of writing that was chronograf_1.7.11_amd64.deb).
 

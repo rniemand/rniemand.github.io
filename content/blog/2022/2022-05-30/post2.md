@@ -5,7 +5,7 @@ tags: [home assistant,unraid,tts]
 logo: hass.png
 ---
 
-> This post is [part of a series](https://www.richardn.ca/series/#unraid-containers-2022) covering running various containers on [Unraid](https://unraid.net/).
+> This post is [part of a series](/series/) covering running various containers on [Unraid](https://unraid.net/).
 {: .prompt-tip }
 
 Today I will cover setting up TTS on Home Assistant using the Google Cast integration.

@@ -5,7 +5,7 @@ tags: [iot,ubuntu,node-red]
 logo: node-red.png
 ---
 
-> **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+> **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
 {: .prompt-tip }
 
 Today I will be covering getting up and running with [Node-RED](https://nodered.org/) on your server. This process is slightly more involved compared to all the previous instals we have done so far, however this post aims to make it as simple as possible!

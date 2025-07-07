@@ -5,7 +5,7 @@ tags: [javascript]
 logo: javascript.png
 ---
 
-Following on from my [last post](https://www.richardn.ca/posts/Pong/) I have made some minor tweaks to my pong game, and have addressed some of the issues that I picked up during the first phase of development, namely:
+Following on from my [last post](/blog/2016/2016-07-29/post1/) I have made some minor tweaks to my pong game, and have addressed some of the issues that I picked up during the first phase of development, namely:
 
 - Made use of the `requestAnimationFrame()` method to handle calls to the `update()` and `draw()` methods.
 - Addressed issues with the collision detection to better match the relative position of the paddle and ball.

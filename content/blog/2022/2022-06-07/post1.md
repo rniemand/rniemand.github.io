@@ -14,7 +14,7 @@ Today I will be covering installing some must-have Add-ons when working with IoT
 Having these add-ons installed will open up a plethora of automation possibilities along, there is a lot to cover here so let’s dive in!
 
 ## ESPHome
-ESPHome is a configuration driven (`yaml files`) toolchain aimed at ESP8266 / ESP32 devices and allows for quick and easy IoT device deployment and management with its built in UI. My [lounge-clock project](https://www.richardn.ca/posts/LoungeClockV1/) was coded completely using ESPHome and has been one of the simplest deployments I have done to date.
+ESPHome is a configuration driven (`yaml files`) toolchain aimed at ESP8266 / ESP32 devices and allows for quick and easy IoT device deployment and management with its built in UI. My [lounge-clock project](/blog/2022/2022-06-07/post2/) was coded completely using ESPHome and has been one of the simplest deployments I have done to date.
 
 ### Installation
 The easiest way to install ESPHome is through the Home Assistant addon (detailed instructions can be [found here](https://esphome.io/guides/getting_started_hassio.html)).
@@ -148,7 +148,7 @@ In the side menu there should be a link to **Zigbee2MQTT**, to add a device, pre
 ## Z-Wave JS
 I have a couple of door locks that can be controlled via Z-Wave so I decided to invest in a "**Zooz 700 Series Z-Wave Plus S2 USB Stick**" to use with [Z-Wave JS](https://www.home-assistant.io/integrations/zwave_js/).
 
-I ran into an odd issue with Unraid and sharing multiple serial based USB sticks with a container that I still have yet to resolve (any help \ suggestions here would be appreciated). Thankfully I have an old Ubuntu server used for [DB backups](https://www.richardn.ca/posts/BackingUpMariaDbViaCron/) that is more than capable of running [Portainer](https://www.portainer.io/) allowing me to run the [zwavejs/zwavejs2mqtt](https://hub.docker.com/r/zwavejs/zwavejs2mqtt) Docker container.
+I ran into an odd issue with Unraid and sharing multiple serial based USB sticks with a container that I still have yet to resolve (any help \ suggestions here would be appreciated). Thankfully I have an old Ubuntu server used for [DB backups](/blog/2019/2019-07-10/post/) that is more than capable of running [Portainer](https://www.portainer.io/) allowing me to run the [zwavejs/zwavejs2mqtt](https://hub.docker.com/r/zwavejs/zwavejs2mqtt) Docker container.
 
 ### Obtaining USB Device ID
 The first thing you will need to do is work out the path to your USB Serial Device so we can expose it to our container. Running the following command should list all serial devices plugged into your server:

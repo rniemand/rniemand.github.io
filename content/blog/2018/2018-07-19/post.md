@@ -5,7 +5,7 @@ tags: [home assistant]
 logo: hass.png
 ---
 
-> This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
 {: .prompt-tip }
 
 Today we are going to make our Home Assistant deployment a bit smarter by adding in presence detection. For this I am going to be making use of the [Google Maps Location Sharing](https://www.home-assistant.io/integrations/google_maps/) component as I find it to be more reliable than my old self-hosted OwnTracks instance, and both my wife's phone and mine already have Google Maps installed with location sharing enabled (so there is no need to install another application on Rae's phone).

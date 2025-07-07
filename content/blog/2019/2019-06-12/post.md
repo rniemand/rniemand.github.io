@@ -11,7 +11,7 @@ So today I decommissioned the 2 computers that run the majority of my applicatio
 
 Basically going forward the next few blog posts will be centred around getting everything back up and running, specifically:
 
-> **NOTE** you can see the complete post listing **[here](https://www.richardn.ca/series/#home-server-revamp-2019)**
+> **NOTE** you can see the complete post listing **[here](/series/)**
 {: .prompt-info }
 
 If this is something that interests you, be sure to bookmark this blog as things are going to get weird!

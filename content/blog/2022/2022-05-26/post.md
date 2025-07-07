@@ -5,7 +5,7 @@ tags: [unraid,rabbitmq]
 logo: rabbitmq.png
 ---
 
-> This post is [part of a series](https://www.richardn.ca/series/#unraid-containers-2022) covering running various containers on [Unraid](https://unraid.net/).
+> This post is [part of a series](/series/) covering running various containers on [Unraid](https://unraid.net/).
 {: .prompt-tip }
 
 This is a quick post on getting [RabbitMQ](https://www.rabbitmq.com/) up and running in a Docker container on [Unraid](https://unraid.net/), this post is based on the [official docker image](https://hub.docker.com/_/rabbitmq).

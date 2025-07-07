@@ -328,7 +328,7 @@ mode: single
 ```
 
 ## Changing Lounge Clock Scene
-Another use for the Times of Day integration is to adjust the style of my **[lounge clock](https://www.richardn.ca/posts/LoungeClockV1/)**, making it more visible during the day, and dimming it in the evenings. Below are a couple of the automations I use for that:
+Another use for the Times of Day integration is to adjust the style of my **[lounge clock](/blog/2022/2022-06-07/post2/)**, making it more visible during the day, and dimming it in the evenings. Below are a couple of the automations I use for that:
 
 ```yaml
 alias: Lounge Clock - Set Scene - Early Evening

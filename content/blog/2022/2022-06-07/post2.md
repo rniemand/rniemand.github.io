@@ -5,7 +5,7 @@ tags: [home assistant,esphome,mqtt,mosquitto,3d printing,iot,project]
 logo: esphome.png
 ---
 
-In this post I will cover how I built my lounge clock using [ESPHome](https://esphome.io/), [Home Assistant](https://www.home-assistant.io/), [MQTT](https://www.richardn.ca/posts/InstallingMqttOnUbuntu/) and a whole lot of other technologies, I think that the end result looks pretty good for my first attempt:
+In this post I will cover how I built my lounge clock using [ESPHome](https://esphome.io/), [Home Assistant](https://www.home-assistant.io/), [MQTT](/blog/2019/2019-11-04/post/) and a whole lot of other technologies, I think that the end result looks pretty good for my first attempt:
 
 <img src="./001.jpg" alt="" />
 

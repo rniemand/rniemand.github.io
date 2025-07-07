@@ -80,7 +80,7 @@ Once we have the power connected to the LCD we will need to hook up its SCLand S
 <img src="./009.jpg" alt="">
 
 ### Connecting the UNO
-Now it's time to move onto uploading our code to the Pro Mini. To do this I am going to be using my Arduino UNO and [the flashing process described here](https://www.richardn.ca/posts/FlashingATmega168/). The hook up between the devices are as follows:
+Now it's time to move onto uploading our code to the Pro Mini. To do this I am going to be using my Arduino UNO and [the flashing process described here](/blog/2017/2017-03-10/post/). The hook up between the devices are as follows:
 
 ```
 RESET ................. (RST on Pro Mini)
@@ -196,4 +196,4 @@ If everything went well, you should see the current time being displayed on the 
 Congratulations, you now have a working Arduino powered clock.
 
 ## Powering the Clock
-In order to keep this post as short as possible I have created a new post called [powering your Arduino projects](https://www.richardn.ca/posts/PoweringYourArduinoProjects/) that cover this topic in a lot more detail.
+In order to keep this post as short as possible I have created a new post called [powering your Arduino projects](/blog/2017/2017-04-26/post/) that cover this topic in a lot more detail.

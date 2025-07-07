@@ -7,7 +7,7 @@ logo: mqtt.png
 
 At the end of December last year my family and I immigrated to Canada (from South Africa) for a fresh start and to allow my wife to be closer to her family. We decided to only bring the essentials with us to make things easier and to reduce the cost of the immigration. Now that we are starting to find our feet I have decided to pick up where I left off with my endeavours into home automation and to start setting up [Home Assistant](https://www.home-assistant.io/) again, starting with my MQTT Broker of choice - [Mosquitto](https://mosquitto.org/).
 
-To save on costs I decided to make use of an old Raspberry Pi I packed running the [DietPi OS](https://dietpi.com/) (lightweight version of Raspbian), as opposed to my original [Windows Server running Mosquitto](https://www.richardn.ca/posts/RunningMosquittoAsAWindowsService/) I used to use. This post is just a quick high-level overview of how to get up and running with Mosquitto in under `10 minutes`, so let's dive in.
+To save on costs I decided to make use of an old Raspberry Pi I packed running the [DietPi OS](https://dietpi.com/) (lightweight version of Raspbian), as opposed to my original [Windows Server running Mosquitto](/blog/2017/2017-06-08/post/) I used to use. This post is just a quick high-level overview of how to get up and running with Mosquitto in under `10 minutes`, so let's dive in.
 
 ## Recommended Tools
 To make things a lot easier I highly recommend the following tools for this tutorial:

@@ -10,13 +10,13 @@ This series of posts will cover setting up my Home Assistant setup from scratch 
 Please be sure to keep checking back on this post as I will be updating the list below with all future posts relating to this topic.
 
 ## The Posts
-You can view the complete post listing [here](https://www.richardn.ca/series/#home-assistant-from-scratch-2018).
+You can view the complete post listing [here](/series/).
 
 ## Installation
 This post will cover the bare bones installation of Home Assistant on a Raspberry Pi 3 using the Hass.io image. In addition to the installation I will cover the setup of some core plugins to ensure that you get the most out of your Home Assistant installation.
 
 ### Hardware
-With my initial Home Assistant setup I was [running everything on Windows](https://www.richardn.ca/posts/RunningHomeAssistantAsAWindowsService/) which worked perfectly fine. However I have been wanting to test out [Hass.io](https://www.home-assistant.io/getting-started) as it offers a simpler way of managing your Home Assistant installation, updates and configuration.
+With my initial Home Assistant setup I was [running everything on Windows](/blog/2017/2017-09-11/post2/) which worked perfectly fine. However I have been wanting to test out [Hass.io](https://www.home-assistant.io/getting-started) as it offers a simpler way of managing your Home Assistant installation, updates and configuration.
 
 My hardware consists of a [Raspberry Pi 3 - Model B](https://www.adafruit.com/product/3055) from [Adafruit](https://www.adafruit.com/) along with a reliable `16 GB class 10 micro SD card` to write the image to.
 

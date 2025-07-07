@@ -5,7 +5,7 @@ tags: [webmin,ubuntu]
 logo: webmin.png
 ---
 
-> **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+> **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
 {: .prompt-tip }
 
 Today I will be covering installing [Webmin](https://www.webmin.com/) on Ubuntu (and Ubuntu Server), in case you are unaware of it (I was initially) here is a blurb taken from their website.

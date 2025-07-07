@@ -8,7 +8,7 @@ logo: hass.png
 In this post I will cover some simple steps on how to get [Home Assistant](https://www.home-assistant.io/) as a service on windows. I will be making use of a nifty utility called [nssm](https://nssm.cc/) (the `Non-Sucking Service Manager`) which lives up to its name. Before you begin you will need to have the following prerequisites met:
 
 - [Python 3.x](https://www.python.org/) installed (do not use 2.x)
-- [netifaces and Microsoft Visual C++ 14.0](https://www.richardn.ca/posts/HomeAssistantMissingDependenciesWindows/)
+- [netifaces and Microsoft Visual C++ 14.0](/blog/2017/2017-09-11/post1/)
 - [Home Assistant](https://www.home-assistant.io/) installed under some elevated account
   - In my case I am using the Administrator account :/
 

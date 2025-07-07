@@ -5,7 +5,7 @@ tags: [home assistant,unraid,dns]
 logo: hass.png
 ---
 
-> This post is [part of a series](https://www.richardn.ca/series/#unraid-containers-2022) covering running various containers on [Unraid](https://unraid.net/).
+> This post is [part of a series](/series/) covering running various containers on [Unraid](https://unraid.net/).
 {: .prompt-tip }
 
 Today I will be covering setting up DNS and HTTPS on your local Home Assistance instance making use of [Duck DNS](https://www.duckdns.org/) and [Let's Encrypt](https://letsencrypt.org/).

@@ -5,7 +5,7 @@ tags: [home assistant]
 logo: hass.png
 ---
 
-> This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
 {: .prompt-tip }
 
 Today I would like to tackle breaking up your configuration file (`configuration.yaml`) into smaller, more manageable parts to make configuring Home Assistant a lot easier.

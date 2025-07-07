@@ -5,7 +5,7 @@ tags: [home assistant]
 logo: hass.png
 ---
 
-> This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
 {: .prompt-tip }
 
 Today I would like to cover the History component of Home Assistant, and show you how to ignore certain entities or domains altogether through it.
@@ -14,7 +14,7 @@ Today I would like to cover the History component of Home Assistant, and show yo
 In this post I will be talking about `entities` and `domains` in Home Assistant, these are relatively simple terms which you are familiar with already, albeit you didn't know the proper names for them.
 
 ### Entities
-An entity in Home Assistant is anything that you can interact with, for example one of the [Philips Hue lights we added in an earlier post](https://www.richardn.ca/posts/HomeAssistantFromScratchHue/). All objects in Home Assistant inherit from the [entity base class](https://github.com/home-assistant/core/blob/dev/homeassistant/helpers/entity.py), and can be seen in the states section of the developer tools.
+An entity in Home Assistant is anything that you can interact with, for example one of the [Philips Hue lights we added in an earlier post](/blog/2018/2018-07-02/post/). All objects in Home Assistant inherit from the [entity base class](https://github.com/home-assistant/core/blob/dev/homeassistant/helpers/entity.py), and can be seen in the states section of the developer tools.
 
 <img src="./001.png" alt="" />
 
@@ -25,7 +25,7 @@ It is these names (I like to think of them as the entity's fully qualified name)
 ### Domains
 Entities are grouped together into collections known as `domains` in Home Assistant, making them easier to manage, and helps provide some insight into what a particular entity does (e.g. deck is less helpful when compared to `light.deck`).
 
-Again we have already seen domains in action when creating the custom light group back in [this post](https://www.richardn.ca/posts/HomeAssistantFromScratchHue/), with the groups we created again being added to the group domain.
+Again we have already seen domains in action when creating the custom light group back in [this post](/blog/2018/2018-07-02/post/), with the groups we created again being added to the group domain.
 
 <img src="./003.png" alt="" />
 

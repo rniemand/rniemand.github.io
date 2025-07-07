@@ -5,13 +5,13 @@ tags: [home assistant,mysql,mariadb]
 logo: hass.png
 ---
 
-> This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
 {: .prompt-tip }
 
 Today I would like to cover switching from the default SQLite database that Home Assistant uses over to MySQL - there is a slight performance update when making this switch, not to mention that it frees up valuable resources on my Raspberry Pi.
 
 ## Why use MySQL?
-My main driver for switching from SQLite to MySQL is performance and resources. If you have been following [this series](https://www.richardn.ca/series/#home-assistant-from-scratch-2018) you will know that I am running my Home Assistant setup on a Raspberry Pi (through [hass.io](https://www.home-assistant.io/getting-started)) for ease of use. This works amazingly well, however the throughput of the default database suffers due to the limited resources on the Pi.
+My main driver for switching from SQLite to MySQL is performance and resources. If you have been following [this series](/series/) you will know that I am running my Home Assistant setup on a Raspberry Pi (through [hass.io](https://www.home-assistant.io/getting-started)) for ease of use. This works amazingly well, however the throughput of the default database suffers due to the limited resources on the Pi.
 
 I already have a [MySQL Community Edition](https://www.mysql.com/products/community/) server running on my home network complete with weekly backups of some select databases. So for me it makes sense to create a new home_assistant schema on my server and gain the performance benefits over SQLite.
 

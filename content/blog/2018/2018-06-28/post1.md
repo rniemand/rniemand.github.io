@@ -5,7 +5,7 @@ tags: [home assistant,plex]
 logo: hass.png
 ---
 
-> This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
 {: .prompt-tip }
 
 Today I would like to get [Plex](https://www.plex.tv/) configured and running in [Home Assistant](https://www.home-assistant.io/).

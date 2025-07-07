@@ -5,7 +5,7 @@ tags: [iot,mqtt,sonoff]
 logo: sonoff.png
 ---
 
-A while back I got brave and [changed the firmware on the Sonoff switch](https://www.richardn.ca/posts/ChangingSonoffFirmwareVisualGuide/) connected to my lounge light to use it in my home automation. I followed [these instructions](https://github.com/arendst/Tasmota) when uploading the firmware and was up and running in about 10 minutes.
+A while back I got brave and [changed the firmware on the Sonoff switch](/blog/2017/2017-08-03/post/) connected to my lounge light to use it in my home automation. I followed [these instructions](https://github.com/arendst/Tasmota) when uploading the firmware and was up and running in about 10 minutes.
 
 Once I had everything connected back up it was time to interact with the light via my MQTT broker, and after Googling for the relevant commands I found [them here](https://github.com/arendst/Tasmota#tl-dr).
 

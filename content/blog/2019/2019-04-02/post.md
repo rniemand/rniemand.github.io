@@ -10,7 +10,7 @@ This post covers the process of collecting performance data from most Sonoff dev
 ## Requirements
 To follow along you will need the following:
 
-- an MQTT server - some setup [posts here](https://www.richardn.ca/categories/mqtt/)
+- an MQTT server - some setup [posts here](/tags/mqtt/)
 - a Sonoff device running [Tasmota](https://github.com/arendst/Tasmota)
 
 ## Setting the correct time

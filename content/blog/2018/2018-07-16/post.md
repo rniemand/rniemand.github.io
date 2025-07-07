@@ -5,7 +5,7 @@ tags: [home assistant,mqtt,mosquitto]
 logo: hass.png
 ---
 
-> This is one **[post in a series](https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
 {: .prompt-tip }
 
 In this post we will be covering getting up and running with MQTT on Home Assistant - for the purposes of this post I will be working on the assumption that you have a local MQTT broker running on your home network. If you do not, you could always follow this post, or Google to find a tutorial for your OS.

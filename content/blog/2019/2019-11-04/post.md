@@ -5,7 +5,7 @@ tags: [iot,ubuntu,mqtt,mosquitto]
 logo: mqtt.png
 ---
 
-> **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+> **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
 {: .prompt-tip }
 
 Today I am going to be covering installing and configuring `mosquitto` (a pretty common MQTT client) on Ubuntu. I make use of MQTT a lot when it comes to my home automation as it's a lightweight protocol that can easily run on devices with limited memory (like an ESP8266).

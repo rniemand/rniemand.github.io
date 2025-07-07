@@ -12,7 +12,7 @@ At the moment my main focus is around security and knowing what is going on at h
 > OwnTracks allows you to keep track of your own location. You can build your private location diary or share it with your family and friends. OwnTracks is open-source and uses open protocols for communication so you can be sure your data stays secure and private.
 {: .prompt-info }
 
-I installed the client on my phone,configured it to talk to my home MQTT server, and making use of my [MQTT dumper application](https://www.richardn.ca/posts/MQTTDumperAlpha/) confirmed that it was indeed able to publish my location correctly. Now comes the fun part of getting everything up and running on Home Assistant.
+I installed the client on my phone,configured it to talk to my home MQTT server, and making use of my [MQTT dumper application](/blog/2017/2017-08-29/post/) confirmed that it was indeed able to publish my location correctly. Now comes the fun part of getting everything up and running on Home Assistant.
 
 ## Getting your location
 Home Assistant needs to know your home location in order to determine whether you are home or not, and for the most part the installer does a pretty good job at guessing your coordinates, however you will need to refine them a bit to ensure that everything works properly.

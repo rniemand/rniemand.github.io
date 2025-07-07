@@ -5,7 +5,7 @@ tags: [iot,windows,mqtt]
 logo: mqtt.png
 ---
 
-In [my last post](https://www.richardn.ca/posts/MosquittoOnWindows/) I ran over the required steps to get `mosquitto` up and running on a Windows environment. Now somewhere during my initial install I managed to break the Mosquitto Broker service that was installed by default, and ended up removing it using an elevated command window and the `SC delete NAME` command.
+In [my last post](/blog/2017/2017-06-07/post/) I ran over the required steps to get `mosquitto` up and running on a Windows environment. Now somewhere during my initial install I managed to break the Mosquitto Broker service that was installed by default, and ended up removing it using an elevated command window and the `SC delete NAME` command.
 
 This post will cover re-creating this service, and showcase a really amazing application I found to make almost anything into a Windows service.
 
@@ -20,7 +20,7 @@ It is available [here](https://nssm.cc/download) and was created by **Iain Patte
 C:\Program Files (x86)\mosquitto
 ```
 
-In [my last post](https://www.richardn.ca/posts/MosquittoOnWindows/) I covered how to run mosquitto via a command line using:
+In [my last post](/blog/2017/2017-06-07/post/) I covered how to run mosquitto via a command line using:
 
 ```
 mosquitto.exe -v -c mosquitto.conf

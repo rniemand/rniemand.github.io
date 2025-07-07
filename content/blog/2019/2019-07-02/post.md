@@ -5,10 +5,10 @@ tags: [monitoring,ubuntu,grafana]
 logo: grafana.png
 ---
 
-> **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+> **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
 {: .prompt-tip }
 
-Once you have a running instance of [InfluxDB](https://www.richardn.ca/posts/InstallingInfluxDBOnUbuntu/) being populated with that sweet, sweet [Telegraf](https://www.richardn.ca/posts/InstallingTelegrafOnUbuntu/) data, you are going to need a way to visualise it all, this is where [Grafana](https://grafana.com/) comes in. Grafana is by far one of the best dash-boarding systems out there and is simple to use.
+Once you have a running instance of [InfluxDB](/blog/2019/2019-06-14/post1/) being populated with that sweet, sweet [Telegraf](/blog/2019/2019-06-17/post/) data, you are going to need a way to visualise it all, this is where [Grafana](https://grafana.com/) comes in. Grafana is by far one of the best dash-boarding systems out there and is simple to use.
 
 In this post I will cover the steps needed to get Grafana up and running on your Ubuntu Server installation, let's dive in.
 

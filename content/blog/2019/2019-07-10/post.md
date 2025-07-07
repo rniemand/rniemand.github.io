@@ -5,10 +5,10 @@ tags: [database,ubuntu,mysql,mariadb]
 logo: mariadb.png
 ---
 
-> **Hi there**! This post is [part of a series](https://www.richardn.ca/series/#home-server-revamp-2019) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
+> **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
 {: .prompt-tip }
 
-Once you have your [MariaDB (MySQL alternative)](https://www.richardn.ca/posts/InstallingMariaDBOnUbuntu/) instance up and running, it would be a good idea to automate backing up your important databases. In this post I will cover performing a simple daily backup of your databases using [mysqldump](https://mariadb.com/kb/en/mariadb-dumpmysqldump/).
+Once you have your [MariaDB (MySQL alternative)](/blog/2019/2019-06-15/post/) instance up and running, it would be a good idea to automate backing up your important databases. In this post I will cover performing a simple daily backup of your databases using [mysqldump](https://mariadb.com/kb/en/mariadb-dumpmysqldump/).
 
 ## Create ".my.cnf"
 To make your backups easier I would suggest creating a `.my.cnf` file in your CRON users home directory. When `mysqldump` runs it will search for the current users' `.my.cnf` file to load additional settings (e.g. DB credentials) allowing you to omit them from the CRON jobs command.
