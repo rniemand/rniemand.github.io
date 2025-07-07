@@ -64,3 +64,13 @@ div.main-content table {
 div.main-content .list-group-item:hover {
 	background-color: #2b3137;
 }
+
+/* div.main-content blockquote {
+	background-color: #262a2f;
+	border-radius: 0.5rem;
+	padding: .75rem;
+	border: 1px solid #94ff0045;
+}
+div.main-content blockquote p:last-child {
+	margin-bottom: 0;
+} */
