@@ -268,7 +268,7 @@ pre[class*="language-diff-"] {
 								<a class="nav-link " href="/about/">About</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link " href="/blog/">Archive</a>
+								<a class="nav-link " href="/blog/">Blog</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link " href="/projects/">Projects</a>
@@ -304,10 +304,10 @@ pre[class*="language-diff-"] {
 </div>
 
 <blockquote>
-<p>This post is <a href="https://www.richardn.ca/series/#unraid-containers-2022">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.
+<p>This post is <a href="/series/">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.
 {: .prompt-tip }</p>
 </blockquote>
-<p>In this post I will cover configuring Home Assistant to use <a href="https://mariadb.com/">MariaDB</a> rather than the default SQLite DB, you can refer to <a href="https://www.richardn.ca/posts/InstallingMariaDBOnUbuntu/">this post</a> for instructions on how to set up MariaDB on Ubuntu.</p>
+<p>In this post I will cover configuring Home Assistant to use <a href="https://mariadb.com/">MariaDB</a> rather than the default SQLite DB, you can refer to <a href="/blog/2019/2019-06-15/post/">this post</a> for instructions on how to set up MariaDB on Ubuntu.</p>
 <h2 id="create-db-and-user">Create DB and User</h2>
 <p>First you will need to create a DB and user account, this can be done by running the following commands while connected to mysql - make sure that you replace the relevant values with your own.</p>
 <pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token keyword">CREATE</span> <span class="token keyword">DATABASE</span> <span class="token identifier"><span class="token punctuation">`</span>HomeAssistant2021<span class="token punctuation">`</span></span><span class="token punctuation">;</span>
@@ -317,7 +317,7 @@ pre[class*="language-diff-"] {
 You should now have a DB called HomeAssistant2021 that can be accessed using the account you created.</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-05-27/post2/wk6ZGjH6dE-408.avif 408w"><source type="image/webp" srcset="/blog/2022/2022-05-27/post2/wk6ZGjH6dE-408.webp 408w"><img loading="lazy" decoding="async" src="/blog/2022/2022-05-27/post2/wk6ZGjH6dE-408.png" alt="" width="408" height="120"></picture>
 <h3 id="backup-your-db">Backup your DB</h3>
-<p>It is generally a good idea to create periodic backups of your databases and should be done for your Home Assistant DB too. <a href="https://www.richardn.ca/posts/BackingUpMariaDbViaCron/">This post</a> covers how to backup your DB via a CRON job.</p>
+<p>It is generally a good idea to create periodic backups of your databases and should be done for your Home Assistant DB too. <a href="/blog/2019/2019-07-10/post/">This post</a> covers how to backup your DB via a CRON job.</p>
 <h2 id="install-studio-code-server">Install Studio Code Server</h2>
 <p>Although this step is not required, it will make things a lot easier going forward.
 Under the Addon section in Home Assistant find and install the Studio Code Server addon.</p>
@@ -379,7 +379,7 @@ recorder: <code>!include custom/recorder.yaml</code></p>
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2022/2022-05-27/post2/` was built on 2025-07-07T22:09:59.325Z -->
+		<!-- This page `/blog/2022/2022-05-27/post2/` was built on 2025-07-07T22:37:44.945Z -->
 		<script type="module" src="/dist/uHLRy2-o6f.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

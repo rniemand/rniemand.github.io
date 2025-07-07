@@ -268,7 +268,7 @@ pre[class*="language-diff-"] {
 								<a class="nav-link " href="/about/">About</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link " href="/blog/">Archive</a>
+								<a class="nav-link " href="/blog/">Blog</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link " href="/projects/">Projects</a>
@@ -303,12 +303,12 @@ pre[class*="language-diff-"] {
 </div>
 
 <blockquote>
-<p>This post is <a href="https://www.richardn.ca/series/#unraid-containers-2022">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.
+<p>This post is <a href="/series/">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.
 {: .prompt-tip }</p>
 </blockquote>
 <p>In this post I will be covering getting up and running with <a href="https://mqtt.org/">MQTT</a> on <a href="https://www.home-assistant.io/">Home Assistant</a>, installation is pretty simple when following the <a href="https://www.home-assistant.io/integrations/mqtt/">official documentation</a> and should take no longer than a couple of minutes.</p>
 <h2 id="install-an-mqtt-broker">Install an MQTT Broker</h2>
-<p>The first thing you will need to do is install <code>MQTT</code> either as a <a href="https://www.richardn.ca/posts/InstallingMqttOnUbuntu/">service running on your computer</a>, or as a Docker container, or using the <a href="https://www.home-assistant.io/docs/mqtt/broker/">Home Assistant Addon</a>.</p>
+<p>The first thing you will need to do is install <code>MQTT</code> either as a <a href="/blog/2019/2019-11-04/post/">service running on your computer</a>, or as a Docker container, or using the <a href="https://www.home-assistant.io/docs/mqtt/broker/">Home Assistant Addon</a>.</p>
 <p>Personally I am running MQTT as a Docker container with the following configuration.</p>
 <ul>
 <li><strong>Repo</strong>: <code>cmccambridge/mosquitto-unraid:latest</code></li>
@@ -317,7 +317,7 @@ pre[class*="language-diff-"] {
 <li><strong>Path</strong>: <code>/mosquitto/config</code> -&gt; <code>/mnt/user/appdata/mosquitto/config/</code> (RW)</li>
 <li><strong>Path</strong>: <code>/mosquitto/data</code> -&gt; <code>/mnt/user/appdata/mosquitto/data/</code> (RW)</li>
 </ul>
-<p>You can follow the instructions <a href="https://www.richardn.ca/posts/InstallingMqttOnUbuntu/#adding-our-first-user">here</a> to add \ manage user accounts.</p>
+<p>You can follow the instructions <a href="/blog/2019/2019-11-04/post/">here</a> to add \ manage user accounts.</p>
 <h2 id="configuring-home-assistant">Configuring Home Assistant</h2>
 <h3 id="custom-mqtt-yaml">custom/mqtt.yaml</h3>
 <p>I tend to break my configuration up into component specific files (it just feels a lot cleaner to me, and makes excluding portions of configuration a lot simpler too), this is the contents of my <code>custom/mqtt.yaml</code> file:</p>
@@ -361,7 +361,7 @@ _MQTT is working_
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2022/2022-06-06/post/` was built on 2025-07-07T22:09:59.326Z -->
+		<!-- This page `/blog/2022/2022-06-06/post/` was built on 2025-07-07T22:37:44.945Z -->
 		<script type="module" src="/dist/uHLRy2-o6f.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

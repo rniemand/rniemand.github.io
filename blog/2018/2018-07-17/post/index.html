@@ -268,7 +268,7 @@ pre[class*="language-diff-"] {
 								<a class="nav-link " href="/about/">About</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link " href="/blog/">Archive</a>
+								<a class="nav-link " href="/blog/">Blog</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link " href="/projects/">Projects</a>
@@ -303,12 +303,12 @@ pre[class*="language-diff-"] {
 </div>
 
 <blockquote>
-<p>This is one <strong><a href="https://www.richardn.ca/posts/HomeAssistantFromScratchInstallation/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.
+<p>This is one <strong><a href="/blog/2018/2018-06-27/post/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.
 {: .prompt-tip }</p>
 </blockquote>
 <p>Today I would like to cover switching from the default SQLite database that Home Assistant uses over to MySQL - there is a slight performance update when making this switch, not to mention that it frees up valuable resources on my Raspberry Pi.</p>
 <h2 id="why-use-mysql">Why use MySQL?</h2>
-<p>My main driver for switching from SQLite to MySQL is performance and resources. If you have been following <a href="https://www.richardn.ca/series/#home-assistant-from-scratch-2018">this series</a> you will know that I am running my Home Assistant setup on a Raspberry Pi (through <a href="https://www.home-assistant.io/getting-started">hass.io</a>) for ease of use. This works amazingly well, however the throughput of the default database suffers due to the limited resources on the Pi.</p>
+<p>My main driver for switching from SQLite to MySQL is performance and resources. If you have been following <a href="/series/">this series</a> you will know that I am running my Home Assistant setup on a Raspberry Pi (through <a href="https://www.home-assistant.io/getting-started">hass.io</a>) for ease of use. This works amazingly well, however the throughput of the default database suffers due to the limited resources on the Pi.</p>
 <p>I already have a <a href="https://www.mysql.com/products/community/">MySQL Community Edition</a> server running on my home network complete with weekly backups of some select databases. So for me it makes sense to create a new home_assistant schema on my server and gain the performance benefits over SQLite.</p>
 <p>For the remainder of this post I am going to presume that you have an instance of MySQL running somewhere on your home network (<a href="https://dev.mysql.com/doc/refman/8.0/en/windows-installation.html">official installation guide</a>) along with <a href="https://www.mysql.com/products/workbench/">MySQL Workbench</a> to manage your server.</p>
 <h2 id="the-process">The process</h2>
@@ -375,7 +375,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-07-17/post/` was built on 2025-07-07T22:09:59.321Z -->
+		<!-- This page `/blog/2018/2018-07-17/post/` was built on 2025-07-07T22:37:44.940Z -->
 		<script type="module" src="/dist/uHLRy2-o6f.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>

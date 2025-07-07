@@ -268,7 +268,7 @@ pre[class*="language-diff-"] {
 								<a class="nav-link " href="/about/">About</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link " href="/blog/">Archive</a>
+								<a class="nav-link " href="/blog/">Blog</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link " href="/projects/">Projects</a>
@@ -311,7 +311,7 @@ pre[class*="language-diff-"] {
 </ul>
 <p>Having these add-ons installed will open up a plethora of automation possibilities along, there is a lot to cover here so let’s dive in!</p>
 <h2 id="esphome">ESPHome</h2>
-<p>ESPHome is a configuration driven (<code>yaml files</code>) toolchain aimed at ESP8266 / ESP32 devices and allows for quick and easy IoT device deployment and management with its built in UI. My <a href="https://www.richardn.ca/posts/LoungeClockV1/">lounge-clock project</a> was coded completely using ESPHome and has been one of the simplest deployments I have done to date.</p>
+<p>ESPHome is a configuration driven (<code>yaml files</code>) toolchain aimed at ESP8266 / ESP32 devices and allows for quick and easy IoT device deployment and management with its built in UI. My <a href="/blog/2022/2022-06-07/post2/">lounge-clock project</a> was coded completely using ESPHome and has been one of the simplest deployments I have done to date.</p>
 <h3 id="installation">Installation</h3>
 <p>The easiest way to install ESPHome is through the Home Assistant addon (detailed instructions can be <a href="https://esphome.io/guides/getting_started_hassio.html">found here</a>).</p>
 <p>In a nutshell, installation is as simple as adding the ESPHome repository (<code>https://github.com/esphome/home-assistant-addon</code>) to Home Assistant and installing the preferred release. I would highly recommend using the stable release.</p>
@@ -404,7 +404,7 @@ pre[class*="language-diff-"] {
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/Grq88BGyvK-603.avif 603w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/Grq88BGyvK-603.webp 603w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/Grq88BGyvK-603.png" alt="" width="603" height="292"></picture>
 <h2 id="z-wave-js">Z-Wave JS</h2>
 <p>I have a couple of door locks that can be controlled via Z-Wave so I decided to invest in a &quot;<strong>Zooz 700 Series Z-Wave Plus S2 USB Stick</strong>&quot; to use with <a href="https://www.home-assistant.io/integrations/zwave_js/">Z-Wave JS</a>.</p>
-<p>I ran into an odd issue with Unraid and sharing multiple serial based USB sticks with a container that I still have yet to resolve (any help \ suggestions here would be appreciated). Thankfully I have an old Ubuntu server used for <a href="https://www.richardn.ca/posts/BackingUpMariaDbViaCron/">DB backups</a> that is more than capable of running <a href="https://www.portainer.io/">Portainer</a> allowing me to run the <a href="https://hub.docker.com/r/zwavejs/zwavejs2mqtt">zwavejs/zwavejs2mqtt</a> Docker container.</p>
+<p>I ran into an odd issue with Unraid and sharing multiple serial based USB sticks with a container that I still have yet to resolve (any help \ suggestions here would be appreciated). Thankfully I have an old Ubuntu server used for <a href="/blog/2019/2019-07-10/post/">DB backups</a> that is more than capable of running <a href="https://www.portainer.io/">Portainer</a> allowing me to run the <a href="https://hub.docker.com/r/zwavejs/zwavejs2mqtt">zwavejs/zwavejs2mqtt</a> Docker container.</p>
 <h3 id="obtaining-usb-device-id">Obtaining USB Device ID</h3>
 <p>The first thing you will need to do is work out the path to your USB Serial Device so we can expose it to our container. Running the following command should list all serial devices plugged into your server:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">ls</span> /dev/serial/by-id/</code></pre>
@@ -456,7 +456,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2022/2022-06-07/post1/` was built on 2025-07-07T22:09:59.326Z -->
+		<!-- This page `/blog/2022/2022-06-07/post1/` was built on 2025-07-07T22:37:44.945Z -->
 		<script type="module" src="/dist/uHLRy2-o6f.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
