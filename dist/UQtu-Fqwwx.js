@@ -239,4 +239,14 @@ const styleTables = () => {
     });
 }
 
+const styleBlockquotes = () => {
+    let tables = document.querySelectorAll('div.main-content blockquote');
+    tables.forEach(t => {
+        t.classList.add('blockquote');
+        t.classList.add('alert');
+        t.classList.add('alert-secondary');
+    });
+}
+
 styleTables();
+styleBlockquotes();

@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Manual appdata backups in Unraid</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		<style>@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+body {
+	/* font-size: 1rem; */
+	font-family: "Open Sans", sans-serif;
+	font-optical-sizing: auto;
+}
+
+div.main-content {
+	margin-top: 4rem;
+	font-size: 1.2rem;
+}
+
+.blog-list a {
+	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
+}
+
+div.main-content h1 {
+	color: #c3e6ff;
+	margin-bottom: 1rem;
+}
+
+div.main-content h2 {
+	color: #ffd97f;
+	margin-bottom: 1rem;
+}
+
+div.main-content h3 {
+	color: #f0ff7f;
+	margin-bottom: 1rem;
+}
+
+div.main-content pre {
+	font-size: 1.1rem;
+	background-color: #31363b;
+	border: 1px solid #3f4851;
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+div.main-content picture img {
+	border: 1px solid #454d55;
+	max-width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+	box-shadow: 5px 5px 10px 0px #2b3137;
+}
+
+div.main-content div.prev-next {
+	background-color: #293037;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+}
+
+div.main-content table {
+	border: 1px solid #363c43;
+}
+
+div.main-content .list-group-item:hover {
+	background-color: #2b3137;
+}
+
+/* div.main-content blockquote {
+	background-color: #262a2f;
+	border-radius: 0.5rem;
+	padding: .75rem;
+	border: 1px solid #94ff0045;
+}
+div.main-content blockquote p:last-child {
+	margin-bottom: 0;
+} */
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+		<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1689302880129363" crossorigin="anonymous"></script>
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Blog</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/projects/">Projects</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/series/">Series</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="manual-appdata-backups-in-unraid">Manual appdata backups in Unraid</h1>
+
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/unraid/" class="post-tag">unraid</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2025-07-07">07 July 2025</time>
+	</span>
+</div>
+
+<p>Below is a simple <code>shell</code> script that I created to run daily backups of my Unraid servers <code>appdata</code> folder.</p>
+<p>This will create a daily zip file (following the <code>/yyyy-mm/yyyy-mm-dd-&lt;folder&gt;.zip</code> format), all folders are automatically created during the backup process.</p>
+<blockquote>
+<p><strong>NOTE</strong>: I set the files permissions to <code>0777</code> which you may want to omit for security.</p>
+</blockquote>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
+
+<span class="token function-name function">backupAppdata</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"============================================="</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"Backing up :: <span class="token variable">$1</span>"</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"============================================="</span>
+  
+  <span class="token assign-left variable">backupTargetRoot</span><span class="token operator">=</span><span class="token string">"/mnt/user/appdata-backups/nas/<span class="token variable">$1</span>/<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%Y-%m/'</span><span class="token variable">)</span></span>"</span>
+  <span class="token assign-left variable">backupZipFile</span><span class="token operator">=</span><span class="token string">"/mnt/user/appdata-backups/nas/<span class="token variable">$1</span>/<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%Y-%m/%F'</span><span class="token variable">)</span></span>-<span class="token variable">$1</span>.zip"</span>
+  <span class="token assign-left variable">appRootDir</span><span class="token operator">=</span><span class="token string">"/mnt/user/appdata/<span class="token variable">$1</span>/"</span>
+  
+  <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> <span class="token variable">$backupTargetRoot</span>
+  <span class="token function">rm</span> <span class="token parameter variable">-f</span> <span class="token variable">$backupZipFile</span>
+  <span class="token function">zip</span> <span class="token parameter variable">-r</span> <span class="token variable">$backupZipFile</span> <span class="token variable">$appRootDir</span>
+  <span class="token function">chmod</span> <span class="token parameter variable">-R</span> 0777 <span class="token variable">$backupTargetRoot</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"  > done"</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">""</span>
+<span class="token punctuation">}</span>
+
+backupAppdata <span class="token string">"binhex-nginx"</span>
+backupAppdata <span class="token string">"mosquitto"</span></code></pre>
+<p>When adding a new folder to be backed up, simply add it to the end of the script like so (<code>backupAppdata &quot;&lt;folder&gt;&quot;</code>).</p>
+<p>You will need the <code>Users Script</code> Unraid plugin installed for this to work.</p>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-07/post/-_ONXsJe3J-410.avif 410w"><source type="image/webp" srcset="/blog/2025/2025-07-07/post/-_ONXsJe3J-410.webp 410w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-07/post/-_ONXsJe3J-410.png" alt="" width="410" height="295"></picture>
+<p>Once installed, just create a new script with whatever name works for you, add in your modified version of the above script, and set a <a href="https://crontab.guru/">CRON</a> schedule for it.</p>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-07/post/8f5im3wc_8-1430.avif 1430w"><source type="image/webp" srcset="/blog/2025/2025-07-07/post/8f5im3wc_8-1430.webp 1430w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-07/post/8f5im3wc_8-1430.png" alt="" width="1430" height="102"></picture>
+<p>When the script has completed running, you should see the backup in your designated backup location.</p>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-07/post/PhJdk6iiMF-905.avif 905w"><source type="image/webp" srcset="/blog/2025/2025-07-07/post/PhJdk6iiMF-905.webp 905w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-07/post/PhJdk6iiMF-905.png" alt="" width="905" height="331"></picture>
+<p>Hopefully this saves you some time!</p>
+
+<div class="d-flex mb-3 prev-next">
+	<i class="bi bi-arrow-left-short"></i>
+	<span class="text-start">Previous<br><a href="/blog/2024/2024-07-31/post/">Using Certificates with ASP.Net Core under Docker</a></span>
+	
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+</div>
+
+
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2025/2025-07-07/post/` was built on 2025-07-07T23:00:45.233Z -->
+		<script type="module" src="/dist/UQtu-Fqwwx.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+	</body>
+</html>
