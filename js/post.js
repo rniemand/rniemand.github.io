@@ -1,5 +1,5 @@
 const styleTables = () => {
-    let tables = document.querySelectorAll('div.main-content table');
+    let tables = document.querySelectorAll('.main-content table:not(.skip-auto-class)');
     tables.forEach(t => {
         t.classList.add('table');
         t.classList.add('table-sm');
