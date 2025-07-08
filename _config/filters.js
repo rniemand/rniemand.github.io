@@ -18,14 +18,19 @@ export default function (eleventyConfig) {
 	eleventyConfig.addFilter('postBanner', (post, page) => {
 		let climbDirs = page.url.split('/').length - 1;
 		let finalPath = '';
-		for(let i=0; i<climbDirs; i++) finalPath += '../';
+		for (let i = 0; i < climbDirs; i++) finalPath += '../';
 		return finalPath + 'img/post-banners/' + post.data.banner;
+	});
+
+	eleventyConfig.addFilter('pageSlug', (page) => {
+		let stripped = page.url.replaceAll('/', '_').replaceAll('-', '');
+		return stripped.substring(1, stripped.length - 1);
 	});
 
 	eleventyConfig.addFilter('postLogo', (post, page) => {
 		let climbDirs = page.url.split('/').length - 1;
 		let finalPath = '';
-		for(let i=0; i<climbDirs; i++) finalPath += '../';
+		for (let i = 0; i < climbDirs; i++) finalPath += '../';
 		return finalPath + 'img/post-logos/' + post.data.logo;
 	});
 
