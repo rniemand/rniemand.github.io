@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Core Unraid Plugins and Containers</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+body {
+	font-family: "Open Sans", sans-serif;
+	font-optical-sizing: auto;
+}
+
+div.main-content {
+	margin-top: 4rem;
+	font-size: 1.1rem;
+}
+
+.blog-list a {
+	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
+}
+
+div.main-content > h1 {
+	color: #c3e6ff;
+	margin-bottom: 1rem;
+}
+
+div.main-content > h2 {
+	color: #ffd97f;
+	margin-bottom: 1rem;
+}
+
+div.main-content > h3 {
+	color: #f0ff7f;
+	margin-bottom: 1rem;
+}
+
+div.main-content pre {
+	font-size: 1.1rem;
+	background-color: #31363b;
+	border: 1px solid #3f4851;
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+div.main-content picture img:not(.no-borders) {
+	border: 1px solid #454d55;
+	max-width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+}
+
+div.main-content picture img {
+	margin-bottom: 1rem;
+	box-shadow: 5px 5px 10px 0px #2b3137;
+}
+
+div.main-content div.prev-next {
+	background-color: #293037;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+}
+
+div.main-content table {
+	border: 1px solid #363c43;
+	font-size: 1rem;
+}
+
+div.main-content .list-group-item:hover {
+	background-color: #2b3137;
+}
+
+div.main-content .accordion {
+	margin-bottom: 1rem;
+}
+
+div.main-content .accordion .accordion-item .accordion-body {
+	background-color: #2a2f35;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+		<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1689302880129363" crossorigin="anonymous"></script>
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Blog</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/projects/">Projects</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/series/">Series</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="core-unraid-plugins-and-containers">Core Unraid Plugins and Containers</h1>
+
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/unraid/" class="post-tag">unraid</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2025-07-07">07 July 2025</time>
+	</span>
+</div>
+
+
+<h2 id="unraid-plugins">Unraid Plugins</h2>
+
+<p>Below is a list of some of the plugins I use on my server.</p>
+
+<div class="accordion" id="pluginsAccordian">
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="ca-auto-update-applications">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#ca-auto-up-apps" aria-expanded="false" aria-controls="ca-auto-up-apps">CA Auto Update Applications</button>
+		</h2>
+		<div id="ca-auto-up-apps" class="accordion-collapse collapse" data-bs-parent="#pluginsAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p>Part of the CA family, Auto Update Applications will keep your selected plugins and docker applications up to date</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/wXvHaTgqhR-1337.avif 1337w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/wXvHaTgqhR-1337.webp 1337w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/wXvHaTgqhR-1337.png" alt="" width="1337" height="337"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://forums.unraid.net/topic/51959-plugin-ca-application-auto-update/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/a_YkvHhmRv-39.avif 39w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/a_YkvHhmRv-39.webp 39w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/a_YkvHhmRv-39.png" class="no-borders" width="39" alt="" height="39"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="dynamix-system-temperature">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#system-temps" aria-expanded="false" aria-controls="system-temps">Dynamix System Temperature</button>
+		</h2>
+		<div id="system-temps" class="accordion-collapse collapse" data-bs-parent="#pluginsAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p><a href="https://forums.unraid.net/topic/34889-dynamix-v6-plugins/" target="_blank">Dynamix System Temperature</a> shows in real-time the temperature of the system CPU and motherboard. Temperatures can be displayed in Celsius or Fahrenheit. Your hardware must support the necessary probes, and additional software drivers may be required too.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/FQ9Egm7d0a-1125.avif 1125w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/FQ9Egm7d0a-1125.webp 1125w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/FQ9Egm7d0a-1125.png" alt="" width="1125" height="452"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://forums.unraid.net/topic/34889-dynamix-v6-plugins/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/U9hiHSWGZH-48.avif 48w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/U9hiHSWGZH-48.webp 48w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/U9hiHSWGZH-48.png" class="no-borders" width="48" alt="" height="48"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="fix-common-problems-2">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#fix-common-problems" aria-expanded="false" aria-controls="fix-common-problems">Fix Common Problems</button>
+		</h2>
+		<div id="fix-common-problems" class="accordion-collapse collapse" data-bs-parent="#pluginsAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p>A Plugin to diagnose and suggest fixes for common problems, configuration mistakes, etc.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/0qmE6FrzNr-1558.avif 1558w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/0qmE6FrzNr-1558.webp 1558w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/0qmE6FrzNr-1558.png" alt="" width="1558" height="551"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://forums.unraid.net/topic/47266-plugin-ca-fix-common-problems/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/0wtgUEj4Fa-47.avif 47w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/0wtgUEj4Fa-47.webp 47w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/0wtgUEj4Fa-47.png" class="no-borders" width="47" alt="" height="47"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="folderview2">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#folder-view-2" aria-expanded="false" aria-controls="folder-view-2">FolderView2</button>
+		</h2>
+		<div id="folder-view-2" class="accordion-collapse collapse" data-bs-parent="#pluginsAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p><a href="https://forums.unraid.net/topic/189167-plugin-folderview2" target="_blank">FolderView2</a> lets you create folders for grouping Dockers and VMs together to help with organization. Especially useful if you're using docker-compose. Getting Started: A new button named "Add Folder" will appear at the bottom of the docker/VM tab next to "Add Container/VM".</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/IZo8ETSXEw-1433.avif 1433w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/IZo8ETSXEw-1433.webp 1433w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/IZo8ETSXEw-1433.png" alt="" width="1433" height="386"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://forums.unraid.net/topic/189167-plugin-folderview2" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/rzUTyNaEA0-47.avif 47w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/rzUTyNaEA0-47.webp 47w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/rzUTyNaEA0-47.png" class="no-borders" width="47" alt="" height="47"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="unbalanced-2">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#unbalanced" aria-expanded="false" aria-controls="unbalanced">unbalanced</button>
+		</h2>
+		<div id="unbalanced" class="accordion-collapse collapse" data-bs-parent="#pluginsAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p><a href="https://forums.unraid.net/topic/43651-plugin-unbalanced/" target="_blank">unbalanced</a> transfers files/folders between disks in your array.</p>
+					<p>I mainly use this plugin to consolidate files from the same folder that span multiple disks.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/YVsiSDMnSm-1686.avif 1686w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/YVsiSDMnSm-1686.webp 1686w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/YVsiSDMnSm-1686.png" alt="" width="1686" height="425"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://forums.unraid.net/topic/43651-plugin-unbalanced/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/jmSQ533hWS-50.avif 50w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/jmSQ533hWS-50.webp 50w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/jmSQ533hWS-50.png" class="no-borders" width="50" alt="" height="50"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="user-scripts-2">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#user-scripts" aria-expanded="false" aria-controls="user-scripts">User Scripts</button>
+		</h2>
+		<div id="user-scripts" class="accordion-collapse collapse" data-bs-parent="#pluginsAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p>A plugin to act as a simple front end for any user scripts to allow you to run them without entering the command line</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/oFgEh8T3ko-1764.avif 1764w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/oFgEh8T3ko-1764.webp 1764w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/oFgEh8T3ko-1764.png" alt="" width="1764" height="637"></picture>
+					<p>I make use of this plugin to run scheduled scripts against my Unraid server (like my <a href="/blog/2025/2025-07-07/post/">appdata backup script</a>).</p>
+				</div>
+				<div class="ms-2">
+					<a href="https://forums.unraid.net/topic/48286-plugin-ca-user-scripts/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/Pmto5cs7af-42.avif 42w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/Pmto5cs7af-42.webp 42w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/Pmto5cs7af-42.png" class="no-borders" width="42" alt="" height="42"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h2 id="docker-containers">Docker Containers</h2>
+
+<p>Below is a list of some of the Docker containers I use on my server.</p>
+
+<div class="accordion" id="dockerAccordian">
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="hass-unraid-2">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#hass-unraid" aria-expanded="false" aria-controls="hass-unraid">hass-unraid</button>
+		</h2>
+		<div id="hass-unraid" class="accordion-collapse collapse" data-bs-parent="#dockerAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+						<p>
+							The
+							<a href="https://github.com/IDmedia/hass-unraid" target="_blank">hass-unraid</a>
+							is a Docker container parses and forwards all WebSocket messages from your Unraid server to Home Assistant using the MQTT protocol.
+						</p>
+						<p>As per the <a href="https://github.com/IDmedia/hass-unraid?tab=readme-ov-file#getting-started" target="_blank">getting started documentation</a> my server configuration looks something like this:</p>
+						<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">unraid</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> NAS
+    <span class="token key atrule">host</span><span class="token punctuation">:</span> 192.168.0.60
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">80</span>
+    <span class="token key atrule">ssl</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">username</span><span class="token punctuation">:</span> root
+    <span class="token key atrule">password</span><span class="token punctuation">:</span> pass
+    <span class="token key atrule">scan_interval</span><span class="token punctuation">:</span> <span class="token number">30</span>
+
+<span class="token key atrule">mqtt</span><span class="token punctuation">:</span>
+  <span class="token key atrule">host</span><span class="token punctuation">:</span> 192.168.0.60
+  <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">1883</span>
+  <span class="token key atrule">username</span><span class="token punctuation">:</span> hass
+  <span class="token key atrule">password</span><span class="token punctuation">:</span> pass</code></pre>
+						<p>When running the container will publish collected data via <code>MQTT</code> so Home Assistant can discover it.</p>
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/58TovtL2VJ-1000.avif 1000w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/58TovtL2VJ-1000.webp 1000w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/58TovtL2VJ-1000.png" alt="" width="1000" height="367"></picture>
+						<p>I make use of <a href="#unraid-plugins" data-bs-toggle="collapse" data-bs-target="#system-temps">Dynamix System Temperature</a> (above) to collect the temperatures of my CPU's, however I needed to assign one of my CPUs as the motherboard temperature in Unraid to work around a limitation with <code>Dynamix System Temperature</code>.</p>
+						<p>In Home Assistant I make use of the <a href="https://www.home-assistant.io/integrations/influxdb/" target="_blank">InfluxDB</a> plugin to forward all collected data to my InfluxDB instance.</p>
+						<p>Finally, using something like <a href="https://grafana.com/grafana/" target="_blank">Grafana</a> I visualise the collected data to monitor my server temps.</p>
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/bVFUzjQnQl-794.avif 794w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/bVFUzjQnQl-794.webp 794w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/bVFUzjQnQl-794.png" alt="" width="794" height="197"></picture>
+					</div>
+					<div class="ms-2">
+						<a href="https://github.com/IDmedia/hass-unraid" target="_blank">
+							<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/ipDd7uGn2H-50.avif 50w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/ipDd7uGn2H-50.webp 50w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/ipDd7uGn2H-50.png" class="no-borders" width="50" alt="" height="50"></picture>
+						</a>
+					</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="syncthing">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#binhex-syncthing" aria-expanded="false" aria-controls="binhex-syncthing">Syncthing</button>
+		</h2>
+		<div id="binhex-syncthing" class="accordion-collapse collapse" data-bs-parent="#dockerAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p>Another useful container is <code>binhex-syncthing</code>. It allows you to synchronise files between your computers in a multitude of different syncing mechanisms.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/W2A-E1A5TO-1457.avif 1457w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/W2A-E1A5TO-1457.webp 1457w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/W2A-E1A5TO-1457.png" alt="" width="1457" height="696"></picture>
+					<p>Personally, I use it to synchronise important files between my 2 servers, which is then backed up to the cloud via <a href="#" data-bs-toggle="collapse" data-bs-target="#crashplan-pro">CrashPlan</a> to ensure all my photos, code and documents are kept safe.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/jRMsurTOtj-566.avif 566w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/jRMsurTOtj-566.webp 566w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/jRMsurTOtj-566.png" alt="" width="566" height="430"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://syncthing.net/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/DbXDvH_-Wc-50.avif 50w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/DbXDvH_-Wc-50.webp 50w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/DbXDvH_-Wc-50.png" class="no-borders" width="50" alt="" height="50"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="crashplanpro">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#crashplan-pro" aria-expanded="false" aria-controls="crashplan-pro">CrashPlanPRO</button>
+		</h2>
+		<div id="crashplan-pro" class="accordion-collapse collapse" data-bs-parent="#dockerAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p><a href="https://www.crashplan.com/" target="_blank">CrashPlan</a> is an affordable offsite backup solution for all your personal files which offers competitive pricing and supports all major operating systems. Personally, I have been using it for close to 10 years with no issues.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/9Y8YgG68e3-1272.avif 1272w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/9Y8YgG68e3-1272.webp 1272w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/9Y8YgG68e3-1272.png" alt="" width="1272" height="237"></picture>
+					<p>Running it as a Docker container allows me to upgrade my Unraid server with no need to reinstall the client once done. All you need to do is ensure that you map the same shares to the container (generally <code>/mnt/user/</code>) and you are protected.</p>
+					<p>They offer a WebUI to manage your backups too!</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/Ufkayq3Ew5-752.avif 752w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/Ufkayq3Ew5-752.webp 752w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/Ufkayq3Ew5-752.png" alt="" width="752" height="419"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://www.crashplan.com/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/43rJyIfv_J-50.avif 50w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/43rJyIfv_J-50.webp 50w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/43rJyIfv_J-50.png" class="no-borders" width="50" alt="" height="50"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="krusader">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#binhex-krusader" aria-expanded="false" aria-controls="binhex-krusader">Krusader</button>
+		</h2>
+		<div id="binhex-krusader" class="accordion-collapse collapse" data-bs-parent="#dockerAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p><a href="https://krusader.org/" target="_blank">Krusader</a> is an advanced twin panel (commander style) file manager for KDE Plasma and other desktops in the *nix world, like Midnight or Total Commander. It provides all the file management features you could possibly want.</p>
+					<p>Personally I make us of the <a href="https://hub.docker.com/r/binhex/arch-krusader" target="_blank">binhex-krusader</a> container, and it works well.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/Ughr2TrAoP-1371.avif 1371w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/Ughr2TrAoP-1371.webp 1371w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/Ughr2TrAoP-1371.jpeg" alt="" width="1371" height="449"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://krusader.org/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/B5ixxdsL3q-50.avif 50w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/B5ixxdsL3q-50.webp 50w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/B5ixxdsL3q-50.png" class="no-borders" width="50" alt="" height="50"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="photoprism-2">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#photoprism" aria-expanded="false" aria-controls="photoprism">PhotoPrism</button>
+		</h2>
+		<div id="photoprism" class="accordion-collapse collapse" data-bs-parent="#dockerAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p><a href="https://www.photoprism.app/" target="_blank">PhotoPrism</a> is an AI-Powered Photos App for the Decentralized Web. It makes use of the latest technologies to tag and find pictures automatically without getting in your way. You can run it at home, on a private server, or in the cloud.</p>
+					<p>PhotoPrism has some amazing features like auto-tagging, face detection, timelines, and so on. One of the coolest features is the ability to search your photos:</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/tKPRjcqfCm-1257.avif 1257w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/tKPRjcqfCm-1257.webp 1257w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/tKPRjcqfCm-1257.jpeg" alt="" width="1257" height="485"></picture>
+					<p>You can search on a single person, multiple people, locations, camera, date, etc.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/HEC0GXeYTp-1028.avif 1028w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/HEC0GXeYTp-1028.webp 1028w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/HEC0GXeYTp-1028.jpeg" alt="" width="1028" height="426"></picture>
+					<p>I would highly recommend checking it out.</p>
+				</div>
+				<div class="ms-2">
+					<a href="https://www.photoprism.app/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/EJX_ApQ6V6-50.avif 50w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/EJX_ApQ6V6-50.webp 50w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/EJX_ApQ6V6-50.png" class="no-borders" width="50" alt="" height="49"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="jdownloader-2">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#jdownloader" aria-expanded="false" aria-controls="jdownloader">jDownloader</button>
+		</h2>
+		<div id="jdownloader" class="accordion-collapse collapse" data-bs-parent="#dockerAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p><a href="https://jdownloader.org/" target="_blank">JDownloader</a> is a free, open-source download management tool with a huge community that makes downloading as easy and fast as it should be. Users can start, stop or pause downloads, set bandwith limitations, auto-extract archives and much more. It's an easy-to-extend framework that can save hours of your valuable time every day!</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/qmUgUAGUdx-824.avif 824w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/qmUgUAGUdx-824.webp 824w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/qmUgUAGUdx-824.jpeg" alt="" width="824" height="166"></picture>
+					<p>Used in conjunction with <a href="https://my.jdownloader.org/" target="_blank">MyJDownloader</a> you can easily send and manage downloads to your server through the provided Web UI.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/jZ_HtJ6tLs-997.avif 997w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/jZ_HtJ6tLs-997.webp 997w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/jZ_HtJ6tLs-997.jpeg" alt="" width="997" height="477"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://jdownloader.org/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/MrgDwuMg6f-50.avif 50w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/MrgDwuMg6f-50.webp 50w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/MrgDwuMg6f-50.png" class="no-borders" width="50" alt="" height="50"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="stirlingpdf">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#stirling-pdf" aria-expanded="false" aria-controls="stirling-pdf">StirlingPDF</button>
+		</h2>
+		<div id="stirling-pdf" class="accordion-collapse collapse" data-bs-parent="#dockerAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p><a href="https://www.stirlingpdf.com/" target="_blank">StirlingPDF</a> allows you to run over 50 powerful PDF tools — locally, securely, and on your own infrastructure.</p>
+					<p>They offer a free tier which seems to cover most use-cases, however there is a paid version of the application too which offers a lot more functionality should you need it.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/fGmXDN5gsH-1319.avif 1319w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/fGmXDN5gsH-1319.webp 1319w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/fGmXDN5gsH-1319.png" alt="" width="1319" height="468"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://www.stirlingpdf.com/" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/IVkJZqBEXC-50.avif 50w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/IVkJZqBEXC-50.webp 50w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/IVkJZqBEXC-50.png" class="no-borders" width="50" alt="" height="50"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header" id="watchyourlan">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#watch-your-lan" aria-expanded="false" aria-controls="watch-your-lan">WatchYourLAN</button>
+		</h2>
+		<div id="watch-your-lan" class="accordion-collapse collapse" data-bs-parent="#dockerAccordian">
+			<div class="accordion-body d-flex">
+				<div class="flex-fill">
+					<p><a href="https://github.com/aceberg/WatchYourLAN" target="_blank">WatchYourLAN</a> is a lightweight network IP scanner. Can be used to notify about new hosts and monitor host online/offline history.</p>
+					<p>This is useful for identifying new hosts on your network, or for simplify keeping track of your network devices.</p>
+					<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/ZsvbDCA65u-1135.avif 1135w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/ZsvbDCA65u-1135.webp 1135w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/ZsvbDCA65u-1135.png" alt="" width="1135" height="461"></picture>
+				</div>
+				<div class="ms-2">
+					<a href="https://github.com/aceberg/WatchYourLAN" target="_blank">
+						<picture><source type="image/avif" srcset="/blog/2025/2025-07-08/post/72eebDsQs3-50.avif 50w"><source type="image/webp" srcset="/blog/2025/2025-07-08/post/72eebDsQs3-50.webp 50w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-08/post/72eebDsQs3-50.png" class="no-borders" width="50" alt="" height="50"></picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="d-flex mb-3 prev-next">
+	<i class="bi bi-arrow-left-short"></i>
+	<span class="text-start">Previous<br><a href="/blog/2025/2025-07-07/post/">Manual appdata backups in Unraid</a></span>
+	
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+</div>
+
+
+<div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2025/2025-07-08/post/` was built on 2025-07-08T22:13:29.095Z -->
+		<script type="module" src="/dist/nH3-NcqK34.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
+	</body>
+</html>
