@@ -1,5 +1,5 @@
 ---
-title: Manual appdata backups in Unraid
+title: Automated appdata backups with Unraid
 date: 2025-07-07
 tags: [unraid]
 #banner: blue.png
@@ -19,11 +19,11 @@ backupAppdata() {
   echo "============================================="
   echo "Backing up :: $1"
   echo "============================================="
-  
+
   backupTargetRoot="/mnt/user/appdata-backups/nas/$1/$(date '+%Y-%m/')"
   backupZipFile="/mnt/user/appdata-backups/nas/$1/$(date '+%Y-%m/%F')-$1.zip"
   appRootDir="/mnt/user/appdata/$1/"
-  
+
   mkdir -p $backupTargetRoot
   rm -f $backupZipFile
   zip -r $backupZipFile $appRootDir

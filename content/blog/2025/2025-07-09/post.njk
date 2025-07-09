@@ -1,0 +1,62 @@
+---
+title: Automatic MariaDB Backups with Unraid
+date: 2025-07-08
+tags: [unraid]
+#banner: blue.png
+logo: unraid.png
+---
+
+<p>Below is a simple <code>shell</code> script that I created to run daily backups of all my <strong>MariaDB databases</strong> running on my Unraid server.</p>
+
+{% highlight "shell" %}
+#!/bin/sh
+
+backupdb() {
+  echo "============================================="
+  echo "Backing up :: $1"
+  echo "============================================="
+  
+  backupTargetRoot="/mnt/user/DB-Backups/nas/$1/$(date '+%Y-%m/')"
+  backupZipFile="/mnt/user/DB-Backups/nas/$1/$(date '+%Y-%m/%F')-$1.zip"
+  mysqlDumpFile="/mnt/user/DB-Backups/nas/$1/$(date '+%Y-%m/%F')-$1.sql"
+  
+  echo "  > creating backup root dir: ${backupTargetRoot}"
+  mkdir -p $backupTargetRoot
+  rm -f $backupZipFile
+  echo "  > dumping DB to SQL file..."
+  docker exec mariadb sh -c "exec mariadb-dump $1 -u<user> -p\"<pass>\"" > $mysqlDumpFile
+  echo "  > compressing backup file..."
+  zip $backupZipFile $mysqlDumpFile
+  echo "  > cleanup and permissions..."
+  rm $mysqlDumpFile
+  chmod -R 0777 $backupTargetRoot
+  echo "  > done"
+  echo ""
+}
+
+backupdb "RnGo"
+{% endhighlight %}
+
+<p>This script performs the following actions:</p>
+
+<ul>
+	<li>Dumps the contents of the DB to disk using the <a href="https://mariadb.com/docs/server/clients-and-utilities/backup-restore-and-import-clients/mariadb-dump" target="_blank">mariadb-dump</a> command (via docker)</li>
+	<li>Compresses the dumped file using <code>zip</code></li>
+	<li>Places the file in the specified output directory</li>
+	<li>Adjusts the files permissions (in my case to <code>0777</code>, you may want to change that)</li>
+	<li>Preforms some basic cleanup</li>
+</ul>
+
+<p>This will place the backup files in the <code>&lt;output-dir&gt;/&lt;db-name&gt;/yyyy-mm/</code> directory and name the zip file using <code>yyyy-mm-dd-&lt;db-name&gt;.zip</code> format.</p>
+
+<p>To use this script, you will need to replace the <code>&lt;user&gt;</code> and <code>&lt;pass&gt;</code> placeholders.</p>
+
+<p>Just append additional calls to the <code>backupdb</code> function to the end of the script to add additional databases.</p>
+
+<div class="alert alert-warning">
+	<strong>Note</strong>: the selected DB user needs to have access to each DB you wish to back up.
+</div>
+
+<p>Just add the script to your Unraid server using the <a href="/blog/2025/2025-07-08/post/">User Scripts</a> plugin, set a sensible schedule, and enjoy the automated backups.</p>
+
+<img src="./01.png" alt="">
