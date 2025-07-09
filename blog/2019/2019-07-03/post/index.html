@@ -314,8 +314,7 @@ pre[class*="language-diff-"] {
 </div>
 
 <blockquote>
-<p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
-{: .prompt-tip }</p>
+<p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
 </blockquote>
 <p>Today I will be covering getting up and running with <a href="https://nodered.org/">Node-RED</a> on your server. This process is slightly more involved compared to all the previous instals we have done so far, however this post aims to make it as simple as possible!</p>
 <h2 id="installing-node-js">Installing Node.js</h2>
@@ -331,8 +330,7 @@ pre[class*="language-diff-"] {
 <h2 id="installing-node-red">Installing Node-RED</h2>
 <p>Once we have Node.js installed we can move on to installing Node-RED, the below commands are taken from the <a href="https://nodered.org/docs/getting-started/local">official documentation</a>.</p>
 <blockquote>
-<p><strong>Note</strong>: you will need to run most of these commands as <code>sudo</code>
-{: .prompt-info }</p>
+<p><strong>Note</strong>: you will need to run most of these commands as <code>sudo</code></p>
 </blockquote>
 <p>You can install Node-RED with the below command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> --unsafe-perm node-red</code></pre>
@@ -382,8 +380,7 @@ pm2 startup systemd</code></pre>
 <p>Navigate to your Node-RED folder (in my case it was <code>/home/niemandr/.node-red</code>) and run this command to fix permissions:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">find</span> ~ <span class="token parameter variable">-type</span> d <span class="token parameter variable">-user</span> root <span class="token parameter variable">-exec</span> <span class="token function">sudo</span> <span class="token function">chown</span> <span class="token parameter variable">-R</span> <span class="token environment constant">$USER</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> +</code></pre>
 <blockquote>
-<p><strong>NOTE</strong>: you need to be in your Node-RED directory before running this command!
-{: .prompt-tip }</p>
+<p><strong>NOTE</strong>: you need to be in your Node-RED directory before running this command!</p>
 </blockquote>
 <h2 id="installing-palettes">Installing Palettes</h2>
 <p>Once you have fixed the permissions (covered above) you should be able to install any palettes normally through Node-RED.</p>
@@ -439,7 +436,7 @@ pm2 startup systemd</code></pre>
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2019/2019-07-03/post/` was built on 2025-07-08T23:28:23.614Z -->
+		<!-- This page `/blog/2019/2019-07-03/post/` was built on 2025-07-09T14:04:58.670Z -->
 		<script type="module" src="/dist/O9hroq7MfK.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

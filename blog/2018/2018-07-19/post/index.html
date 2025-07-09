@@ -312,15 +312,13 @@ pre[class*="language-diff-"] {
 </div>
 
 <blockquote>
-<p>This is one <strong><a href="/blog/2018/2018-06-27/post/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.
-{: .prompt-tip }</p>
+<p>This is one <strong><a href="/blog/2018/2018-06-27/post/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
 </blockquote>
 <p>Today we are going to make our Home Assistant deployment a bit smarter by adding in presence detection. For this I am going to be making use of the <a href="https://www.home-assistant.io/integrations/google_maps/">Google Maps Location Sharing</a> component as I find it to be more reliable than my old self-hosted OwnTracks instance, and both my wife's phone and mine already have Google Maps installed with location sharing enabled (so there is no need to install another application on Rae's phone).</p>
 <h2 id="core-configuration">Core Configuration</h2>
 <p>Below are the steps required to get up and running with the Google Maps Location Sharing component.</p>
 <blockquote>
-<p><strong>Note</strong>: I strongly recommend creating a new Google account to be used with Home Assistant for this, mainly due to the fact that you will need to share your location with it.
-{: .prompt-info }</p>
+<p><strong>Note</strong>: I strongly recommend creating a new Google account to be used with Home Assistant for this, mainly due to the fact that you will need to share your location with it.</p>
 </blockquote>
 <h3 id="google-account-configuration">Google Account Configuration</h3>
 <p>You will also need to enable <a href="https://myaccount.google.com/lesssecureapps?pli=1&amp;rapt=AEjHL4PmYNJjr7LhnWj_lt7RNWbWlRF2t9o63ABWOnZ4_hKtad_9LXD3C0v9ie3V7MeagABgpmi8r_v91ZUSqz64rMhfEoO86A">less secure application sign in</a> for the new account, along with approving the login on the <a href="https://myaccount.google.com/device-activity">device activity</a> overview page after your initial spin up of Home Assistant with Google Maps location sharing enabled.</p>
@@ -353,8 +351,7 @@ pre[class*="language-diff-"] {
 <h2 id="zones">Zones</h2>
 <p>Home Assistant allows us to configure custom zones through the <a href="https://www.home-assistant.io/integrations/zone/">zone component</a>.</p>
 <blockquote>
-<p>Zones allow you to specify certain regions on earth. When a device tracker sees a device to be within a zone, the state will take the name from the zone. Zones can also be used as a trigger or condition inside automation setups.
-{: .prompt-info }</p>
+<p>Zones allow you to specify certain regions on earth. When a device tracker sees a device to be within a zone, the state will take the name from the zone. Zones can also be used as a trigger or condition inside automation setups.</p>
 </blockquote>
 <p>Let's see this in action by defining a Gym zone to see how active I am (spoiler - not very).</p>
 <h3 id="creating-a-gym-zone">Creating a Gym zone</h3>
@@ -408,7 +405,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-07-19/post/` was built on 2025-07-08T23:28:23.611Z -->
+		<!-- This page `/blog/2018/2018-07-19/post/` was built on 2025-07-09T14:04:58.666Z -->
 		<script type="module" src="/dist/8mhuIgRH6w.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

@@ -343,8 +343,7 @@ pre[class*="language-diff-"] {
 <p>Once you have made the appropriate configuration changes for your home setup, upload the sketch to the ESP using the <a href="https://www.arduino.cc/en/software">Arduino software</a> and you are good to go.</p>
 <h2 id="the-enclosure">The enclosure</h2>
 <blockquote>
-<p><strong>Note</strong>: This step is optional. Thingiverse files <a href="https://www.thingiverse.com/thing:2542138">here</a>
-{: .prompt-tip }</p>
+<p><strong>Note</strong>: This step is optional. Thingiverse files <a href="https://www.thingiverse.com/thing:2542138">here</a></p>
 </blockquote>
 <p>Powering it off the battery was a lot simpler than using the 14v regulated power that comes into the main controller board of the gate, and less complex to hook up. The ESP8266 I have chosen requires 3.3v to operate and thus requires a buck converter to step down the 12-14v supplied by the gate's battery.</p>
 <picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/7Wu2RnzeJp-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/7Wu2RnzeJp-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/7Wu2RnzeJp-800.jpeg" alt="" width="800" height="564"></picture>
@@ -401,16 +400,15 @@ pre[class*="language-diff-"] {
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token key atrule">platform</span><span class="token punctuation">:</span> state
   <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.kitchen_door
-  <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">'off'</span>
-  <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+  <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">"off"</span>
+  <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token key atrule">service</span><span class="token punctuation">:</span> notify.pushbullet
   <span class="token key atrule">data</span><span class="token punctuation">:</span>
     <span class="token key atrule">message</span><span class="token punctuation">:</span> <span class="token string">"Kitchen door is closed"</span>
     <span class="token key atrule">title</span><span class="token punctuation">:</span> <span class="token string">"Kitchen Door"</span></code></pre>
 <blockquote>
-<p><strong>Note</strong> when using include_dir_list you need to have more than 1 file in the target directory - I tried using a single file and got all manner of errors from Home Assistant when loading my automation tasks<br>
-{: .prompt-info }</p>
+<p><strong>Note</strong> when using include_dir_list you need to have more than 1 file in the target directory - I tried using a single file and got all manner of errors from Home Assistant when loading my automation tasks\</p>
 </blockquote>
 <p>I reference my automation tasks in Home Assistant using the below statement paying special attention to the warning above:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">automation</span><span class="token punctuation">:</span> <span class="token tag">!include_dir_list</span> config/automation/</code></pre>
@@ -446,7 +444,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-09-19/post/` was built on 2025-07-08T23:28:23.608Z -->
+		<!-- This page `/blog/2017/2017-09-19/post/` was built on 2025-07-09T14:04:58.663Z -->
 		<script type="module" src="/dist/-3sYj4V6yv.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

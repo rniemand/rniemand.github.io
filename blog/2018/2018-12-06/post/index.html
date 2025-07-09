@@ -312,8 +312,7 @@ pre[class*="language-diff-"] {
 </div>
 
 <blockquote>
-<p>This is one <strong><a href="/blog/2018/2018-06-27/post/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.
-{: .prompt-tip }</p>
+<p>This is one <strong><a href="/blog/2018/2018-06-27/post/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
 </blockquote>
 <p>Today I would like to tackle breaking up your configuration file (<code>configuration.yaml</code>) into smaller, more manageable parts to make configuring Home Assistant a lot easier.</p>
 <h2 id="home-assistant-yaml-commands">Home Assistant YAML Commands</h2>
@@ -333,23 +332,23 @@ pre[class*="language-diff-"] {
 </ul>
 <p>To achieve this I will be making use of the <code>!include</code> and <code>!include_dir_list</code> commands and convert configuration like this:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">switch</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
-     <span class="token key atrule">command_topic</span><span class="token punctuation">:</span> <span class="token string">"cmnd/xmas/POWER"</span>
-     <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"stat/xmas/POWER"</span>
-     <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"ON"</span>
-     <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"OFF"</span>
-     <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"XMas Lights"</span>
-     <span class="token key atrule">optimistic</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-     <span class="token key atrule">retain</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
+    <span class="token key atrule">command_topic</span><span class="token punctuation">:</span> <span class="token string">"cmnd/xmas/POWER"</span>
+    <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"stat/xmas/POWER"</span>
+    <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"ON"</span>
+    <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"OFF"</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"XMas Lights"</span>
+    <span class="token key atrule">optimistic</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">retain</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
 
-   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
-     <span class="token key atrule">command_topic</span><span class="token punctuation">:</span> <span class="token string">"cmnd/windowlights/POWER"</span>
-     <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"stat/windowlights/POWER"</span>
-     <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"ON"</span>
-     <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"OFF"</span>
-     <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"Window Lights"</span>
-     <span class="token key atrule">optimistic</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-     <span class="token key atrule">retain</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
+    <span class="token key atrule">command_topic</span><span class="token punctuation">:</span> <span class="token string">"cmnd/windowlights/POWER"</span>
+    <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"stat/windowlights/POWER"</span>
+    <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"ON"</span>
+    <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"OFF"</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"Window Lights"</span>
+    <span class="token key atrule">optimistic</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">retain</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
 <p>into this:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">switch</span><span class="token punctuation">:</span> <span class="token tag">!include_dir_list</span> /config/switches</code></pre>
 <h2 id="include-dir-list">!include_dir_list</h2>
@@ -361,14 +360,14 @@ pre[class*="language-diff-"] {
 </ul>
 <p>Let's use this switch configuration as an example:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">switch</span><span class="token punctuation">:</span>
-   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
-     <span class="token key atrule">command_topic</span><span class="token punctuation">:</span> <span class="token string">"cmnd/xmas/POWER"</span>
-     <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"stat/xmas/POWER"</span>
-     <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"ON"</span>
-     <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"OFF"</span>
-     <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"XMas Lights"</span>
-     <span class="token key atrule">optimistic</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
-     <span class="token key atrule">retain</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
+  <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
+    <span class="token key atrule">command_topic</span><span class="token punctuation">:</span> <span class="token string">"cmnd/xmas/POWER"</span>
+    <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"stat/xmas/POWER"</span>
+    <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"ON"</span>
+    <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"OFF"</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"XMas Lights"</span>
+    <span class="token key atrule">optimistic</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+    <span class="token key atrule">retain</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
 <p>This would become a new file called <code>/config/switches/xmas.yaml</code> with the following contents:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
 <span class="token key atrule">command_topic</span><span class="token punctuation">:</span> <span class="token string">"cmnd/xmas/POWER"</span>
@@ -380,8 +379,7 @@ pre[class*="language-diff-"] {
 <span class="token key atrule">retain</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
 <p>Note the lack of spacing in the new file, and would be included with the following statement in your main <code>configuration.yaml</code> file: <code>switch: !include_dir_list config/switches</code></p>
 <blockquote>
-<p><strong>Note</strong>: I got an error when testing this out with only 1 file in the target folder, this went away as soon as I added a second one though!
-{: .prompt-info }</p>
+<p><strong>Note</strong>: I got an error when testing this out with only 1 file in the target folder, this went away as soon as I added a second one though!</p>
 </blockquote>
 <h2 id="include">!include</h2>
 <p>The other command I use a lot when breaking up my configuration is the <code>!include</code> command, this essentially places the targeted file directly in place of the !include placeholder.</p>
@@ -402,8 +400,7 @@ pre[class*="language-diff-"] {
 <picture><source type="image/avif" srcset="/blog/2018/2018-12-06/post/sfESbPPIZ0-723.avif 723w"><source type="image/webp" srcset="/blog/2018/2018-12-06/post/sfESbPPIZ0-723.webp 723w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-06/post/sfESbPPIZ0-723.png" alt="" width="723" height="185"></picture>
 <p>This allows me to keep my group definitions smaller, keep similar entities grouped together and gives me the ability to quickly disable a collection of groups by just simply appending an _ to the end of a group file's name.</p>
 <blockquote>
-<p><strong>Note</strong> I strongly recommend keeping all your view definitions in the same file, this allows you to control the order that they appear in as the files are loaded alphabetically from the configuration directory when using !includedirmerge_named
-{: .prompt-tip }</p>
+<p><strong>Note</strong> I strongly recommend keeping all your view definitions in the same file, this allows you to control the order that they appear in as the files are loaded alphabetically from the configuration directory when using !includedirmerge_named</p>
 </blockquote>
 <h2 id="tips">Tips</h2>
 <p>Here are some useful tips to consider when breaking up your Home Assistant configuration:</p>
@@ -440,7 +437,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-12-06/post/` was built on 2025-07-08T23:28:23.612Z -->
+		<!-- This page `/blog/2018/2018-12-06/post/` was built on 2025-07-09T14:04:58.667Z -->
 		<script type="module" src="/dist/7cNegyUH43.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

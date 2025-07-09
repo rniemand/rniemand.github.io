@@ -332,8 +332,7 @@ pre[class*="language-diff-"] {
 <p>Generally speaking you should be able to just install the add-on and use it as-is.</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post1/JL6GMP0awP-567.avif 567w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post1/JL6GMP0awP-567.webp 567w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post1/JL6GMP0awP-567.png" alt="" width="567" height="295"></picture>
 <blockquote>
-<p><strong>NOTE</strong>: it may be worthwhile disabling automatic updates with ESPHome as there have been a couple of breaking changes in the last 2 updates.
-{: .prompt-warning }</p>
+<p><strong>NOTE</strong>: it may be worthwhile disabling automatic updates with ESPHome as there have been a couple of breaking changes in the last 2 updates.</p>
 </blockquote>
 <h3 id="using-secrets">Using Secrets</h3>
 <p>I strongly suggest making use of secrets when working with ESPHome (accessed through the top right navigation button):</p>
@@ -357,7 +356,7 @@ pre[class*="language-diff-"] {
       <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"${display_name} Humidity"</span>
       <span class="token key atrule">id</span><span class="token punctuation">:</span> humidity_boys_room
     <span class="token key atrule">update_interval</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> collection_interval_dht
-    
+
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> adc
     <span class="token key atrule">pin</span><span class="token punctuation">:</span> A0
     <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"${display_name} Brightness"</span>
@@ -365,7 +364,7 @@ pre[class*="language-diff-"] {
     <span class="token key atrule">update_interval</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> collection_interval_ldr
     <span class="token key atrule">filters</span><span class="token punctuation">:</span>
       <span class="token punctuation">-</span> <span class="token key atrule">multiply</span><span class="token punctuation">:</span> <span class="token number">3.3</span>
-      
+
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> wifi_signal
     <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"${display_name} WiFi"</span>
     <span class="token key atrule">update_interval</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> collection_interval_wifi_signal</code></pre>
@@ -393,7 +392,7 @@ pre[class*="language-diff-"] {
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
 <span class="token key atrule">master</span><span class="token punctuation">:</span> pty<span class="token punctuation">,</span>raw<span class="token punctuation">,</span>echo=0<span class="token punctuation">,</span>link=/tmp/ttyZ2M<span class="token punctuation">,</span>mode=777
 <span class="token key atrule">slave</span><span class="token punctuation">:</span> tcp<span class="token punctuation">-</span>listen<span class="token punctuation">:</span><span class="token number">8485</span><span class="token punctuation">,</span>keepalive<span class="token punctuation">,</span>nodelay<span class="token punctuation">,</span>reuseaddr<span class="token punctuation">,</span>keepidle=1<span class="token punctuation">,</span>keepintvl=1<span class="token punctuation">,</span>keepcnt=5
-<span class="token key atrule">options</span><span class="token punctuation">:</span> <span class="token string">'-d -d'</span>
+<span class="token key atrule">options</span><span class="token punctuation">:</span> <span class="token string">"-d -d"</span>
 <span class="token key atrule">log</span><span class="token punctuation">:</span> <span class="token boolean important">false</span></code></pre>
 <h4 id="mqtt">mqtt</h4>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">base_topic</span><span class="token punctuation">:</span> zigbee2mqtt
@@ -403,8 +402,7 @@ pre[class*="language-diff-"] {
 <h4 id="serial">serial</h4>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">port</span><span class="token punctuation">:</span> /dev/ttyUSB0</code></pre>
 <blockquote>
-<p>In Home Assistant to work out the path to your specific USB Stick go to <strong>Settings</strong> -&gt; <strong>System</strong> -&gt; <strong>Hardware</strong>, click the ellipse at the top of the UI and select <strong>All Hardware</strong>.
-{: .prompt-tip }</p>
+<p>In Home Assistant to work out the path to your specific USB Stick go to <strong>Settings</strong> -&gt; <strong>System</strong> -&gt; <strong>Hardware</strong>, click the ellipse at the top of the UI and select <strong>All Hardware</strong>.</p>
 </blockquote>
 <h4 id="additional">additional</h4>
 <p>You will also need to define a <code>network_key</code> for your network - this can be done through the &quot;<strong>edit yaml</strong>&quot; option on the configuration screen, ensure that you backup your network key somewhere safe in case you need to do a reinstall - it will save you from having to re-adopt all your devices again.</p>
@@ -469,7 +467,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2022/2022-06-07/post1/` was built on 2025-07-08T23:28:23.616Z -->
+		<!-- This page `/blog/2022/2022-06-07/post1/` was built on 2025-07-09T14:04:58.674Z -->
 		<script type="module" src="/dist/O-RBkxymlf.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

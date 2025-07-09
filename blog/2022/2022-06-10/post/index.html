@@ -313,8 +313,7 @@ pre[class*="language-diff-"] {
 
 <p>In this post I will explore the concepts of Helpers in Home Assistant and the potential that they can unlock with your automations.</p>
 <blockquote>
-<p>It is worthwhile adopting a naming convention for your automation to make discovery \ searching easier in the future, I tend to follow an &quot;<code>&lt;object&gt;</code> - <code>&lt;action&gt;</code> - <code>&lt;condition&gt;</code>&quot; pattern.
-{: .prompt-tip }</p>
+<p>It is worthwhile adopting a naming convention for your automation to make discovery \ searching easier in the future, I tend to follow an &quot;<code>&lt;object&gt;</code> - <code>&lt;action&gt;</code> - <code>&lt;condition&gt;</code>&quot; pattern.</p>
 </blockquote>
 <p>Let’s start.</p>
 <h1 id="required-integrations">Required Integrations</h1>
@@ -339,8 +338,7 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">before</span><span class="token punctuation">:</span> sunrise</code></pre>
 <p>Similar to <strong>Before Sunrise</strong>, however I subtract 10 min from “sunset” to ensure that my lights are on just a little bit before.</p>
 <blockquote>
-<p>If you are using any of the before modifiers make sure that you take them into consideration for your automations.
-{: .prompt-info }</p>
+<p>If you are using any of the before modifiers make sure that you take them into consideration for your automations.</p>
 </blockquote>
 <h2 id="workday">Workday</h2>
 <p>The <a href="https://www.home-assistant.io/integrations/workday/">workday</a> binary sensor indicates whether the current day is a workday or not. It allows specifying which days of the week will count as workdays and also uses the Python module <a href="https://pypi.org/project/holidays/">holidays</a> to incorporate information about region-specific public holidays.</p>
@@ -375,7 +373,7 @@ pre[class*="language-diff-"] {
 <h2 id="office-routine-workday-start">Office - Routine - Workday Start</h2>
 <p>Simple automation that uses a Date Time helper in combination with the Workday sensor to turn on the lights \ plugs in my office when my work day starts.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Office <span class="token punctuation">-</span> Routine <span class="token punctuation">-</span> Workday Start
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> time
     <span class="token key atrule">at</span><span class="token punctuation">:</span> input_datetime.workday_start_richard
@@ -384,10 +382,10 @@ pre[class*="language-diff-"] {
     <span class="token key atrule">conditions</span><span class="token punctuation">:</span>
       <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> state
         <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.is_workday
-        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
       <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> state
         <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> input_boolean.enable_workday_automations
-        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">service</span><span class="token punctuation">:</span> light.turn_on
     <span class="token key atrule">data</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
@@ -409,19 +407,19 @@ pre[class*="language-diff-"] {
 <h2 id="sam-school-day-start-06-45">Sam - School Day - Start (06:45)</h2>
 <p>On school days I use this automation to ensure that my daughter is up for 7:00 am, this makes use of the <strong>Is School Day</strong> sensor and basically just turns on her lights in the morning:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Sam <span class="token punctuation">-</span> School Day <span class="token punctuation">-</span> Start (06<span class="token punctuation">:</span>45)
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> time
-    <span class="token key atrule">at</span><span class="token punctuation">:</span> <span class="token string">'06:45:00'</span>
+    <span class="token key atrule">at</span><span class="token punctuation">:</span> <span class="token string">"06:45:00"</span>
 <span class="token key atrule">condition</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> and
     <span class="token key atrule">conditions</span><span class="token punctuation">:</span>
       <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> state
         <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.is_workday
-        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
       <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> state
         <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> input_boolean.school_automation
-        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">service</span><span class="token punctuation">:</span> light.turn_on
     <span class="token key atrule">data</span><span class="token punctuation">:</span>
@@ -442,21 +440,21 @@ pre[class*="language-diff-"] {
 <h3 id="set-scene-sam-bedtime-weekends">Set Scene - Sam Bedtime - Weekends</h3>
 <p>This automation makes use of the Workday sensor along with dynamic times to activate a specified scene on the weekends for my daughter.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Set Scene <span class="token punctuation">-</span> Sam Bedtime <span class="token punctuation">-</span> Weekends
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> time
     <span class="token key atrule">at</span><span class="token punctuation">:</span> input_datetime.sam_bedtime_weekend
 <span class="token key atrule">condition</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> state
     <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.is_school_night
-    <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">'off'</span>
+    <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">"off"</span>
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.sam_bedtime
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
 <h3 id="set-scene-sam-bedtime-school-automation-on">Set Scene - Sam Bedtime - School Automation (On)</h3>
 <p>Similar to the above this automation will turn off Sam's lights at the appropriate time in the evenings on a school night.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Set Scene <span class="token punctuation">-</span> Sam Bedtime <span class="token punctuation">-</span> School Automation (On)
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> time
     <span class="token key atrule">at</span><span class="token punctuation">:</span> input_datetime.sam_bedtime_school_night
@@ -465,17 +463,17 @@ pre[class*="language-diff-"] {
     <span class="token key atrule">conditions</span><span class="token punctuation">:</span>
       <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> state
         <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> input_boolean.school_automation
-        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
       <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> state
         <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.is_school_night
-        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.sam_bedtime
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
 <h3 id="set-scene-sam-bedtime-school-automation-off">Set Scene - Sam Bedtime - School Automation (Off)</h3>
 <p>Helper automation to cater for school specific off days when Sam can stay up a bit later in the evenings.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Set Scene <span class="token punctuation">-</span> Sam Bedtime <span class="token punctuation">-</span> School Automation (Off)
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> time
     <span class="token key atrule">at</span><span class="token punctuation">:</span> input_datetime.sam_bedtime_weekend
@@ -484,10 +482,10 @@ pre[class*="language-diff-"] {
     <span class="token key atrule">conditions</span><span class="token punctuation">:</span>
       <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> state
         <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> input_boolean.school_automation
-        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">'off'</span>
+        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">"off"</span>
       <span class="token punctuation">-</span> <span class="token key atrule">condition</span><span class="token punctuation">:</span> state
         <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.is_school_night
-        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+        <span class="token key atrule">state</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.sam_bedtime
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
@@ -499,12 +497,12 @@ pre[class*="language-diff-"] {
 <h3 id="external-lights-turn-off-mornings">External - Lights - Turn Off (Mornings)</h3>
 <p>Dynamic automation to turn off lights based on the sunrise.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> External <span class="token punctuation">-</span> Lights <span class="token punctuation">-</span> Turn Off (Mornings)
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> state
     <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.is_daytime
-    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">'off'</span>
-    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">"off"</span>
+    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
     <span class="token key atrule">for</span><span class="token punctuation">:</span>
       <span class="token key atrule">hours</span><span class="token punctuation">:</span> <span class="token number">0</span>
       <span class="token key atrule">minutes</span><span class="token punctuation">:</span> <span class="token number">5</span>
@@ -526,12 +524,12 @@ pre[class*="language-diff-"] {
 <h3 id="external-lights-turn-on-evenings">External - Lights - Turn On (Evenings)</h3>
 <p>Dynamic automation used to turn on lights based on the sunset.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> External <span class="token punctuation">-</span> Lights <span class="token punctuation">-</span> Turn On (Evenings)
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> state
     <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.is_evening
-    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">'off'</span>
-    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">"off"</span>
+    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
 <span class="token key atrule">condition</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">service</span><span class="token punctuation">:</span> switch.turn_on
@@ -542,12 +540,12 @@ pre[class*="language-diff-"] {
 <h3 id="dining-area-lights-turn-off-display-cabinet-mornings">Dining Area - Lights - Turn Off - Display Cabinet (Mornings)</h3>
 <p>Helper automation to ensure that specific lights are turned off regardless of sunrise \ sunset.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Dining Area <span class="token punctuation">-</span> Lights <span class="token punctuation">-</span> Turn Off <span class="token punctuation">-</span> Display Cabinet (Mornings)
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> state
     <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.is_daytime
-    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">'off'</span>
-    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">"off"</span>
+    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
     <span class="token key atrule">for</span><span class="token punctuation">:</span>
       <span class="token key atrule">hours</span><span class="token punctuation">:</span> <span class="token number">0</span>
       <span class="token key atrule">minutes</span><span class="token punctuation">:</span> <span class="token number">5</span>
@@ -562,12 +560,12 @@ pre[class*="language-diff-"] {
 <h2 id="changing-lounge-clock-scene">Changing Lounge Clock Scene</h2>
 <p>Another use for the Times of Day integration is to adjust the style of my <strong><a href="/blog/2022/2022-06-07/post2/">lounge clock</a></strong>, making it more visible during the day, and dimming it in the evenings. Below are a couple of the automations I use for that:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Lounge Clock <span class="token punctuation">-</span> Set Scene <span class="token punctuation">-</span> Early Evening
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> state
     <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.is_evening
-    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">'off'</span>
-    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
+    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">"off"</span>
+    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
 <span class="token key atrule">condition</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">delay</span><span class="token punctuation">:</span>
@@ -578,10 +576,10 @@ pre[class*="language-diff-"] {
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.lounge_clock_early_evening
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Lounge Clock <span class="token punctuation">-</span> Set Scene <span class="token punctuation">-</span> Early Morning
-<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">''</span>
+<span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> time
-    <span class="token key atrule">at</span><span class="token punctuation">:</span> <span class="token string">'07:00:00'</span>
+    <span class="token key atrule">at</span><span class="token punctuation">:</span> <span class="token string">"07:00:00"</span>
 <span class="token key atrule">condition</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.lounge_clock_early_morning
@@ -614,7 +612,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2022/2022-06-10/post/` was built on 2025-07-08T23:28:23.617Z -->
+		<!-- This page `/blog/2022/2022-06-10/post/` was built on 2025-07-09T14:04:58.674Z -->
 		<script type="module" src="/dist/gmv4hJ6n7Z.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

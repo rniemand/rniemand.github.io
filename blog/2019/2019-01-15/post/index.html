@@ -314,8 +314,7 @@ pre[class*="language-diff-"] {
 
 <p>Today I am going to quickly cover getting a php script up and running in Docker. In case you are unfamiliar with Docker:</p>
 <blockquote>
-<p>Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.
-{: .prompt-info }</p>
+<p>Docker is a tool designed to make it easier to create, deploy, and run applications by using containers. Containers allow a developer to package up an application with all of the parts it needs, such as libraries and other dependencies, and ship it all out as one package.</p>
 </blockquote>
 <p>Before getting started you will need to make sure that the following requirements are met:</p>
 <ul>
@@ -332,8 +331,7 @@ pre[class*="language-diff-"] {
 <p>Once you have found a base container to work with, you will need to choose a minimum version of the container to use with your application. This is simply done by scrolling down on the containers information page and looking for the tags section on the Description tab.</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-15/post/y2Tlb1h7ji-796.avif 796w"><source type="image/webp" srcset="/blog/2019/2019-01-15/post/y2Tlb1h7ji-796.webp 796w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-15/post/y2Tlb1h7ji-796.png" alt="" width="796" height="292"></picture>
 <blockquote>
-<p><strong>Note</strong> The tag versions go from more specific to super vague when reading left to right. You can use a very restrictive tag like 7.3.0-apache to lock into a specific PHP version, or 7-apache for the latest version of PHP 7.
-{: .prompt-tip }</p>
+<p><strong>Note</strong> The tag versions go from more specific to super vague when reading left to right. You can use a very restrictive tag like 7.3.0-apache to lock into a specific PHP version, or 7-apache for the latest version of PHP 7.</p>
 </blockquote>
 <p>In my case I am going to go with <code>7.3.0-apache</code>.</p>
 <p>This will form the base container we are going to use for our application and we will refer to this as the FROM directive in our Dockerfile later on.</p>
@@ -358,8 +356,7 @@ pre[class*="language-diff-"] {
 <pre><code>docker build -t hello-world .
 </code></pre>
 <blockquote>
-<p><strong>Note</strong> I use <code>.</code> here are is am already in the folder containing the Dockerfile
-{: .prompt-info }</p>
+<p><strong>Note</strong> I use <code>.</code> here are is am already in the folder containing the Dockerfile</p>
 </blockquote>
 <p>This will interrogate your Dockerfile and pull down all the required images to build your container (this may take a while the first time you do this).</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-15/post/4yeH8ddKZ8-805.avif 805w"><source type="image/webp" srcset="/blog/2019/2019-01-15/post/4yeH8ddKZ8-805.webp 805w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-15/post/4yeH8ddKZ8-805.png" alt="" width="805" height="466"></picture>
@@ -378,8 +375,7 @@ pre[class*="language-diff-"] {
 <pre><code>docker run -p 5001:80 -v C:\Users\niema\Desktop\docker\src\:/var/www/html hello-world
 </code></pre>
 <blockquote>
-<p><strong>Note</strong> you will need to replace C:\Users\niema\Desktop\docker\src\ with your desired source directory.
-{: .prompt-tip }</p>
+<p><strong>Note</strong> you will need to replace C:\Users\niema\Desktop\docker\src\ with your desired source directory.</p>
 </blockquote>
 <p>Now any changes that we make to index.php are reflected in our application.</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-15/post/ZAtCzjfGn--264.avif 264w"><source type="image/webp" srcset="/blog/2019/2019-01-15/post/ZAtCzjfGn--264.webp 264w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-15/post/ZAtCzjfGn--264.png" alt="" width="264" height="82"></picture>
@@ -411,7 +407,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2019/2019-01-15/post/` was built on 2025-07-08T23:28:23.613Z -->
+		<!-- This page `/blog/2019/2019-01-15/post/` was built on 2025-07-09T14:04:58.667Z -->
 		<script type="module" src="/dist/gsA_JYXIxO.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

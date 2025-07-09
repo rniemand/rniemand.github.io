@@ -318,8 +318,7 @@ pre[class*="language-diff-"] {
 <p>Installing <code>docsify</code> globally if you do not already have it installed:</p>
 <pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">npm</span> i docsify-cli <span class="token parameter variable">-g</span></code></pre>
 <blockquote>
-<p>If you decide to install <code>docsify</code> globally, you only need to run the above command once!
-{: .prompt-note }</p>
+<p>If you decide to install <code>docsify</code> globally, you only need to run the above command once!</p>
 </blockquote>
 <h2 id="initializing-docsify">Initializing docsify</h2>
 <p>To add <code>docsify</code> to your project simply naviate to your projects root directory and issue the following command where <code>./docs</code> is the name of the directory you wish to save your documentation to:</p>
@@ -330,35 +329,34 @@ pre[class*="language-diff-"] {
 <p>This will serve your documentation on <a href="http://localhost:3000">http://localhost:3000</a> by default.</p>
 <h1 id="configuring-docsify">Configuring docsify</h1>
 <p>All core configuration for <code>docsify</code> is done in the <code>index.html</code> file using the <code>window.$docsify</code> script object, I generally configure the following when starting documentation for a new project:</p>
-<pre class="language-js" tabindex="0"><code class="language-js">  window<span class="token punctuation">.</span>$docsify <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">'PROJECT_NAME'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">repo</span><span class="token operator">:</span> <span class="token string">'rniemand/RepoSlug'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">loadSidebar</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">maxLevel</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">subMaxLevel</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">externalLinkRel</span><span class="token operator">:</span> <span class="token string">'_blank'</span>
-  <span class="token punctuation">}</span></code></pre>
+<pre class="language-js" tabindex="0"><code class="language-js">window<span class="token punctuation">.</span>$docsify <span class="token operator">=</span> <span class="token punctuation">{</span>
+	<span class="token literal-property property">name</span><span class="token operator">:</span> <span class="token string">"PROJECT_NAME"</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">repo</span><span class="token operator">:</span> <span class="token string">"rniemand/RepoSlug"</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">loadSidebar</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">maxLevel</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">subMaxLevel</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">externalLinkRel</span><span class="token operator">:</span> <span class="token string">"_blank"</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 <p>You can see a full list of all configuration options <a href="https://docsify.js.org/#/configuration">here</a>.</p>
 <h1 id="themes">Themes</h1>
 <p>You can theme <code>docsify</code> by simply including a reference to the theme <code>css</code> file you would like to use:</p>
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token comment">&lt;!-- Replace --></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
 
 <span class="token comment">&lt;!-- with --></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css<span class="token punctuation">"</span></span><span class="token punctuation">></span></span></code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span></code></pre>
 <p>You can see all possible theme configuration options <a href="https://docsify.js.org/#/themes">here</a>.</p>
 <blockquote>
-<p>Additional themes can be found on <a href="https://jhildenbiddle.github.io/docsify-themeable/#/">docsify-themeable</a>!
-{: .prompt-tip }</p>
+<p>Additional themes can be found on <a href="https://jhildenbiddle.github.io/docsify-themeable/#/">docsify-themeable</a>!</p>
 </blockquote>
 <h1 id="side-navigation">Side Navigation</h1>
 <p>If you would like to customize the side navigation for your documentation you can add <code>_sidebar.md</code> to your root documentation directory.</p>
 <p>Generally the sidebar is used to place an list of links to make navigating your documentation a lot easier, you can use the global <code>$docsify</code> object to configure the behaviour of the sidebar:</p>
-<pre class="language-js" tabindex="0"><code class="language-js">  window<span class="token punctuation">.</span>$docsify <span class="token operator">=</span> <span class="token punctuation">{</span>
-    <span class="token literal-property property">loadSidebar</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">maxLevel</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">subMaxLevel</span><span class="token operator">:</span> <span class="token number">3</span>
-  <span class="token punctuation">}</span></code></pre>
+<pre class="language-js" tabindex="0"><code class="language-js">window<span class="token punctuation">.</span>$docsify <span class="token operator">=</span> <span class="token punctuation">{</span>
+	<span class="token literal-property property">loadSidebar</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">maxLevel</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
+	<span class="token literal-property property">subMaxLevel</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 <h1 id="syntax-highlighting">Syntax Highlighting</h1>
 <p>Docsify makes use of <a href="https://prismjs.com/">prismjs</a> for it's syntax highlighting support and comes with a couple of pre-installed languages, you may find the need to add in additional <code>grammar</code> files to work for your project.</p>
 <p>You can browse all supported <a href="https://cdn.jsdelivr.net/npm/prismjs@1/components/">grammar files here</a> and can include them in your documentation using the following <code>HTML</code> snippet:</p>
@@ -409,13 +407,13 @@ pre[class*="language-diff-"] {
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
 <p>Configuration:</p>
 <pre class="language-js" tabindex="0"><code class="language-js">window<span class="token punctuation">.</span>$docsify <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token comment">// docsify-copy-code (defaults)</span>
-  <span class="token literal-property property">copyCode</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token literal-property property">buttonText</span> <span class="token operator">:</span> <span class="token string">'Copy to clipboard'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">errorText</span>  <span class="token operator">:</span> <span class="token string">'Error'</span><span class="token punctuation">,</span>
-    <span class="token literal-property property">successText</span><span class="token operator">:</span> <span class="token string">'Copied'</span>
-  <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre>
+	<span class="token comment">// docsify-copy-code (defaults)</span>
+	<span class="token literal-property property">copyCode</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token literal-property property">buttonText</span><span class="token operator">:</span> <span class="token string">"Copy to clipboard"</span><span class="token punctuation">,</span>
+		<span class="token literal-property property">errorText</span><span class="token operator">:</span> <span class="token string">"Error"</span><span class="token punctuation">,</span>
+		<span class="token literal-property property">successText</span><span class="token operator">:</span> <span class="token string">"Copied"</span><span class="token punctuation">,</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 <h2 id="tabs">Tabs</h2>
 <p>The <a href="https://docsify.js.org/#/plugins?id=tabs">tabs</a> plugin allows you to define and use tabs in an effort to reduce the length of generated pages:</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-12-22/post/-CG_dwkU3J-808.avif 808w"><source type="image/webp" srcset="/blog/2022/2022-12-22/post/-CG_dwkU3J-808.webp 808w"><img loading="lazy" decoding="async" src="/blog/2022/2022-12-22/post/-CG_dwkU3J-808.png" alt="" width="808" height="225"></picture>
@@ -423,14 +421,14 @@ pre[class*="language-diff-"] {
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/npm/docsify-tabs@1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
 <p>Configuration:</p>
 <pre class="language-js" tabindex="0"><code class="language-js">window<span class="token punctuation">.</span>$docsify <span class="token operator">=</span> <span class="token punctuation">{</span>
-  <span class="token comment">// ...</span>
-  <span class="token literal-property property">tabs</span><span class="token operator">:</span> <span class="token punctuation">{</span>
-    <span class="token literal-property property">persist</span>    <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>      <span class="token comment">// default</span>
-    <span class="token literal-property property">sync</span>       <span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>      <span class="token comment">// default</span>
-    <span class="token literal-property property">theme</span>      <span class="token operator">:</span> <span class="token string">'classic'</span><span class="token punctuation">,</span> <span class="token comment">// default</span>
-    <span class="token literal-property property">tabComments</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>      <span class="token comment">// default</span>
-    <span class="token literal-property property">tabHeadings</span><span class="token operator">:</span> <span class="token boolean">true</span>       <span class="token comment">// default</span>
-  <span class="token punctuation">}</span>
+	<span class="token comment">// ...</span>
+	<span class="token literal-property property">tabs</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token literal-property property">persist</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// default</span>
+		<span class="token literal-property property">sync</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// default</span>
+		<span class="token literal-property property">theme</span><span class="token operator">:</span> <span class="token string">"classic"</span><span class="token punctuation">,</span> <span class="token comment">// default</span>
+		<span class="token literal-property property">tabComments</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// default</span>
+		<span class="token literal-property property">tabHeadings</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// default</span>
+	<span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 <h1 id="github-pages">GitHub Pages</h1>
 <p>There are multiple deployment options available when using <code>docsify</code>, however the mpst apt one for me is the built in <strong>pages</strong> support from GitHub.</p>
@@ -469,7 +467,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2022/2022-12-22/post/` was built on 2025-07-08T23:28:23.617Z -->
+		<!-- This page `/blog/2022/2022-12-22/post/` was built on 2025-07-09T14:04:58.675Z -->
 		<script type="module" src="/dist/0IZRIwuW5j.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

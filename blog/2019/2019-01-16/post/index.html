@@ -347,9 +347,9 @@ pre[class*="language-diff-"] {
 </ul>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/g1LwwdtyEq-503.avif 503w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/g1LwwdtyEq-503.webp 503w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/g1LwwdtyEq-503.png" alt="" width="503" height="125"></picture>
 <p>Execute a simple JavaScript code block to schedule the reset message</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">let</span> offTime <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1000</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'door_back_offAt'</span><span class="token punctuation">,</span> offTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
-flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'door_back_state'</span><span class="token punctuation">,</span> <span class="token string">'OPEN'</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">let</span> offTime <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1000</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"door_back_offAt"</span><span class="token punctuation">,</span> offTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
+flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"door_back_state"</span><span class="token punctuation">,</span> <span class="token string">"OPEN"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
 <h3 id="send-reset-message">Send Reset Message</h3>
 <p>The flow to send the reset message looks like this:</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.avif 1249w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.webp 1249w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.png" alt="" width="1249" height="231"></picture>
@@ -357,23 +357,23 @@ flow<span class="token punctuation">.</span><span class="token function">set</sp
 <li>At an interval of <code>10 seconds</code></li>
 </ul>
 <p>Run a script to determine if we need to send a reset message</p>
-<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">let</span> doorState <span class="token operator">=</span> flow<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'door_back_state'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">let</span> turnOffAt <span class="token operator">=</span> flow<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'door_back_offAt'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">let</span> newState <span class="token operator">=</span> <span class="token string">'IGNORE'</span><span class="token punctuation">;</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span>doorState <span class="token operator">===</span> <span class="token string">'OPEN'</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> turnOffAt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">'door_front_state'</span><span class="token punctuation">,</span> <span class="token string">'CLOSED'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        newState <span class="token operator">=</span> <span class="token string">'CLOSED'</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">let</span> doorState <span class="token operator">=</span> flow<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"door_back_state"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> turnOffAt <span class="token operator">=</span> flow<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"door_back_offAt"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">let</span> newState <span class="token operator">=</span> <span class="token string">"IGNORE"</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>doorState <span class="token operator">===</span> <span class="token string">"OPEN"</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> turnOffAt<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"door_front_state"</span><span class="token punctuation">,</span> <span class="token string">"CLOSED"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		newState <span class="token operator">=</span> <span class="token string">"CLOSED"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-msg<span class="token punctuation">.</span>payload <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token literal-property property">state</span><span class="token operator">:</span> newState <span class="token punctuation">}</span><span class="token punctuation">;</span>
+msg<span class="token punctuation">.</span>payload <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token literal-property property">state</span><span class="token operator">:</span> newState<span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token keyword">return</span> msg<span class="token punctuation">;</span></code></pre>
 <ul>
 <li>Filter to check for the CLOSED state</li>
 </ul>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/y66bVq0zvw-599.avif 599w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/y66bVq0zvw-599.webp 599w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/y66bVq0zvw-599.png" alt="" width="599" height="205"></picture>
 <p>Template to generate the reset message:</p>
-<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"RfReceived"</span><span class="token operator">:</span><span class="token punctuation">{</span><span class="token property">"Data"</span><span class="token operator">:</span><span class="token string">"B82346OFF"</span><span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"RfReceived"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token property">"Data"</span><span class="token operator">:</span> <span class="token string">"B82346OFF"</span><span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre>
 <p>Publish the reset message via MQTT on the <code>tele/RF_Bridge/RESULT</code> topic - mocking the required structure of a decoded Sonoff RF message.</p>
 <h3 id="flows-side-by-side">Flows Side by Side</h3>
 <p>Schedule reset message flow:</p>
@@ -389,10 +389,9 @@ msg<span class="token punctuation">.</span>payload <span class="token operator">
     <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"1E3B46"</span>
     <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"1E3B46OFF"</span>
     <span class="token key atrule">device_class</span><span class="token punctuation">:</span> door
-    <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token string">''</span></code></pre>
+    <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token string">""</span></code></pre>
 <blockquote>
-<p><strong>Note</strong> the <code>1E3B46OFF</code> payload is the actual reset message sent from Node-RED
-{: .prompt-info }</p>
+<p><strong>Note</strong> the <code>1E3B46OFF</code> payload is the actual reset message sent from Node-RED</p>
 </blockquote>
 <p>After restarting Home Assistant I now had my doors showing up:</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/LH6HI_kx6F-521.avif 521w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/LH6HI_kx6F-521.webp 521w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/LH6HI_kx6F-521.png" alt="" width="521" height="287"></picture>
@@ -459,7 +458,7 @@ msg<span class="token punctuation">.</span>payload <span class="token operator">
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2019/2019-01-16/post/` was built on 2025-07-08T23:28:23.613Z -->
+		<!-- This page `/blog/2019/2019-01-16/post/` was built on 2025-07-09T14:04:58.667Z -->
 		<script type="module" src="/dist/f4San49xro.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

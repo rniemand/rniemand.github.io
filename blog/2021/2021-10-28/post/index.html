@@ -315,37 +315,34 @@ pre[class*="language-diff-"] {
 
 <p>With the release of Satisfactory Update 5 comes the addition of dedicated servers, something interesting on the <a href="https://satisfactory.fandom.com/wiki/Dedicated_servers#Running_manually_within_a_Docker_container">official wiki</a> something interesting caught my eye - the ability to run the server as a Docker Container which is amazing!</p>
 <blockquote>
-<p><strong>TL;DR</strong>: you can make use of the niemandr/satisfactory-server Docker container listed below to run the server - this is updated daily
-{: .prompt-tip }</p>
+<p><strong>TL;DR</strong>: you can make use of the niemandr/satisfactory-server Docker container listed below to run the server - this is updated daily</p>
 </blockquote>
 <blockquote>
-<p><strong>Sad News</strong>: this is no longer maintained by me as there is a better way to do this
-{: .prompt-warning }</p>
+<p><strong>Sad News</strong>: this is no longer maintained by me as there is a better way to do this</p>
 </blockquote>
 <p>At home I am running an old <code>HP DL180G6</code> using <a href="https://unraid.net/">Unraid</a> (equipped with 24 cores, 128 GB RAM) and a handful of Docker containers. Generally this server just sits there idling, so this is a perfect candidate for running a dedicated Satisfactory Server.</p>
 <picture><source type="image/avif" srcset="/blog/2021/2021-10-28/post/C25GYprfHB-913.avif 913w"><source type="image/webp" srcset="/blog/2021/2021-10-28/post/C25GYprfHB-913.webp 913w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-28/post/C25GYprfHB-913.png" alt="" width="913" height="301"></picture>
 <blockquote>
-<p><strong>Note</strong>: The first spike is me testing out the server with my SO, and the second one is my nightly snapshot \ verification of my server.
-{: .prompt-info }</p>
+<p><strong>Note</strong>: The first spike is me testing out the server with my SO, and the second one is my nightly snapshot \ verification of my server.</p>
 </blockquote>
 <p>To make things a lot easier I decided to make use of <a href="https://github.com/features/actions">Github Actions</a> to automate the build and publish the result to <a href="https://hub.docker.com/">Docker Hub</a> using the following configuration:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">name</span><span class="token punctuation">:</span> Docker Image CI
 <span class="token key atrule">on</span><span class="token punctuation">:</span>
   <span class="token key atrule">push</span><span class="token punctuation">:</span>
-    <span class="token key atrule">branches</span><span class="token punctuation">:</span> <span class="token punctuation">[</span> main <span class="token punctuation">]</span>
+    <span class="token key atrule">branches</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>main<span class="token punctuation">]</span>
   <span class="token key atrule">schedule</span><span class="token punctuation">:</span>
-  <span class="token punctuation">-</span> <span class="token key atrule">cron</span><span class="token punctuation">:</span> <span class="token string">"30 23 * * *"</span>
+    <span class="token punctuation">-</span> <span class="token key atrule">cron</span><span class="token punctuation">:</span> <span class="token string">"30 23 * * *"</span>
 <span class="token key atrule">jobs</span><span class="token punctuation">:</span>
   <span class="token key atrule">build</span><span class="token punctuation">:</span>
     <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest
     <span class="token key atrule">steps</span><span class="token punctuation">:</span>
-    <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@master
-    <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Publish to Registry
-      <span class="token key atrule">uses</span><span class="token punctuation">:</span> jerray/publish<span class="token punctuation">-</span>docker<span class="token punctuation">-</span>action@master
-      <span class="token key atrule">with</span><span class="token punctuation">:</span>
-        <span class="token key atrule">username</span><span class="token punctuation">:</span> $
-        <span class="token key atrule">password</span><span class="token punctuation">:</span> $
-        <span class="token key atrule">repository</span><span class="token punctuation">:</span> niemandr/satisfactory<span class="token punctuation">-</span>server</code></pre>
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@master
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Publish to Registry
+        <span class="token key atrule">uses</span><span class="token punctuation">:</span> jerray/publish<span class="token punctuation">-</span>docker<span class="token punctuation">-</span>action@master
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token key atrule">username</span><span class="token punctuation">:</span> $
+          <span class="token key atrule">password</span><span class="token punctuation">:</span> $
+          <span class="token key atrule">repository</span><span class="token punctuation">:</span> niemandr/satisfactory<span class="token punctuation">-</span>server</code></pre>
 <h2 id="running-the-server">Running the server</h2>
 <p>To run the server from a command line you can use:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">docker</span> run <span class="token parameter variable">-p</span> <span class="token number">15000</span>:15000/udp <span class="token parameter variable">-p</span> <span class="token number">7777</span>:7777/udp <span class="token parameter variable">-p</span> <span class="token number">15777</span>:15777/udp <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span><span class="token operator">=</span>satisfactory <span class="token parameter variable">-v</span> C:/docker-data/satisfactory:/home/steam/Satisfactory-dedicated niemandr/satisfactory-server:latest</code></pre>
@@ -393,7 +390,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2021/2021-10-28/post/` was built on 2025-07-08T23:28:23.615Z -->
+		<!-- This page `/blog/2021/2021-10-28/post/` was built on 2025-07-09T14:04:58.672Z -->
 		<script type="module" src="/dist/jM4DYnUW_V.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

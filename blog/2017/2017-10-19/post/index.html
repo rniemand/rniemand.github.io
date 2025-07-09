@@ -329,8 +329,7 @@ pre[class*="language-diff-"] {
 <picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/QCWp0I_SUb-365.avif 365w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/QCWp0I_SUb-365.webp 365w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/QCWp0I_SUb-365.png" alt="" width="365" height="151"></picture>
 <p>The sketch will publish state changes for the reed switch on the <code>security/reed_switch/&lt;node&gt;</code> topic, and listen on the <code>cmd/&lt;node&gt;</code> topic for commands. At the moment there is only support for the <code>update_all</code> command.</p>
 <blockquote>
-<p><strong>Note</strong>: The value of node will be derived from the MQTT_CLIENT_NAME property
-{: .prompt-info }</p>
+<p><strong>Note</strong>: The value of node will be derived from the MQTT_CLIENT_NAME property</p>
 </blockquote>
 <p>To issue a test command to the device open up any MQTT client (in my case I am using <a href="https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=en">MQTTLens</a>) and send an <code>update_all</code> command to the client as shown below:</p>
 <picture><source type="image/avif" srcset="/blog/2017/2017-10-19/post/s5UInVZCJB-699.avif 699w"><source type="image/webp" srcset="/blog/2017/2017-10-19/post/s5UInVZCJB-699.webp 699w"><img loading="lazy" decoding="async" src="/blog/2017/2017-10-19/post/s5UInVZCJB-699.png" alt="" width="699" height="166"></picture>
@@ -372,8 +371,8 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
     <span class="token key atrule">platform</span><span class="token punctuation">:</span> state
     <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> binary_sensor.kitchen_door
-    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">'on'</span>
-    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">'off'</span>
+    <span class="token key atrule">to</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
+    <span class="token key atrule">from</span><span class="token punctuation">:</span> <span class="token string">"off"</span>
   <span class="token key atrule">action</span><span class="token punctuation">:</span>
     <span class="token key atrule">service</span><span class="token punctuation">:</span> notify.pushover
     <span class="token key atrule">data</span><span class="token punctuation">:</span>
@@ -421,7 +420,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-10-19/post/` was built on 2025-07-08T23:28:23.609Z -->
+		<!-- This page `/blog/2017/2017-10-19/post/` was built on 2025-07-09T14:04:58.663Z -->
 		<script type="module" src="/dist/d1caBTaUCK.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

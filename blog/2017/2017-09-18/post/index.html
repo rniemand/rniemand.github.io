@@ -329,8 +329,7 @@ pre[class*="language-diff-"] {
 <p>It seems that the batt property is what we are looking for, and a quick cross-check with the <a href="https://owntracks.org/booklet/tech/json/">OwnTracks booklet</a> confirmed my suspicion:</p>
 <picture><source type="image/avif" srcset="/blog/2017/2017-09-18/post/rKY1wLlZ3--720.avif 720w"><source type="image/webp" srcset="/blog/2017/2017-09-18/post/rKY1wLlZ3--720.webp 720w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-18/post/rKY1wLlZ3--720.png" alt="" width="720" height="255"></picture>
 <blockquote>
-<p>Something to note here &quot;iOS,Android/integer/percent/optional&quot;
-{: .prompt-info }</p>
+<p>Something to note here &quot;iOS,Android/integer/percent/optional&quot;</p>
 </blockquote>
 <p>There is a possibility that this value won't always be there, and this is due to the fact that you can enable / disable advanced reporting in the application. We will need to make sure that this case is catered for when we attempt to collect this information.</p>
 <h2 id="tracking-battery-usage">Tracking battery usage</h2>
@@ -339,7 +338,7 @@ pre[class*="language-diff-"] {
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
   <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> owntracks/xxx/xxx
   <span class="token key atrule">name</span><span class="token punctuation">:</span> Phone Battery (Richard)
-  <span class="token key atrule">unit_of_measurement</span><span class="token punctuation">:</span> <span class="token string">'%'</span>
+  <span class="token key atrule">unit_of_measurement</span><span class="token punctuation">:</span> <span class="token string">"%"</span>
   <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token punctuation">...</span></code></pre>
 <p>Most of it is self-explanatory with the exception of the value_template, which I am sure most of you can work out. Basically this template first checks that we have some battery information to extract (value_json.batt) and providing we do it will extract it, should there be no information to extract it will use the last known value of the battery. I found that sometimes OwnTracks would check in without sending battery information, this is just a safeguard against that.</p>
 <p>After restarting Home Assistant, and checking in with my phone I am able to see my battery information!</p>
@@ -408,7 +407,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-09-18/post/` was built on 2025-07-08T23:28:23.608Z -->
+		<!-- This page `/blog/2017/2017-09-18/post/` was built on 2025-07-09T14:04:58.663Z -->
 		<script type="module" src="/dist/ddRql_30HD.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

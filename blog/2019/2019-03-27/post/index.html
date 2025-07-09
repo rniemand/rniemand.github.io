@@ -327,8 +327,7 @@ systemctl daemon-reload</code></pre>
 <p>Create a source entry for <code>influxdb.list</code>:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token builtin class-name">echo</span> <span class="token string">"deb [arch=arm64] https://repos.influxdata.com/debian stretch stable"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/apt/sources.list.d/influxdb.list</code></pre>
 <blockquote>
-<p><strong>Note</strong>: depending on your SBC architecture you may need to replace [arch=arm64] with [arch=armel] or [arch=armhf]! You can get your CPU architecture by running cat /proc/cpuinfo
-{: .prompt-tip }</p>
+<p><strong>Note</strong>: depending on your SBC architecture you may need to replace [arch=arm64] with [arch=armel] or [arch=armhf]! You can get your CPU architecture by running cat /proc/cpuinfo</p>
 </blockquote>
 <p>Run <code>apt-get update</code> and install required dependencies:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> apt-transport-https</code></pre>
@@ -373,7 +372,7 @@ systemctl status telegraf</code></pre>
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2019/2019-03-27/post/` was built on 2025-07-08T23:28:23.613Z -->
+		<!-- This page `/blog/2019/2019-03-27/post/` was built on 2025-07-09T14:04:58.668Z -->
 		<script type="module" src="/dist/nko32YMwxn.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

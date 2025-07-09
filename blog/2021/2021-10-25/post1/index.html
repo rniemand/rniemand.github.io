@@ -337,8 +337,7 @@ pre[class*="language-diff-"] {
 <picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post1/9wmjgByjZR-781.avif 781w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post1/9wmjgByjZR-781.webp 781w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post1/9wmjgByjZR-781.png" alt="" width="781" height="156"></picture>
 <p>That covers all the configuration needed for the VM.</p>
 <blockquote>
-<p><strong>Note</strong>: don't start the VM yet - we still need to do some additional configuration on our router first!
-{: .prompt-warning }</p>
+<p><strong>Note</strong>: don't start the VM yet - we still need to do some additional configuration on our router first!</p>
 </blockquote>
 <h2 id="router-configuration">Router Configuration</h2>
 <p>To make things easy, I would suggest setting a static IP address for Home Assistant on your router - again this can vary a LOT depending on the make and model of your router. Ideally we are wanting to get the following configured:</p>
@@ -351,8 +350,7 @@ pre[class*="language-diff-"] {
 <p>Additionally I have re-mapped the default port <code>8123</code> to <code>443</code> (https) and forwarded all incoming TCP traffic to my Home Assistant server as shown below:</p>
 <picture><source type="image/avif" srcset="/blog/2021/2021-10-25/post1/8x8RgmNhXC-527.avif 527w"><source type="image/webp" srcset="/blog/2021/2021-10-25/post1/8x8RgmNhXC-527.webp 527w"><img loading="lazy" decoding="async" src="/blog/2021/2021-10-25/post1/8x8RgmNhXC-527.png" alt="" width="527" height="331"></picture>
 <blockquote>
-<p><strong>Note</strong>: You don't need to change the default port, I am making use of some integrations that require Home Assistant to be running on 443.
-{: .prompt-info }</p>
+<p><strong>Note</strong>: You don't need to change the default port, I am making use of some integrations that require Home Assistant to be running on 443.</p>
 </blockquote>
 <h2 id="pi-hole-dhcp-dns-configuration-optional">Pi-hole / DHCP / DNS Configuration (Optional)</h2>
 <p>I run <a href="https://pi-hole.net/">Pi-hole</a> locally to block adverts on my internal network, along with this I am using Pi-hole as a DHCP server so I need to ensure that I add a reservation for Home Assistant (based on the VMS MAC Address) as shown below:</p>
@@ -392,7 +390,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2021/2021-10-25/post1/` was built on 2025-07-08T23:28:23.615Z -->
+		<!-- This page `/blog/2021/2021-10-25/post1/` was built on 2025-07-09T14:04:58.671Z -->
 		<script type="module" src="/dist/-CT3ojUwxv.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

@@ -341,21 +341,21 @@ pre[class*="language-diff-"] {
 <p>Take note of the topic as we will need to subscribe to it in Home Assistant.</p>
 <h2 id="mqtt-payload">MQTT Payload</h2>
 <p>The telemetry payload from my Sonoff POW R2 is shown below.</p>
-<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>  
-   <span class="token property">"Time"</span><span class="token operator">:</span><span class="token string">"2019-04-02T19:31:06"</span><span class="token punctuation">,</span>
-   <span class="token property">"ENERGY"</span><span class="token operator">:</span><span class="token punctuation">{</span>  
-      <span class="token property">"TotalStartTime"</span><span class="token operator">:</span><span class="token string">"2019-03-19T21:10:01"</span><span class="token punctuation">,</span>
-      <span class="token property">"Total"</span><span class="token operator">:</span><span class="token number">1.368</span><span class="token punctuation">,</span>
-      <span class="token property">"Yesterday"</span><span class="token operator">:</span><span class="token number">0.001</span><span class="token punctuation">,</span>
-      <span class="token property">"Today"</span><span class="token operator">:</span><span class="token number">0.397</span><span class="token punctuation">,</span>
-      <span class="token property">"Period"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
-      <span class="token property">"Power"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
-      <span class="token property">"ApparentPower"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
-      <span class="token property">"ReactivePower"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
-      <span class="token property">"Factor"</span><span class="token operator">:</span><span class="token number">0.00</span><span class="token punctuation">,</span>
-      <span class="token property">"Voltage"</span><span class="token operator">:</span><span class="token number">0</span><span class="token punctuation">,</span>
-      <span class="token property">"Current"</span><span class="token operator">:</span><span class="token number">0.000</span>
-   <span class="token punctuation">}</span>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+	<span class="token property">"Time"</span><span class="token operator">:</span> <span class="token string">"2019-04-02T19:31:06"</span><span class="token punctuation">,</span>
+	<span class="token property">"ENERGY"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+		<span class="token property">"TotalStartTime"</span><span class="token operator">:</span> <span class="token string">"2019-03-19T21:10:01"</span><span class="token punctuation">,</span>
+		<span class="token property">"Total"</span><span class="token operator">:</span> <span class="token number">1.368</span><span class="token punctuation">,</span>
+		<span class="token property">"Yesterday"</span><span class="token operator">:</span> <span class="token number">0.001</span><span class="token punctuation">,</span>
+		<span class="token property">"Today"</span><span class="token operator">:</span> <span class="token number">0.397</span><span class="token punctuation">,</span>
+		<span class="token property">"Period"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+		<span class="token property">"Power"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+		<span class="token property">"ApparentPower"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+		<span class="token property">"ReactivePower"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+		<span class="token property">"Factor"</span><span class="token operator">:</span> <span class="token number">0.0</span><span class="token punctuation">,</span>
+		<span class="token property">"Voltage"</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+		<span class="token property">"Current"</span><span class="token operator">:</span> <span class="token number">0.0</span>
+	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
 <p>As you can see there is a lot of useful data in the payload and it's pretty easy to work out what each value relates to on your Sonoff device.</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-04-02/post/7_czuLwBeX-334.avif 334w"><source type="image/webp" srcset="/blog/2019/2019-04-02/post/7_czuLwBeX-334.webp 334w"><img loading="lazy" decoding="async" src="/blog/2019/2019-04-02/post/7_czuLwBeX-334.png" alt="" width="334" height="403"></picture>
@@ -363,14 +363,13 @@ pre[class*="language-diff-"] {
 <p>We will be making use of the <a href="https://www.home-assistant.io/integrations/sensor.mqtt">MQTT Sensor</a> component in Home Assistant with a custom <code>value_template</code> to extract the counter we are interested in. You will need to create one entry per value you wish to collect.</p>
 <p>Here is the configuration used to collect the Reactive Power (ReactivePower) value from the above MQTT payload.</p>
 <blockquote>
-<p><strong>Note</strong>: The parsed JSON payload is available through the value_json template variable.
-{: .prompt-tip }</p>
+<p><strong>Note</strong>: The parsed JSON payload is available through the value_json template variable.</p>
 </blockquote>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
     <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"tele/anet-a8-pow/SENSOR"</span>
-    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">'Reactive Power (Anet A8)'</span>
-    <span class="token key atrule">unit_of_measurement</span><span class="token punctuation">:</span> <span class="token string">'VA'</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"Reactive Power (Anet A8)"</span>
+    <span class="token key atrule">unit_of_measurement</span><span class="token punctuation">:</span> <span class="token string">"VA"</span>
     <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token string">""</span></code></pre>
 <p>Repeat this step for each counter you wish to collect.</p>
 <p>Once done be sure to check your configuration before restarting Home Assistant, and if all goes well you should end up with your new counters:</p>
@@ -405,7 +404,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2019/2019-04-02/post/` was built on 2025-07-08T23:28:23.613Z -->
+		<!-- This page `/blog/2019/2019-04-02/post/` was built on 2025-07-09T14:04:58.668Z -->
 		<script type="module" src="/dist/cEFZEO2_81.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

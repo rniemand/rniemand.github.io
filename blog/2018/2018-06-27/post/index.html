@@ -323,8 +323,7 @@ pre[class*="language-diff-"] {
 <p>For a case I am using one of <a href="https://www.thingiverse.com/thing:2979595">my own designs</a> as I am planning on mounting it on a pegboard along with all my other Single Board Computers (<code>SBC</code>), this way the cable management is a lot better and it keeps my desk free of additional clutter.</p>
 <picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/qmg8-JXRul-800.avif 800w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/qmg8-JXRul-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/qmg8-JXRul-800.jpeg" alt="" width="800" height="526"></picture>
 <blockquote>
-<p><strong>Note</strong> Use a class 10 or above SD card for this installation, anything slower becomes unbearably noticeable in the long run.
-{: .prompt-tip }</p>
+<p><strong>Note</strong> Use a class 10 or above SD card for this installation, anything slower becomes unbearably noticeable in the long run.</p>
 </blockquote>
 <h3 id="flashing-the-software">Flashing the Software</h3>
 <p>For this installation I am going with <a href="https://www.home-assistant.io/installation">Hass.io</a>, which is an all in one image for your SBC and installation could not be simpler. All you need to do is burn the image to your SD card using an application like <a href="https://sourceforge.net/projects/win32diskimager/">Win32 Disk Imager</a> or <a href="https://www.balena.io/etcher/">Etcher</a> like so:</p>
@@ -352,8 +351,8 @@ pre[class*="language-diff-"] {
 <p>The Configurator add-on gives you the ability to edit your Home Assistant configuration files in your browser with no need to mess around with file shares. This is great when you want to make a quick change to Home Assistant.</p>
 <p>Installation is straight forward, just click the install button and wait for the task to complete. Once installed you will need to set a desired username / password under the configuration section.</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
-  <span class="token property">"username"</span><span class="token operator">:</span> <span class="token string">"&lt;username>"</span><span class="token punctuation">,</span>
-  <span class="token property">"password"</span><span class="token operator">:</span> <span class="token string">"&lt;password>"</span><span class="token punctuation">,</span>
+	<span class="token property">"username"</span><span class="token operator">:</span> <span class="token string">"&lt;username>"</span><span class="token punctuation">,</span>
+	<span class="token property">"password"</span><span class="token operator">:</span> <span class="token string">"&lt;password>"</span>
 <span class="token punctuation">}</span></code></pre>
 <p>In addition to setting up credentials for yourself you will also need to ensure that you white-list your home IP Range for access (if you do not do this you won't be able to access the web UI), again this is a setting under the configuration section.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"> <span class="token key atrule">"allowed_networks"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
@@ -413,7 +412,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-06-27/post/` was built on 2025-07-08T23:28:23.610Z -->
+		<!-- This page `/blog/2018/2018-06-27/post/` was built on 2025-07-09T14:04:58.665Z -->
 		<script type="module" src="/dist/85LS9H_VR_.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
