@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Monitoring your Unraid server with Telegraf and Grafana</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+body {
+	font-family: "Open Sans", sans-serif;
+	font-optical-sizing: auto;
+}
+
+div.main-content {
+	margin-top: 4rem;
+	font-size: 1.1rem;
+}
+
+.blog-list a {
+	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
+}
+
+div.main-content > h1 {
+	color: #c3e6ff;
+	margin-bottom: 1rem;
+}
+
+div.main-content > h2 {
+	color: #ffd97f;
+	margin-bottom: 1rem;
+}
+
+div.main-content > h3 {
+	color: #f0ff7f;
+	margin-bottom: 1rem;
+}
+
+div.main-content pre {
+	font-size: 1.1rem;
+	background-color: #31363b;
+	border: 1px solid #3f4851;
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+div.main-content picture img:not(.no-borders) {
+	border: 1px solid #454d55;
+	max-width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+}
+
+div.main-content picture img {
+	margin-bottom: 1rem;
+	box-shadow: 5px 5px 10px 0px #2b3137;
+}
+
+div.main-content div.prev-next {
+	background-color: #293037;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+}
+
+div.main-content table {
+	border: 1px solid #363c43;
+	font-size: 1rem;
+}
+
+div.main-content .list-group-item:hover {
+	background-color: #2b3137;
+}
+
+div.main-content .accordion {
+	margin-bottom: 1rem;
+}
+
+div.main-content .accordion .accordion-item .accordion-body {
+	background-color: #2a2f35;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+		<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1689302880129363" crossorigin="anonymous"></script>
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/projects/">Projects</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/series/">Series</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/tags/">Tags</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="monitoring-your-unraid-server-with-telegraf-and-grafana">Monitoring your Unraid server with Telegraf and Grafana</h1>
+
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/unraid/" class="post-tag">unraid</a>, 
+				<a href="/tags/telegraf/" class="post-tag">telegraf</a>, 
+				<a href="/tags/grafana/" class="post-tag">grafana</a>, 
+				<a href="/tags/influxdb/" class="post-tag">influxdb</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2025-07-09">09 July 2025</time>
+	</span>
+</div>
+<div class="toc">
+        <ol><li><a href="#overview">Overview</a></li><li><a href="#telegraf">Installing and configuring Telegraf</a><ol><li><a href="#telegraf-make-config">Generating telegraf.conf</a></li><li><a href="#telegraf-configuring">Configuring Telegraf</a></li><li><a href="#telegraf-installation">Installing Telegraf</a></li></ol></li><li><a href="#influxdb-conn-info">InfluxDB Connection Information</a><ol><li><a href="#influxdb-orgid">Organization ID</a></li><li><a href="#influxdb-token">Token</a></li></ol></li><li><a href="#grafana">Grafana Configuration</a><ol><li><a href="#grafana-datasource">InfluxDB Datasource</a></li><li><a href="#grafana-dashboard">Create a test dashboard</a></li></ol></li></ol>
+      </div>
+
+
+<h2 id="overview">Overview</h2>
+
+<p>In this post I will cover the process used to monitor your <a href="https://unraid.net/" target="_blank">Unraid</a> server using <a href="https://www.influxdata.com/time-series-platform/telegraf/" target="_blank">Telegraf</a>, <a href="https://www.influxdata.com/lp/influxdb-database/" target="_blank">InfluxDB</a> and <a href="https://grafana.com/" target="_blank">Grafana</a>.</p>
+
+<p>I will be working off the assumption that you have already installed InfluxDB (v2) and Grafana on your server and focus on getting Telegraf installed and collecting data on your server.</p>
+
+<h2 id="telegraf">Installing and configuring Telegraf</h2>
+
+<h3 id="telegraf-make-config">Generating telegraf.conf</h3>
+
+<p>Before deploying the container, open a <strong>terminal</strong> on your Unraid server and run the following commands making sure to adjust the paths for your server.</p>
+
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">mkdir</span> /mnt/user/appdata/telegraf/</code></pre>
+
+<p>This will create a <code>telegraf</code> folder in Unraids default <code>appdata</code> location.</p>
+
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">docker</span> run <span class="token parameter variable">--rm</span> telegraf telegraf config <span class="token operator">></span> /mnt/user/appdata/telegraf/telegraf.conf</code></pre>
+
+<p>This will pull the latest image of Telegraf from Docker, generate and save a configuration file to <code>/mnt/user/appdata/telegraf/telegraf.conf</code> on your server.</p>
+
+<h3 id="telegraf-configuring">Configuring Telegraf</h3>
+
+<p>Once created, open up your <code>telegraf.conf</code> file and make the following changes.</p>
+
+<p>Find the <code>[[outputs.influxdb_v2]]</code> section, uncomment it, and enter in your <strong>InfluxDB</strong> connection details. Once done it should look something like the below:</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post2/9RwPfgM8eC-1077.avif 1077w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post2/9RwPfgM8eC-1077.webp 1077w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post2/9RwPfgM8eC-1077.png" alt="" width="1077" height="473"></picture>
+
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+	<i class="bi bi-info-circle me-2"></i>
+	<div>You can refer to the <a href="#influxdb-conn-info">section below</a> if you are unsure of where to get your InfluxDB connection information from.</div>
+</div>
+
+<p>Optionally you can enable network monitoring by uncommenting the <code>[[inputs.net]]</code> section header.</p>
+
+<h3 id="telegraf-installation">Installing Telegraf</h3>
+
+<p>On your Unraid server, navigate to the <strong>Apps</strong> page and search for telegraf:</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post2/tVpM-rPoa3-408.avif 408w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post2/tVpM-rPoa3-408.webp 408w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post2/tVpM-rPoa3-408.png" alt="" width="408" height="290"></picture>
+
+<p>I found that the default configuration options for this container work well, however if you are a power user, or want to tweak some settings feel free to do so.</p>
+
+<p>You should start to see metrics in InfluxDB a couple of seconds after deploying the container, however if you do not see anything I would suggest looking at the containers logs to help with troubleshooting.</p>
+
+<h2 id="influxdb-conn-info">InfluxDB Connection Information</h2>
+
+<h3 id="influxdb-orgid">Organization ID</h3>
+
+<p>The <code>Organization ID</code> can be found by clicking on your <strong>username</strong>, then <strong>about</strong> in the web interface.</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post2/LKrw6yIHCJ-447.avif 447w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post2/LKrw6yIHCJ-447.webp 447w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post2/LKrw6yIHCJ-447.png" alt="" width="447" height="117"></picture>
+
+<p>Under the Common IDs section, you should see it.</p>
+
+<h3 id="influxdb-token">Token</h3>
+
+<p>I strongly suggest generating a token per system submitting data to InfluxDB as this reduces the attack surface should a token become compromised.</p>
+
+<p>To generate a token in the web interface, click on the <strong>Load Data</strong> menu item, followed by selecting the <strong>API Tokens</strong> tab.</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post2/Tc_g78UXiQ-910.avif 910w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post2/Tc_g78UXiQ-910.webp 910w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post2/Tc_g78UXiQ-910.png" alt="" width="910" height="124"></picture>
+
+<p>Click the Generate API Token button to generate a token for your server, making sure to note it down as you won’t be able to see it again.</p>
+
+<h2 id="grafana">Grafana Configuration</h2>
+
+<h3 id="grafana-datasource">InfluxDB Datasource</h3>
+
+<p>To add a <code>data source</code> to Grafana, click on the <strong>logo</strong>, then click on <strong>Data sources</strong>.</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post2/FhxsWp48ns-303.avif 303w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post2/FhxsWp48ns-303.webp 303w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post2/FhxsWp48ns-303.png" alt="" width="303" height="408"></picture>
+
+<p>Find and add a new InfluxDB data source, switch the query language to <code>Flux</code>, and enter in the relative configuration for your InfluxDB server.</p>
+
+<p>Ensure that you set the correct organization and token for the data source.</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post2/hKSVYQERVP-588.avif 588w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post2/hKSVYQERVP-588.webp 588w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post2/hKSVYQERVP-588.png" alt="" width="588" height="239"></picture>
+
+<h3 id="grafana-dashboard">Create a test dashboard</h3>
+
+<p>In Grafana, create a new dashboard, add a new <strong>guage</strong> backed by your InfluxDB datasource with the following query.</p>
+
+<pre class="language-shell" tabindex="0"><code class="language-shell">from<span class="token punctuation">(</span>bucket: <span class="token string">"telegraf"</span><span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> range<span class="token punctuation">(</span>start: v.timeRangeStart, stop: v.timeRangeStop<span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> filter<span class="token punctuation">(</span>fn: <span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> r<span class="token punctuation">[</span><span class="token string">"_measurement"</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"mem"</span><span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> filter<span class="token punctuation">(</span>fn: <span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> r<span class="token punctuation">[</span><span class="token string">"_field"</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"used_percent"</span><span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> aggregateWindow<span class="token punctuation">(</span>every: v.windowPeriod, fn: last, createEmpty: <span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> yield<span class="token punctuation">(</span>name: <span class="token string">"last"</span><span class="token punctuation">)</span></code></pre>
+
+<p>Under the standard options section, set the unit to percentage, and use <code>${__field.labels.host}</code> for the display name.</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post2/cm1Osyru_b-317.avif 317w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post2/cm1Osyru_b-317.webp 317w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post2/cm1Osyru_b-317.png" alt="" width="317" height="421"></picture>
+
+<p>This should generate a gauge per unique telegraf input submitting data to your InfluxDB server.</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post2/R73Pabu0Xy-839.avif 839w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post2/R73Pabu0Xy-839.webp 839w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post2/R73Pabu0Xy-839.png" alt="" width="839" height="380"></picture>
+
+<p>That’s all there is to it!</p>
+
+<div class="d-flex mb-3 prev-next">
+	<i class="bi bi-arrow-left-short"></i>
+	<span class="text-start">Previous<br><a href="/blog/2025/2025-07-09/post/">Automatic MariaDB Backups with Unraid</a></span>
+	
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+</div>
+
+
+<div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2025/2025-07-09/post2/` was built on 2025-07-09T23:08:30.500Z -->
+		<script type="module" src="/dist/CKtDHeZTJt.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
+	</body>
+</html>

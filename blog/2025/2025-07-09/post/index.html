@@ -287,6 +287,9 @@ pre[class*="language-diff-"] {
 							<li class="nav-item">
 								<a class="nav-link " href="/series/">Series</a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/tags/">Tags</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -307,7 +310,7 @@ pre[class*="language-diff-"] {
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="post-date">
 		<i class="bi bi-calendar-plus-fill"></i>
-		<time datetime="2025-07-08">08 July 2025</time>
+		<time datetime="2025-07-09">09 July 2025</time>
 	</span>
 </div>
 
@@ -320,11 +323,11 @@ pre[class*="language-diff-"] {
   <span class="token builtin class-name">echo</span> <span class="token string">"============================================="</span>
   <span class="token builtin class-name">echo</span> <span class="token string">"Backing up :: <span class="token variable">$1</span>"</span>
   <span class="token builtin class-name">echo</span> <span class="token string">"============================================="</span>
-  
+
   <span class="token assign-left variable">backupTargetRoot</span><span class="token operator">=</span><span class="token string">"/mnt/user/DB-Backups/nas/<span class="token variable">$1</span>/<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%Y-%m/'</span><span class="token variable">)</span></span>"</span>
   <span class="token assign-left variable">backupZipFile</span><span class="token operator">=</span><span class="token string">"/mnt/user/DB-Backups/nas/<span class="token variable">$1</span>/<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%Y-%m/%F'</span><span class="token variable">)</span></span>-<span class="token variable">$1</span>.zip"</span>
   <span class="token assign-left variable">mysqlDumpFile</span><span class="token operator">=</span><span class="token string">"/mnt/user/DB-Backups/nas/<span class="token variable">$1</span>/<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%Y-%m/%F'</span><span class="token variable">)</span></span>-<span class="token variable">$1</span>.sql"</span>
-  
+
   <span class="token builtin class-name">echo</span> <span class="token string">"  > creating backup root dir: <span class="token variable">${backupTargetRoot}</span>"</span>
   <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> <span class="token variable">$backupTargetRoot</span>
   <span class="token function">rm</span> <span class="token parameter variable">-f</span> <span class="token variable">$backupZipFile</span>
@@ -364,17 +367,22 @@ backupdb <span class="token string">"RnGo"</span></code></pre>
 <p>Just add the script to your Unraid server using the <a href="/blog/2025/2025-07-08/post/">User Scripts</a> plugin, set a sensible schedule, and enjoy the automated backups.</p>
 
 <picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post/HrHG2rOq16-918.avif 918w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post/HrHG2rOq16-918.webp 918w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post/HrHG2rOq16-918.png" alt="" width="918" height="389"></picture>
+
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
 	<span class="text-start">Previous<br><a href="/blog/2025/2025-07-08/post/">Core Unraid Plugins and Containers</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="text-end">Next<br><a href="/blog/2025/2025-07-09/post2/">Monitoring your Unraid server with Telegraf and Grafana</a></span>
+	<i class="bi bi-arrow-right-short"></i>
+	
 </div>
 
 
 <div id="disqus_thread"></div>
 
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
 			</div>
 		</main>
 		<footer class="footer mt-auto py-3 bg-body-tertiary">
@@ -384,7 +392,7 @@ backupdb <span class="token string">"RnGo"</span></code></pre>
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2025/2025-07-09/post/` was built on 2025-07-09T19:09:43.839Z -->
+		<!-- This page `/blog/2025/2025-07-09/post/` was built on 2025-07-09T23:08:30.499Z -->
 		<script type="module" src="/dist/N5M8_8v5Lr.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
