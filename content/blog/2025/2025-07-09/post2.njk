@@ -1,0 +1,102 @@
+---
+title: Monitoring your Unraid server with Telegraf and Grafana
+date: 2025-07-09
+tags: [unraid, telegraf, grafana, influxdb]
+#banner: blue.png
+logo: unraid.png
+---
+
+<h2 id="overview">Overview</h2>
+
+<p>In this post I will cover the process used to monitor your <a href="https://unraid.net/" target="_blank">Unraid</a> server using <a href="https://www.influxdata.com/time-series-platform/telegraf/" target="_blank">Telegraf</a>, <a href="https://www.influxdata.com/lp/influxdb-database/" target="_blank">InfluxDB</a> and <a href="https://grafana.com/" target="_blank">Grafana</a>.</p>
+
+<p>I will be working off the assumption that you have already installed InfluxDB (v2) and Grafana on your server and focus on getting Telegraf installed and collecting data on your server.</p>
+
+<h2 id="telegraf">Installing and configuring Telegraf</h2>
+
+<h3 id="telegraf-make-config">Generating telegraf.conf</h3>
+
+<p>Before deploying the container, open a <strong>terminal</strong> on your Unraid server and run the following commands making sure to adjust the paths for your server.</p>
+
+{% highlight "shell" %} mkdir /mnt/user/appdata/telegraf/ {% endhighlight %}
+
+<p>This will create a <code>telegraf</code> folder in Unraids default <code>appdata</code> location.</p>
+
+{% highlight "shell" %} docker run --rm telegraf telegraf config > /mnt/user/appdata/telegraf/telegraf.conf {% endhighlight %}
+
+<p>This will pull the latest image of Telegraf from Docker, generate and save a configuration file to <code>/mnt/user/appdata/telegraf/telegraf.conf</code> on your server.</p>
+
+<h3 id="telegraf-configuring">Configuring Telegraf</h3>
+
+<p>Once created, open up your <code>telegraf.conf</code> file and make the following changes.</p>
+
+<p>Find the <code>[[outputs.influxdb_v2]]</code> section, uncomment it, and enter in your <strong>InfluxDB</strong> connection details. Once done it should look something like the below:</p>
+
+<img src="./02.png" alt="" />
+
+<div class="alert alert-primary d-flex align-items-center" role="alert">
+	<i class="bi bi-info-circle me-2"></i>
+	<div>You can refer to the <a href="#influxdb-conn-info">section below</a> if you are unsure of where to get your InfluxDB connection information from.</div>
+</div>
+
+<p>Optionally you can enable network monitoring by uncommenting the <code>[[inputs.net]]</code> section header.</p>
+
+<h3 id="telegraf-installation">Installing Telegraf</h3>
+
+<p>On your Unraid server, navigate to the <strong>Apps</strong> page and search for telegraf:</p>
+
+<img src="./09.png" alt="" />
+
+<p>I found that the default configuration options for this container work well, however if you are a power user, or want to tweak some settings feel free to do so.</p>
+
+<p>You should start to see metrics in InfluxDB a couple of seconds after deploying the container, however if you do not see anything I would suggest looking at the containers logs to help with troubleshooting.</p>
+
+<h2 id="influxdb-conn-info">InfluxDB Connection Information</h2>
+
+<h3 id="influxdb-orgid">Organization ID</h3>
+
+<p>The <code>Organization ID</code> can be found by clicking on your <strong>username</strong>, then <strong>about</strong> in the web interface.</p>
+
+<img src="./03.png" alt="" />
+
+<p>Under the Common IDs section, you should see it.</p>
+
+<h3 id="influxdb-token">Token</h3>
+
+<p>I strongly suggest generating a token per system submitting data to InfluxDB as this reduces the attack surface should a token become compromised.</p>
+
+<p>To generate a token in the web interface, click on the <strong>Load Data</strong> menu item, followed by selecting the <strong>API Tokens</strong> tab.</p>
+
+<img src="./04.png" alt="" />
+
+<p>Click the Generate API Token button to generate a token for your server, making sure to note it down as you won’t be able to see it again.</p>
+
+<h2 id="grafana">Grafana Configuration</h2>
+
+<h3 id="grafana-datasource">InfluxDB Datasource</h3>
+
+<p>To add a <code>data source</code> to Grafana, click on the <strong>logo</strong>, then click on <strong>Data sources</strong>.</p>
+
+<img src="./05.png" alt="" />
+
+<p>Find and add a new InfluxDB data source, switch the query language to <code>Flux</code>, and enter in the relative configuration for your InfluxDB server.</p>
+
+<p>Ensure that you set the correct organization and token for the data source.</p>
+
+<img src="./06.png" alt="" />
+
+<h3 id="grafana-dashboard">Create a test dashboard</h3>
+
+<p>In Grafana, create a new dashboard, add a new <strong>guage</strong> backed by your InfluxDB datasource with the following query.</p>
+
+{% highlight "shell" %} from(bucket: "telegraf") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r["_measurement"] == "mem") |> filter(fn: (r) => r["_field"] == "used_percent") |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false) |> yield(name: "last") {% endhighlight %}
+
+<p>Under the standard options section, set the unit to percentage, and use <code>${__field.labels.host}</code> for the display name.</p>
+
+<img src="./07.png" alt="" />
+
+<p>This should generate a gauge per unique telegraf input submitting data to your InfluxDB server.</p>
+
+<img src="./08.png" alt="" />
+
+<p>That’s all there is to it!</p>

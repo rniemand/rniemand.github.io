@@ -52,3 +52,23 @@ Logos
     logo: typescript.png
     logo: ubuntu.png
     logo: webmin.png
+
+tags
+	.net
+	3d printing
+	arduino
+	ci-cd
+	docker
+	documentation
+	esp8266
+	esphome
+	gaming
+	github
+	home assistant
+	iot
+	linux
+	monitoring
+	telegraf
+	uncategorized
+	unraid
+

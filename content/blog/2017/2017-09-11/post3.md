@@ -1,7 +1,7 @@
 ---
 title: Upgrading Home Assistant (Windows Service Edition)
 date: 2017-09-11
-tags: [home assistant,windows]
+tags: [home assistant]
 logo: hass.png
 ---
 

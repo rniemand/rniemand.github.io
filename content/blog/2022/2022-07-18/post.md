@@ -1,7 +1,7 @@
 ---
-title: 'Legacy Blog Posts (2011)'
+title: "Legacy Blog Posts (2011)"
 date: 2022-07-18
-tags: [blog]
+tags: [uncategorized]
 logo: blog.png
 ---
 
@@ -28,16 +28,16 @@ This is a collection of all my old blog posts from 2011 with links to the export
 - [2011-03-09 - Windows Gadgets – Setting Settings.pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20-%20Windows%20Gadgets%20%E2%80%93%20Setting%20Settings.pdf)
 - [2011-03-09 - Wireless Networking on Windows Server 2008.pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20-%20Wireless.pdf)
 - [2011-03-09 - Working with folders.pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20-%20Working%20with%20folders.pdf)
-- [2011-03-09 [01] Custom MP Dev (Index).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B01%5D%20Custom%20MP%20Dev%20(Index).pdf)
-  - [2011-03-09 [02] Custom MP Dev (C-MP-1A).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B02%5D%20Custom%20MP%20Dev%20(C-MP-1A).pdf)
-  - [2011-03-09 [03] Custom MP Dev (C-MP-1B).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B03%5D%20Custom%20MP%20Dev%20(C-MP-1B).pdf)
-  - [2011-03-09 [04] Custom MP Dev (C-MP-1C).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B04%5D%20Custom%20MP%20Dev%20(C-MP-1C).pdf)
-  - [2011-03-09 [05] Custom MP Dev (C-MP-1D).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B05%5D%20Custom%20MP%20Dev%20(C-MP-1D).pdf) - ([Supporting files](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B05%5D%20Custom%20MP%20Dev%20(C-MP-1D).zip))
-  - [2011-03-09 [06] Custom MP Dev (C-MP-2A).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B06%5D%20Custom%20MP%20Dev%20(C-MP-2A).pdf)
-  - [2011-03-09 [07] Custom MP Dev (C-MP-2B).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B07%5D%20Custom%20MP%20Dev%20(C-MP-2B).pdf) - ([Supporting files](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B07%5D%20Custom%20MP%20Dev%20(C-MP-2B).zip))
-  - [2011-03-09 [08] Custom MP Dev (C-MP-2C).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B08%5D%20Custom%20MP%20Dev%20(C-MP-2C).pdf) - ([Supporting files](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B08%5D%20Custom%20MP%20Dev%20(C-MP-2C).zip))
-  - [2011-03-09 [09] Custom MP Dev (C-MP-3A).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B09%5D%20Custom%20MP%20Dev%20(C-MP-3A).pdf) - ([Supporting files](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B09%5D%20Custom%20MP%20Dev%20(C-MP-3A).zip))
-  - [2011-03-09 [10] Custom MP Dev (C-MP-4A).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B10%5D%20Custom%20MP%20Dev%20(C-MP-4A).pdf) - ([Supporting files](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B10%5D%20Custom%20MP%20Dev%20(C-MP-4A).zip))
-  - [2011-03-09 [11] Custom MP Dev (C-MP-4B).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B11%5D%20Custom%20MP%20Dev%20(C-MP-4B).pdf) - ([Supporting files](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B11%5D%20Custom%20MP%20Dev%20(C-MP-4B).zip))
+- [2011-03-09 [01] Custom MP Dev (Index).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B01%5D%20Custom%20MP%20Dev%20(Index).pdf>)
+  - [2011-03-09 [02] Custom MP Dev (C-MP-1A).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B02%5D%20Custom%20MP%20Dev%20(C-MP-1A).pdf>)
+  - [2011-03-09 [03] Custom MP Dev (C-MP-1B).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B03%5D%20Custom%20MP%20Dev%20(C-MP-1B).pdf>)
+  - [2011-03-09 [04] Custom MP Dev (C-MP-1C).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B04%5D%20Custom%20MP%20Dev%20(C-MP-1C).pdf>)
+  - [2011-03-09 [05] Custom MP Dev (C-MP-1D).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B05%5D%20Custom%20MP%20Dev%20(C-MP-1D).pdf>) - ([Supporting files](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B05%5D%20Custom%20MP%20Dev%20(C-MP-1D).zip>))
+  - [2011-03-09 [06] Custom MP Dev (C-MP-2A).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B06%5D%20Custom%20MP%20Dev%20(C-MP-2A).pdf>)
+  - [2011-03-09 [07] Custom MP Dev (C-MP-2B).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B07%5D%20Custom%20MP%20Dev%20(C-MP-2B).pdf>) - ([Supporting files](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B07%5D%20Custom%20MP%20Dev%20(C-MP-2B).zip>))
+  - [2011-03-09 [08] Custom MP Dev (C-MP-2C).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B08%5D%20Custom%20MP%20Dev%20(C-MP-2C).pdf>) - ([Supporting files](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B08%5D%20Custom%20MP%20Dev%20(C-MP-2C).zip>))
+  - [2011-03-09 [09] Custom MP Dev (C-MP-3A).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B09%5D%20Custom%20MP%20Dev%20(C-MP-3A).pdf>) - ([Supporting files](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B09%5D%20Custom%20MP%20Dev%20(C-MP-3A).zip>))
+  - [2011-03-09 [10] Custom MP Dev (C-MP-4A).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B10%5D%20Custom%20MP%20Dev%20(C-MP-4A).pdf>) - ([Supporting files](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B10%5D%20Custom%20MP%20Dev%20(C-MP-4A).zip>))
+  - [2011-03-09 [11] Custom MP Dev (C-MP-4B).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-09%20%5B11%5D%20Custom%20MP%20Dev%20(C-MP-4B).pdf>) - ([Supporting files](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-09%20%5B11%5D%20Custom%20MP%20Dev%20(C-MP-4B).zip>))
 - [2011-03-10 - MP Sealer 1.0.1.pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-10%20-%20MP%20Sealer%201.0.1.pdf) - ([Supporting files](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/_files/2011-03-10%20-%20MP%20Sealer%201.0.1.zip))
-- [2011-03-11 - Create a new VHD (VirtualBox).pdf](https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-11%20-%20Create%20a%20new%20VHD%20(VirtualBox).pdf)
+- [2011-03-11 - Create a new VHD (VirtualBox).pdf](<https://github.com/rniemand/code-samples/blob/main/blog-posts/2011/2011-03/2011-03-11%20-%20Create%20a%20new%20VHD%20(VirtualBox).pdf>)

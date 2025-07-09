@@ -1,13 +1,14 @@
 ---
 title: Automating .Net Core 2.x App NuGet Deployment with AppVeyor
 date: 2018-12-11
-tags: [ci-cd,appveyor]
+tags: [ci-cd]
 logo: appveyor.png
 ---
 
 In this post I am going to cover getting one of my `.net core` projects built in [AppVeyor](https://www.appveyor.com/) and automatically publishing to NuGet on a successful build.
 
 ## Project structure
+
 As it stands my project currently looks like this:
 
 <img src="./001.png" alt="" />
@@ -19,6 +20,7 @@ Lastly, I only want to run the automated build \ publish flow when code is pushe
 I originally had this working with the `.net framework` but it was obviously not compatible with `.net core`. After a couple of hours messing about, I managed to get everything working as I wanted, below is the process I followed.
 
 ### Generate a NuGet deployment key
+
 First I headed over to [NuGet.org](https://www.nuget.org/) and generated a deployment key to use with AppVeyor:
 
 <img src="./002.png" alt="" />
@@ -26,6 +28,7 @@ First I headed over to [NuGet.org](https://www.nuget.org/) and generated a deplo
 Be sure to save this key in a safe place and do not expose it publicly.
 
 ### Configure AppVeyor
+
 Once we have the deployment key we will need to make a couple of changes to our AppVeyor project to support .net core - I already had an existing project to modify, but if you don't have one, now would be the time to create it.
 
 Under the Settings page for your project navigate to the General section and ensure that `.NET Core .csproj patching` has been enabled (as shown below):
@@ -39,6 +42,7 @@ Then navigate to the Environment section and create a new environment key called
 That's it for the AppVeyor web configuration.
 
 ### Create an appveyor.yml file
+
 Next you will need to create an appveyor.yml` file in the root of your repository with the following content:
 
 ```yaml
@@ -46,7 +50,7 @@ version: 1.0.{build}
 image: Visual Studio 2017
 branches:
   only:
-  - master
+    - master
 init:
   # Good practice, because Windows line endings are different from Unix/Linux ones
   - cmd: git config --global core.autocrlf true
@@ -63,6 +67,7 @@ Here we do the following key things:
 That's it for my `appveyor.yml` file.
 
 ### Create a build script
+
 After a lot of trial and error with the appveyor.yml file I decided to use PowerShell as my main build script due to some road blocks I was getting with the yml limitations. The below is what I came up with, I will run through the main parts of the script quickly.
 
 The first thing I do is grab the build folder and build number from the available [AppVeyor variables](https://www.appveyor.com/docs/environment-variables/):
@@ -178,6 +183,7 @@ This results in a new version of the Rn.Common package being deployed to NuGet a
 <img src="./013.png" alt="" />
 
 ## Final Thoughts
+
 This is by no way the best solution to automating the build process, however it does what I need it to do. There are some limitations with AppVeyor now, with the biggest one being that they don't support .net core 2.2 at time of writing.
 
 I welcome feedback, comments and suggestions!

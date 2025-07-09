@@ -1,7 +1,7 @@
 ---
 title: "Docsify for your projects"
 date: 2022-12-22
-tags: [docsify]
+tags: [documentation]
 logo: docsify.png
 ---
 

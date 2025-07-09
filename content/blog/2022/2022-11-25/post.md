@@ -1,7 +1,7 @@
 ---
 title: Updating Chirpy
 date: 2022-11-25
-tags: [blog]
+tags: [github]
 logo: git.png
 ---
 

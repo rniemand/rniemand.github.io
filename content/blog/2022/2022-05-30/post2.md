@@ -1,7 +1,7 @@
 ---
 title: "HASS On Unraid: Google TTS"
 date: 2022-05-30
-tags: [home assistant, unraid, tts]
+tags: [home assistant, unraid]
 logo: hass.png
 ---
 

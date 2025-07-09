@@ -1,7 +1,7 @@
 ---
 title: Mosquitto on Windows
 date: 2017-06-07
-tags: [iot,windows,mqtt]
+tags: [iot]
 logo: mqtt.png
 ---
 

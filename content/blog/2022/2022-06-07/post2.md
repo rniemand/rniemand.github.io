@@ -1,7 +1,7 @@
 ---
 title: "Lounge Clock (v 1.0)"
 date: 2022-06-07
-tags: [home assistant, esphome, mqtt, mosquitto, 3d printing, iot, project]
+tags: [home assistant, esphome, 3d printing, iot]
 logo: esphome.png
 ---
 

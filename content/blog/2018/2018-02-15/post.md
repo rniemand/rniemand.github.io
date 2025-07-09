@@ -1,7 +1,7 @@
 ---
 title: Upgrading Home Assistant on DietPi
 date: 2018-02-15
-tags: [home assistant,dietpi]
+tags: [home assistant]
 logo: hass.png
 ---
 

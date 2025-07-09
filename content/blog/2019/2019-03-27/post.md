@@ -1,7 +1,7 @@
 ---
 title: Installing Telegraf on DietPi / ARM (Revised)
 date: 2019-03-27
-tags: [monitoring, dietpi, telegraf]
+tags: [monitoring, telegraf]
 logo: telegraf.png
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Installing Webmin on Ubuntu
 date: 2019-07-24
-tags: [webmin, ubuntu]
+tags: [linux]
 logo: webmin.png
 ---
 

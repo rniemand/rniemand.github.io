@@ -1,7 +1,7 @@
 ---
 title: "Home Assistant + ESP Easy + DHT11 = :)"
 date: 2017-12-10
-tags: [home assistant, espeasy]
+tags: [home assistant]
 logo: hass.png
 ---
 

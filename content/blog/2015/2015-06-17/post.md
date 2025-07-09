@@ -1,7 +1,7 @@
 ---
 title: Remote Access Home
 date: 2015-06-17
-tags: [dns,networking]
+tags: [uncategorized]
 logo: homelab.png
 ---
 

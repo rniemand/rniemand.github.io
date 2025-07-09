@@ -1,7 +1,7 @@
 ---
 title: Installing OctoPrint on Armbian from Source
 date: 2018-12-12
-tags: [3d printing,octoprint,dietpi]
+tags: [3d printing]
 logo: octoprint.png
 ---
 

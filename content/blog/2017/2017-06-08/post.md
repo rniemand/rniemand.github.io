@@ -1,7 +1,7 @@
 ---
 title: Running Mosquitto as a Windows Service
 date: 2017-06-08
-tags: [iot,windows,mqtt]
+tags: [iot]
 logo: mqtt.png
 ---
 

@@ -1,6 +1,6 @@
 ---
 title: Automatic MariaDB Backups with Unraid
-date: 2025-07-08
+date: 2025-07-09
 tags: [unraid]
 #banner: blue.png
 logo: unraid.png
@@ -15,11 +15,11 @@ backupdb() {
   echo "============================================="
   echo "Backing up :: $1"
   echo "============================================="
-  
+
   backupTargetRoot="/mnt/user/DB-Backups/nas/$1/$(date '+%Y-%m/')"
   backupZipFile="/mnt/user/DB-Backups/nas/$1/$(date '+%Y-%m/%F')-$1.zip"
   mysqlDumpFile="/mnt/user/DB-Backups/nas/$1/$(date '+%Y-%m/%F')-$1.sql"
-  
+
   echo "  > creating backup root dir: ${backupTargetRoot}"
   mkdir -p $backupTargetRoot
   rm -f $backupZipFile

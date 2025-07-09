@@ -1,7 +1,7 @@
 ---
 title: Home Assistant Missing Dependencies (Windows)
 date: 2017-09-11
-tags: [home assistant,windows]
+tags: [home assistant]
 logo: hass.png
 ---
 

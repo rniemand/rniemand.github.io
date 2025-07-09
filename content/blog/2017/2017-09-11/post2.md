@@ -1,7 +1,7 @@
 ---
 title: Running Home Assistant as a Windows Service
 date: 2017-09-11
-tags: [windows,home assistant]
+tags: [home assistant]
 logo: hass.png
 ---
 

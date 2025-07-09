@@ -1,7 +1,7 @@
 ---
 title: Hosting Web API and Static Content with OWIN
 date: 2015-06-18
-tags: [owin,hosting,.net]
+tags: [.net]
 logo: dotnet.png
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Installing Chronograf on Ubuntu
 date: 2019-06-18
-tags: [chronograf, ubuntu]
+tags: [linux]
 logo: chronograf.png
 ---
 

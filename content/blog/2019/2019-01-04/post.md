@@ -1,7 +1,7 @@
 ---
 title: Installing InfluxDB on Windows
 date: 2019-01-04
-tags: [monitoring,influxdb,windows]
+tags: [monitoring,influxdb]
 logo: influxdb.png
 ---
 

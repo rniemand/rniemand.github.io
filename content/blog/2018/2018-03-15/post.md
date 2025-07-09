@@ -1,7 +1,7 @@
 ---
 title: NodeRED on DietPi
 date: 2018-03-15
-tags: [iot,node-red,dietpi]
+tags: [iot]
 logo: node-red.png
 ---
 

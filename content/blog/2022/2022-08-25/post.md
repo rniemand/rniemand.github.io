@@ -1,7 +1,7 @@
 ---
 title: Voxelab Aries 3D Printer with Cura
 date: 2022-08-25
-tags: [cura, 3d printing]
+tags: [3d printing]
 logo: 3dprinter.png
 ---
 

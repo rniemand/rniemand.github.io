@@ -1,7 +1,7 @@
 ---
 title: Pong - Update 2
 date: 2016-08-02
-tags: [javascript]
+tags: [javascript,gaming]
 logo: javascript.png
 ---
 

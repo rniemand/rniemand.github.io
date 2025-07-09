@@ -1,7 +1,7 @@
 ---
 title: Backing up MariaDB (MySQL) via CRON
 date: 2019-07-10
-tags: [database, ubuntu, mysql, mariadb]
+tags: [linux, mysql, mariadb]
 logo: mariadb.png
 ---
 

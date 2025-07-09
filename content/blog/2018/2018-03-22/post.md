@@ -1,7 +1,7 @@
 ---
 title: "Flashing Tasmota on Sonoff (Revised)"
 date: 2018-03-22
-tags: [arduino, flashing, tasmota]
+tags: [arduino]
 logo: tasmota.png
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Running a PHP site with Docker
 date: 2019-01-15
-tags: [docker, php]
+tags: [docker]
 logo: php.png
 ---
 

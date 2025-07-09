@@ -1,7 +1,7 @@
 ---
 title: "HASS On Unraid: DNS"
 date: 2022-05-30
-tags: [home assistant, unraid, dns]
+tags: [home assistant, unraid]
 logo: hass.png
 ---
 
