@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Automatic MariaDB Backups with Unraid</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+		<meta name="generator" content="Eleventy v3.1.1">
+		
+		
+		<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+body {
+	font-family: "Open Sans", sans-serif;
+	font-optical-sizing: auto;
+}
+
+div.main-content {
+	margin-top: 4rem;
+	font-size: 1.1rem;
+}
+
+.blog-list a {
+	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #52a0d7;
+}
+
+div.main-content > h1 {
+	color: #c3e6ff;
+	margin-bottom: 1rem;
+}
+
+div.main-content > h2 {
+	color: #ffd97f;
+	margin-bottom: 1rem;
+}
+
+div.main-content > h3 {
+	color: #f0ff7f;
+	margin-bottom: 1rem;
+}
+
+div.main-content pre {
+	font-size: 1.1rem;
+	background-color: #31363b;
+	border: 1px solid #3f4851;
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+div.main-content picture img:not(.no-borders) {
+	border: 1px solid #454d55;
+	max-width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+}
+
+div.main-content picture img {
+	margin-bottom: 1rem;
+	box-shadow: 5px 5px 10px 0px #2b3137;
+}
+
+div.main-content div.prev-next {
+	background-color: #293037;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+}
+
+div.main-content table {
+	border: 1px solid #363c43;
+	font-size: 1rem;
+}
+
+div.main-content .list-group-item:hover {
+	background-color: #2b3137;
+}
+
+div.main-content .accordion {
+	margin-bottom: 1rem;
+}
+
+div.main-content .accordion .accordion-item .accordion-body {
+	background-color: #2a2f35;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+		<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1689302880129363" crossorigin="anonymous"></script>
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand" href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/about/">About</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/projects/">Projects</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/series/">Series</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+        	</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="automatic-mariadb-backups-with-unraid">Automatic MariaDB Backups with Unraid</h1>
+
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/unraid/" class="post-tag">unraid</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2025-07-08">08 July 2025</time>
+	</span>
+</div>
+
+
+<p>Below is a simple <code>shell</code> script that I created to run daily backups of all my <strong>MariaDB databases</strong> running on my Unraid server.</p>
+
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token shebang important">#!/bin/sh</span>
+
+<span class="token function-name function">backupdb</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"============================================="</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"Backing up :: <span class="token variable">$1</span>"</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"============================================="</span>
+  
+  <span class="token assign-left variable">backupTargetRoot</span><span class="token operator">=</span><span class="token string">"/mnt/user/DB-Backups/nas/<span class="token variable">$1</span>/<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%Y-%m/'</span><span class="token variable">)</span></span>"</span>
+  <span class="token assign-left variable">backupZipFile</span><span class="token operator">=</span><span class="token string">"/mnt/user/DB-Backups/nas/<span class="token variable">$1</span>/<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%Y-%m/%F'</span><span class="token variable">)</span></span>-<span class="token variable">$1</span>.zip"</span>
+  <span class="token assign-left variable">mysqlDumpFile</span><span class="token operator">=</span><span class="token string">"/mnt/user/DB-Backups/nas/<span class="token variable">$1</span>/<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%Y-%m/%F'</span><span class="token variable">)</span></span>-<span class="token variable">$1</span>.sql"</span>
+  
+  <span class="token builtin class-name">echo</span> <span class="token string">"  > creating backup root dir: <span class="token variable">${backupTargetRoot}</span>"</span>
+  <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> <span class="token variable">$backupTargetRoot</span>
+  <span class="token function">rm</span> <span class="token parameter variable">-f</span> <span class="token variable">$backupZipFile</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"  > dumping DB to SQL file..."</span>
+  <span class="token function">docker</span> <span class="token builtin class-name">exec</span> mariadb <span class="token function">sh</span> <span class="token parameter variable">-c</span> <span class="token string">"exec mariadb-dump <span class="token variable">$1</span> -u&lt;user> -p<span class="token entity" title="\&quot;">\"</span>&lt;pass><span class="token entity" title="\&quot;">\"</span>"</span> <span class="token operator">></span> <span class="token variable">$mysqlDumpFile</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"  > compressing backup file..."</span>
+  <span class="token function">zip</span> <span class="token variable">$backupZipFile</span> <span class="token variable">$mysqlDumpFile</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"  > cleanup and permissions..."</span>
+  <span class="token function">rm</span> <span class="token variable">$mysqlDumpFile</span>
+  <span class="token function">chmod</span> <span class="token parameter variable">-R</span> 0777 <span class="token variable">$backupTargetRoot</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">"  > done"</span>
+  <span class="token builtin class-name">echo</span> <span class="token string">""</span>
+<span class="token punctuation">}</span>
+
+backupdb <span class="token string">"RnGo"</span></code></pre>
+
+<p>This script performs the following actions:</p>
+
+<ul>
+	<li>Dumps the contents of the DB to disk using the <a href="https://mariadb.com/docs/server/clients-and-utilities/backup-restore-and-import-clients/mariadb-dump" target="_blank">mariadb-dump</a> command (via docker)</li>
+	<li>Compresses the dumped file using <code>zip</code></li>
+	<li>Places the file in the specified output directory</li>
+	<li>Adjusts the files permissions (in my case to <code>0777</code>, you may want to change that)</li>
+	<li>Preforms some basic cleanup</li>
+</ul>
+
+<p>This will place the backup files in the <code>&lt;output-dir&gt;/&lt;db-name&gt;/yyyy-mm/</code> directory and name the zip file using <code>yyyy-mm-dd-&lt;db-name&gt;.zip</code> format.</p>
+
+<p>To use this script, you will need to replace the <code>&lt;user&gt;</code> and <code>&lt;pass&gt;</code> placeholders.</p>
+
+<p>Just append additional calls to the <code>backupdb</code> function to the end of the script to add additional databases.</p>
+
+<div class="alert alert-warning">
+	<strong>Note</strong>: the selected DB user needs to have access to each DB you wish to back up.
+</div>
+
+<p>Just add the script to your Unraid server using the <a href="/blog/2025/2025-07-08/post/">User Scripts</a> plugin, set a sensible schedule, and enjoy the automated backups.</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-09/post/HrHG2rOq16-918.avif 918w"><source type="image/webp" srcset="/blog/2025/2025-07-09/post/HrHG2rOq16-918.webp 918w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-09/post/HrHG2rOq16-918.png" alt="" width="918" height="389"></picture>
+<div class="d-flex mb-3 prev-next">
+	<i class="bi bi-arrow-left-short"></i>
+	<span class="text-start">Previous<br><a href="/blog/2025/2025-07-08/post/">Core Unraid Plugins and Containers</a></span>
+	
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+</div>
+
+
+<div id="disqus_thread"></div>
+
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					<a href="https://github.com/rniemand" target="_blank">GitHub</a>
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2025/2025-07-09/post/` was built on 2025-07-09T19:01:40.524Z -->
+		<script type="module" src="/dist/N5M8_8v5Lr.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
+	</body>
+</html>
