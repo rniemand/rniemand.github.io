@@ -6,7 +6,6 @@ logo: hass.png
 ---
 
 > This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
-{: .prompt-tip }
 
 In preparation for an upcoming blog post on the recorder and history component we are going to need some historical data to work with. I would like to keep tabs on the performance of our internet connection using the [speedtest.net component](https://www.home-assistant.io/integrations/speedtestdotnet/), we will be doing this in the following steps:
 
@@ -16,7 +15,9 @@ In preparation for an upcoming blog post on the recorder and history component w
 - Customize our group
 
 ## Process
+
 ### Speedtest.net sensor
+
 Looking at the speedtest sensor's documentation adding the sensor as a new platform under the sensor node. Once added there are a couple of options available on the conditions that you would like to monitor, in my case I am going to be collecting information about ping, download and upload speeds.
 
 To do this we will need to add the following configuration to the `configuration.yaml` file:
@@ -42,6 +43,7 @@ After a quick configuration check and reload of Home Assistant we can see our ne
 <img src="./001.png" alt="" />
 
 ### Create a group
+
 I would prefer to have these counters displayed as a card in Home Assistant rather than in the status area. To do this we can simply create a group, list the components that we would like to see in the group and reload the core components of Home Assistant.
 
 To create our group we will first need the component id's of our new counters, you can get the id's through the states view under the developer tools.
@@ -62,6 +64,7 @@ After reloading the groups we are presented with the following:
 <img src="./002.png" alt="" />
 
 ### Triggering data collection
+
 At the moment we don't have any data from Speedtest (as it only collects every 15 min) so we can trigger the collection manually to get our initial counters.
 
 Most components in Home Assistant expose services which can be called either through code or via custom automation rules. Services can range from something as simple as getting \ setting a state on a component or running a complex command for the targeted entity.
@@ -81,6 +84,7 @@ Some services may require additional parameters to function correctly, if that i
 `{ "keep_days": 7, "repack": false }`
 
 ### Customizing our counters
+
 Lastly I would like to do some basic customization of the collected counters, namely I would like to rename them and add a custom icon per value.
 
 We can make these changes in the customize.yaml file by adding the following lines:
@@ -108,9 +112,11 @@ Clicking on any of the counters (after a while) will result in a graph containin
 <img src="./007.png" alt="" />
 
 ## Committing Changes
+
 If you are using some form of source control, now would be a good time to commit your changes.
 
 ## Final thoughts
+
 This was one of the last posts where I will dive into so much detail around simple configuration tasks in Home Assistant. I will elaborate any topics that require it, but for now please keep the following in mind:
 
 - `configuration.yaml` - stores all configuration relating to adding new components and sensors to Home Assistant

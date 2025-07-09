@@ -10,11 +10,11 @@ logo: hass.png
 At the moment my main focus is around security and knowing what is going on at home when we are not around. I have built a couple of sensory nodes based on an ESP8266 development board (more to come in a later post) that now live in key areas of the house monitoring movement, doors & windows, temperature, humidity, etc. These devices publish their information to my MQTT broker which is being monitored by Home Assistant. My main intent here is to have Home Assistant send me notifications on my mobile phone when there is movement around the house and we are not there. For this to happen I somehow need to let Home Assistant know when we are home, and when we are away so it is able to take the appropriate action when movement is detected, Enter OwnTracks.
 
 > OwnTracks allows you to keep track of your own location. You can build your private location diary or share it with your family and friends. OwnTracks is open-source and uses open protocols for communication so you can be sure your data stays secure and private.
-{: .prompt-info }
 
 I installed the client on my phone,configured it to talk to my home MQTT server, and making use of my [MQTT dumper application](/blog/2017/2017-08-29/post/) confirmed that it was indeed able to publish my location correctly. Now comes the fun part of getting everything up and running on Home Assistant.
 
 ## Getting your location
+
 Home Assistant needs to know your home location in order to determine whether you are home or not, and for the most part the installer does a pretty good job at guessing your coordinates, however you will need to refine them a bit to ensure that everything works properly.
 
 To do this you will need the `latitude` and `longitude` of your home location. For mine I made use of the [following site](https://www.latlong.net/) to work this out, but you can also do this via Google maps by pulling the values out of the URL - the site was a bit easier IMO.
@@ -28,6 +28,7 @@ homeassistant:
 ```
 
 ## Home Assistant and MQTT
+
 Next you will need to make sure that Home Assistant can talk to your MQTT server. To do this you will need to add the appropriate configuration to your configuration.yaml again:
 
 ```yaml
@@ -41,6 +42,7 @@ mqtt:
 Provided all your settings are correct, Home Assistant should be able to talk to your MQTT server after a restart.
 
 ## Setup OwnTracks
+
 Next you will need to tell Home Assistant to track your devices via owntracks by adding in the below configuration lines into your configuration.yaml again.
 
 ```yaml
@@ -80,6 +82,7 @@ After a quick restart of Home Assistant I can see my avatar, and an AWAY tag by 
 <img src="./001.png" alt="" />
 
 ## Zoning
+
 As it stands Home Assistant now knows when you are home and away, nothing more. We could leave it here, but it would be nice to know when I am at work also as there may be some automation tasks I would like to trigger when I get to work (not that I can think of any at the moment). To do this we will need to set up some [zones](https://www.home-assistant.io/integrations/zone/).
 
 We are going to define these in a separate file to make management of zones easier, and reference that file in our configuration.yaml by adding the following line somewhere near the bottom of it:
@@ -109,6 +112,7 @@ Save the file, restart Home Assistant and if all went well you should see your n
 <img src="./002.png" alt="" />
 
 ### Troubleshooting
+
 I actually had a lot of trouble getting this up and running initially - Home Assistant was refusing to update my location no matter what I did. I spent about 10 min redefining my zones, tweaking the radius, reloading the application to no success, it was only after configuring the logger to be more verbose that the issue became apparent. To enable [logging](https://www.home-assistant.io/integrations/logger/) add the following to your configuration.yaml file:
 
 ```yaml

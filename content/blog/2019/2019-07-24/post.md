@@ -1,12 +1,11 @@
 ---
 title: Installing Webmin on Ubuntu
 date: 2019-07-24
-tags: [webmin,ubuntu]
+tags: [webmin, ubuntu]
 logo: webmin.png
 ---
 
 > **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
-{: .prompt-tip }
 
 Today I will be covering installing [Webmin](https://www.webmin.com/) on Ubuntu (and Ubuntu Server), in case you are unaware of it (I was initially) here is a blurb taken from their website.
 
@@ -15,6 +14,7 @@ Webmin is a web-based interface for system administration for Unix. Using any mo
 I highly recommend checking out "[the official deployment guide](https://www.webmin.com/deb.html)", so should you get stuck with any of the steps below.
 
 ## Installation
+
 First you will need to download the latest version of the Webmin installer on your server. You can get this link from their deployment guide, at the time of writing this post `webmin_1.920_all.deb` was the latest version. Once you are connected to your server you can simply download it using the following command (making sure that you reference the current version.
 
 ```shell
@@ -56,6 +56,7 @@ rm webmin_1.920_all.deb
 ```
 
 ## Connecting to Webmin
+
 By default, the Webmin UI is exposed on port 10000 on your server's IP Address, connecting to it is as simple as navigating to `https://<SERVER-IP>:10000` in your favourite browser.
 
 <img src="./001.png" alt="" />
@@ -69,6 +70,7 @@ Before continuing, it may be a good idea to install any missing updates to your 
 <img src="./002.png" alt="" />
 
 ## Modules
+
 One of the cool features with Webmin are its modules (plugins). There are a lot of modules available with some sensible defaults enabled. You can easily get a list of any disabled modules through the un-used Modules link.
 
 <img src="./003.png" alt="" />
@@ -77,6 +79,7 @@ Setup and configuration of each module will vary so I can't cover all of them (t
 The next section will walk you through installing the required services to get up and running with the SMART Drive Status module.
 
 ### SMART Drive Status
+
 The SMART Drive Status module requires Smartmontools to be installed, you can install smartmontools with the below command:
 
 ```shell
@@ -102,6 +105,7 @@ That's all there is to it, you should now see some additional drive information 
 <img src="./006.png" alt="" />
 
 ## In Closing
+
 Hopefully you found this post helpful and were able to get your own deployment of Webmin up and running. If you get stuck feel free to ask a question below if you are unable to find an answer on [the official Webmin](https://www.webmin.com/) site, I am always happy to try to help out.
 
 I am open to any feedback, comments and suggestions that you may have so please feel free to leave some, I will do my best to get back to you as soon as possible.

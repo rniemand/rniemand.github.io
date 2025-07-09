@@ -10,8 +10,8 @@ This is a simple post covering the steps required to update the [Chirpy Jekyll T
 Let's dive in.
 
 ## Initial Setup
+
 > Personally I use Windows as my daily driver so this section will cover Windows only.
-{: .prompt-tip }
 
 In order to build and run locally you will need to meet the following requirements:
 
@@ -29,6 +29,7 @@ bundle
 ```
 
 ## Writing Flow
+
 You can run either of the commands below to build and preview your site:
 
 ```shell
@@ -40,6 +41,7 @@ bundle exec jekyll s --incremental
 Once running you can view your site locally at [http://localhost:4000](http://localhost:4000).
 
 ## Updating Chirpy
+
 Full process is covered [here](https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide), this is more of a cheat sheet for the process:
 
 Determine the version that you are currently on (e.g. `v5.3.1`) and the latest version you are updating too - this can be found [here](https://github.com/cotes2020/jekyll-theme-chirpy/tags) (let's say `v5.3.2`).
@@ -63,6 +65,7 @@ Visitng the URL will list out all the changes between the provided versions:
 The update process is just replaying the changes made to the relevant files over your repository.
 
 ## Useful Links
+
 Below is a curated list of useful links I have found and use when writing blog posts.
 
 - [Typography supported by Chirpy](https://chirpy.cotes.page/posts/text-and-typography/#titles)
@@ -70,6 +73,7 @@ Below is a curated list of useful links I have found and use when writing blog p
 - [Enabling Google Pages View](https://chirpy.cotes.page/posts/enable-google-pv/) - was a breaking change a while back.
 
 ## Closing
+
 That's all there is to it.
 
 Happy posting!

@@ -1,12 +1,11 @@
 ---
 title: Setting Static IP Address (Ubuntu)
 date: 2019-06-14
-tags: [networking,ubuntu]
+tags: [networking, ubuntu]
 logo: ubuntu.png
 ---
 
 > **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
-{: .prompt-tip }
 
 Most of the information in this post is a simplified version of the [following guide](https://ubuntu.com/server/docs). Basically you can think of this as the CliffsNotes for getting up and running with a static IP Address on Ubuntu Server.
 

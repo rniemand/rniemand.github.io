@@ -1,16 +1,16 @@
 ---
 title: Installing Telegraf on Ubuntu
 date: 2019-06-17
-tags: [monitoring,ubuntu,telegraf]
+tags: [monitoring, ubuntu, telegraf]
 logo: telegraf.png
 ---
 
 > **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
-{: .prompt-tip }
 
 [Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) is the open source server agent to help you collect metrics from your stacks, sensors and systems. Following the steps below should get you up and running with Telegraf in no time. Should you want to dive a bit deeper into some of the features offered by Telegraf you may want to refer to the [official documentation here](https://docs.influxdata.com/telegraf/v1.11/introduction/installation/).
 
 ## First Time Only
+
 The first time you install any of the Influx Data products you will need to add their repository using the below commands:
 
 ```shell
@@ -20,6 +20,7 @@ echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stabl
 ```
 
 ## Installing Telegraf
+
 Once you have added the InfluxData source to your system, you can install Telegraf with the below command:
 
 ```shell
@@ -27,6 +28,7 @@ sudo apt-get update && sudo apt-get install telegraf
 ```
 
 ## Configuring Telegraf
+
 Once installed, you will need to make some changes to the default configuration file that Telegraf ships with. To do this we can edit the `telegraf.conf` file.
 
 ```shell
@@ -34,6 +36,7 @@ sudo nano /etc/telegraf/telegraf.conf
 ```
 
 ### InfluxDB (Output)
+
 You will need to enable at least 1 output for Telegraf, in my case (and most commonly) this would be [InfluxDB](/blog/2019/2019-06-14/post1/). Search for the `[[outputs.influxdb]]` configuration section and change as needed, my configuration is shown below:
 
 ```ini
@@ -43,12 +46,12 @@ You will need to enable at least 1 output for Telegraf, in my case (and most com
 ```
 
 ### net (Input)
+
 To collect networking stats for your computer you will need to enable the [[inputs.net]] plugin. Part of the configuration for the plugin is setting the interface name for your network card (the name varies from system to system) - the easiest way to get your interface name is by listing all the networking devices on your computer and choosing the most appropriate one from the results:
 
 ```shell
 ls /sys/class/net/
 ```
-
 
 Once you have your adapter name change your configuration to match it, in my case I am using the following configuration:
 
@@ -58,6 +61,7 @@ Once you have your adapter name change your configuration to match it, in my cas
 ```
 
 ### Default (Input)
+
 When installing Telegraf on my system the following plugins seemed to be enabled by default (though your mileage may vary):
 
 - [inputs.cpu](https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/cpu/README.md)
@@ -71,6 +75,7 @@ When installing Telegraf on my system the following plugins seemed to be enabled
 A complete list of Telegraf plugins can be found [here](https://docs.influxdata.com/telegraf/v1.11/plugins/plugin-list/).
 
 ## Service Management
+
 You can use the below commands to manage the Telegraf service after making configuration changes.
 
 ```shell
@@ -81,9 +86,9 @@ sudo systemctl restart telegraf.service
 ```
 
 > Make sure you remember to restart the service after making configuration changes.
-{: .prompt-tip }
 
 ## Troubleshooting
+
 Should you run into any issues with starting Telegraf, or you are missing data you can always run the below command to get the last couple of messages from Telegraf:
 
 ```shell
@@ -101,6 +106,7 @@ In my case I had set the incorrect URL for InfluxDB :/
 <img src="./001.png" alt="" />
 
 ## All Done
+
 Hopefully you find this post helpful!
 
 Feel free to leave any feedback or comments below, or if you spot an issue let me know so I can fix it. Happy monitoring!

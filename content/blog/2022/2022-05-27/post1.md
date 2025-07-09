@@ -1,14 +1,14 @@
 ---
-title: 'HASS On Unraid: Installation'
+title: "HASS On Unraid: Installation"
 date: 2022-05-27
-tags: [home assistant,unraid]
+tags: [home assistant, unraid]
 logo: hass.png
 ---
 
 > This post is [part of a series](/series/) covering running various containers on [Unraid](https://unraid.net/).
-{: .prompt-tip }
 
 ## Download the VM Image
+
 First you will need to obtain the latest image from the Home Assistant website ([see this page](https://www.home-assistant.io/installation/alternative)) - in my installation I am using the .qcow2 image as shown below:
 
 <img src="./001.png" alt="" />
@@ -19,6 +19,7 @@ Once downloaded you can use a tool like [7-Zip](https://www.7-zip.org/) to extra
 _This is the extracted contents of the zip file_
 
 ## Create the Home Assistant VM
+
 Next, you will need to create a new VM in Unraid making use of the Linux template and apply the appropriate configuration for your VM, in my case I used the following.
 
 <img src="./003.png" alt="" />
@@ -36,6 +37,7 @@ Ensure that you set the Primary vDisk Location to point to the `.qcow2` image yo
 Ensure that you assign the network as bridged as some of the functionality of Home Assistant will break without this - assign a MAC Address for the VM (you can use this to enforce static IPs on your router) and select the appropriate network driver.
 
 ### Adding an Icon
+
 You can edit the XML file for your VM as shown below to add in a custom image for Home Assistant to make your VM stand out (if you have a number of them).
 
 ```xml
@@ -49,6 +51,7 @@ You can edit the XML file for your VM as shown below to add in a custom image fo
 ```
 
 ## First Time Setup
+
 Once your VM is created and you are happy with the configuration you can start it:
 
 <img src="./006.png" alt="" />

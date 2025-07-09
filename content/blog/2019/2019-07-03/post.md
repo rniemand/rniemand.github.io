@@ -1,16 +1,16 @@
 ---
 title: Installing Node-RED on Ubuntu
 date: 2019-07-03
-tags: [iot,ubuntu,node-red]
+tags: [iot, ubuntu, node-red]
 logo: node-red.png
 ---
 
 > **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
-{: .prompt-tip }
 
 Today I will be covering getting up and running with [Node-RED](https://nodered.org/) on your server. This process is slightly more involved compared to all the previous instals we have done so far, however this post aims to make it as simple as possible!
 
 ## Installing Node.js
+
 In order to run Node-RED you will need to have [Node.js](https://nodejs.org/en/) installed, these steps are a condensed version of the [official installation guide](https://github.com/nodesource/distributions/blob/master/README.md#debinstall) for Ubuntu.
 
 To install Node.js 12.x simply run the below command on your server:
@@ -36,10 +36,10 @@ You should see output similar to the below:
 <img src="./001.png" alt="" />
 
 ## Installing Node-RED
+
 Once we have Node.js installed we can move on to installing Node-RED, the below commands are taken from the [official documentation](https://nodered.org/docs/getting-started/local).
 
 > **Note**: you will need to run most of these commands as `sudo`
-{: .prompt-info }
 
 You can install Node-RED with the below command:
 
@@ -58,6 +58,7 @@ Once Node-RED has started you should be able to access it on your server's IP Ad
 <img src="./002.png" alt="" />
 
 ## Securing Node-RED
+
 If you are planning on making your Node-RED installation accessible on your home network (or the web) it is a good idea to secure it with a password, follow the steps below to add the default admin user and custom password to your instance.
 
 First you will need to install the `node-red-admin` package.
@@ -89,9 +90,11 @@ Next, save and close the configuration file and restart Node-RED (for now you ca
 You should be able to now log in using the admin user and your selected password!
 
 ## Create a Node-RED Service
+
 Ideally we want Node-RED to start when the server boots, after some digging online the below process worked best for me ([more information here](https://nodered.org/docs/faq/starting-node-red-on-boot)). Basically we are going to install [pm2](https://www.npmjs.com/package/pm2) which is a process manager plugin for Node.js and can be configured to start services on boot.
 
 ### Installing pm2
+
 You can install pm2 using the following command:
 
 ```shell
@@ -120,6 +123,7 @@ pm2 logs node-red
 ```
 
 ### Starting Node-RED on boot
+
 You can configure Node-RED to start on boot by running the below commands, you will need to have pm2 installed (covered above):
 
 ```shell
@@ -142,6 +146,7 @@ The only thing left to do now, is to restart the server and see if Node-RED star
 <img src="./006.png" alt="" />
 
 ## Fixing Node-RED permissions
+
 Presumably you installed Node-RED using your user account (as root is disabled by default on Ubuntu), so you will need to amend some permissions before you can install any additional pallets to Node-RED.
 
 After some digging on Google I came across this post which had an all-in-one command that fixed my permissions perfectly, maybe this will save you some time!
@@ -153,9 +158,9 @@ sudo find ~ -type d -user root -exec sudo chown -R $USER: {} +
 ```
 
 > **NOTE**: you need to be in your Node-RED directory before running this command!
-{: .prompt-tip }
 
 ## Installing Palettes
+
 Once you have fixed the permissions (covered above) you should be able to install any palettes normally through Node-RED.
 
 <img src="./007.png" alt="" />
@@ -165,10 +170,12 @@ Thanks to the fix above I was able to install all the palettes I needed with no 
 <img src="./008.png" alt="" />
 
 ## Automated Backups
+
 As a bonus I thought I would cover creating automated backups of your Node-RED server using a CRON job.
 
 ### The zip command
-Node-RED stores all your flows in a file with the flows_<HOST>.json naming convention, in my case that was:
+
+Node-RED stores all your flows in a file with the flows\_<HOST>.json naming convention, in my case that was:
 
 ```shell
 /home/niemandr/.node-red/flows_<HOST>.json
@@ -191,6 +198,7 @@ This will create a zip file with the following naming convention: `Node-RED-<DAT
 <img src="./009.png" alt="" />
 
 ### Creating the CRON
+
 You can manage your CRON jobs using the below command:
 
 ```shell
@@ -214,6 +222,7 @@ Once done, save and close the CRON file.
 You are now configured with daily backups of your Node-RED service!
 
 ## In Closing
+
 This was a longer post than normal, and I would like to thank you for sticking it out to the end! I always welcome any comments, suggestions and feedback on these posts as it helps me learn.
 
 If you are stuck feel free to ask me a question and I will do my best to answer you ASAP.

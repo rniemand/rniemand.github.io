@@ -1,7 +1,7 @@
 ---
 title: Sonoff & MQTT Example (Lounge Light)
 date: 2017-10-03
-tags: [iot,mqtt,sonoff]
+tags: [iot, mqtt, sonoff]
 logo: sonoff.png
 ---
 
@@ -33,7 +33,6 @@ This flow will publish a pre-defined payload to the below topic on my MQTT broke
 To take my light automation to the next level as it were I am making use of [schedex](https://github.com/biddster/node-red-contrib-schedex):
 
 > Scheduler for node-red which allows you to enter on/off times as 24hr clock (e.g. 01:10) or suncalc events (e.g. goldenHour). It also allows you to offset times and randomise the time within the offset.
-{: .prompt-tip }
 
 This scheduler allows you to set your location (`longitude` and `latitude`) and provides some really awesome scheduling options as shown below.
 

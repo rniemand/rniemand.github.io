@@ -1,18 +1,18 @@
 ---
 title: Installing Grafana on Ubuntu
 date: 2019-07-02
-tags: [monitoring,ubuntu,grafana]
+tags: [monitoring, ubuntu, grafana]
 logo: grafana.png
 ---
 
 > **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
-{: .prompt-tip }
 
 Once you have a running instance of [InfluxDB](/blog/2019/2019-06-14/post1/) being populated with that sweet, sweet [Telegraf](/blog/2019/2019-06-17/post/) data, you are going to need a way to visualise it all, this is where [Grafana](https://grafana.com/) comes in. Grafana is by far one of the best dash-boarding systems out there and is simple to use.
 
 In this post I will cover the steps needed to get Grafana up and running on your Ubuntu Server installation, let's dive in.
 
 ## Dependencies
+
 Before you begin it is a good idea to make sure that you have the latest version of libfontconfig1 installed as my initial installation failed as it was missing on my system, installation is as simple as running:
 
 ```shell
@@ -26,6 +26,7 @@ sudo apt --fix-broken install
 ```
 
 ## Download and Install
+
 Next, you will need to grab the appropriate installation package from [the official Grafana release page](https://grafana.com/grafana/download), in my case this was `grafana_6.2.2_amd64.deb`. Log onto your server and download the installation package using wget:
 
 ```shell
@@ -45,6 +46,7 @@ sudo rm -f grafana_6.2.2_amd64.deb
 ```
 
 ## Configuration
+
 The main Grafana configuration file live in /etc/grafana/grafana.ini and you can edit it with your favourite bash editor:
 
 ```shell
@@ -62,6 +64,7 @@ http_port = 3000
 There are loads more configuration options to play around with, but as stated above these are the ones I most often mess around with.
 
 ## Creating a Service
+
 You can enable the Grafana service with the following commands:
 
 ```shell
@@ -83,6 +86,7 @@ sudo systemctl status grafana-server
 ```
 
 ## First Time Configuration
+
 Provided you left the default port unchanged, you should be able to connect to Grafana on `http://<server_ip>:3000/`, in my case that would be: `http://10.0.0.51:3000`
 
 You should be greeted with the following login screen.

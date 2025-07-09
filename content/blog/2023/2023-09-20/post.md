@@ -122,7 +122,6 @@ You should now be able to navigate to SonarQube on `http://localhost:9000/` and 
 Once you have completed the initial setup as instructed above subsequent starting and stopping of the container can be done using the following commands.
 
 > These commands need to be run from the folder that you saved your `docker-compose.yaml` file in.
-{: .prompt-info }
 
 To start the container:
 

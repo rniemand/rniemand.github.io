@@ -6,7 +6,6 @@ logo: ubuntu.png
 ---
 
 > **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
-{: .prompt-tip }
 
 The first thing I do with any new system installation is ensure that the correct date, time and timezone is configured. I ran into an issue a while back when working on an old image of [DietPi](https://dietpi.com/) and was not able to update packages, long story short the system's date was about a year out and causing SSL certificates to become invalid.
 

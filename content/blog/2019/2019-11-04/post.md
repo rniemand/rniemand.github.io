@@ -1,16 +1,16 @@
 ---
 title: Installing MQTT on Ubuntu
 date: 2019-11-04
-tags: [iot,ubuntu,mqtt,mosquitto]
+tags: [iot, ubuntu, mqtt, mosquitto]
 logo: mqtt.png
 ---
 
 > **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
-{: .prompt-tip }
 
 Today I am going to be covering installing and configuring `mosquitto` (a pretty common MQTT client) on Ubuntu. I make use of MQTT a lot when it comes to my home automation as it's a lightweight protocol that can easily run on devices with limited memory (like an ESP8266).
 
 ## Installation
+
 If you haven't already you will need to add the mosquitto ppa to apt using the following command:
 
 ```shell
@@ -30,6 +30,7 @@ systemctl status mosquitto.service
 ```
 
 ## General Configuration
+
 If you want to add custom configuration to mosquitto you will need to create a configuration file called `/etc/mosquitto/conf.d/mosquitto.conf` (as it does not exist by default), we can create or edit this file using the following command:
 
 ```shell
@@ -44,8 +45,8 @@ password_file /etc/mosquitto/conf.d/passwd
 ```
 
 ## Adding our FIRST user
+
 > **Note**: if you are wanting to add an additional user to mosquitto please refer to the next section, this section is for creating the initial password file and user. Running this command again will overwrite all existing users!
-{: .prompt-tip }
 
 To add our first user to mosquitto we will need to create our password file (specified by the `password_file` configuration value above). We can create a new password file and add our first user at the same time by using the following command:
 
@@ -60,6 +61,7 @@ sudo systemctl restart mosquitto
 ```
 
 ## Adding additional users
+
 To add additional users to mosquitto we can run the below command (note that we omit the -c switch this time as we are not wanting to create a password file).
 
 ```shell
@@ -75,6 +77,7 @@ sudo systemctl restart mosquitto
 ```
 
 ## Useful Links
+
 That's pretty much all there is to installing mosquitto on Ubuntu, hopefully this saved you some time.
 
 Below are some helpful links to make working with MQTT a lot easier:

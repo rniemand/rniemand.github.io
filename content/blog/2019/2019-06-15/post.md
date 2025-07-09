@@ -1,16 +1,16 @@
 ---
 title: Installing MariaDB (MySQL) on Ubuntu
 date: 2019-06-15
-tags: [database,mariadb,mysql]
+tags: [database, mariadb, mysql]
 logo: mariadb.png
 ---
 
 > **Hi there**! This post is [part of a series](/series/) I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!
-{: .prompt-tip }
 
 This post covers the basics of installing MariaDB (an alternative to MySQL) on Ubuntu Server in an hopefully easy to follow format. I have broken the process up into smaller sections to make following along a lot easier.
 
 ## Installation
+
 The first thing you will need to do is ensure that your server is up to date using the following command:
 
 ```shell
@@ -36,6 +36,7 @@ $ sudo systemctl stop mariadb.service
 ```
 
 ## Configuration
+
 The default configuration file can be found at `/etc/mysql/mariadb.conf.d/50-server.cnf`, you can run the below command to edit it:
 
 ```shell
@@ -54,6 +55,7 @@ $ sudo /usr/bin/mysql_secure_installation
 ```
 
 ### Connecting to the DB
+
 You can connect to MariaDB using the following command:
 
 ```shell
@@ -61,6 +63,7 @@ $ sudo mysql -u root -p
 ```
 
 ### Creating Users
+
 You can create an user account with the below commands (be sure to replace the `<USER>` and `<PASSWORD>` placeholders):
 
 ```sql
@@ -70,6 +73,7 @@ FLUSH PRIVILEGES;
 ```
 
 ### Creating DB
+
 You can create a DB with the below command (be sure to replace the `<DB_NAME>` placeholder):
 
 ```sql
@@ -77,6 +81,7 @@ CREATE DATABASE `<DB_NAME>`;
 ```
 
 ### Assigning an User to a DB
+
 Use the below commands to assign an user to a specific DB (make sure you replace `<DB_NAME>`, `<USER>` and `<HOST>`):
 
 ```sql
@@ -87,12 +92,15 @@ FLUSH PRIVILEGES;
 You can use `%` for `<HOST>` to allow access from anywhere - however it is a lot safer to lock down access to known, safe IP Addresses.
 
 ## Quick Reference
+
 Some helpful commands and paths to save you time.
 
 ### Data Directory
+
 `/var/lib/mysql/`
 
 ### Service Management
+
 ```shell
 sudo systemctl start mariadb.service
 sudo systemctl stop mariadb.service
@@ -101,16 +109,19 @@ sudo systemctl status mariadb.service
 ```
 
 ### Connecting to MariaDB
+
 ```shell
 sudo mysql -u root -p
 ```
 
 ### Creating a DB
+
 ```shell
 CREATE DATABASE `<DB_NAME>`;
 ```
 
 ### Creating an User and assign a DB
+
 ```shell
 CREATE USER '<USER>' IDENTIFIED BY '<PASSWORD>';
 GRANT USAGE ON `<DB_NAME>`.* TO '<USER>'@'%' IDENTIFIED BY '<PASSWORD>';

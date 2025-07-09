@@ -1,7 +1,7 @@
 ---
 title: Installing Telegraf on DietPi / ARM (Revised)
 date: 2019-03-27
-tags: [monitoring,dietpi,telegraf]
+tags: [monitoring, dietpi, telegraf]
 logo: telegraf.png
 ---
 
@@ -10,6 +10,7 @@ Today I would like to cover getting up and running with [Telegraf](https://www.i
 This will be a brief post just covering the commands \ "hacks" used to get it all sorted.
 
 ## Uninstalling (Optional)
+
 I had initially done a manual installation of Telegraf which needed to be removed:
 
 ```shell
@@ -19,6 +20,7 @@ systemctl daemon-reload
 ```
 
 ## Installing from influxdata.com
+
 These steps are summarised from the [official documentation](https://docs.influxdata.com/telegraf/v1.10/introduction/installation/).
 
 Add the influxdb.key key:
@@ -34,7 +36,6 @@ echo "deb [arch=arm64] https://repos.influxdata.com/debian stretch stable" | sud
 ```
 
 > **Note**: depending on your SBC architecture you may need to replace [arch=arm64] with [arch=armel] or [arch=armhf]! You can get your CPU architecture by running cat /proc/cpuinfo
-{: .prompt-tip }
 
 Run `apt-get update` and install required dependencies:
 
@@ -49,6 +50,7 @@ sudo apt-get update && sudo apt-get install telegraf
 ```
 
 ## Configuration
+
 By default the configuration file can be found at `/etc/telegraf/telegraf.conf`.
 
 You will need to edit this file to point Telegraf to your local InfluxDb server and add any modules you require:
@@ -58,6 +60,7 @@ nano /etc/telegraf/telegraf.conf
 ```
 
 ## Running as a service
+
 Enabling the telegraf service should be as easy as issuing the following commands:
 
 ```shell
@@ -72,6 +75,7 @@ systemctl enable telegraf
 ```
 
 ## Notes
+
 The official repository I used for discovering the supported CPU architectures is here: [https://repos.influxdata.com/debian/dists/stretch/stable/](https://repos.influxdata.com/debian/dists/stretch/stable/).
 
 Once running you should start seeing your hosts appearing in Chronograf.

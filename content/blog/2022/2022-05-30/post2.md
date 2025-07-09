@@ -1,16 +1,16 @@
 ---
-title: 'HASS On Unraid: Google TTS'
+title: "HASS On Unraid: Google TTS"
 date: 2022-05-30
-tags: [home assistant,unraid,tts]
+tags: [home assistant, unraid, tts]
 logo: hass.png
 ---
 
 > This post is [part of a series](/series/) covering running various containers on [Unraid](https://unraid.net/).
-{: .prompt-tip }
 
 Today I will cover setting up TTS on Home Assistant using the Google Cast integration.
 
 ## Basic Discovery
+
 Out of the box Home Assistant should automatically discover any [Google Cast](https://www.home-assistant.io/integrations/cast/) compatible devices on your home network and present you with a notification similar to the one below under the Devices & Services section.
 
 <img src="./002.png" alt="" />
@@ -25,6 +25,7 @@ Once done your devices will be available in Home Assistant under the Google Cast
 <img src="./004.png" alt="" />
 
 ## TTS Configuration
+
 Next up I created a new configuration file called custom\tts.yaml with the following configuration:
 
 ```yaml

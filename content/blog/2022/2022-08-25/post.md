@@ -1,11 +1,11 @@
 ---
 title: Voxelab Aries 3D Printer with Cura
 date: 2022-08-25
-tags: [cura,3d printing]
+tags: [cura, 3d printing]
 logo: 3dprinter.png
 ---
 
-Recently I bought myself a new 3D Printer, more specifically a new shiny "[Voxelab Aries 3D Printer](https://www.voxelab3dp.com/product/aries-high-end-fdm-3d-printer-for-beginners?cID=29)" which `imho` is a pretty good value printer for its price point (*paid ~ CAD$ 400* all in). My only complaints with the printer is the fact that the firmware is closed source and the provided slicer leaves a lot behind in terms of functionality when compared to [Cura](https://ultimaker.com/software/ultimaker-cura) or similar slicing software.
+Recently I bought myself a new 3D Printer, more specifically a new shiny "[Voxelab Aries 3D Printer](https://www.voxelab3dp.com/product/aries-high-end-fdm-3d-printer-for-beginners?cID=29)" which `imho` is a pretty good value printer for its price point (_paid ~ CAD$ 400_ all in). My only complaints with the printer is the fact that the firmware is closed source and the provided slicer leaves a lot behind in terms of functionality when compared to [Cura](https://ultimaker.com/software/ultimaker-cura) or similar slicing software.
 
 In this post I will cover getting the printer up and running in Cura along with providing a suggested Cura profile that you can use as a template.
 
@@ -86,7 +86,6 @@ Ensure that you have your printer selected in Cura along with the desired materi
 <img src="./008.png" alt="" />
 
 > Below are some sample prints using the base profile - this should be a good starting point for most people.
-{: .prompt-tip }
 
 <img src="./009.jpg" alt="" />
 

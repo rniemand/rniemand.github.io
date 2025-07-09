@@ -1,7 +1,7 @@
 ---
-title: 'Home Assistant + ESP Easy + DHT11 = :)'
+title: "Home Assistant + ESP Easy + DHT11 = :)"
 date: 2017-12-10
-tags: [home assistant,espeasy]
+tags: [home assistant, espeasy]
 logo: hass.png
 ---
 
@@ -12,6 +12,7 @@ As the name suggests `ESPEasy` aims to be a simple to use (and install) firmware
 For the rest of this post I am going to assume that you have successfully flashed your ESP with the latest build and have connected your device to your home network.
 
 ## Configuration
+
 The first thing you will need to do is connect your `DHT sensor` to your ESP similar to the diagram shown below, taking note of the pin used for the data signal (in the case below that is `D4`).
 
 <img src="./001.png" alt="" />
@@ -29,7 +30,6 @@ On the screen that appears next you will need to make the following changes:
 - Using the diagram at the bottom of this post - select the GPIO that your DHT device is connected to.
 
 > If the IDX value is not set you ESP will not publish any data for the configured device (I learnt this the hard way).
-{: .prompt-tip }
 
 - Choose the decimals (optionally the formula for publishing the collected data).
 - Finally give the values a friendly name (this will form part of the topic when publishing over MQTT).
@@ -41,6 +41,7 @@ Click the submit button to save your changes, and if all went well you should st
 <img src="./004.png" alt="" />
 
 ## Viewing Published Data
+
 As mentioned above the values entered in when configuring your ESP and the DHT11 device are used to generate a unique MQTT Topic for publishing the collected temperature data.
 
 You can use a tool like [MQTTLens](https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=en) to spy on your generated topic, or if you are unsure of what it maybe you can spy on the # global topic. After a while you should see some information being published from your device (mine is every 30 seconds according to my configuration).
@@ -50,6 +51,7 @@ You can use a tool like [MQTTLens](https://chrome.google.com/webstore/detail/mqt
 The published values are determined by the following formula `/%sysname%/%tskname%/%valname%`, so that becomes `/ESP03/dht/Temperature` and `/ESP03/dht/Humidity`. The formula can be configured globally on the ESP via the main configuration screen.
 
 ## HASS Integration
+
 The last thing I would like to do is to display the collected temperature and humidity information in Home Assistant (HASS) for easy viewing and historical graphing. To do this I will need to create a couple of MQTT sensors in HASS with the following configuration:
 
 ```yaml
@@ -75,6 +77,7 @@ After a quick reboot (or reload of the core configuration) I am able to see the 
 <img src="./007.png" alt="" />
 
 ## Diagrams
+
 The below diagram shows you the most common pin mapping of 90% of the ESP8266 boards when using the ESPEasy firmware.
 
 <img src="./008.png" alt="" />

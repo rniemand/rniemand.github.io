@@ -1,7 +1,7 @@
 ---
 title: MySQL and Home Assistant
 date: 2018-02-16
-tags: [home assistant,mysql,mariadb]
+tags: [home assistant, mysql, mariadb]
 logo: hass.png
 ---
 
@@ -10,6 +10,7 @@ To get the best performance out of [Home Assistant](https://www.home-assistant.i
 I am running the latest build of [DietPi](https://dietpi.com/) on my server to get the most out of it, and have already got the latest version of HASS running on it (0.63.2 at the time of writing).
 
 ## Installing MySQL
+
 The first thing you will need to do is install the MySQL Client via pip, initially I tried running the following command after logging into my Pi:
 
 ```
@@ -27,9 +28,9 @@ running under the same user context that Home Assistant was installed under.
 <img src="./002.png" alt="" />
 
 > After following their commands, I was able to successfully install the mysqlclient package.
-{: .prompt-info }
 
 ## Configuring Home Assistant
+
 To configure Home Assistant to connect to your MySQL server you will need to add/modify the following line in your `configuration.yaml` file, be sure to replace the relevant placeholders.
 
 ```yaml
@@ -50,6 +51,7 @@ After that, the Home Assistant should be good to go.
 <img src="./005.png" alt="" />
 
 ## Performance
+
 As you would expect, the performance is much better right off the bat when using MySQL (you are starting fresh with no history). Using the built in analysis dashboard in MySQL Workbench you can see that my server is running well.
 
 <img src="./006.png" alt="" />
@@ -73,4 +75,5 @@ The MySQL service on my host computer is also using < 200 Mb when running and le
 Compared to the default SQLite implementation, and given the choice I will always opt in to using MySQL when running Home Assistant for a large number of devices and automations.
 
 ## Enjoy
+
 I hope that you found this post helpful and somewhat interesting, please feel free to leave any comments or suggestions below.

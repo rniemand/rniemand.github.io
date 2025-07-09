@@ -1,7 +1,7 @@
 ---
-title: 'Ceiling Fan Remote Hacking'
+title: "Ceiling Fan Remote Hacking"
 date: 2022-06-15
-tags: [cc1101,esp8266,home assistant]
+tags: [cc1101, esp8266, home assistant]
 logo: esphome.png
 ---
 
@@ -12,6 +12,7 @@ I will cover the basics. I went through reverse engineering the commands sent to
 You can skip all of this and just get the **[source code here](https://github.com/rniemand/hampton-bay-fan-mqtt)** if you would like.
 
 ## Required Hardware and Setup
+
 In order to follow along you will need to have access to the following hardware:
 
 - ESP8266 (or compatible chipset) - I am using a Wemos D1 Mini
@@ -20,6 +21,7 @@ In order to follow along you will need to have access to the following hardware:
 - [Arduino IDE](https://www.arduino.cc/en/software) - used to build and upload the code
 
 ### Module Wiring
+
 Depending on your CC1101 module, your wiring may be different, please ensure that you check your modules specific wiring before continuing.
 
 The module that I selected has the following pinout:
@@ -34,18 +36,19 @@ Based on the [wiring diagram here](https://github.com/LSatan/SmartRC-CC1101-Driv
 
 <img src="./003.png" alt="" />
 
-| CP1101 | ESP8266 | Mode | Notes |
-| --- | --- | --- | --- |
-| GD00 | D1 | Output | Module Info output pin |
-| GD02 | D2 | Output | Module information output pin |
-| SCK | D5 | Input | SPI bus clock |
-| VCC | 3V3 | - | Power supply must be between `1.8-3.6v` |
-| MOSI | D7 | Input | SPI data input pin |
-| MISO | D6 | Output | SPI data output pin |
-| CSN | D8 | Input | Chip select pin |
-| GND | GND | - | Ground wire |
+| CP1101 | ESP8266 | Mode   | Notes                                   |
+| ------ | ------- | ------ | --------------------------------------- |
+| GD00   | D1      | Output | Module Info output pin                  |
+| GD02   | D2      | Output | Module information output pin           |
+| SCK    | D5      | Input  | SPI bus clock                           |
+| VCC    | 3V3     | -      | Power supply must be between `1.8-3.6v` |
+| MOSI   | D7      | Input  | SPI data input pin                      |
+| MISO   | D6      | Output | SPI data output pin                     |
+| CSN    | D8      | Input  | Chip select pin                         |
+| GND    | GND     | -      | Ground wire                             |
 
 ### Arduino Libraries
+
 The following libraries are required to compile the project:
 
 - [SmartRC-CC1101-Driver-Lib](https://github.com/LSatan/SmartRC-CC1101-Driver-Lib)
@@ -55,6 +58,7 @@ The following libraries are required to compile the project:
 For simplicity and to ensure that your build works these have been included in my repository under the `libs` directory ([here](https://github.com/rniemand/hampton-bay-fan-mqtt/tree/main/libs)).
 
 ## Project Usage
+
 Usage is pretty straight forward, and can be done by following these steps:
 
 - Clone the [repository](https://github.com/rniemand/hampton-bay-fan-mqtt) locally
@@ -67,9 +71,11 @@ Usage is pretty straight forward, and can be done by following these steps:
 - Compile and upload the sketch
 
 ## Reverse Engineering
+
 This section covers (at a high-level) how I was able to reverse engineer the remote codes and modify the existing project to meet my needs.
 
 ### Capturing Codes
+
 The first thing I needed to do was to capture any codes being sent by the remotes, this was as simple as modifying the sketch to log out the values captured by RCSwitch:
 
 ```cpp
@@ -80,13 +86,14 @@ bits = mySwitch.getReceivedBitlength();
 
 Resulting in values like the table below:
 
-| Protocol | Bits | Value | Dip Pos | Action |
-| --- | --- | --- | --- | --- |
-| 11 | 24 | 16543350 | 0001 | Fan Speed 1 |
-| 11 | 24 | 16542838 | 0011 | Fan Speed 1 |
-| 11 | 24 | 16541814 | 0111 | Fan Speed 1 |
+| Protocol | Bits | Value    | Dip Pos | Action      |
+| -------- | ---- | -------- | ------- | ----------- |
+| 11       | 24   | 16543350 | 0001    | Fan Speed 1 |
+| 11       | 24   | 16542838 | 0011    | Fan Speed 1 |
+| 11       | 24   | 16541814 | 0111    | Fan Speed 1 |
 
 ### Decoding the bits
+
 At first glance this may all seem like nonsense - how does “16543350” turn on a specific fan to a specific speed? To answer that we first need to convert these values to their binary representation, this resulted in the following 24 bits:
 
 | Int | A | B | C | D | E | F |
@@ -95,7 +102,6 @@ At first glance this may all seem like nonsense - how does “16543350” turn o
 | 16542838 | 1111 | 1100 | 0110 | 1000 | 0111 | 0110 |
 
 > **Note**: This table is referenced a LOT below
-{: .prompt-info }
 
 This process was repeated for each possible command on the remote and compared once done, during my comparison the following stood out:
 
@@ -110,12 +116,15 @@ With this information I was able to piece together the following truth table:
 <img src="./004.png" alt="" />
 
 ### Encoding Codes
+
 The process of re-encoding the remote codes is as simple as reversing this process (covered later on), at least this is some good news - we can work with this.
 
 ## Arduino Sketch
+
 Implementing this in the original Arduino sketch was a bit of a hack on my end, however with some persistence I was able to do it.
 
 ### Decoding RF Input
+
 When a RF code is detected we need to decode it, this process begins with reading the received value:
 
 ```cpp
@@ -166,6 +175,7 @@ int command = subtractedValue & 0b000000001111;
 All that is left to do is respond to the received code.
 
 ### Encoding Codes
+
 Encoding outgoing RF codes is basically reversing the process used to decode them, and looks like this:
 
 ```cpp
@@ -194,17 +204,19 @@ int finalCommand = baseCommand + fanIdDips + commandInt + command;
 This value is then transmitted using the same protocol and bit length used to receive it, this results in the fan thinking the command came from the remote.
 
 > If your fans do not respond to the command you should try changing the frequency value `RF_FREQUENCY` - I wasted a good 45 min with this one!
-{: .prompt-tip }
 
 ### Everything Else
+
 The rest of the code is pretty much in line with the source repository.
 
 I have no doubtably introduced some new BUGS in the code-base and will need to tackle them when discovered!
 
 ## Home Assistant
+
 Once you have your ESP device deployed, adding it to Home Assistant is as simple as adding an MQTT fan and light entry per fan you wish to control.
 
 ### MQTT Fan Configuration
+
 In this case I am creating an entry for my remote with a DIP switch position of `0001`:
 
 ```yaml
@@ -226,6 +238,7 @@ mqtt:
 ```
 
 ### MQTT Light Configuration
+
 In this case I am creating an entry for my remote with a DIP switch position of `0001`:
 
 ```yaml
@@ -241,6 +254,7 @@ mqtt:
 ```
 
 ### Entities
+
 Once restarted you should see all your fan and light entities in Home Assistant.
 
 <img src="./005.png" alt="" />
@@ -254,6 +268,7 @@ Along with the fan entities:
 <img src="./007.png" alt="" />
 
 ### Dashboard Configuration
+
 I am personally using the following configuration to control my fans in Home Assistant:
 
 <img src="./008.png" alt="" />
@@ -304,7 +319,7 @@ cards:
         preset_mode: low
       target:
         entity_id: fan.master_bedroom_fan
-    entity: ''
+    entity: ""
     icon: mdi:fan-speed-1
     hold_action:
       action: none
@@ -318,7 +333,7 @@ cards:
         preset_mode: medium
       target:
         entity_id: fan.master_bedroom_fan
-    entity: ''
+    entity: ""
     icon: mdi:fan-speed-2
     hold_action:
       action: none
@@ -332,7 +347,7 @@ cards:
         preset_mode: high
       target:
         entity_id: fan.master_bedroom_fan
-    entity: ''
+    entity: ""
     icon: mdi:fan-speed-3
     hold_action:
       action: none
@@ -341,6 +356,7 @@ cards:
 This can be repeated for each fan you wish to control.
 
 ## Proto-boarding
+
 Finally I tried to neaten everything up by placing all the components on a proto-board, and I will soon be designing and printing a case for the final project.
 
 <img src="./009.png" alt="" />
@@ -353,6 +369,7 @@ _The wiring at the back is not amazing_
 _don't forget the hot glue_
 
 ## In Closing
+
 This project was a good brain teaser and forced me to re-learn basic comp-sci principles like bitwise operations and binary maths.
 
 I would like to give a shout out to **[Ben Owen](https://github.com/owenb321)** for the original work done here as it saved me a lot of time along with providing me with a good starting place.

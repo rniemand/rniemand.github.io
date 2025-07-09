@@ -1,7 +1,7 @@
 ---
-title: 'Flashing Tasmota on Sonoff (Revised)'
+title: "Flashing Tasmota on Sonoff (Revised)"
 date: 2018-03-22
-tags: [arduino,flashing,tasmota]
+tags: [arduino, flashing, tasmota]
 logo: tasmota.png
 ---
 
@@ -10,6 +10,7 @@ This post is an update to my previous "[Changing Sonoff Firmware (Visual Guide)]
 All credits to `Justin` from [DrZzs](https://www.youtube.com/channel/UC7G4tLa4Kt6A9e3hJ-HO8ng/featured) - keep up the good work!
 
 ## Required Hardware
+
 If you are planning to follow along with this blog post, you will require the following items:
 
 - [Sonoff WiFi Smart Switch](https://www.banggood.com/SONOFF-BASICR2-10A-2200W-WIFI-Wireless-Smart-Switch-Remote-Control-Socket-APP-Timer-AC90-250V-50-or-60Hz-Works-with-Amazon-Alexa-Google-Home-Assistant-IFTTT-p-1019971.html?imageAb=2&p=5T250523689812015082&akmClientCountry=CA&cur_warehouse=CN)
@@ -19,9 +20,11 @@ If you are planning to follow along with this blog post, you will require the fo
 <img src="./001.jpg" alt="" />
 
 ## ESP8266 tools & Arduino
+
 To save on some time and to try to keep this post short, I am going to assume that you have the `ESP8266 community tools` already installed alongside your Arduino IDE, if you do not [this post](/blog/2018/2018-03-19/post/) will get you up and running quickly.
 
 ## Download Tasmota
+
 You are going to need the latest `stable` build of the Tasmota firmware, you can download it from the link below (please be sure to download the Source Code (zip) release).
 
 - https://github.com/arendst/Sonoff-Tasmota/releases
@@ -31,9 +34,9 @@ Once downloaded, extract the contents of the zip file to a local folder on your 
 <img src="./002.png" alt="" />
 
 > **NOTE**: ensure that you replace any existing libraries with the ones provided!
-{: .prompt-warning }
 
 ## Configure Tasmota
+
 This is the section where all the magic happens, and shows how much work has been put into the actual Tasmota firmware by the developers. Unlike my [original flashing guide](/blog/2017/2017-08-03/post/) this method is 100 times simpler and more robust should your network become completely unreachable to your Sonoff device.
 
 The only configuration change we are going to make to the Tasmota firmware is tell it to enter into `WIFI_MANAGER` mode whenever it is unable to connect to any of the configured WiFi networks, in this case the Sonoff will enter Access Point (`AP`) mode and host its own WiFi network for you to connect to and configure the device. No more hacking about configuration ever!
@@ -55,6 +58,7 @@ Locate the following line ...
 That's all we need to do for our configuration, it's that simple.
 
 ### Pro Tip: Make a Flash Cable
+
 I find that the simplest way to flash my Sonoffs is to make my own flashing cable using 4 (or 5) Dupont cables. I normally use a female header to align them, and join them together using some super glue and a bit or cardboard.
 
 <img src="./004.png" alt="" />
@@ -68,6 +72,7 @@ This method of connecting to the Sonoff saves me a lot of time / solder and male
 <img src="./006.jpg" alt="" />
 
 ## Verify the Firmware
+
 The next thing we need to do before attempting to flash the Tasmota firmware to our device is to compile it. Depending on your computer's performance this could take a while, and depending on whether you copied the libraries or not, you may need to address some compilation issues.
 
 The next thing we need to do before attempting to flash the Tasmota firmware to our device is to compile it. Depending on your computer's performance this could take a while, and depending on whether you copied the libraries or not, you may need to address some compilation issues.
@@ -93,12 +98,12 @@ Once you have verified, and are happy with your board configuration press the ti
 <img src="./008.png" alt="" />
 
 ## Connect your Sonoff
+
 Next we will need to connect an ISP to the programming headers on your Sonoff device, depending on what ISP you are using this can vary slightly, however the general principle is the same. As mentioned earlier I am making use of an old Arduino UNO board with the processor removed as my programmer. Below you can see how I hooked it all up.
 
 <img src="./009.jpg" alt="" />
 
 > **NOTE**: Read below before powering up your ISP / Sonoff
-{: .prompt-tip }
 
 In order to flash the Tasmota firmware we are going to need to place the Sonoff into flashing mode when powering it up, this is pretty simple and is achieved by the following steps:
 
@@ -111,6 +116,7 @@ In order to flash the Tasmota firmware we are going to need to place the Sonoff 
 If done correctly the light on the Sonoff should remain off, if it is flashing your timing is out and you will need to disconnect the power and try again.
 
 ## Upload the firmware
+
 When the connection has been made, and the Sonoff is in flashing mode (`done by holding down the push button when powering up the device`), press the upload button in the Arduino IDE to flash Tasmota to your device. The upload will take a while to complete and should output as shown below:
 
 <img src="./010.png" alt="" />
@@ -120,6 +126,7 @@ After the upload has completed your Sonoff should reboot and blink the green sta
 <img src="./011.gif" alt="" />
 
 ## Connect and configure
+
 When your Sonoff first powers on it won't be able to connect to your WiFi network and will put itself into Access Point mode, this is indicated by the rapidly flashing green LED above. When the Sonoff is in AP mode it will create its own WiFi network that you can connect to with your phone / laptop and configure, in my case the sonoff-2399 network was created.
 
 <img src="./012.png" alt="" />
@@ -129,6 +136,7 @@ Connecting to this WiFi network should launch your web browser and bring up the 
 <img src="./013.png" alt="" />
 
 ### Pro Tip: Use Fing for a good time
+
 If you are like me and want to assign a static `IP Address` to your Sonoff once it has booted, or do not know what the initial IP Address assigned to it by your router is you can make use of [Fing](https://www.fing.com/) on your mobile device to discover your Sonoff:
 
 <img src="./014.png" alt="" />
@@ -136,6 +144,7 @@ If you are like me and want to assign a static `IP Address` to your Sonoff once 
 Once you know the IP and MAC address of the Sonoff you can make it static on your router :)
 
 ## Final thoughts
+
 Although this was a long post I do feel that the overall process of flashing the Sonoff was a log simpler and quicker, thanks to the following factors:
 
 - The use of a custom programming cable - no need to solder

@@ -10,6 +10,7 @@ Following on from a [previous post](/blog/2017/2017-09-15/post/) I would like to
 In order to accomplish this I will need to know a couple of things, mainly what data is being sent by OwnTracks, and how to get at this bits of it I want.
 
 ## OwnTracks payload
+
 First we will need to see exactly what is being sent over the wire when OwnTracks "calls home" and identify where in that payload the phone battery level is stored. To do this I made use of my [MQTT dumper application](/blog/2017/2017-08-29/post/) filtering it to the owntracks/# publications, I forced my phone to check in and recoded the data sent over the wire:
 
 ```json
@@ -31,11 +32,11 @@ It seems that the batt property is what we are looking for, and a quick cross-ch
 <img src="./001.png" alt="" />
 
 > Something to note here "iOS,Android/integer/percent/optional"
-{: .prompt-info }
 
 There is a possibility that this value won't always be there, and this is due to the fact that you can enable / disable advanced reporting in the application. We will need to make sure that this case is catered for when we attempt to collect this information.
 
 ## Tracking battery usage
+
 In order to store and present this information in Home Assistant we will need to make use of a sensor, more specifically the [mqtt sensor](https://www.home-assistant.io/integrations/sensor.mqtt). This sensor will allow us to subscribe to any MQTT topic and collect data from it, with the added bonus of being able to manipulate this data using the [templating engine](https://www.home-assistant.io/docs/configuration/templating/) built into Home Assistant.
 
 I created this sensor in my config/sensor.yaml file, with the following config:
@@ -44,7 +45,7 @@ I created this sensor in my config/sensor.yaml file, with the following config:
 - platform: mqtt
   state_topic: owntracks/xxx/xxx
   name: Phone Battery (Richard)
-  unit_of_measurement: '%'
+  unit_of_measurement: "%"
   value_template: ...
 ```
 
@@ -55,6 +56,7 @@ After restarting Home Assistant, and checking in with my phone I am able to see 
 <img src="./002.png" alt="" />
 
 ## Tracking WiFi / Mobile
+
 Using the same approach as above I was able to add the following sensor to Home Assistant to track what type of connection my phone was using to call home (either WiFi or mobile data). This information could be used to alert you when you are at home and not on the WiFi network, and possibly save you some money :).
 
 This sensor is configured as below, using very similar logic to the battery code:
@@ -71,6 +73,7 @@ After another restart of Home Assistant (notice a trend here) I was able to see 
 <img src="./003.png" alt="" />
 
 ## Tracking GPS accuracy
+
 The last bit of useful data from the "call home" payload of OwnTracks is the GPS accuracy value. Personally I have yet to think of a useful flow involving this data, but I am collecting it nonetheless just in case.
 
 To track this information you will need to add another sensor with the following configuration:
@@ -87,6 +90,7 @@ After restarting Home Assistant I can now see my GPS accuracy in meters I believ
 <img src="./004.png" alt="" />
 
 ## Create a nice card
+
 To better display this information on the Home Assistant UI (and to stop cluttering up the top bar) I like to group related values together in cards (or groups). To do this I added the following group to my config/groups.yaml file:
 
 ```yaml

@@ -1,16 +1,16 @@
 ---
 title: Home Assistant From Scratch - Octoprint
 date: 2018-10-09
-tags: [home assistant,octoprint]
+tags: [home assistant, octoprint]
 logo: hass.png
 ---
 
 > This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
-{: .prompt-tip }
 
 Today I will be adding my 3D printer to Home Assistant via the [octoprint integration](https://www.home-assistant.io/integrations/octoprint/), this post will build up on core concepts that have already been covered in some of my previous posts.
 
 ## Requirements
+
 If you wish to follow along, you will need the following.
 
 - Octoprint setup and running for your 3D printer
@@ -19,6 +19,7 @@ If you wish to follow along, you will need the following.
 - (Optional) A webcam configured in Octoprint
 
 ## Octoprint
+
 As mentioned above, in order to monitor Octoprint from Home Assistant you will need the [Octoprint MQTT plugin](https://plugins.octoprint.org/plugins/mqtt/) as this allows Octoprint to publish relative information about your printer and any running jobs.
 
 You can install the plugin through Octoprints built-in plugin manager, and configure it to point to your home MQTT server (or cloud server if you are not hosting your own).
@@ -34,6 +35,7 @@ We can confirm that our configuration is correct by subscribing to either `#` or
 <img src="./003.png" alt="" />
 
 ## Home Assistant
+
 The first thing we need to do is add the Octoprint component's configuration into your configuration.yaml file.
 
 ```yaml
@@ -45,7 +47,6 @@ octoprint:
 ```
 
 > This is the main component to integrate OctoPrint sensors, you will have to set up sensors and binary sensors separately.
-{: prompt-tip }
 
 Next you will need to create a new octoprint sensor (shown below) in your `configuration.yaml` file and select the monitored conditions that you are interested in.
 
@@ -63,6 +64,7 @@ After a quick restart of Home Assistant you should see your new sensors.
 <img src="./004.png" alt="" />
 
 ### Grouping and Customization
+
 I prefer to group similar sensors together in Home Assistant to make it easier to get to the information that I want to see. Below I am creating a new card called Anet A8 which contains all the sensors that I want to see...
 
 ```yaml
@@ -88,6 +90,7 @@ If you are wondering where to get the entity names specific to your 3D printer (
 <img src="./007.png" alt="" />
 
 ### Customizing Entities
+
 The next thing I want to do is rename some of the automatically generated names to ones that make more sense to me. To do this I added the following configuration to my customize.yaml file:
 
 ```yaml
@@ -121,6 +124,7 @@ The results after a restart can be seen below:
 <img src="./008.png" alt="" />
 
 ### Webcam Support
+
 Octoprint by default provides a webcam stream which is available at: `http://<IP Address>/webcam/?action=stream`
 
 In my case that would make it: `http://10.0.0.101/webcam/?action=stream&1532530153491`
@@ -137,6 +141,7 @@ camera:
 <img src="./009.png" alt="" />
 
 ### 3D Printer View
+
 The last thing left to do is create a 3D Printer view in Home Assistant (i.e. a TAB on the top row) which will be used to only display information from my 3D printer, to do this I added the following configuration to the groups.yaml file.
 
 ```yaml
@@ -155,6 +160,7 @@ After restarting Home Assistant:
 <img src="./010.png" alt="" />
 
 ## Conclusion
+
 I feel a lot more comfortable being able to check on my 3D printer from another room, and having it integrate so easily into Home Assistant is a huge bonus.
 
 This also opens up the doors for a lot of automation around your printer (e.g. power down after print completion (using a Sonoff), cut power in [thermal runaway](https://reprap.org/forum/read.php?1,786827), etc.).

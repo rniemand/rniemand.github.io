@@ -16,6 +16,7 @@ I was pretty impressed with how the printer was packed, and everything has its p
 <img src="./002.jpg" alt="" />
 
 ## Assembly
+
 The build was pretty straight forward, and the supplied build instructions (included on the 8 Gb SD Card that came with the printer) were enough to get up and running. I much prefer video instructions when it comes to building things and ended up following these to complete my printer build:
 
 - [Anet A8 Assembly - Part 1](https://www.youtube.com/watch?v=-tiHfzBQZpI)
@@ -38,12 +39,11 @@ A quick power on test confirmed that I didn't wire up any of the components inco
 <img src="./007.jpg" alt="" />
 
 > The total time it took me to build the printer was around 4-5 hours, I decided to take my time and ran numerous checks during the build process to ensure that I did not make any silly mistakes.
-{: .prompt-tip }
 
 > **FYI**: you need to be careful with tightening all screws and belts. Too much tension can lead to a cracked frame. Also be extra careful to match all polarity when wiring up the controller boards.
-{: .prompt-info }
 
 ## Upgrades
+
 By itself the Anet A8 is an amazing entry level (learning) printer given its low barrier to entry, and is able to produce pretty good quality prints. It has a heated print bed allowing it to print in a multitude of materials PLA, ABS, HIPS, WOOD, PVA and Nylon, however I mainly print in PLA as it is a lot easier to work with in my opinion.
 
 So far I have added / printed the following upgrades for the printer:
@@ -81,6 +81,7 @@ So far I have added / printed the following upgrades for the printer:
 <img src="./014.jpg" alt="" />
 
 ## Print Quality
+
 Below are some pictures showcasing the quality of prints that I have been able to achieve using the Anet A8.
 
 <img src="./015.jpg" alt="" />

@@ -6,7 +6,6 @@ logo: hass.png
 ---
 
 > This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
-{: .prompt-tip }
 
 Today I am adding in two new sensors which will be used in some upcoming automation rules in Home Assistant, namely:
 
@@ -16,11 +15,13 @@ Today I am adding in two new sensors which will be used in some upcoming automat
 Seeing that we have already done a lot of work with sensors and basic configuration in Home Assistant I am just going to list the configuration I used, along with the relevant configuration commits on GitHub. If you would like more information on why things are done a certain way feel free to [browse all the posts](/series/) leading up to this one.
 
 ## Dark Sky
+
 Dark Sky is a weather data provider with a free API (based on usage). It integrates well into Home Assistant, and unless otherwise configured will use your default coordinates to fetch local weather data.
 
 You will need a developer account to use the sensor, with the registration process being quick and easy to follow, once you have a key you are good to go.
 
 ### Configuring Dark Sky
+
 First, add your API key to `secrets.yaml` like so:
 
 ```yaml
@@ -79,11 +80,13 @@ After verifying your configuration and reloading Home Assistant you should have 
 <img src="./008.png" alt="" />
 
 ## System Monitor
+
 [System Monitor](https://www.home-assistant.io/integrations/systemmonitor/) allows you to collect performance counters from your host computer (regardless of the platform).
 
 There are a lot of good code examples on the documentation page for most OS's - in my case I am running Home Assistant on linux (Raspberry Pi to be more precise) so depending on what you are using, your configuration may look a little bit different.
 
 ### Configuring System Monitor
+
 First we will need to define the sensor in configuration.yaml like so:
 
 ```yaml
@@ -120,6 +123,7 @@ host_system_group:
 Finally we will need to verify our configuration changes and restart Home Assistant, if all went well you should have a new card for your Host Information:
 
 ## In Closing
+
 Right now (and if you have been following these posts) our Home Assistant dashboard is getting pretty cluttered (we will be doing something about that soon). I still have yet to scratch the surface of this product, but I am getting some immediate benefit with what I have done so far.
 
 In the next post we will be adding support for OctoPrint to Home Assistant, followed by creating views (tabs essentially) and breaking up our configuration into smaller, more manageable parts.
