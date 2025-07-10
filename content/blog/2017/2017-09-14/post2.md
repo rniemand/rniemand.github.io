@@ -1,7 +1,7 @@
 ---
 title: Wondrous OctoPrint & My OrangePi Lite
 date: 2017-09-14
-tags: [3d printing,octoprint]
+tags: [3d printing,linux]
 logo: octoprint.png
 ---
 

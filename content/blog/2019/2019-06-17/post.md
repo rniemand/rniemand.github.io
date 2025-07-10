@@ -1,7 +1,7 @@
 ---
 title: Installing Telegraf on Ubuntu
 date: 2019-06-17
-tags: [monitoring, ubuntu, telegraf]
+tags: [monitoring, linux]
 logo: telegraf.png
 ---
 

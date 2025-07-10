@@ -1,7 +1,7 @@
 ---
 title: Using GitHub Pages for your Personal Blog
 date: 2023-06-20
-tags: [github]
+tags: [uncategorized]
 logo: github.png
 ---
 

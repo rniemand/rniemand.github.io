@@ -1,7 +1,7 @@
 ---
 title: Installing MQTT on Ubuntu
 date: 2019-11-04
-tags: [iot, ubuntu, mqtt, mosquitto]
+tags: [iot, linux]
 logo: mqtt.png
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "HASS On Unraid: MQTT"
 date: 2022-06-06
-tags: [home assistant, mqtt, mosquitto]
+tags: [home assistant, unraid, mqtt]
 logo: hass.png
 ---
 

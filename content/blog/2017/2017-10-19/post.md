@@ -1,7 +1,7 @@
 ---
 title: Monitoring a Door with Home Assistant
 date: 2017-10-19
-tags: [home assistant, project]
+tags: [home assistant]
 logo: hass.png
 ---
 

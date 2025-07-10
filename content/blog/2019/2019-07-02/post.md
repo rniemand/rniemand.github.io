@@ -1,7 +1,7 @@
 ---
 title: Installing Grafana on Ubuntu
 date: 2019-07-02
-tags: [monitoring, ubuntu, grafana]
+tags: [monitoring, linux, grafana]
 logo: grafana.png
 ---
 

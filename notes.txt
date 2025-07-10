@@ -58,6 +58,7 @@ tags
 	3d printing
 	arduino
 	ci-cd
+	database
 	docker
 	documentation
 	esp8266
@@ -71,4 +72,7 @@ tags
 	telegraf
 	uncategorized
 	unraid
+
+{% highlight "yaml" %}
+{% endhighlight %}
 

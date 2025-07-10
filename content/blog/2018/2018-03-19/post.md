@@ -1,7 +1,7 @@
 ---
 title: Setting up ESP8266 on Arduino
 date: 2018-03-19
-tags: [arduino,esp8266]
+tags: [arduino]
 logo: esp8266.png
 ---
 

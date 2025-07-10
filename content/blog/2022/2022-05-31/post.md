@@ -1,7 +1,7 @@
 ---
 title: SonarQube and Github Actions
 date: 2022-05-31
-tags: [ci-cd, sonarqube, github]
+tags: [ci-cd]
 logo: sonarqube.png
 ---
 

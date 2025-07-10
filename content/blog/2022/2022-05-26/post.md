@@ -1,7 +1,7 @@
 ---
 title: Running RabbitMQ on Unraid
 date: 2022-05-26
-tags: [unraid, rabbitmq]
+tags: [unraid]
 logo: rabbitmq.png
 ---
 

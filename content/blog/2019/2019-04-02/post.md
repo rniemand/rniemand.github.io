@@ -1,7 +1,7 @@
 ---
 title: Collecting Sonoff Pow data in Home Assistant
 date: 2019-04-02
-tags: [home assistant, mqtt, mosquitto]
+tags: [home assistant, mqtt, iot]
 logo: sonoff.png
 ---
 

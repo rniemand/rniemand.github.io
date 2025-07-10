@@ -1,7 +1,7 @@
 ---
 title: Home Assistant From Scratch - MySQL
 date: 2018-07-17
-tags: [home assistant, mysql, mariadb]
+tags: [home assistant, database]
 logo: hass.png
 ---
 

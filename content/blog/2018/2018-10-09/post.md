@@ -1,7 +1,7 @@
 ---
 title: Home Assistant From Scratch - Octoprint
 date: 2018-10-09
-tags: [home assistant, octoprint]
+tags: [home assistant, 3d printing]
 logo: hass.png
 ---
 

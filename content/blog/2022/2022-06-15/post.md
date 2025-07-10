@@ -1,7 +1,7 @@
 ---
 title: "Ceiling Fan Remote Hacking"
 date: 2022-06-15
-tags: [esp8266,home assistant]
+tags: [arduino, home assistant]
 logo: esphome.png
 ---
 

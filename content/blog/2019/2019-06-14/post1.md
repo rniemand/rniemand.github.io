@@ -1,7 +1,7 @@
 ---
 title: Installing InfluxDB on Ubuntu
 date: 2019-06-14
-tags: [monitoring, ubuntu, influxdb]
+tags: [monitoring, linux]
 logo: influxdb.png
 ---
 

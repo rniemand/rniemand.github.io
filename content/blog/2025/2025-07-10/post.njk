@@ -1,0 +1,193 @@
+---
+title: Collecting Unraid CPU Temperature in Home Assistant
+date: 2025-07-10
+tags: [unraid, home assistant]
+#banner: blue.png
+logo: unraid.png
+draft: true
+---
+
+<h2 id="overview">Overview</h2>
+
+<p>
+	I recently upgraded my home lab server to a <a href="https://i.dell.com/sites/doccontent/shared-content/data-sheets/en/Documents/Dell-PowerEdge-R730-and-R730xd-Technical-Guide-v1-7.pdf" target="_blank">Dell PowerEdge R730xd</a> 
+	sporting 2x <a href="https://www.intel.com/content/www/us/en/products/sku/91772/intel-xeon-processor-e52660-v4-35m-cache-2-00-ghz/specifications.html" target="_blank">Intel Xeon E5-2660 v4</a> processors, which seem to
+	run a lot hotter than my previous server when under load (even after replacing the thermal paste).
+</p>
+
+<p>
+	To cool the server, I bought a cheap box fan, that I want to automatically turn on when the server breaches a predefined temperature threshold, then have it turn back off 
+	when the temperatures drop to something acceptable again.
+</p>
+
+<img class="text-center" src="./01.jpg" alt="" />
+
+<p>
+	To accomplish this, I planned to make use of a <a href="https://www.tp-link.com/ca/home-networking/smart-plug/hs103p2/" target="_blank">Kasa Smart Wi-Fi Plug Lite (HS103P2)</a>
+	via the Home Assistant <a href="https://www.home-assistant.io/integrations/tplink/" target="_blank">TP-Link Smart Home</a> integration.
+</p>
+
+<p>
+	After some Googling, I was disappointed to see that there is no native Unraid integrations for Home Assistant that would allow me to import the temperature information.
+</p>
+
+<p>
+	However, I stumbled across a GitHub repository called <a href="https://github.com/IDmedia/hass-unraid" target="_blank">hass-unraid</a> that seemed to do what I wanted, 
+	albeit through a much more roundabout manner.
+</p>
+
+<p>
+	Below is a breakdown of how such a simple task was completed in the most roundabout manner, in hopes that someone may find this useful.
+</p>
+
+<h2 id="hass-unraid">hass-unraid container</h2>
+
+<p>
+	The first thing we will need to do is deploy the <code>hass-unraid</code> container somewhere.
+	The simplest solution here was to use my Unraid server to do this as there is a community application for this already.
+</p>
+
+<img src="./02.png" class="text-center" alt="">
+
+<p>
+	Once the container is deployed you will need to create a <code>config.yaml</code> file in it’s <code>/data</code> directory 
+	(normally this is under <code>/mnt/user/appdata/hass-unraid</code>), with the following configuration as per the
+	<a href="https://github.com/IDmedia/hass-unraid?tab=readme-ov-file#getting-started" target="_blank">official documentation</a>.
+</p>
+
+<p>My configuration looks something like this:</p>
+
+{% highlight "yaml" %}
+unraid:
+  - name: NAS
+    host: 192.168.0.60
+    port: 80
+    ssl: false
+    username: root
+    password: pass
+    scan_interval: 30
+
+mqtt:
+  host: 192.168.0.60
+  port: 1883
+  username: hass
+  password: pass
+{% endhighlight %}
+
+<p>With everything configured you should be able to start the container.</p>
+
+<h2 id="defining-temps-unraid">Defining Temperature Information</h2>
+
+<p>I make use of the <a href="https://forums.unraid.net/topic/34889-dynamix-v6-plugins/" target="_blank">Dynamix System Temperature</a> Unraid plugin to collect my CPU temperature information on my server.</p>
+
+<p>I am in an odd situation as my server has 2 processors, and the plugin only allows the selection of a single processor to provide temperature information about.</p>
+
+<p>To address this within the constraints of the plugin, I simply assigned CPU1 as the processor temperature, and CPU2 as the motherboard temperature. I do loose the ability to monitor the motherboard this way, but for what I am wanting to do this is fine.</p>
+
+<img src="./03.png" class="text-center" alt="">
+
+<p>Unraid is now able to see my processor temperatures.</p>
+
+<img src="./04.png" class="text-center" alt="">
+
+<h2 id="hass-discovery">Home Assistant Discovery</h2>
+
+<p>With <code>hass-unraid</code> running and publishing data to your MQTT sever, Home Assistant should automatically discover a new MQTT device for you Unraid server.</p>
+
+<img src="./05.png" class="text-center" alt="">
+
+<p>To avoid confusion in the future I renamed the exposed motherboard temperature to CPU2 and disabled collected information for values I don’t care about, leaving me with the following.</p>
+
+<img src="./06.png" class="text-center" alt="">
+
+<p>Once I had my CPU temperatures coming into Home Assistant it’s just a matter of setting up the automations for the fan.</p>
+
+<h2 id="hass-automation">Fan Automations</h2>
+
+<h3 id="hass-automation-on">Turn fan ON when CPU is over 50 °C</h3>
+
+<p>This is done using a <a href="https://www.home-assistant.io/docs/automation/trigger/#numeric-state-trigger" target="_blank">Numeric State trigger</a> monitoring CPU2 on my server (as it seems to run a bit hotter than CPU1) set to a value above 49.5 degrees for 10 seconds or more.</p>
+
+<p>When this threshold is hit, check the state of the fans smart plug to see if it needs to be turn it on, turn on if required.</p>
+
+<img src="./07.png" class="text-center" alt="">
+
+<p>And in <code>yaml</code> it looks something like this:</p>
+
+{% highlight "yaml" %}
+alias: Server Rack Fan - Turn On (CPU2 >= 50)
+description: ""
+triggers:
+  - trigger: numeric_state
+    entity_id:
+      - sensor.nas_mainboard_temperature
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 10
+    above: 49.5
+conditions:
+  - condition: state
+    entity_id: switch.server_rack_fan
+    state: "off"
+actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.server_rack_fan
+mode: single
+{% endhighlight %}
+
+<h3 id="hass-automation-off">Turn fan OFF when CPU is below 50 °C</h3>
+
+<p>The off case is pretty much the invers of the on case. When the servers CPU is reporting a temperature, I deem good, and the fan is currently running, turn it off.</p>
+
+<img src="./08.png" class="text-center" alt="">
+
+<p>And in <code>yaml</code> it looks something like this:</p>
+
+{% highlight "yaml" %}
+alias: Server Rack Fan - Turn Off (CPU2 <= 50)
+description: ""
+triggers:
+  - trigger: numeric_state
+    entity_id:
+      - sensor.nas_mainboard_temperature
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+    below: 50
+conditions:
+  - condition: state
+    entity_id: switch.server_rack_fan
+    state: "on"
+actions:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.server_rack_fan
+mode: single
+{% endhighlight %}
+
+<h3 id="hass-automation-tweak">Tweaking</h3>
+
+<p>You may want to play around with the threshold temperatures to something that makes sense for your setup should you find that the fan is cycling too often, or if you only want to run the fan at a higher temperature.</p>
+
+<p>For me, the selected values work well with the fan only turning on when the server is under load. During normal operations the fan is off (which is most of the day).</p>
+
+<p>Running a couple of test using the <code>stress</code> Unraid container the automations work as expected.</p>
+
+<img src="./10.png" class="text-center" alt="">
+
+<p>The fan turns on when the server breaches 50, then back off when the server is below 50.</p>
+
+<img src="./09.png" class="text-center" alt="">
+
+<h2 id="final-thoughts">Final Thoughts</h2>
+
+<p>Hopefully someone found this article helpful, and I wish there was better first party support for Unraid in Home Assistant.</p>
+
+<p>Please feel free to drop me a comment if you have any questions or suggestions.</p>

@@ -1,7 +1,7 @@
 ---
 title: Over the top Door Monitoring (RF, Node-RED and HASS)
 date: 2019-01-16
-tags: [home assistant, project, node-red, mqtt, mosquitto]
+tags: [home assistant, iot]
 logo: hass.png
 ---
 

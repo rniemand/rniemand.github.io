@@ -1,7 +1,7 @@
 ---
 title: Installing MariaDB (MySQL) on Ubuntu
 date: 2019-06-15
-tags: [linux, mariadb, mysql]
+tags: [linux, database]
 logo: mariadb.png
 ---
 

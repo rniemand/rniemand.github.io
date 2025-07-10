@@ -1,7 +1,7 @@
 ---
 title: ESP8266 (MOSI, MISO, SCK, CS) Pinout
 date: 2017-03-06
-tags: [esp8266]
+tags: [arduino]
 logo: esp8266.png
 ---
 When trying to work with an SD Card module on my `ESP8266` I ran into some issues mapping the MOSI, MISO, SCK and CS pins. After some digging online it turns out that these values are hard-coded into the Arduino IDE and mapped a bit weirdly on the `ESP` due to the limited pins available on the chip itself. Hopefully to save you some time here are the mappings you need to use.

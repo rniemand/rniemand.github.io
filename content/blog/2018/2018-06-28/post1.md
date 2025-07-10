@@ -1,7 +1,7 @@
 ---
 title: Home Assistant From Scratch - Setting Up Plex
 date: 2018-06-28
-tags: [home assistant, plex]
+tags: [home assistant]
 logo: hass.png
 ---
 

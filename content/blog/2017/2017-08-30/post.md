@@ -1,7 +1,7 @@
 ---
 title: OctoPrint MQTT Events (with samples)
 date: 2017-08-30
-tags: [3d printing,octoprint]
+tags: [3d printing]
 logo: octoprint.png
 ---
 

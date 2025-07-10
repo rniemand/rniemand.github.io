@@ -1,7 +1,7 @@
 ---
 title: Portainer Cheat Sheet
 date: 2022-05-24
-tags: [portainer]
+tags: [docker]
 logo: portainer.png
 ---
 

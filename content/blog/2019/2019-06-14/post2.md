@@ -1,7 +1,7 @@
 ---
 title: Setting Static IP Address (Ubuntu)
 date: 2019-06-14
-tags: [networking, ubuntu]
+tags: [linux]
 logo: ubuntu.png
 ---
 

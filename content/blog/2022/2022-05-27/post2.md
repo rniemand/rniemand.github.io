@@ -1,7 +1,7 @@
 ---
 title: "HASS On Unraid: MariaDB"
 date: 2022-05-27
-tags: [home assistant, unraid, mariadb, mysql]
+tags: [home assistant, unraid, database]
 logo: hass.png
 ---
 

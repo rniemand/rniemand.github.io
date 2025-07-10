@@ -1,7 +1,7 @@
 ---
 title: Install MySQL on DietPi (Debian)
 date: 2018-10-17
-tags: [linux,mysql,mariadb]
+tags: [linux, database]
 logo: mysql.png
 ---
 

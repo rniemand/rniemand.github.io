@@ -1,7 +1,7 @@
 ---
 title: Setting Date and Time (Ubuntu)
 date: 2019-06-13
-tags: [homelab]
+tags: [linux]
 logo: ubuntu.png
 ---
 

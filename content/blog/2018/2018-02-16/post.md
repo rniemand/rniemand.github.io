@@ -1,7 +1,7 @@
 ---
 title: MySQL and Home Assistant
 date: 2018-02-16
-tags: [home assistant, mysql, mariadb]
+tags: [home assistant, database]
 logo: hass.png
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Installing Node-RED on Ubuntu
 date: 2019-07-03
-tags: [iot, ubuntu, node-red]
+tags: [iot, linux]
 logo: node-red.png
 ---
 

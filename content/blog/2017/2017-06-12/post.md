@@ -1,7 +1,7 @@
 ---
 title: Installing Node-RED as a Windows Service
 date: 2017-06-12
-tags: [iot,node-red]
+tags: [iot]
 logo: node-red.png
 ---
 

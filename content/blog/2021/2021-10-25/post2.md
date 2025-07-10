@@ -1,7 +1,7 @@
 ---
 title: Updating Pi-hole
 date: 2021-10-25
-tags: [networking,pihole]
+tags: [linux]
 logo: pihole.png
 ---
 

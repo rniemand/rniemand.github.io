@@ -1,7 +1,7 @@
 ---
 title: Running Satisfactory Dedicated Server
 date: 2021-10-28
-tags: [gaming, docker, satisfactory]
+tags: [gaming, docker]
 logo: satisfactory.png
 ---
 

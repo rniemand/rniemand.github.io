@@ -1,7 +1,7 @@
 ---
 title: SonarQube in Docker
 date: 2023-09-20
-tags: [docker, sonarqube]
+tags: [docker, ci-cd]
 logo: sonarqube.png
 ---
 

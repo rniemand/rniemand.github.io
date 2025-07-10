@@ -1,7 +1,7 @@
 ---
 title: Sonoff & MQTT Example (Lounge Light)
 date: 2017-10-03
-tags: [iot, mqtt, sonoff]
+tags: [iot, arduino]
 logo: sonoff.png
 ---
 

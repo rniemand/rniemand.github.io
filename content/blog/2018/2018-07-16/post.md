@@ -1,7 +1,7 @@
 ---
 title: Home Assistant From Scratch - MQTT
 date: 2018-07-16
-tags: [home assistant, mqtt, mosquitto]
+tags: [home assistant, mqtt]
 logo: hass.png
 ---
 

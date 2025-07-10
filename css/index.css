@@ -51,6 +51,9 @@ div.main-content picture img:not(.no-borders) {
 div.main-content picture {
 	display: block;
 }
+div.main-content picture:has(img.text-center) {
+	text-align: center;
+}
 
 div.main-content picture img {
 	margin-bottom: 1rem;

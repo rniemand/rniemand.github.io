@@ -1,7 +1,7 @@
 ---
 title: Changing Sonoff Firmware (Visual Guide)
 date: 2017-08-03
-tags: [arduino, sonoff]
+tags: [arduino, iot]
 logo: sonoff.png
 ---
 
