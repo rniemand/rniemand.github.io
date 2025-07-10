@@ -48,6 +48,10 @@ div.main-content picture img:not(.no-borders) {
 	border-radius: 0.5rem;
 }
 
+div.main-content picture {
+	display: block;
+}
+
 div.main-content picture img {
 	margin-bottom: 1rem;
 	box-shadow: 5px 5px 10px 0px #2b3137;
