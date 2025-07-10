@@ -4,19 +4,18 @@ date: 2025-07-10
 tags: [unraid, home assistant]
 #banner: blue.png
 logo: unraid.png
-draft: true
 ---
 
 <h2 id="overview">Overview</h2>
 
 <p>
-	I recently upgraded my home lab server to a <a href="https://i.dell.com/sites/doccontent/shared-content/data-sheets/en/Documents/Dell-PowerEdge-R730-and-R730xd-Technical-Guide-v1-7.pdf" target="_blank">Dell PowerEdge R730xd</a> 
+	I recently upgraded my home lab server to a <a href="https://i.dell.com/sites/doccontent/shared-content/data-sheets/en/Documents/Dell-PowerEdge-R730-and-R730xd-Technical-Guide-v1-7.pdf" target="_blank">Dell PowerEdge R730xd</a>
 	sporting 2x <a href="https://www.intel.com/content/www/us/en/products/sku/91772/intel-xeon-processor-e52660-v4-35m-cache-2-00-ghz/specifications.html" target="_blank">Intel Xeon E5-2660 v4</a> processors, which seem to
 	run a lot hotter than my previous server when under load (even after replacing the thermal paste).
 </p>
 
 <p>
-	To cool the server, I bought a cheap box fan, that I want to automatically turn on when the server breaches a predefined temperature threshold, then have it turn back off 
+	To cool the server, I bought a cheap box fan, that I want to automatically turn on when the server breaches a predefined temperature threshold, then have it turn back off
 	when the temperatures drop to something acceptable again.
 </p>
 
@@ -32,7 +31,7 @@ draft: true
 </p>
 
 <p>
-	However, I stumbled across a GitHub repository called <a href="https://github.com/IDmedia/hass-unraid" target="_blank">hass-unraid</a> that seemed to do what I wanted, 
+	However, I stumbled across a GitHub repository called <a href="https://github.com/IDmedia/hass-unraid" target="_blank">hass-unraid</a> that seemed to do what I wanted,
 	albeit through a much more roundabout manner.
 </p>
 
@@ -50,7 +49,7 @@ draft: true
 <img src="./02.png" class="text-center" alt="">
 
 <p>
-	Once the container is deployed you will need to create a <code>config.yaml</code> file in it’s <code>/data</code> directory 
+	Once the container is deployed you will need to create a <code>config.yaml</code> file in it’s <code>/data</code> directory
 	(normally this is under <code>/mnt/user/appdata/hass-unraid</code>), with the following configuration as per the
 	<a href="https://github.com/IDmedia/hass-unraid?tab=readme-ov-file#getting-started" target="_blank">official documentation</a>.
 </p>
