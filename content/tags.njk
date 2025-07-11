@@ -7,9 +7,31 @@ eleventyNavigation:
 
 <h1>Tags</h1>
 
-<ul>
-{% for tag in collections | getKeys | filterTagList | sortAlphabetically %}
-	{% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-	<li><a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a></li>
-{% endfor %}
-</ul>
+<style>
+	.tags-table .post-date {
+		color: #eaff9b;
+	}
+</style>
+
+<table class="table table-sm table-hover table-striped tags-table">
+	<thead>
+		<tr>
+			<th>Tag</th>
+			<th># Posts</th>
+			<th>Last Post Date</th>
+			<th>Latest Post</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for tag in collections | getKeys | filterTagList | sortAlphabetically %}
+			{% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+			{% set postCount %}{{ collections[tag].length }}{% endset %}
+			<tr>
+				<td><a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a></td>
+				<td>{{postCount}} post{% if postCount>1 %}s{% endif %}</td>
+				<td class="post-date">{{ collections[tag][postCount-1].date | readableDate2 }}</td>
+				<td><a href="{{ collections[tag][postCount-1].url }}">{{ collections[tag][postCount-1].data.title }}</a></td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
