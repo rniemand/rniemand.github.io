@@ -28,6 +28,10 @@ div.main-content > h2 {
 	margin-bottom: 1rem;
 }
 
+div.main-content h2.quick-access {
+	color: #7cbbe6;
+}
+
 div.main-content > h3 {
 	color: #f0ff7f;
 	margin-bottom: 1rem;

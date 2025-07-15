@@ -1,0 +1,25 @@
+---
+title: Find the nth occurrence of a string (JavaScript)
+date: 2016-03-23
+tags: [javascript]
+logo: javascript.png
+---
+
+<p>
+	I was playing around in JavScript needing to find 7’th position of a <code>(</code> within a long string. Messing about with the 
+	<a href="https://www.w3schools.com/jsref/jsref_indexof.asp" target="_blank">indexOf()</a> and 
+	<a href="https://www.w3schools.com/jsref/jsref_substring.asp" target="_blank">substring()</a> methods were a bit too cumbersome so 
+	I came up with the following code snippet. Hopefully this saves you some time.
+</p>
+
+{% highlight "js" %}
+function nthOccurrence(str, s, c) {
+    var strlen = str.length;
+    var matches = 0;
+
+    for(i = 0; i < strlen; i++){
+        if(str[i] === s) matches++;
+        if(matches == c) return i;
+    }
+}
+{% endhighlight %}
