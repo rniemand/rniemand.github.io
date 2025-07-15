@@ -5,6 +5,11 @@ body {
 	font-optical-sizing: auto;
 }
 
+.navbar .navbar-brand.active,
+.navbar-nav .nav-item .nav-link.active {
+	border-bottom: 1px solid #e0e9f2;
+}
+
 div.main-content {
 	margin-top: 4rem;
 	font-size: 1.1rem;

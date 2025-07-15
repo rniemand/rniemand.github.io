@@ -1,21 +1,18 @@
 ---
 title: Home
-eleventyNavigation:
-  key: Home
-  order: 1
 pagination:
   data: collections.posts
   size: 10
   reverse: true
 ---
 
-<h2>Welcome to my blog!</h2>
+<h1>Welcome to my blog!</h1>
 <p>This is a space where I randomly post about things that interest me along with showcasing some of the <a href="/projects/">projects</a> that I am currently working on.</p>
 <p>Being a self-taught developer I am open to any feedback, comments, and suggestions on any of my posts to improve and learn more - don’t be shy to add in your comments.</p>
 
 {% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(5) %}
-<h3 class="pt-3">Latest {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h3>
+<h2 class="pt-3">Last {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h2>
 
 {% set postslist = collections.posts | head(-1 * 5) %}
 {% set postslistCounter = postsCount %}
@@ -23,5 +20,5 @@ pagination:
 
 {% set morePosts = postsCount - 5 %}
 {% if morePosts > 0 %}
-<p>{{ morePosts }} more post{% if morePosts != 1 %}s{% endif %} can be found in <a href="blog.njk">the archive</a>.</p>
+<p class="text-end">{{ morePosts }} more post{% if morePosts != 1 %}s{% endif %} can be found in <a href="blog.njk">the archive</a>.</p>
 {% endif %}
