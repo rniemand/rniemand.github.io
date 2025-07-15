@@ -41,6 +41,10 @@ div.main-content > h2 {
 	margin-bottom: 1rem;
 }
 
+div.main-content h2.quick-access {
+	color: #7cbbe6;
+}
+
 div.main-content > h3 {
 	color: #f0ff7f;
 	margin-bottom: 1rem;
@@ -315,7 +319,14 @@ pre[class*="language-diff-"] {
 	</span>
 </div>
 
-<p>I am currently in the process of writing a C# wrapper for <a href="https://www.kik.com/">Kik</a> and needed a way to dump the raw POST body when their service made a callback to one of my WebAPI controllers (after model binding had occurred). After some Googling I found a posting on Stackoverflow (unfortunately I didn't bookmark the link) which had a creative solution to the problem by making use of a <code>DelegatingHandler</code>.</p>
+
+<p>
+	I am currently in the process of writing a C# wrapper for <a href="https://www.kik.com/" target="_blank">Kik</a> and needed a way 
+	to dump the raw <code>POST</code> body when their service made a callback to one of my WebAPI controllers (after model binding 
+	had occurred). After some Googling I found a posting on Stackoverflow (unfortunately I didn't bookmark the link) which had a creative 
+	solution to the problem by making use of a <code>DelegatingHandler</code>.
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PostPreserverHandler</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">DelegatingHandler</span></span>
 <span class="token punctuation">{</span>
     <span class="token keyword">protected</span> <span class="token keyword">override</span> <span class="token keyword">async</span> <span class="token return-type class-name">Task</span> <span class="token function">SendAsync</span><span class="token punctuation">(</span>
@@ -331,15 +342,20 @@ pre[class*="language-diff-"] {
         <span class="token keyword">return</span> <span class="token keyword">await</span> <span class="token keyword">base</span><span class="token punctuation">.</span><span class="token function">SendAsync</span><span class="token punctuation">(</span>request<span class="token punctuation">,</span> cancellationToken<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>Which simply gets added to your WebAPI Register() method like so:</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs">config<span class="token punctuation">.</span>MessageHandlers<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token constructor-invocation class-name">PostPreserverHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
 <p>And can be accessed from within a controller like this:</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs">Request<span class="token punctuation">.</span>Properties<span class="token punctuation">[</span><span class="token string">"body"</span><span class="token punctuation">]</span></code></pre>
+
 <p>Thanks so much for the solution mystery contributor!</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2016/2016-03-23/post/">Find the nth occurrence of a string (JavaScript)</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2016/2016-03-23/">Find the nth occurrence of a string (JavaScript)</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="text-end">Next<br><a href="/blog/2016/2016-07-24/post/">Adding Castle Windsor to your WebAPI project</a></span>
@@ -359,7 +375,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2016/2016-04-07/post/` was built on 2025-07-15T16:09:44.090Z -->
+		<!-- This page `/blog/2016/2016-04-07/` was built on 2025-07-15T22:18:51.735Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
