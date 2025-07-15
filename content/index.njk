@@ -9,14 +9,13 @@ pagination:
   reverse: true
 ---
 
-<p>&nbsp;</p>
-<p>Welcome to my blog, I am in the process of porting it over to <a href="https://www.11ty.dev/" target="_blank">11ty</a>, so things may be broken for a while.</p>
-<p>Everything should be up and running in the next couple of weeks or so, time permitting.</p>
-<p class="mb-5">Feel free to browse around.</p>
+<h2>Welcome to my blog!</h2>
+<p>This is a space where I randomly post about things that interest me along with showcasing some of the <a href="/projects/">projects</a> that I am currently working on.</p>
+<p>Being a self-taught developer I am open to any feedback, comments, and suggestions on any of my posts to improve and learn more - don’t be shy to add in your comments.</p>
 
 {% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(5) %}
-<h2>Latest {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h2>
+<h3 class="pt-3">Latest {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h3>
 
 {% set postslist = collections.posts | head(-1 * 5) %}
 {% set postslistCounter = postsCount %}
