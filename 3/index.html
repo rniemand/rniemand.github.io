@@ -10,12 +10,16 @@
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
 		<meta name="generator" content="Eleventy v3.1.1">
 		
-		
 		<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 body {
 	font-family: "Open Sans", sans-serif;
 	font-optical-sizing: auto;
+}
+
+.navbar .navbar-brand.active,
+.navbar-nav .nav-item .nav-link.active {
+	border-bottom: 1px solid #e0e9f2;
 }
 
 div.main-content {
@@ -109,40 +113,37 @@ div.main-content .accordion .accordion-item .accordion-body {
 		<header>
 			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="/">RichardN</a>
+					<a class="navbar-brand " href="/">RichardN</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarCollapse">
 						<ul class="navbar-nav me-auto mb-2 mb-md-0">
 							<li class="nav-item">
-								<a class="nav-link " href="/">Home</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link " href="/blog/">Archive</a>
-							</li>
-							<li class="nav-item">
 								<a class="nav-link " href="/projects/">Projects</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link " href="/tags/">Tags</a>
 							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
 						</ul>
 					</div>
 				</div>
-        	</nav>
+			</nav>
 		</header>
 		<main class="flex-shrink-0">
 			<div class="container main-content">
 				
 
-<h2 id="welcome-to-my-blog">Welcome to my blog!</h2>
+<h1 id="welcome-to-my-blog">Welcome to my blog!</h1>
 <p>This is a space where I randomly post about things that interest me along with showcasing some of the <a href="/projects/">projects</a> that I am currently working on.</p>
 <p>Being a self-taught developer I am open to any feedback, comments, and suggestions on any of my posts to improve and learn more - don’t be shy to add in your comments.</p>
 
 
 
-<h3 class="pt-3" id="latest-5-posts">Latest 5 Posts</h3>
+<h2 class="pt-3" id="last-5-posts">Last 5 Posts</h2>
 
 
 
@@ -217,7 +218,7 @@ div.main-content .accordion .accordion-item .accordion-body {
 
 
 
-<p>108 more posts can be found in <a href="/blog/">the archive</a>.</p>
+<p class="text-end">108 more posts can be found in <a href="/blog/">the archive</a>.</p>
 
 
 
@@ -230,7 +231,7 @@ div.main-content .accordion .accordion-item .accordion-body {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/3/` was built on 2025-07-15T22:18:52.883Z -->
+		<!-- This page `/3/` was built on 2025-07-15T22:32:08.499Z -->
 		<script type="module" src="/dist/WlufSHogYa.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
