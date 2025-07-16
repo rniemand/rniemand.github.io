@@ -8,3 +8,46 @@ draft: true
 ---
 
 <h2>Reworking Obsidian Storage on Unraid</h2>
+
+<p>
+	The initial configuration for my <strong>Obsidian</strong> share is to initially store data on my <code>cache</code> drive and then 
+	move it to the <code>array</code>.
+</p>
+
+<img src="./01.png" alt="">
+
+<p>
+	This becomes problematic in the mornings when I access the share for the first time, as I have my array configured to spin the disks 
+	down after <strong>15 minuets of inactivity</strong> in order to prolong the life of the drives and lower the overall power consumption 
+	of the server.
+</p>
+
+<p>
+	Ideally, I would like these files to always reside on my <code>cache</code> or <code>ssd</code> drive (as they do not spin down) making 
+	accessing the shares content quicker. I do lose the security of having the files on the safe storage of the array; however, I have automated 
+	the backup of my <strong>Obsidian</strong> folder which is backed up to the array making moving the share a non-issue.
+</p>
+
+<p>
+	The first thing we will need to do is reconfigure the share and point its primary storage location to the <code>ssd</code> drive.
+</p>
+
+<img src="./02.png" alt="">
+
+<img src="./03.png" alt="">
+
+<img src="./04.png" alt="">
+
+<img src="./05.png" alt="">
+
+<img src="./06.png" alt="">
+
+<img src="./07.png" alt="">
+
+<img src="./08.png" alt="">
+
+<img src="./09.png" alt="">
+
+<img src="./10.png" alt="">
+
+<img src="./11.png" alt="">
