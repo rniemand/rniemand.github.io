@@ -1,0 +1,62 @@
+---
+title: Automated appdata backups with Unraid
+date: 2025-07-07
+tags: [unraid]
+#banner: blue.png
+logo: unraid.png
+---
+
+<p>Below is a simple <code>shell</code> script that I created to run daily backups of my Unraid servers <code>appdata</code> folder.</p>
+
+<p>
+	This will create a daily zip file (following the <code>/yyyy-mm/yyyy-mm-dd-&lt;folder&gt;.zip</code> format), 
+	all folders are automatically created during the backup process.
+</p>
+
+<div class="alert alert-warning">
+	<i class="bi bi-exclamation-octagon-fill pe-1"></i>
+	<strong>NOTE</strong>: I set the files permissions to <code>0777</code> which you may want to omit for security.
+</div>
+
+{% highlight "bash" %}
+#!/bin/sh
+
+backupAppdata() {
+  echo "============================================="
+  echo "Backing up :: $1"
+  echo "============================================="
+
+  backupTargetRoot="/mnt/user/appdata-backups/nas/$1/$(date '+%Y-%m/')"
+  backupZipFile="/mnt/user/appdata-backups/nas/$1/$(date '+%Y-%m/%F')-$1.zip"
+  appRootDir="/mnt/user/appdata/$1/"
+
+  mkdir -p $backupTargetRoot
+  rm -f $backupZipFile
+  zip -r $backupZipFile $appRootDir
+  chmod -R 0777 $backupTargetRoot
+  echo "  > done"
+  echo ""
+}
+
+backupAppdata "binhex-nginx"
+backupAppdata "mosquitto"
+{% endhighlight %}
+
+<p>When adding a new folder to be backed up, simply add it to the end of the script like so (<code>backupAppdata "&lt;folder&gt;"</code>).</p>
+
+<p>You will need the <strong>Users Script</strong> Unraid plugin installed for this to work.</p>
+
+<img src="./images/07/20250707-01.png" alt="" />
+
+<p>
+	Once installed, just create a new script with whatever name works for you, add in your modified version of the above script, and set a 
+	<a href="https://crontab.guru/" target="_blank">CRON</a> schedule for it.
+</p>
+
+<img src="./images/07/20250707-02.png" class="text-center" alt="" />
+
+<p>When the script has completed running, you should see the backup in your designated backup location.</p>
+
+<img src="./images/07/20250707-03.png" alt="" />
+
+<p>Hopefully this saves you some time!</p>

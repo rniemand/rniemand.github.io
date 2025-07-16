@@ -46,7 +46,7 @@ logo: unraid.png
 	The simplest solution here was to use my Unraid server to do this as there is a community application for this already.
 </p>
 
-<img src="./02.png" class="text-center" alt="">
+<img src="./images/07/20250711-02.png" class="text-center" alt="">
 
 <p>
 	Once the container is deployed you will need to create a <code>config.yaml</code> file in it’s <code>/data</code> directory
@@ -83,21 +83,21 @@ mqtt:
 
 <p>To address this within the constraints of the plugin, I simply assigned CPU1 as the processor temperature, and CPU2 as the motherboard temperature. I do loose the ability to monitor the motherboard this way, but for what I am wanting to do this is fine.</p>
 
-<img src="./03.png" class="text-center" alt="">
+<img src="./images/07/20250711-03.png" class="text-center" alt="">
 
 <p>Unraid is now able to see my processor temperatures.</p>
 
-<img src="./04.png" class="text-center" alt="">
+<img src="./images/07/20250711-04.png" class="text-center" alt="">
 
 <h2 id="hass-discovery">Home Assistant Discovery</h2>
 
 <p>With <code>hass-unraid</code> running and publishing data to your MQTT sever, Home Assistant should automatically discover a new MQTT device for you Unraid server.</p>
 
-<img src="./05.png" class="text-center" alt="">
+<img src="./images/07/20250711-05.png" class="text-center" alt="">
 
 <p>To avoid confusion in the future I renamed the exposed motherboard temperature to CPU2 and disabled collected information for values I don’t care about, leaving me with the following.</p>
 
-<img src="./06.png" class="text-center" alt="">
+<img src="./images/07/20250711-06.png" class="text-center" alt="">
 
 <p>Once I had my CPU temperatures coming into Home Assistant it’s just a matter of setting up the automations for the fan.</p>
 
@@ -109,7 +109,7 @@ mqtt:
 
 <p>When this threshold is hit, check the state of the fans smart plug to see if it needs to be turn it on, turn on if required.</p>
 
-<img src="./07.png" class="text-center" alt="">
+<img src="./images/07/20250711-07.png" class="text-center" alt="">
 
 <p>And in <code>yaml</code> it looks something like this:</p>
 
@@ -142,7 +142,7 @@ mode: single
 
 <p>The off case is pretty much the invers of the on case. When the servers CPU is reporting a temperature, I deem good, and the fan is currently running, turn it off.</p>
 
-<img src="./08.png" class="text-center" alt="">
+<img src="./images/07/20250711-08.png" class="text-center" alt="">
 
 <p>And in <code>yaml</code> it looks something like this:</p>
 
@@ -179,11 +179,11 @@ mode: single
 
 <p>Running a couple of test using the <code>stress</code> Unraid container the automations work as expected.</p>
 
-<img src="./10.png" class="text-center" alt="">
+<img src="./images/07/20250711-10.png" class="text-center" alt="">
 
 <p>The fan turns on when the server breaches 50, then back off when the server is below 50.</p>
 
-<img src="./09.png" class="text-center" alt="">
+<img src="./images/07/20250711-09.png" class="text-center" alt="">
 
 <h2 id="final-thoughts">Final Thoughts</h2>
 
