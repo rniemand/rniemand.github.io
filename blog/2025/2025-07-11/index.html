@@ -339,7 +339,7 @@ pre[class*="language-diff-"] {
 	when the temperatures drop to something acceptable again.
 </p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/Xnjpks4byo-1024.avif 1024w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/Xnjpks4byo-1024.webp 1024w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/Xnjpks4byo-1024.jpeg" class="text-center" alt="" width="1024" height="1147"></picture>
+<img class="text-center" src="content/blog/2025/01.jpg" alt="">
 
 <p>
 	To accomplish this, I planned to make use of a <a href="https://www.tp-link.com/ca/home-networking/smart-plug/hs103p2/" target="_blank">Kasa Smart Wi-Fi Plug Lite (HS103P2)</a>
@@ -366,7 +366,7 @@ pre[class*="language-diff-"] {
 	The simplest solution here was to use my Unraid server to do this as there is a community application for this already.
 </p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/EGkh5yAEVR-409.avif 409w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/EGkh5yAEVR-409.webp 409w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/EGkh5yAEVR-409.png" class="text-center" alt="" width="409" height="289"></picture>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-11/EGkh5yAEVR-409.avif 409w"><source type="image/webp" srcset="/blog/2025/2025-07-11/EGkh5yAEVR-409.webp 409w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-11/EGkh5yAEVR-409.png" class="text-center" alt="" width="409" height="289"></picture>
 
 <p>
 	Once the container is deployed you will need to create a <code>config.yaml</code> file in it’s <code>/data</code> directory
@@ -401,21 +401,21 @@ pre[class*="language-diff-"] {
 
 <p>To address this within the constraints of the plugin, I simply assigned CPU1 as the processor temperature, and CPU2 as the motherboard temperature. I do loose the ability to monitor the motherboard this way, but for what I am wanting to do this is fine.</p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/HqwdqOcgFN-515.avif 515w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/HqwdqOcgFN-515.webp 515w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/HqwdqOcgFN-515.png" class="text-center" alt="" width="515" height="210"></picture>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-11/HqwdqOcgFN-515.avif 515w"><source type="image/webp" srcset="/blog/2025/2025-07-11/HqwdqOcgFN-515.webp 515w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-11/HqwdqOcgFN-515.png" class="text-center" alt="" width="515" height="210"></picture>
 
 <p>Unraid is now able to see my processor temperatures.</p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/gAuIzG3oMz-470.avif 470w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/gAuIzG3oMz-470.webp 470w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/gAuIzG3oMz-470.png" class="text-center" alt="" width="470" height="33"></picture>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-11/gAuIzG3oMz-470.avif 470w"><source type="image/webp" srcset="/blog/2025/2025-07-11/gAuIzG3oMz-470.webp 470w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-11/gAuIzG3oMz-470.png" class="text-center" alt="" width="470" height="33"></picture>
 
 <h2 id="hass-discovery">Home Assistant Discovery</h2>
 
 <p>With <code>hass-unraid</code> running and publishing data to your MQTT sever, Home Assistant should automatically discover a new MQTT device for you Unraid server.</p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/jQAAtozytr-944.avif 944w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/jQAAtozytr-944.webp 944w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/jQAAtozytr-944.png" class="text-center" alt="" width="944" height="70"></picture>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-11/jQAAtozytr-944.avif 944w"><source type="image/webp" srcset="/blog/2025/2025-07-11/jQAAtozytr-944.webp 944w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-11/jQAAtozytr-944.png" class="text-center" alt="" width="944" height="70"></picture>
 
 <p>To avoid confusion in the future I renamed the exposed motherboard temperature to CPU2 and disabled collected information for values I don’t care about, leaving me with the following.</p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/VIFtJ3p2u3-670.avif 670w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/VIFtJ3p2u3-670.webp 670w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/VIFtJ3p2u3-670.png" class="text-center" alt="" width="670" height="345"></picture>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-11/VIFtJ3p2u3-670.avif 670w"><source type="image/webp" srcset="/blog/2025/2025-07-11/VIFtJ3p2u3-670.webp 670w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-11/VIFtJ3p2u3-670.png" class="text-center" alt="" width="670" height="345"></picture>
 
 <p>Once I had my CPU temperatures coming into Home Assistant it’s just a matter of setting up the automations for the fan.</p>
 
@@ -427,7 +427,7 @@ pre[class*="language-diff-"] {
 
 <p>When this threshold is hit, check the state of the fans smart plug to see if it needs to be turn it on, turn on if required.</p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/6mWoEIcQTQ-1063.avif 1063w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/6mWoEIcQTQ-1063.webp 1063w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/6mWoEIcQTQ-1063.png" class="text-center" alt="" width="1063" height="481"></picture>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-11/6mWoEIcQTQ-1063.avif 1063w"><source type="image/webp" srcset="/blog/2025/2025-07-11/6mWoEIcQTQ-1063.webp 1063w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-11/6mWoEIcQTQ-1063.png" class="text-center" alt="" width="1063" height="481"></picture>
 
 <p>And in <code>yaml</code> it looks something like this:</p>
 
@@ -458,7 +458,7 @@ pre[class*="language-diff-"] {
 
 <p>The off case is pretty much the invers of the on case. When the servers CPU is reporting a temperature, I deem good, and the fan is currently running, turn it off.</p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/9sAGZUnrkz-1064.avif 1064w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/9sAGZUnrkz-1064.webp 1064w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/9sAGZUnrkz-1064.png" class="text-center" alt="" width="1064" height="484"></picture>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-11/9sAGZUnrkz-1064.avif 1064w"><source type="image/webp" srcset="/blog/2025/2025-07-11/9sAGZUnrkz-1064.webp 1064w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-11/9sAGZUnrkz-1064.png" class="text-center" alt="" width="1064" height="484"></picture>
 
 <p>And in <code>yaml</code> it looks something like this:</p>
 
@@ -493,11 +493,11 @@ pre[class*="language-diff-"] {
 
 <p>Running a couple of test using the <code>stress</code> Unraid container the automations work as expected.</p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/b4dM8yHcik-410.avif 410w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/b4dM8yHcik-410.webp 410w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/b4dM8yHcik-410.png" class="text-center" alt="" width="410" height="293"></picture>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-11/b4dM8yHcik-410.avif 410w"><source type="image/webp" srcset="/blog/2025/2025-07-11/b4dM8yHcik-410.webp 410w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-11/b4dM8yHcik-410.png" class="text-center" alt="" width="410" height="293"></picture>
 
 <p>The fan turns on when the server breaches 50, then back off when the server is below 50.</p>
 
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-10/post/oqEFBwA5SR-513.avif 513w"><source type="image/webp" srcset="/blog/2025/2025-07-10/post/oqEFBwA5SR-513.webp 513w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-10/post/oqEFBwA5SR-513.png" class="text-center" alt="" width="513" height="519"></picture>
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-11/oqEFBwA5SR-513.avif 513w"><source type="image/webp" srcset="/blog/2025/2025-07-11/oqEFBwA5SR-513.webp 513w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-11/oqEFBwA5SR-513.png" class="text-center" alt="" width="513" height="519"></picture>
 
 <h2 id="final-thoughts">Final Thoughts</h2>
 
@@ -507,7 +507,7 @@ pre[class*="language-diff-"] {
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2025/2025-07-09/post2/">Monitoring your Unraid server with Telegraf and Grafana</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2025/2025-07-10/">Monitoring your Unraid server with Telegraf and Grafana</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 </div>
@@ -524,7 +524,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2025/2025-07-10/post/` was built on 2025-07-15T22:32:07.377Z -->
+		<!-- This page `/blog/2025/2025-07-11/` was built on 2025-07-16T21:02:57.476Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

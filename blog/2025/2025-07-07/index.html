@@ -320,11 +320,19 @@ pre[class*="language-diff-"] {
 	</span>
 </div>
 
+
 <p>Below is a simple <code>shell</code> script that I created to run daily backups of my Unraid servers <code>appdata</code> folder.</p>
-<p>This will create a daily zip file (following the <code>/yyyy-mm/yyyy-mm-dd-&lt;folder&gt;.zip</code> format), all folders are automatically created during the backup process.</p>
-<blockquote>
-<p><strong>NOTE</strong>: I set the files permissions to <code>0777</code> which you may want to omit for security.</p>
-</blockquote>
+
+<p>
+	This will create a daily zip file (following the <code>/yyyy-mm/yyyy-mm-dd-&lt;folder&gt;.zip</code> format), 
+	all folders are automatically created during the backup process.
+</p>
+
+<div class="alert alert-warning">
+	<i class="bi bi-exclamation-octagon-fill pe-1"></i>
+	<strong>NOTE</strong>: I set the files permissions to <code>0777</code> which you may want to omit for security.
+</div>
+
 <pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token shebang important">#!/bin/sh</span>
 
 <span class="token function-name function">backupAppdata</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -346,13 +354,24 @@ pre[class*="language-diff-"] {
 
 backupAppdata <span class="token string">"binhex-nginx"</span>
 backupAppdata <span class="token string">"mosquitto"</span></code></pre>
-<p>When adding a new folder to be backed up, simply add it to the end of the script like so (<code>backupAppdata &quot;&lt;folder&gt;&quot;</code>).</p>
-<p>You will need the <code>Users Script</code> Unraid plugin installed for this to work.</p>
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-07/post/-_ONXsJe3J-410.avif 410w"><source type="image/webp" srcset="/blog/2025/2025-07-07/post/-_ONXsJe3J-410.webp 410w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-07/post/-_ONXsJe3J-410.png" alt="" width="410" height="295"></picture>
-<p>Once installed, just create a new script with whatever name works for you, add in your modified version of the above script, and set a <a href="https://crontab.guru/">CRON</a> schedule for it.</p>
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-07/post/8f5im3wc_8-1430.avif 1430w"><source type="image/webp" srcset="/blog/2025/2025-07-07/post/8f5im3wc_8-1430.webp 1430w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-07/post/8f5im3wc_8-1430.png" alt="" width="1430" height="102"></picture>
+
+<p>When adding a new folder to be backed up, simply add it to the end of the script like so (<code>backupAppdata "&lt;folder&gt;"</code>).</p>
+
+<p>You will need the <strong>Users Script</strong> Unraid plugin installed for this to work.</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-07/-_ONXsJe3J-410.avif 410w"><source type="image/webp" srcset="/blog/2025/2025-07-07/-_ONXsJe3J-410.webp 410w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-07/-_ONXsJe3J-410.png" alt="" width="410" height="295"></picture>
+
+<p>
+	Once installed, just create a new script with whatever name works for you, add in your modified version of the above script, and set a 
+	<a href="https://crontab.guru/" target="_blank">CRON</a> schedule for it.
+</p>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-07/8f5im3wc_8-1430.avif 1430w"><source type="image/webp" srcset="/blog/2025/2025-07-07/8f5im3wc_8-1430.webp 1430w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-07/8f5im3wc_8-1430.png" class="text-center" alt="" width="1430" height="102"></picture>
+
 <p>When the script has completed running, you should see the backup in your designated backup location.</p>
-<picture><source type="image/avif" srcset="/blog/2025/2025-07-07/post/PhJdk6iiMF-905.avif 905w"><source type="image/webp" srcset="/blog/2025/2025-07-07/post/PhJdk6iiMF-905.webp 905w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-07/post/PhJdk6iiMF-905.png" alt="" width="905" height="331"></picture>
+
+<picture><source type="image/avif" srcset="/blog/2025/2025-07-07/PhJdk6iiMF-905.avif 905w"><source type="image/webp" srcset="/blog/2025/2025-07-07/PhJdk6iiMF-905.webp 905w"><img loading="lazy" decoding="async" src="/blog/2025/2025-07-07/PhJdk6iiMF-905.png" alt="" width="905" height="331"></picture>
+
 <p>Hopefully this saves you some time!</p>
 
 <div class="d-flex mb-3 prev-next">
@@ -360,7 +379,7 @@ backupAppdata <span class="token string">"mosquitto"</span></code></pre>
 	<span class="text-start">Previous<br><a href="/blog/2024/2024-07-31/post/">Using Certificates with ASP.Net Core under Docker</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2025/2025-07-08/post/">Core Unraid Plugins and Containers</a></span>
+	<span class="text-end">Next<br><a href="/blog/2025/2025-07-08/">Core Unraid Plugins and Containers</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -377,7 +396,7 @@ backupAppdata <span class="token string">"mosquitto"</span></code></pre>
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2025/2025-07-07/post/` was built on 2025-07-15T22:32:07.394Z -->
+		<!-- This page `/blog/2025/2025-07-07/` was built on 2025-07-16T21:02:57.476Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
