@@ -1,0 +1,202 @@
+---
+title: Getting started with SQLite and Entity Framework
+date: 2016-08-25
+tags: [.net]
+logo: dotnet.png
+---
+
+<p>
+	I am starting development on a <strong>ROM File management</strong> project that requires me to break my ties with <strong>SQL Server</strong> and <strong>IIS</strong> 
+	(I will cover the IIS portion in a later post) to make the application more accessible to my target audience. In addition to reducing the number of external dependencies, 
+	this approach is going to allow me to eventually wrap the application up as a windows service allowing it to run in the background.
+</p>
+
+<p>
+	This post serves as a <strong>living document</strong> for future reference, and as a quick start guide should you want to make use of <strong>SQLite</strong> and 
+	<strong>Entity Framework</strong> (<code>EF</code>) in your applications.
+</p>
+
+<h2>Adding in SQLite</h2>
+
+<p>
+	The first thing we need to do is install <code>SQLite</code>, you can do this using the following command in the package manager console.
+</p>
+
+{% highlight "powershell" %}
+Install-Package System.Data.SQLite
+{% endhighlight %}
+
+<p>This will install SQLite and all its dependencies, after the process has completed you should have the following packages installed:</p>
+
+<ul>
+	<li>EntityFramework</li>
+	<li>System.Data.SQLite</li>
+	<li>System.Data.SQLite.Core</li>
+	<li>System.Data.SQLite.EF6</li>
+	<li>System.Data.SQLite.Linq</li>
+</ul>
+
+<p>
+	It is worth mentioning that EF Code First and SQLite don't play well together "out of the box", luckily for me I discovered 
+	<a href="https://github.com/msallin/SQLiteCodeFirst" target="_blank">SQLite.CodeFirst</a> which bridges this gap and allows for code first database generation to work.
+</p>
+
+{% highlight "powershell" %}
+Install-Package SQLite.CodeFirst
+{% endhighlight %}
+
+<p>Lastly, I needed to update EF as the version installed with <code>System.Data.SQLite</code> is slightly out of date.</p>
+
+<h2>Fixing EF - adding the missing bits</h2>
+
+<p>
+	It seems that my installation of EF did not go as smoothly as I would have liked it to go, and there were a lot of "gaps" in the generator used to scaffold the Nuget package. 
+	I needed to make the below changes to get everything up and running.
+</p>
+
+<p>
+	First you will need to add the following provider to <code>/entityFramework/providers</code> in your <code>App.config</code> (or <code>web.config</code>) file:
+</p>
+
+{% highlight "xml" %}
+<provider invariantName="System.Data.SQLite" type="System.Data.SQLite.EF6.SQLiteProviderServices, System.Data.SQLite.EF6" />
+{% endhighlight %}
+
+<p>Next up, you will need to add in a connection string for your database.</p>
+
+{% highlight "xml" %}
+<connectionStrings>
+  <add name="default" connectionString="data source=app.db;" providerName="System.Data.SQLite" />
+</connectionStrings>
+{% endhighlight %}
+
+<p>That should do it for the basic configuration of EF, let's move onto creating a simple database context and connecting to your database.</p>
+
+<h2>Creating the DbContext</h2>
+
+<p>Let's start off by creating a <code>model</code> to be used with our test DB - I am going to call this <code>User</code>.</p>
+
+{% highlight "cs" %}
+[Table("Users")]
+public class User
+{
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public long Id { get; set; }
+
+    [Required]
+    public string Name { get; set; }
+
+    [Required]
+    public DateTime Created { get; set; }
+}
+{% endhighlight %}
+
+<p>
+	Something to note here, the version of <strong>SQLite</strong> I am using seems to store numbers as <code>int64</code> (<code>long</code>), and keeps blowing up when 
+	attempting to read data back from it. Understandable as there is no conversion between <code>int32</code> and <code>int64</code> without running into an <code>OverflowException</code>.
+</p>
+
+<p>Once we have our <code>User</code> class we can create our <code>DbContext</code>:</p>
+
+{% highlight "cs" %}
+public class TestDbContext : DbContext
+{
+    public virtual DbSet<User> Users { get; set; }
+
+    public TestDbContext()
+        : base("default")
+    { }
+
+    protected override void OnModelCreating(DbModelBuilder modelBuilder)
+    {
+        var sqliteConnectionInitializer = new SqliteCreateDatabaseIfNotExists<TestDbContext>(modelBuilder);
+        Database.SetInitializer(sqliteConnectionInitializer);
+
+    }
+}
+{% endhighlight %}
+
+<p>Our context has been created, lets test it out by adding the following lines into the <code>Main</code> method of my test program:</p>
+
+{% highlight "cs" %}
+var db = new TestDbContext();
+var users = db.Users.ToList();
+{% endhighlight %}
+
+<p>Adding in a break-point just after our select statement shows that we have successfully created and connected to our SQLite database, however we have no data to work with.</p>
+
+<img src="./images/08/25-01.png" alt="">
+
+<p>Success, our database file exists!</p>
+
+<img src="./images/08/25-02.png" alt="">
+
+<h2>Adding a database initializer</h2>
+
+<p>
+	Next up we will add in some code to populate some seed data when our database is created. However, to do this, we will need to delete the database in order for this code to run
+	- it is designed to run only when the database is created. We can automate this for testing purposes by adding the following lines of code at the start of the <code>Main</code> method.
+</p>
+
+{% highlight "cs" %}
+if (File.Exists("app.db"))
+{
+    File.Delete("app.db");
+}
+{% endhighlight %}
+
+<p>
+	Now let's add our initialization class using the provided <code>SqliteDropCreateDatabaseWhenModelChanges&lt;T&gt;</code> generic class.
+</p>
+
+{% highlight "cs" %}
+public class MyDbContextInitializer : SqliteDropCreateDatabaseWhenModelChanges<TestDbContext>
+{
+    public MyDbContextInitializer(DbModelBuilder modelBuilder)
+        : base(modelBuilder) { }
+
+    protected override void Seed(TestDbContext context)
+    {
+        context.Users.Add(new User
+        {
+            Name = "Richard Niemand",
+            Created = DateTime.Now
+        });
+
+        base.Seed(context);
+    }
+}
+{% endhighlight %}
+
+<p>
+	We will need to modify our <code>TestDbContext</code> to make it aware of our new initializer, to do this we will need to replace the 
+	<code>OnModelCreating</code> method with the following code.
+</p>
+
+{% highlight "cs" %}
+protected override void OnModelCreating(DbModelBuilder modelBuilder)
+{
+    var sqliteConnectionInitializer = new MyDbContextInitializer(modelBuilder);
+    Database.SetInitializer(sqliteConnectionInitializer);
+}
+{% endhighlight %}
+
+<p>
+	Let's do a quick test run to make sure that everything is working, bearing in mind that the database will be deleted when the application starts (so if you are 
+	using any tool to browse it, please close that now).
+</p>
+
+<img src="./images/08/25-03.png" alt="">
+
+<p>Success, we now have our seeded `Richard Niemand` user indicating that our seeder code is working as expected.</p>
+
+<h2>Exploring the Database</h2>
+
+<p>
+	If you would like to explore the generated SQLite database you can do so with any SQLite compatible tool (I am using 
+	<a href="https://sqlitestudio.pl/?act=download" target="_blank">SQLite Studio</a> in the screenshot below).
+</p>
+
+<img src="./images/08/25-04.png" alt="">
+
+<p>As you can see, we have our expected <code>Users</code> table along with an Entity <code>Framework</code> generated <code>History</code> table.</p>

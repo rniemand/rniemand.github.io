@@ -1,0 +1,97 @@
+---
+title: Pong (or my first attempt at JS game development)
+date: 2016-07-29
+tags: [javascript,gaming]
+logo: javascript.png
+---
+
+<p>
+	Ever since I was a little boy, I have always been fascinated with computer games and the way they work. How someone could wield a bunch of 
+	<code>0s</code> and <code>1s</code> into some of the games that shaped my childhood. I could never grasp how <strong>3D rendering engines</strong> 
+	worked (and admittedly still can't), and how the garbled text when opening the games files in <strong>notepad</strong> did this sorcery (I was 
+	young and had no clue about compilers etc.).
+</p>
+
+<p>
+	Now as an adult with a lot of server-side programming experience I have decided to take on the challenge of learning the basics of such an 
+	amazing skill-set \ talent and try to create some of my own simple games.
+</p>
+
+<p>
+	Not knowing where to start, I just <code>Googled</code> some game development starter tutorials (specifically <code>2D browser based</code> games) 
+	to see if I could work through them and build something that resembled a game in some way. I spent a lot of time going through tutorials and sample 
+	code, and am starting to come to terms with the basics, and thought it would be beneficial to myself (and hopefully others) to document the process 
+	going forward.
+</p>
+
+<p>
+	I will be linking back to all sites and developer's blogs when making use of their tutorials to give credit where it is due as creating tutorials 
+	is no easy feat. So without further adieu I present to you my first stab at making a <code>pong clone</code> based on the following 
+	<a href="https://www.udemy.com/join/login-popup/?next=/course/code-your-first-game/learn/lecture/2701754" target="_blank">video series</a> by 
+	<a href="https://twitter.com/gamedevslikeyou" target="_blank">Chris DeLeon</a>.
+</p>
+
+<img src="./images/07/29-01.png" alt="">
+
+<p>
+	See the <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2016/2016-07-29%20-Pong" target="_blank">source code here</a>, 
+	or play with it on <a href="https://jsfiddle.net/qcvhxpq0/4/" target="_blank">JSFiddle</a>.
+</p>
+
+<h2>Points on the code</h2>
+
+<p>
+	After completing the tutorial and going through the generated code I have picked up some issues with it that are worthwhile pointing out. Having 
+	said that, I am no expert when it comes to game development (I am still learning the basics), and judging on the intended audience for the tutorial 
+	these may have been intentional. Nonetheless I would like to point them out.
+</p>
+
+<h3>setInterval()</h3>
+
+<p>
+	The game makes use of <code>setInterval()</code> to manage the calling of the <code>update()</code> and <code>draw()</code> methods, which is not 
+	best practice at all. There are 2 major issues with this approach.
+</p>
+
+<p>
+	On slower computers you run the risk of multiple calls to the <code>update()</code> / <code>draw()</code> methods executing at any given time 
+	provided the calls do not complete in the allocated time span (<code>1000 /30 ms</code>), and seeing that this is not a recursive call (rather 
+	an fire and forget call occurring every <code>33.33 ms</code>) this is highly possible. Over time this could render the game completely unusable 
+	on a computer and may result in the browser stopping execution of the game code as a result.
+</p>
+
+<p>
+	Another side-effect of using <code>setInterval()</code> is that the state of the game becomes unpredictable. There is no guarantee that Computer 
+	A will be in the same game state as Computer B after a few seconds have gone by. This could be due to frame dropping or the <code>update()</code> / 
+	<code>draw()</code> methods overlapping due to slow code execution. This doesn't sound that bad until you try to develop a multiplayer game and 
+	things like state become important and need to be predictable. Another issue with this approach is that the position of the ball is updated each 
+	frame which will result in a different movement speed of the ball which is directly linked to the speed of the computer.
+</p>
+
+<p>
+	There are better ways of scheduling calls to the <code>update()</code> and <code>draw()</code> methods as 
+	<a href="https://www.isaacsukin.com/news/2015/01/detailed-explanation-javascript-game-loops-and-timing" target="_blank">this blog post covers</a>,
+	and I highly recommend giving it a read.
+</p>
+
+<p>
+	<strong>TL;DR</strong>: The solution is to introduce the concept of delta time between frames and use that to calculate the position of the ball 
+	based on the amount of time that passes, rather than the number of frames. This makes the state more predictable and allows for easier testing 
+	and control of the game state.
+</p>
+
+<h3>30 FPS</h3>
+
+<p>
+	Another thing worth mentioning is that the frame rate of the game is capped to <code>30 FPS</code>, which by most games standards is incorrect. 
+	Ideally your frame rate for your game should be around the <code>60 FPS</code> mark to better match the refresh rate of your monitor, and anything 
+	over and above <strong>60</strong> is ideal (but not required as this is a browser game and not a <strong>AAA</strong> title).
+</p>
+
+<h3>Collision Detection</h3>
+
+<p>
+	I suspect that I may have missed the ball on this one (pun intended) as the collision of the ball with the top of the paddle is not registering. 
+	Admittedly I have not done a line for line comparison with the final code from the video series, but I did follow it pretty much to the last line. 
+	I will do some further digging into the code some more and republish my findings in a follow up post as it has peaked my interest.
+</p>

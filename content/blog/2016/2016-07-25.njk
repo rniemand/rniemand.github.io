@@ -1,0 +1,53 @@
+---
+title: Singleton Pattern in TypeScript
+date: 2016-07-25
+tags: [typescript]
+logo: typescript.png
+---
+
+<p>
+	Below is an awesome singleton pattern implementation I found deep in the bowels of <a href="https://stackoverflow.com/" target="_blank">StackOverflow</a>
+	using <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a> (adapted from my favourite <code>C#</code> implementation).
+</p>
+
+<p>
+	This works well if you are wanting to create a single instance class for use through your application such as a logger or user service.
+</p>
+
+{% highlight "ts" %}
+export class Logger {
+  private static _instance:Logger = new Logger();
+
+  constructor() {
+    if(Logger._instance) {
+      throw new Error("The Logger is a singleton class and cannot be created!");
+    }
+
+    Logger._instance = this;
+  }
+
+  public static getInstance() : Logger {
+    return Logger._instance;
+  }
+
+  public trace(message: string) {
+    console.log('[Trace] ' + message);
+  }
+
+  // ...
+}
+{% endhighlight %}
+
+<p>Using the <code>Logger</code> class is as simple as adding a line like this:</p>
+
+{% highlight "ts" %}
+Logger.getInstance().trace("Hello world!")
+{% endhighlight %}
+
+<p>... or more realistically:</p>
+
+{% highlight "ts" %}
+this.logger = Logger.getInstance();
+{% endhighlight %}
+
+<p>Happy coding</p>

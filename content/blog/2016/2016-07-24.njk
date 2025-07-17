@@ -4,21 +4,35 @@ date: 2016-07-24
 tags: [.net]
 logo: dotnet.png
 ---
-This post is meant to serve as a simple guide to get you up and running with Castle Windsor in your next WebAPI project.
 
-First you will need to install Castle Windsor - open up the package manager console and enter in the following command (making sure that your targeted project is set correctly in the projects drop-down list).
+<p>
+	This post is meant to serve as a simple guide to get you up and running with <strong>Castle Windsor</strong> in your next WebAPI project.
+</p>
 
-```cs
+<p>
+	First you will need to install Castle Windsor - open up the package manager console and enter in the following command (making sure that your 
+	targeted project is set correctly in the projects drop-down list).
+</p>
+
+{% highlight "powershell" %}
 Install-Package Castle.Windsor
-```
+{% endhighlight %}
 
-The idea of dependency injection (DI) in WebAPI is simple enough - we are going to be replacing the default [HttpControllerActivator](https://docs.microsoft.com/en-us/previous-versions/aspnet/hh834502(v=vs.118)?redirectedfrom=MSDN) that the pipeline makes use of with a "smarter" one (in our case Castle) that is able to resolve and inject any dependencies that the controller being spun up is looking for.
+<p>
+	The idea of dependency injection (<strong>DI</strong>) in WebAPI is simple enough - we are going to be replacing the default 
+	<a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/hh834502(v=vs.118)?redirectedfrom=MSDN" target="_blank">HttpControllerActivator</a>
+	that the pipeline makes use of with a "smarter" one (in our case Castle) that is able to resolve and inject any dependencies that the controller 
+	being spun up is looking for.
+</p>
 
-This is my way of implementing DI in my applications and may be a bit different to the way you may do it. Please keep this in mind while looking through my code ;)
+<p>
+	This is my way of implementing DI in my applications and may be a bit different to the way you may do it. Please keep this in mind while looking 
+	through my code.
+</p>
 
-First, we will need to create a dependency scope to help manage the lifecycle of any components we pull out of our DI container.
+<p>First, we will need to create a dependency scope to help manage the lifecycle of any components we pull out of our DI container.</p>
 
-```cs
+{% highlight "cs" %}
 public class WindsorDependencyScope : IDependencyScope
 {
     private readonly IWindsorContainer _container;
@@ -50,11 +64,11 @@ public class WindsorDependencyScope : IDependencyScope
         _scope.Dispose();
     }
 }
-```
+{% endhighlight %}
 
-Once I have my scope defined, I create a dependency resolver which will be used later on.
+<p>Once I have my scope defined, I create a dependency resolver which will be used later on.</p>
 
-```cs
+{% highlight "cs" %}
 public class WindsorHttpDependencyResolver : IDependencyResolver
 {
     private readonly IWindsorContainer _container;
@@ -88,11 +102,14 @@ public class WindsorHttpDependencyResolver : IDependencyResolver
     {
     }
 }
-```
+{% endhighlight %}
 
-To assist me when I am in a pinch and need access to the Castle container I normally create a class like "CastleHelper" that gives me access to the Windsor Container through the use of a simple static class (this is not required in most implementations though).
+<p>
+	To assist me when I am in a pinch and need access to the Castle container I normally create a class like <code>CastleHelper</code> that 
+	gives me access to the Windsor Container through the use of a simple static class (this is not required in most implementations though).
+</p>
 
-```cs
+{% highlight "cs" %}
 public static class CastleHelper
 {
     public static WindsorContainer Container { get; private set; }
@@ -117,11 +134,13 @@ public static class CastleHelper
         return _resolver;
     }
 }
-```
+{% endhighlight %}
 
-Next up I create an installer using the "IWindsorInstaller" interface that discovers and instals all classes derived from the APIController class.
+<p>
+	Next up I create an installer using the <code>IWindsorInstaller</code> interface that discovers and instals all classes derived from the APIController class.
+</p>
 
-```cs
+{% highlight "cs" %}
 public class WebApiControllerInstaller : IWindsorInstaller
 {
     public void Install(IWindsorContainer container, IConfigurationStore store)
@@ -131,17 +150,20 @@ public class WebApiControllerInstaller : IWindsorInstaller
             .LifestylePerWebRequest());
     }
 }
-```
+{% endhighlight %}
 
-Next up, I add the following line to the "`WebApiConfig.cs`" file to replace the default dependency resolver with our newly created "`WindsorHttpDependencyResolver`".
+<p>
+	Next up, I add the following line to the <code>WebApiConfig.cs</code> file to replace the default dependency resolver with our newly 
+	created <code>WindsorHttpDependencyResolver</code>.
+</p>
 
-```cs
+{% highlight "cs" %}
 config.DependencyResolver = CastleHelper.GetDependencyResolver();
-```
+{% endhighlight %}
 
-To test that everything is working as expected I usually create a test service like so:
+<p>To test that everything is working as expected I usually create a test service like so:</p>
 
-```cs
+{% highlight "cs" %}
 public interface ITestService
 {
     string GetName();
@@ -154,11 +176,11 @@ public class TestService : ITestService
         return "Test Service";
     }
 }
-```
+{% endhighlight %}
 
-...and install it using the following installer:
+<p>...and install it using the following installer:</p>
 
-```cs
+{% highlight "cs" %}
 public class ServiceInstaller : IWindsorInstaller
 {
     public void Install(IWindsorContainer container, IConfigurationStore store)
@@ -169,11 +191,11 @@ public class ServiceInstaller : IWindsorInstaller
             .LifestylePerWebRequest());
     }
 }
-```
+{% endhighlight %}
 
-...finally pulling it altogether using a test controller like so:
+<p>...finally pulling it altogether using a test controller like so:</p>
 
-```cs
+{% highlight "cs" %}
 public class TestController : ApiController
 {
     private readonly ITestService _testService;
@@ -189,10 +211,12 @@ public class TestController : ApiController
         return Ok(_testService.GetName());
     }
 }
-```
+{% endhighlight %}
 
-To ensure everything is working 100%, compile your project and head over to the newly created TestController, you should get the following response:
+<p>
+	To ensure everything is working 100%, compile your project and head over to the newly created TestController, you should get the following response:
+</p>
 
-<img src="./001.png" alt="">
+<img src="./images/07/24-01.png" alt="">
 
-That's all there is to it :)
+<p>That's all there is to it :)</p>

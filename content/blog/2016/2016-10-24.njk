@@ -1,0 +1,95 @@
+---
+title: Setting up TypeScript in VS Code
+date: 2016-10-24
+tags: [typescript]
+logo: typescript.png
+---
+
+<p>This blog post serves as an abridged summary of the below getting started guides for TypeScript and VS Code and is presented in the shortest possible form:</p>
+
+<ul>
+	<li><a href="https://code.visualstudio.com/docs/languages/typescript" target="_blank">https://code.visualstudio.com/docs/languages/typescript</a></li>
+	<li><a href="https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/" target="_blank">https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/</a></li>
+</ul>
+
+<h2>Enabling TypeScript</h2>
+
+<p>First create a file called `tsconfig.json` to the project with the following contents:</p>
+
+{% highlight "json" %}
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true
+  }
+}
+{% endhighlight %}
+
+<p>Next, create a sample <code>HelloWorld.ts</code> file with the following contents:</p>
+
+{% highlight "ts" %}
+class Startup {
+  public static main(): number {
+    console.log('Hello World');
+    return 0;
+  }
+}
+
+Startup.main();
+{% endhighlight %}
+
+<p>
+	Press <code>Ctrl+Shift+P</code> type in <code>Configure Task Runner</code> select <code>TypeScript - tsconfig.json</code>. I tend to modify the 
+	<code>args</code> command and add an additional <code>-w</code> switch to run tsc in watch mode as can be seen below:
+</p>
+
+{% highlight "json" %}
+{
+  "version": "0.1.0",
+  "command": "tsc",
+  "isShellCommand": true,
+  "args": ["-p", ".", "-w"],
+  "showOutput": "silent",
+  "problemMatcher": "$tsc"
+}
+{% endhighlight %}
+
+<p>Test out a build using <code>Ctrl+Shift+B</code> - this will generate <code>HelloWorld.js</code> and <code>HelloWorld.js.map</code> as can be seen below.</p>
+
+<img src="./images/10/24-01.png" alt="">
+
+<h2>Hiding Generated Files</h2>
+
+<p>
+	If you are working primarily with <code>.ts</code> files in VS Code there is no need to see the generated <code>.map</code> and <code>.js</code> files (well at 
+	least I don't like looking at them). If you wish to hide these files and clean up your work-space all you need to do is follow the below steps:
+</p>
+
+<p>
+	In the root of your application create a <code>.vscode/settings.json</code> file (if you don't already have one), and add the following to it:
+</p>
+
+{% highlight "json" %}
+{
+    "files.exclude": {
+        "node_modules/": true,
+        "app/**/*.js": true,
+        "app/**/*.map": true
+    }
+}
+{% endhighlight %}
+
+<div class="alert alert-info">
+	<strong>NOTE</strong>: I am presuming that your source files now live in a folder called <code>app/*/</code>, feel free to modify this to meet your project needs.
+</div>
+
+<img src="./images/10/24-02.png" alt="">
+
+<p>Folder structure in VS Code before adding in <code>.vscode/settings.json</code>.</p>
+
+<img src="./images/10/24-03.png" alt="">
+
+<p>Folder structure in VS Code after adding in <code>.vscode/settings.json</code> (source folder shown on the right).</p>
+
+<p>I much prefer this way of working with .ts files as it feels a lot less cluttered.</p>

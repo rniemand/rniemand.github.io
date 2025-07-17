@@ -1,0 +1,405 @@
+---
+title: SQLite and Dapper in C#
+date: 2016-07-29
+tags: [.net]
+logo: dotnet.png
+---
+
+<p>
+	In this article I am going to cover the basics of running <strong>SQLite</strong> and <a href="https://github.com/DapperLib/Dapper" target="_blank">Dapper</a>
+	in a <code>C#</code> console application. There is a lot of code below which may be highly opinionated (so please bear that in mind while reading it) with 
+	links to an example application on Github below should you wish to see it all in action.
+</p>
+
+<h2 id="tools">Tools and Resources</h2>
+
+<p>
+	While creating this article I made use of the following online resources and tools, and feel that the original authors should get the credit for the bits 
+	and pieces I used.
+</p>
+
+<ul>
+	<li><a href="https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/" target="_blank">SQLite Manager</a>: SQLite query tool (Firefox extension)</li>
+	<li><a href="https://blog.tigrangasparian.com/2012/02/09/getting-started-with-sqlite-in-c-part-one/" target="_blank">Getting started with SQLite in C#</a>: used as a guideline</li>
+	<li><a href="https://www.fluxbytes.com/csharp/how-to-create-and-connect-to-an-sqlite-database-in-c/" target="_blank">How to create and connect to an SQLite database in C#</a>: used as a guideline</li>
+	<li><a href="https://www.sqlite.org/datatype3.html" target="_blank">Datatypes In SQLite Version 3</a></li>
+	<li><a href="https://stackoverflow.com/questions/200309/sqlite-database-default-time-value-now" target="_blank">SQLite database default time value 'now'</a>: yes I Googled this</li>
+	<li><a href="https://stackoverflow.com/questions/1122483/random-string-generator-returning-same-string" target="_blank">Random String Generator</a>: swiped the generator bit</li>
+</ul>
+
+<h2 id="first-steps">First Steps</h2>
+
+<p>
+	First thing we need to do is create a new console application in Visual Studio and install <code>SQLite</code> and <code>Dapper</code> via the package manager console.
+</p>
+
+{% highlight "powershell" %}
+Install-Package System.Data.SQLite.Core
+Install-Package Dapper
+{% endhighlight %}
+
+<p>
+	This will install the required files for <code>SQLite</code> and <code>Dapper</code> into your solution along with any dependencies that they might have.
+</p>
+
+<h3 id="connecting-to-db">Connecting to the Database</h3>
+
+<p>
+	The connection strings used in <code>SQLite</code> are pretty straight forward seeing that it is a server-less database engine and for this project is as simple as 
+	<code>Data Source=FilePath.sqlite;Version=3;</code>. The connection does support additional parameters like credentials, but that is beyond the scope of this tutorial.
+</p>
+
+<p>
+	To connect to our database (and create it, if missing) add a <code>CreateAndOpenDb()</code> method with the following body:
+</p>
+
+{% highlight "cs" %}
+private static SQLiteConnection _dbConnection;
+// ...
+static void CreateAndOpenDb()
+{
+    var dbFilePath = "./TestDb.sqlite";
+    if (!File.Exists(dbFilePath))
+    {
+        SQLiteConnection.CreateFile(dbFilePath);
+    }
+    _dbConnection = new SQLiteConnection(string.Format(
+        "Data Source={0};Version=3;", dbFilePath));
+    _dbConnection.Open();
+}
+{% endhighlight %}
+
+<p>Quickly running the code confirms that I am able to create and connect to my new database.</p>
+
+<h3 id="ext-methods">Extension methods</h3>
+
+<p>
+	I would suggest creating some extension/helper methods for common <code>SQLite</code> tasks to help speed up development, and will start off by creating a new 
+	<code>SQLiteExtensions</code> class as listed below:
+</p>
+
+{% highlight "cs" %}
+public static void ExecuteNonQuery(
+    this SQLiteConnection connection,
+    string commandText)
+{
+    // Ensure we have a connection
+    if (connection == null)
+    {
+        throw new NullReferenceException("Please provide a connection");
+    }
+
+    // Ensure that the connection state is Open
+    if (connection.State != ConnectionState.Open)
+    {
+        connection.Open();
+    }
+
+    // Use Dapper to execute the given query
+    connection.Execute(commandText);
+}
+{% endhighlight %}
+
+<h3 id="initial-seeding">Initial Database Seeding</h3>
+
+<p>
+	After creating the DB you will need to create all the tables and objects that your application needs in order to run, I would suggest creating a seed method that gets called 
+	when the database is first created. Below is the contents of my <code>SeedDatabase()</code> method.
+</p>
+
+{% highlight "cs" %}
+static void SeedDatabase()
+{
+    // Create a Users table
+    _dbConnection.ExecuteNonQuery(@"
+        CREATE TABLE IF NOT EXISTS [Users] (
+            [Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            [Username] NVARCHAR(64) NOT NULL,
+            [Email] NVARCHAR(128) NOT NULL,
+            [Password] NVARCHAR(128) NOT NULL,
+            [DateCreated] TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )");
+
+    // Insert an ADMIN user
+    _dbConnection.ExecuteNonQuery(@"
+        INSERT INTO Users
+            (Username, Email, Password)
+        VALUES
+            ('admin', 'niemand.richard@gmail.com', 'test')");
+}
+{% endhighlight %}
+
+<p>This will create and seed a `Users` table with an `admin` user.</p>
+
+<img src="./images/07/30-02.png" alt="">
+
+<h2 id="user-management">User Management</h2>
+<h3 id="user-model">Simple User model</h3>
+
+<p>
+	Next, we will create a <code>User</code> class to represent an entry in the <code>Users</code> table. This class should have a property per column you wish to 
+	interact with from the target database table.
+</p>
+
+{% highlight "cs" %}
+public class User
+{
+    public int Id { get; set; }
+    public string Username { get; set; }
+    public string Email { get; set; }
+    public string Password { get; set; }
+    public DateTime DateCreated { get; set; }
+}
+{% endhighlight %}
+
+<p>We will now make use of Dappers <code>Query&lt;T&gt;</code> method to map our <code>admin</code> user to the newly created User class.</p>
+
+{% highlight "cs" %}
+var adminUser = _dbConnection.Query<User>("SELECT * FROM Users WHERE Username = 'admin'")
+{% endhighlight %}
+
+<p>Which results in the user being mapped like so:</p>
+
+<img src="./images/07/30-03.png" alt="">
+
+<p>Dapper is amazing!</p>
+
+<h3 id="create-user">Creating a new user</h3>
+
+<p>
+	Now it's time to add a new user to the database, but only if the user doesn't already exist. In order to do this, I will need to perform the following actions:
+</p>
+
+<ul>
+	<li>Create a new <code>User</code> object to save to the database</li>
+	<li>Check to see that the user doesn't already exist</li>
+	<li>Insert the user into the database</li>
+</ul>
+
+<p>I will need to modify my <code>ExecuteNonQuery()</code> method a bit to make things easier.</p>
+
+{% highlight "cs" %}
+public static void ExecuteNonQuery(
+    this SQLiteConnection connection,
+    string commandText,
+    object param = null)
+{
+    // Ensure we have a connection
+    if (connection == null)
+    {
+        throw new NullReferenceException(
+            "Please provide a connection");
+    }
+
+    // Ensure that the connection state is Open
+    if (connection.State != ConnectionState.Open)
+    {
+        connection.Open();
+    }
+
+    // Use Dapper to execute the given query
+    connection.Execute(commandText, param);
+}
+{% endhighlight %}
+
+<p>
+	This now allows for an optional <code>object</code> to be passed into the method, which is used by Dapper to replace any <code>@parameter</code> placeholders in the given command text.
+</p>
+
+<p>
+	To help make working with <code>Users</code> easier I added a new <code>UserExtensions</code> class to the project to house all database/user related code.
+</p>
+
+{% highlight "cs" %}
+public static class UserExtensions
+{
+    public static void SaveAsNewUser(
+        this User user,
+        SQLiteConnection connection)
+    {
+        connection.ExecuteNonQuery(@"
+            INSERT INTO Users (Username, Email, Password)
+            VALUES (@Username, @Email, @Password)",
+            user);
+    }
+
+    public static bool ExistsInDb(
+        this User user,
+        SQLiteConnection connection)
+    {
+        var rows = connection.Query(string.Format(
+            "SELECT COUNT(1) as 'Count' FROM Users WHERE Username = '{0}'",
+            user.Username));
+
+        return (int) rows.First().Count > 0;
+    }
+}
+{% endhighlight %}
+
+<p>
+	This now allows me to add a <code>CreateSecondUser()</code> method to my Program class with the following body:
+</p>
+
+{% highlight "cs" %}
+static void CreateSecondUser()
+{
+    var secondUser = new User
+    {
+        Username = "rachel",
+        Email = "1@2.com",
+        Password = "password"
+    };
+
+    if (!secondUser.ExistsInDb(_dbConnection))
+    {
+        secondUser.SaveAsNewUser(_dbConnection);
+    }
+}
+{% endhighlight %}
+
+<p>
+	This approach allows for more readable code, and helps a lot with code refactoring, as all of your management code is in one single place. After compiling and running the 
+	code I now have my second <code>Rachel</code> user.
+</p>
+
+<img src="./images/07/30-04.png" alt="">
+
+<h3 id="update-user">Updating a user</h3>
+
+<p>
+	I now add a <code>GetUserByName()</code> and <code>SaveChanges()</code> method to <code>UserExtensions</code>, allowing me to easily save any changes I make to a user back to the database.
+</p>
+
+{% highlight "cs" %}
+public static User GetUserByName(
+    this SQLiteConnection connection,
+    string username)
+{
+    var userCollection = connection.Query<User>(
+        "SELECT * FROM Users WHERE Username = @UserName",
+        new {Username = username});
+
+    return userCollection.FirstOrDefault();
+}
+
+public static void SaveChanges(
+    this User user,
+    SQLiteConnection connection)
+{
+    connection.ExecuteNonQuery(@"
+        UPDATE Users
+        SET
+        Email = @Email, Password = @Password
+        WHERE Id = @Id", user);
+}
+{% endhighlight %}
+
+<p>Next I add a <code>ModifyAdminUser()</code> method to <code>Program</code> with the following body.</p>
+
+{% highlight "cs" %}
+static void ModifyAdminUser()
+{
+    var adminUser = _dbConnection.GetUserByName("admin");
+    adminUser.Password = string.Format(
+        "pass_{0}", DateTime.Now.Millisecond);
+    adminUser.SaveChanges(_dbConnection);
+}
+{% endhighlight %}
+
+<p>Compiling and running the project results in my <code>admin</code> users password being updated.</p>
+
+<img src="./images/07/30-05.png" alt="">
+
+<h3 id="more-more-users">More, more, more users</h3>
+
+<p>
+	I added a <code>AddMoreUsers()</code> method to <code>Program</code> to allow me to add user accounts easily. This method takes in a number of users to add and makes 
+	use of a <a href="https://stackoverflow.com/questions/1122483/random-string-generator-returning-same-string" target="_blank">RandomString()</a> method I found online 
+	to help generate some unique usernames.
+</p>
+
+{% highlight "cs" %}
+static void AddMoreUsers(int amount)
+{
+    var baseUsername = string.Format(
+        "{0}{1}{2}{3}{4}{5}",
+        DateTime.Now.Year,
+        DateTime.Now.Month.ToString().PadLeft(2, '0'),
+        DateTime.Now.Day.ToString().PadLeft(2, '0'),
+        DateTime.Now.Hour.ToString().PadLeft(2, '0'),
+        DateTime.Now.Minute.ToString().PadLeft(2, '0'),
+        DateTime.Now.Second.ToString().PadLeft(2, '0'));
+
+    for (var i = 0; i < amount; i++)
+    {
+        var tempUser = new User
+        {
+            Username = string.Format("{0}{1}",
+                baseUsername, RandomString(4)),
+            Password = RandomString(10),
+            Email = string.Format("{0}@{1}.com",
+                RandomString(12), RandomString(5))
+        };
+
+        tempUser.SaveAsNewUser(_dbConnection);
+    }
+}
+{% endhighlight %}
+
+<p>Now I have loads of user accounts to mess around with.</p>
+
+<img src="./images/07/30-06.png" alt="">
+
+<h3 id="removing-users">Removing a User</h3>
+
+<p>
+	The last thing I would like to cover is deleting users from the DB. To do this I added the <code>GetLastUser()</code> and <code>RemoveFromDb()</code> methods to the 
+	<code>UserExtensions</code> class with the following body.
+</p>
+
+{% highlight "cs" %}
+public static User GetLastUser(
+    this SQLiteConnection connection)
+{
+    var userCollection = connection.Query<User>(
+        "SELECT * FROM Users ORDER BY Id DESC LIMIT 1");
+    return userCollection.FirstOrDefault();
+}
+
+public static void RemoveFromDb(
+    this User user,
+    SQLiteConnection connection)
+{
+    connection.ExecuteNonQuery(
+        "DELETE FROM Users WHERE Id = @Id", user);
+}
+{% endhighlight %}
+
+<p>These methods allow me to add a new <code>RemoveLastNonAdminUser()</code> method to the <code>Program</code> class with the following body.</p>
+
+{% highlight "cs" %}
+static void RemoveLastNonAdminUser()
+{
+    var user = _dbConnection.GetLastUser();
+    if (user.Username == "admin") return;
+    user.RemoveFromDb(_dbConnection);
+}
+{% endhighlight %}
+
+<p>Each time this method is run the last user in the database is dropped.</p>
+
+<img src="./images/07/30-07.png" alt="">
+
+<p>After another run of <code>RemoveLastNonAdminUser()</code>...</p>
+
+<img src="./images/07/30-08.png" alt="">
+
+<h2 id="source-code">Source Code</h2>
+
+<p>
+	The source code for this project can be found on my <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2016/2016-07-29" target="_blank">code-samples GitHub repository</a>.
+</p>
+
+<p>I welcome feedback and pull requests and am always open to any suggestions you may have.</p>
+
+<p>I hope that you found this informative.</p>

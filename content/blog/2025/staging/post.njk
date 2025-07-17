@@ -7,7 +7,38 @@ logo: unraid.png
 draft: true
 ---
 
-<h2>Reworking Obsidian Storage on Unraid</h2>
+<h2 id="problem-statement">Problem Statement</h2>
+
+<p>
+	A while back I discovered an amazing note taking application called <a href="https://obsidian.md/" target="_blank">Obsidian</a> when looking for something 
+	to use as a scratch / brainstorming / note taking application. Along with being a <strong>cross-platform</strong> application it is powered by markdown 
+	(<code>.md</code>) and has a ton of amazing plugins that make this my #1 go to everything application.
+</p>
+
+<p>
+	I tend to jump between my desktop and laptop when working on various projects and wanted to take my notes along with me. Initially my simple approach to this 
+	issue was to just point <strong>Obsidian</strong> to a share on my NAS and work with the files directly there relying on my daily backup scripts to give me 
+	some sense of security with my notes.
+</p>
+
+<p>This worked well, but suffered from the following problems:</p>
+
+<ul>
+	<li>If I was not on my home network, I did not have access to my files</li>
+	<li>
+		The first time I access my files from the NAS I must wait for the array to spin up
+		<ul>
+			<li>This is because I spin down my disks when they have not been accessed for more than 15 minutes</li>
+			<li>This was also because I was moving my notes onto the array, and not leaving them on one of the always on drives</li>
+		</ul>
+	</li>
+</ul>
+
+<p>Initially I solved this problem by moving all my notes off the <code>array</code>, reconfiguring the share to only store files on my <code>ssd</code> drive and called it a day.</p>
+
+<h2 id="share-configuration">Obsidian Share</h2>
+
+<h3 id="reconfiguring-share">Reconfiguring the share</h3>
 
 <p>
 	The initial configuration for my <strong>Obsidian</strong> share is to initially store data on my <code>cache</code> drive and then 
@@ -34,20 +65,107 @@ draft: true
 
 <img src="./02.png" alt="">
 
-<img src="./03.png" alt="">
+<h3 id="moving-files">Gathering Share Files Together</h3>
 
-<img src="./04.png" alt="">
+<p>
+	After reconfiguring my <strong>Obsidian</strong> share, I needed to gather up all the shares’ files from the array and move them to my <code>ssd</code> drive. 
+	I discovered an amazing plugin for Unraid called <a href="https://forums.unraid.net/topic/43651-plugin-unbalanced/" target="_blank">unbalanced</a> which makes 
+	this task as simple as following the steps below:
+</p>
 
-<img src="./05.png" alt="">
+<div class="accordion" id="movingFilesAccordian">
+	<div class="accordion-item">
+		<h2 class="accordion-header">
+			<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#step01" aria-expanded="true" aria-controls="step01">
+				Selection Phase
+			</button>
+		</h2>
+		<div id="step01" class="accordion-collapse collapse show" data-bs-parent="#movingFilesAccordian">
+			<div class="accordion-body">
+				<p>Install the plugin and launch the web interface: <code>http://192.168.0.60:7090/</code></p>
+				<p>On the top navigation menu, select the <strong>Gather</strong> option, followed by selecting the share you would like to gather</p>
+				<img src="./03.png" alt="">
+				<div class="text-end">
+					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#step02" aria-controls="step02">
+						Next
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<img src="./06.png" alt="">
+	<div class="accordion-item">
+		<h2 class="accordion-header">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step02" aria-expanded="false" aria-controls="step02">
+				Planning Phase
+			</button>
+		</h2>
+		<div id="step02" class="accordion-collapse collapse" data-bs-parent="#movingFilesAccordian">
+			<div class="accordion-body">
+				<p>
+					Click <strong>next</strong> to run the planning phase, where unbalanced will scan for your shares files over the array and calculate the actions needed to gather your files.
+				</p>
+				<img src="./04.png" alt="">
+				<div class="text-end">
+					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#step03" aria-controls="step03">
+						Next
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<img src="./07.png" alt="">
+	<div class="accordion-item">
+		<h2 class="accordion-header">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step03" aria-expanded="false" aria-controls="step03">
+				Transfer Phase
+			</button>
+		</h2>
+		<div id="step03" class="accordion-collapse collapse" data-bs-parent="#movingFilesAccordian">
+			<div class="accordion-body">
+				<p>Once planning has been completed you will move onto the transfer phase. Here you will select the target drive where the files will be moved to.</p>
+				<p>In my case I have selected my <code>ssd</code> drive as the target.</p>
+				<p>Once you are happy with the configuration, click the <strong>move</strong> button on the top of the screen to start gathering your files.</p>
+				<img src="./05.png" alt="">
+				<p>Waiting for the gather process to complete, the time taken here will depend on the number and size of the files you are collecting.</p>
+				<img src="./06.png" alt="">
+				<div class="text-end">
+					<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#step04" aria-controls="step04">
+						Next
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="accordion-item">
+		<h2 class="accordion-header">
+			<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#step04" aria-expanded="false" aria-controls="step04">
+				Checking Results
+			</button>
+		</h2>
+		<div id="step04" class="accordion-collapse collapse" data-bs-parent="#movingFilesAccordian">
+			<div class="accordion-body">
+				<p>Once the gather process has been completed you can make use of the Shares page on Unraid to confirm that all your files have been moved to your selected target drive.</p>
+				<p>To do this, open the <strong>Shares</strong> page in Unraid, find your share and click on the <code>Compute...</code> link next to it. This should expand and list all the drives that contain files for the selected share.</p>
+				<p>As you can see, all my files have been moved to the <code>ssd</code> drive.</p>
+				<img src="./07.png" alt="">
+				<p>It’s that simple.</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<h2 id="obs-livesync">Obsidian-Livesync</h2>
+
+<h3 id="obs-livesync-unraid">Unraid Docker Container</h3>
 
 <img src="./08.png" alt="">
 
 <img src="./09.png" alt="">
 
 <img src="./10.png" alt="">
+
+<h3 id="obs-livesync-plugin">Obsidian Self-hosted LiveSync Plugin</h3>
 
 <img src="./11.png" alt="">
