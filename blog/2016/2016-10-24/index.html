@@ -320,13 +320,18 @@ pre[class*="language-diff-"] {
 	</span>
 </div>
 
+
 <p>This blog post serves as an abridged summary of the below getting started guides for TypeScript and VS Code and is presented in the shortest possible form:</p>
+
 <ul>
-<li><a href="https://code.visualstudio.com/docs/languages/typescript">https://code.visualstudio.com/docs/languages/typescript</a></li>
-<li><a href="https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/">https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/</a></li>
+	<li><a href="https://code.visualstudio.com/docs/languages/typescript" target="_blank">https://code.visualstudio.com/docs/languages/typescript</a></li>
+	<li><a href="https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/" target="_blank">https://www.keithcirkel.co.uk/how-to-use-npm-as-a-build-tool/</a></li>
 </ul>
+
 <h2 id="enabling-typescript">Enabling TypeScript</h2>
-<p>First create a file called <code>tsconfig.json</code> to the project with the following contents:</p>
+
+<p>First create a file called `tsconfig.json` to the project with the following contents:</p>
+
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"compilerOptions"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"target"</span><span class="token operator">:</span> <span class="token string">"es5"</span><span class="token punctuation">,</span>
@@ -334,7 +339,9 @@ pre[class*="language-diff-"] {
     <span class="token property">"sourceMap"</span><span class="token operator">:</span> <span class="token boolean">true</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>Next, create a sample <code>HelloWorld.ts</code> file with the following contents:</p>
+
 <pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">class</span> <span class="token class-name">Startup</span> <span class="token punctuation">{</span>
   <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span> <span class="token punctuation">{</span>
     <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Hello World'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -343,7 +350,12 @@ pre[class*="language-diff-"] {
 <span class="token punctuation">}</span>
 
 Startup<span class="token punctuation">.</span><span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>Press <code>Ctrl+Shift+P</code> type in <code>Configure Task Runner</code> select <code>TypeScript - tsconfig.json</code>. I tend to modify the <code>args</code> command and add an additional <code>-w</code> switch to run tsc in watch mode as can be seen below:</p>
+
+<p>
+	Press <code>Ctrl+Shift+P</code> type in <code>Configure Task Runner</code> select <code>TypeScript - tsconfig.json</code>. I tend to modify the 
+	<code>args</code> command and add an additional <code>-w</code> switch to run tsc in watch mode as can be seen below:
+</p>
+
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
   <span class="token property">"version"</span><span class="token operator">:</span> <span class="token string">"0.1.0"</span><span class="token punctuation">,</span>
   <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"tsc"</span><span class="token punctuation">,</span>
@@ -352,11 +364,22 @@ Startup<span class="token punctuation">.</span><span class="token function">main
   <span class="token property">"showOutput"</span><span class="token operator">:</span> <span class="token string">"silent"</span><span class="token punctuation">,</span>
   <span class="token property">"problemMatcher"</span><span class="token operator">:</span> <span class="token string">"$tsc"</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>Test out a build using <code>Ctrl+Shift+B</code> - this will generate <code>HelloWorld.js</code> and <code>HelloWorld.js.map</code> as can be seen below.</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-10-24/post/rPzQ10Jzru-328.avif 328w"><source type="image/webp" srcset="/blog/2016/2016-10-24/post/rPzQ10Jzru-328.webp 328w"><img loading="lazy" decoding="async" src="/blog/2016/2016-10-24/post/rPzQ10Jzru-328.png" alt="" width="328" height="117"></picture>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-10-24/rPzQ10Jzru-328.avif 328w"><source type="image/webp" srcset="/blog/2016/2016-10-24/rPzQ10Jzru-328.webp 328w"><img loading="lazy" decoding="async" src="/blog/2016/2016-10-24/rPzQ10Jzru-328.png" alt="" width="328" height="117"></picture>
+
 <h2 id="hiding-generated-files">Hiding Generated Files</h2>
-<p>If you are working primarily with <code>.ts</code> files in VS Code there is no need to see the generated <code>.map</code> and <code>.js</code> files (well at least I don't like looking at them). If you wish to hide these files and clean up your work-space all you need to do is follow the below steps:</p>
-<p>In the root of your application create a <code>.vscode/settings.json</code> file (if you don't already have one), and add the following to it:</p>
+
+<p>
+	If you are working primarily with <code>.ts</code> files in VS Code there is no need to see the generated <code>.map</code> and <code>.js</code> files (well at 
+	least I don't like looking at them). If you wish to hide these files and clean up your work-space all you need to do is follow the below steps:
+</p>
+
+<p>
+	In the root of your application create a <code>.vscode/settings.json</code> file (if you don't already have one), and add the following to it:
+</p>
+
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
     <span class="token property">"files.exclude"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
         <span class="token property">"node_modules/"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
@@ -364,16 +387,24 @@ Startup<span class="token punctuation">.</span><span class="token function">main
         <span class="token property">"app/**/*.map"</span><span class="token operator">:</span> <span class="token boolean">true</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p><strong>NOTE</strong>: I am presuming that your source files now live in a folder called <code>app/*/</code>, feel free to modify this to meet your project needs.</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-10-24/post/KTB4NoWjBO-329.avif 329w"><source type="image/webp" srcset="/blog/2016/2016-10-24/post/KTB4NoWjBO-329.webp 329w"><img loading="lazy" decoding="async" src="/blog/2016/2016-10-24/post/KTB4NoWjBO-329.png" alt="" width="329" height="167"></picture>
+
+<div class="alert alert-info">
+	<strong>NOTE</strong>: I am presuming that your source files now live in a folder called <code>app/*/</code>, feel free to modify this to meet your project needs.
+</div>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-10-24/KTB4NoWjBO-329.avif 329w"><source type="image/webp" srcset="/blog/2016/2016-10-24/KTB4NoWjBO-329.webp 329w"><img loading="lazy" decoding="async" src="/blog/2016/2016-10-24/KTB4NoWjBO-329.png" alt="" width="329" height="167"></picture>
+
 <p>Folder structure in VS Code before adding in <code>.vscode/settings.json</code>.</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-10-24/post/nQ0fOrcRG_-1144.avif 1144w"><source type="image/webp" srcset="/blog/2016/2016-10-24/post/nQ0fOrcRG_-1144.webp 1144w"><img loading="lazy" decoding="async" src="/blog/2016/2016-10-24/post/nQ0fOrcRG_-1144.png" alt="" width="1144" height="312"></picture>
-<p>Folder structure in VS Code after adding in .<code>vscode/settings.json</code> (source folder shown on the right).</p>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-10-24/nQ0fOrcRG_-1144.avif 1144w"><source type="image/webp" srcset="/blog/2016/2016-10-24/nQ0fOrcRG_-1144.webp 1144w"><img loading="lazy" decoding="async" src="/blog/2016/2016-10-24/nQ0fOrcRG_-1144.png" alt="" width="1144" height="312"></picture>
+
+<p>Folder structure in VS Code after adding in <code>.vscode/settings.json</code> (source folder shown on the right).</p>
+
 <p>I much prefer this way of working with .ts files as it feels a lot less cluttered.</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2016/2016-08-25/post2/">OWIN - Mapping Attribute Routes (Web API 2)</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2016/2016-08-26/">OWIN - Mapping Attribute Routes (Web API 2)</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="text-end">Next<br><a href="/blog/2017/2017-02-27/post/">Arduino Cheat Sheet</a></span>
@@ -393,7 +424,7 @@ Startup<span class="token punctuation">.</span><span class="token function">main
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2016/2016-10-24/post/` was built on 2025-07-16T21:25:28.795Z -->
+		<!-- This page `/blog/2016/2016-10-24/` was built on 2025-07-17T22:35:38.736Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

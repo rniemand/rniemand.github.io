@@ -321,17 +321,35 @@ pre[class*="language-diff-"] {
 	</span>
 </div>
 
-<p>Following on from my <a href="/blog/2016/2016-07-29/post1/">last post</a> I have made some minor tweaks to my pong game, and have addressed some of the issues that I picked up during the first phase of development, namely:</p>
+
+<p>
+	Following on from my <a href="/blog/2016/2016-07-29/">last post</a> I have made some minor tweaks to my pong game, and have addressed some of the issues that I picked up 
+	during the first phase of development, namely:
+</p>
+
 <ul>
-<li>Made use of the <code>requestAnimationFrame()</code> method to handle calls to the <code>update()</code> and <code>draw()</code> methods.</li>
-<li>Addressed issues with the collision detection to better match the relative position of the paddle and ball.</li>
-<li>Did some minor refactoring of the game code.</li>
+	<li>Made use of the <code>requestAnimationFrame()</code> method to handle calls to the <code>update()</code> and <code>draw()</code> methods.</li>
+	<li>Addressed issues with the collision detection to better match the relative position of the paddle and ball.</li>
+	<li>Did some minor refactoring of the game code.</li>
 </ul>
-<p>The game seems to be running a lot smoother at the higher frame-rate, with only a few frames being dropped now and then. When profiling the JavaScript a typical update for a game frame takes less than <code>0.3</code> ms in total (well within the <code>16.666 ms</code> threshold when running at 60 FPS).</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-08-02/post/N_hKx2dbh_-628.avif 628w"><source type="image/webp" srcset="/blog/2016/2016-08-02/post/N_hKx2dbh_-628.webp 628w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-02/post/N_hKx2dbh_-628.png" alt="" width="628" height="238"></picture>
+
+<p>
+	The game seems to be running a lot smoother at the higher frame-rate, with only a few frames being dropped now and then. When profiling the JavaScript a typical update for a 
+	game frame takes less than <code>0.3 ms</code> in total (well within the <code>16.666 ms</code> threshold when running at 60 FPS).
+</p>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-08-02/N_hKx2dbh_-628.avif 628w"><source type="image/webp" srcset="/blog/2016/2016-08-02/N_hKx2dbh_-628.webp 628w"><img loading="lazy" decoding="async" src="/blog/2016/2016-08-02/N_hKx2dbh_-628.png" alt="" width="628" height="238"></picture>
+
 <p>Below is a nice little breakdown of the changes made.</p>
+
 <h2 id="requestanimationframe">requestAnimationFrame()</h2>
-<p>I made use of <code>requestAnimationFrame()</code> to better handle the calling of the <code>update()</code> and <code>draw()</code> methods. To ensure that the position of the ball is predictable, I use the provided <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp">DOMHighResTimeStamp</a> to calculate the delta time between frames, and use the <code>time * velocity</code> of the ball to work out its new position on the canvas, something along the following lines.</p>
+
+<p>
+	I made use of <code>requestAnimationFrame()</code> to better handle the calling of the <code>update()</code> and <code>draw()</code> methods. To ensure that the position of 
+	the ball is predictable, I use the provided <a href="https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp" target="_blank">DOMHighResTimeStamp</a> to calculate 
+	the delta time between frames, and use the <code>time * velocity</code> of the ball to work out its new position on the canvas, something along the following lines.
+</p>
+
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">var</span> start <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
 <span class="token keyword">var</span> remainder <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token keyword">var</span> timeSlice <span class="token operator">=</span> <span class="token number">1000</span> <span class="token operator">/</span> <span class="token number">60</span><span class="token punctuation">;</span>
@@ -357,10 +375,28 @@ pre[class*="language-diff-"] {
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token function">requestAnimationFrame</span><span class="token punctuation">(</span>step<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>Admittedly for my second revision of the code I am not making use of the <code>delta</code> to move the ball, rather I am working out the number of times I need to call the update method and call it using a simple <code>for(;;){ ... }</code> loop. However, moving forward with the game code I will need to start making use of the delta value to calculate the actual position of the ball.</p>
+
+<p>
+	Admittedly for my second revision of the code I am not making use of the <code>delta</code> to move the ball, rather I am working out the number of times I need to call 
+	the update method and call it using a simple <code>for(;;){ ... }</code> loop. However, moving forward with the game code I will need to start making use of the delta value 
+	to calculate the actual position of the ball.
+</p>
+
 <h2 id="fixing-collision-detection">Fixing Collision Detection</h2>
-<p>As I mentioned in my last post, I was having issues when it came to detecting the collision between the ball and paddles (it was completely out when colliding with the top half of the paddle). I mentioned that I followed the tutorial verbatim, however it seems I somehow managed to omit some brackets when calculating the position of the paddles when calculating the collisions in the <code>update()</code> method.</p>
-<p>After including the brackets in the correct places the game's collision detection was working a lot better, but something still felt out of place. I decided to break up the majority of the collision detection into two helper methods <code>updateBallOnLeftSide()</code> and <code>updateBallOnRightSide()</code> and made adjustments in the detection logic to take into consideration that the y position of the paddle represents the middle of it and not the top of the paddle. This can be seen by the <code>paddleModifier</code> value being passed into the helper function below.</p>
+
+<p>
+	As I mentioned in my last post, I was having issues when it came to detecting the collision between the ball and paddles (it was completely out when colliding with the top 
+	half of the paddle). I mentioned that I followed the tutorial verbatim, however it seems I somehow managed to omit some brackets when calculating the position of the paddles 
+	when calculating the collisions in the <code>update()</code> method.
+</p>
+
+<p>
+	After including the brackets in the correct places the game's collision detection was working a lot better, but something still felt out of place. I decided to break up the 
+	majority of the collision detection into two helper methods <code>updateBallOnLeftSide()</code> and <code>updateBallOnRightSide()</code> and made adjustments in the detection 
+	logic to take into consideration that the y position of the paddle represents the middle of it and not the top of the paddle. This can be seen by the <code>paddleModifier</code> 
+	value being passed into the helper function below.
+</p>
+
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">function</span> <span class="token function">updateBallOnRightSide</span><span class="token punctuation">(</span><span class="token parameter">paddleModifier</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">var</span> paddleTop <span class="token operator">=</span> paddle2Y <span class="token operator">-</span> paddleModifier<span class="token punctuation">;</span>
     <span class="token keyword">var</span> paddleBottom <span class="token operator">=</span> paddle2Y <span class="token operator">+</span> paddleModifier<span class="token punctuation">;</span>
@@ -376,9 +412,19 @@ pre[class*="language-diff-"] {
         <span class="token function">ballReset</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>Now things are working much better with collision detection, the only problem left to address is calculating the collision from the outside of the ball (rather than its centre as I am currently doing). This should be addressed in the next update in this series.</p>
+
+<p>
+	Now things are working much better with collision detection, the only problem left to address is calculating the collision from the outside of the ball (rather than its centre as 
+	I am currently doing). This should be addressed in the next update in this series.
+</p>
+
 <h2 id="minor-code-refactoring">Minor Code Refactoring</h2>
-<p>In addition to the two major changes above, I did a lot of code refactoring (and still have a lot to do) to help me identify and troubleshoot the issues with the collision detection, the most useful of them being the introduction of the <code>logCollission()</code> function and calling code.</p>
+
+<p>
+	In addition to the two major changes above, I did a lot of code refactoring (and still have a lot to do) to help me identify and troubleshoot the issues with the collision detection, 
+	the most useful of them being the introduction of the <code>logCollission()</code> function and calling code.
+</p>
+
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">if</span><span class="token punctuation">(</span>logColissions<span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token function">logCollission</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
         <span class="token string-property property">"paddle"</span><span class="token operator">:</span> <span class="token string">"left"</span><span class="token punctuation">,</span>
@@ -388,17 +434,26 @@ pre[class*="language-diff-"] {
         <span class="token string-property property">"ball-y"</span><span class="token operator">:</span> ballY
     <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>Which when run returns the following to the debug <code>textarea</code>.</p>
+
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"paddle"</span><span class="token operator">:</span><span class="token string">"right"</span><span class="token punctuation">,</span><span class="token property">"paddle-top"</span><span class="token operator">:</span><span class="token number">250</span><span class="token punctuation">,</span><span class="token property">"paddle-bottom"</span><span class="token operator">:</span><span class="token number">350</span><span class="token punctuation">,</span><span class="token property">"ball-x"</span><span class="token operator">:</span><span class="token number">535</span><span class="token punctuation">,</span><span class="token property">"ball-y"</span><span class="token operator">:</span><span class="token number">300</span><span class="token punctuation">}</span></code></pre>
-<p>This helps me to determine that the ball did indeed collide with the paddle (the centre of it in this case), and makes pinpointing the root cause of my collision detection issues much easier.
-The latest source code can be <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2016/2016-08-02">found here</a>, and a <a href="https://jsfiddle.net/fuwmbofb/">JSFiddle version</a> should you want to play around with it.</p>
+
+<p>
+	This helps me to determine that the ball did indeed collide with the paddle (the centre of it in this case), and makes pinpointing the root cause of my collision detection issues much easier.
+</p>
+
+<p>
+	The latest source code can be <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2016/2016-08-02" target="_blank">found here</a>, and a 
+	<a href="https://jsfiddle.net/fuwmbofb/" target="_blank">JSFiddle version</a> should you want to play around with it.
+</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2016/2016-07-29/post2/">SQLite and Dapper in C#</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2016/2016-07-30/">SQLite and Dapper in C#</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2016/2016-08-16/post/">*.NDS Rom Info Scraping (C#)</a></span>
+	<span class="text-end">Next<br><a href="/blog/2016/2016-08-16/">*.NDS Rom Info Scraping (C#)</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -415,7 +470,7 @@ The latest source code can be <a href="https://github.com/rniemand/code-samples/
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2016/2016-08-02/post/` was built on 2025-07-16T21:25:28.794Z -->
+		<!-- This page `/blog/2016/2016-08-02/` was built on 2025-07-17T22:35:38.735Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

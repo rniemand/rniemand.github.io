@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Singleton Pattern in TypeScript</title>
+		<title>OWIN - Mapping Attribute Routes (Web API 2)</title>
 		<meta name="description" content="Coding and more">
 		
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
@@ -306,55 +306,50 @@ pre[class*="language-diff-"] {
 				
 
 
-<h1 id="singleton-pattern-in-typescript">Singleton Pattern in TypeScript</h1>
+<h1 id="owin-mapping-attribute-routes-web-api-2">OWIN - Mapping Attribute Routes (Web API 2)</h1>
 
 <div class="p-1 mb-1 d-flex post-meta">
 		<span>
 			<i class="bi bi-bookmarks-fill"></i>
-				<a href="/tags/typescript/" class="post-tag">typescript</a>
+				<a href="/tags/net/" class="post-tag">.net</a>
 		</span>
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="post-date">
 		<i class="bi bi-calendar-plus-fill"></i>
-		<time datetime="2016-07-25">25 July 2016</time>
+		<time datetime="2016-08-26">26 August 2016</time>
 	</span>
 </div>
 
-<p>Below is an awesome singleton pattern implementation I found deep in the bowels of <a href="https://stackoverflow.com/">StackOverflow</a> using <a href="https://www.typescriptlang.org/">TypeScript</a> (adapted from my favourite <code>C#</code> implementation).</p>
-<p>This works well if you are wanting to create a single instance class for use through your application such as a logger or user service.</p>
-<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">export</span> <span class="token keyword">class</span> <span class="token class-name">Logger</span> <span class="token punctuation">{</span>
-  <span class="token keyword">private</span> <span class="token keyword">static</span> _instance<span class="token operator">:</span>Logger <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Logger</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <span class="token function">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token keyword">if</span><span class="token punctuation">(</span>Logger<span class="token punctuation">.</span>_instance<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-      <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">Error</span><span class="token punctuation">(</span><span class="token string">"The Logger is a singleton class and cannot be created!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
+<p>
+	So last night I was playing around with OWIN and a small self-hosted application that made use of WebAPI 2. Everything was working fine until I tried to make use of the 
+	<code>[RoutePrefix("")]</code> and <code>[Route("")]</code> decorators on my controller (they just were not mapping). After a bit of digging I found out that you need to 
+	call <code>config.MapHttpAttributeRoutes()</code> in your OWIN <code>Startup</code> class and that should fix the mapping issue.
+</p>
 
-    Logger<span class="token punctuation">.</span>_instance <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+<p>
+	My initial attempt at this failed, and after a bit of playing around I figured out that the order in which you place the <code>MapHttpAttributeRoutes</code> 
+	and <code>MapHttpRoute</code> makes all the difference.
+</p>
 
-  <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> Logger <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> Logger<span class="token punctuation">.</span>_instance<span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+<p>If you are wanting to make use of attribute routing in your OWIN application, this seems to be the winning order:</p>
 
-  <span class="token keyword">public</span> <span class="token function">trace</span><span class="token punctuation">(</span>message<span class="token operator">:</span> <span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-    <span class="token builtin">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'[Trace] '</span> <span class="token operator">+</span> message<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span>
+<pre class="language-cs" tabindex="0"><code class="language-cs">config<span class="token punctuation">.</span><span class="token function">MapHttpAttributeRoutes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <span class="token comment">// ...</span>
-<span class="token punctuation">}</span></code></pre>
-<p>Using the <code>Logger</code> class is as simple as adding a line like this:</p>
-<pre class="language-ts" tabindex="0"><code class="language-ts">Logger<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">trace</span><span class="token punctuation">(</span><span class="token string">"Hello world!"</span><span class="token punctuation">)</span></code></pre>
-<p>... or more realistically:</p>
-<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">this</span><span class="token punctuation">.</span>logger <span class="token operator">=</span> Logger<span class="token punctuation">.</span><span class="token function">getInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<p>Happy coding :)</p>
+config<span class="token punctuation">.</span>Routes<span class="token punctuation">.</span><span class="token function">MapHttpRoute</span><span class="token punctuation">(</span>
+    <span class="token named-parameter punctuation">name</span><span class="token punctuation">:</span> <span class="token string">"DefaultApi"</span><span class="token punctuation">,</span>
+    <span class="token named-parameter punctuation">routeTemplate</span><span class="token punctuation">:</span> <span class="token string">"api/{controller}/{id}"</span><span class="token punctuation">,</span>
+    <span class="token named-parameter punctuation">defaults</span><span class="token punctuation">:</span> <span class="token keyword">new</span> <span class="token punctuation">{</span>id <span class="token operator">=</span> RouteParameter<span class="token punctuation">.</span>Optional<span class="token punctuation">}</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>Hopefully this helps you</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2016/2016-07-24/post/">Adding Castle Windsor to your WebAPI project</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2016/2016-08-25/">Getting started with SQLite and Entity Framework</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2016/2016-07-29/post1/">Pong (or my first attempt at JS game development)</a></span>
+	<span class="text-end">Next<br><a href="/blog/2016/2016-10-24/">Setting up TypeScript in VS Code</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -371,7 +366,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2016/2016-07-25/post/` was built on 2025-07-16T21:25:28.793Z -->
+		<!-- This page `/blog/2016/2016-08-26/` was built on 2025-07-17T22:35:38.736Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

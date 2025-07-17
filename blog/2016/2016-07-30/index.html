@@ -319,27 +319,58 @@ pre[class*="language-diff-"] {
 		<time datetime="2016-07-29">29 July 2016</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#tools">Tools and Resources</a></li><li><a href="#first-steps">First Steps</a><ol><li><a href="#connecting-to-db">Connecting to the Database</a></li><li><a href="#ext-methods">Extension methods</a></li><li><a href="#initial-seeding">Initial Database Seeding</a></li></ol></li><li><a href="#user-management">User Management</a><ol><li><a href="#user-model">Simple User model</a></li><li><a href="#create-user">Creating a new user</a></li><li><a href="#update-user">Updating a user</a></li><li><a href="#more-more-users">More, more, more users</a></li><li><a href="#removing-users">Removing a User</a></li></ol></li><li><a href="#source-code">Source Code</a></li></ol>
+      </div>
 
-<p>In this article I am going to cover the basics of running <strong>SQLite</strong> and <a href="https://github.com/DapperLib/Dapper">Dapper</a> in a <code>C#</code> console application. There is a lot of code below which may be highly opinionated (so please bear that in mind while reading it) with links to an example application on Github below should you wish to see it all in action.</p>
-<h2 id="tools-and-resources">Tools and Resources</h2>
-<p>While creating this article I made use of the following online resources and tools, and feel that the original authors should get the credit for the bits and pieces I used.</p>
+
+<p>
+	In this article I am going to cover the basics of running <strong>SQLite</strong> and <a href="https://github.com/DapperLib/Dapper" target="_blank">Dapper</a>
+	in a <code>C#</code> console application. There is a lot of code below which may be highly opinionated (so please bear that in mind while reading it) with 
+	links to an example application on Github below should you wish to see it all in action.
+</p>
+
+<h2 id="tools">Tools and Resources</h2>
+
+<p>
+	While creating this article I made use of the following online resources and tools, and feel that the original authors should get the credit for the bits 
+	and pieces I used.
+</p>
+
 <ul>
-<li><a href="https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/">SQLite Manager</a> - SQLite query tool (Firefox extension)</li>
-<li><a href="https://blog.tigrangasparian.com/2012/02/09/getting-started-with-sqlite-in-c-part-one/">Getting started with SQLite in C#</a> - used as a guideline</li>
-<li><a href="https://www.fluxbytes.com/csharp/how-to-create-and-connect-to-an-sqlite-database-in-c/">How to create and connect to an SQLite database in C#</a> - used as a guideline</li>
-<li><a href="https://www.sqlite.org/datatype3.html">Datatypes In SQLite Version 3</a></li>
-<li><a href="https://stackoverflow.com/questions/200309/sqlite-database-default-time-value-now">SQLite database default time value 'now'</a> - yes I Googled this</li>
-<li><a href="https://stackoverflow.com/questions/1122483/random-string-generator-returning-same-string">Random String Generator</a> - swiped the generator bit</li>
+	<li><a href="https://addons.mozilla.org/en-US/firefox/addon/sqlite-manager/" target="_blank">SQLite Manager</a>: SQLite query tool (Firefox extension)</li>
+	<li><a href="https://blog.tigrangasparian.com/2012/02/09/getting-started-with-sqlite-in-c-part-one/" target="_blank">Getting started with SQLite in C#</a>: used as a guideline</li>
+	<li><a href="https://www.fluxbytes.com/csharp/how-to-create-and-connect-to-an-sqlite-database-in-c/" target="_blank">How to create and connect to an SQLite database in C#</a>: used as a guideline</li>
+	<li><a href="https://www.sqlite.org/datatype3.html" target="_blank">Datatypes In SQLite Version 3</a></li>
+	<li><a href="https://stackoverflow.com/questions/200309/sqlite-database-default-time-value-now" target="_blank">SQLite database default time value 'now'</a>: yes I Googled this</li>
+	<li><a href="https://stackoverflow.com/questions/1122483/random-string-generator-returning-same-string" target="_blank">Random String Generator</a>: swiped the generator bit</li>
 </ul>
+
 <h2 id="first-steps">First Steps</h2>
-<p>First thing we need to do is create a new console application in Visual Studio and install <code>SQLite</code> and <code>Dapper</code> via the package manager console.</p>
-<pre><code>Install-Package System.Data.SQLite.Core
-Install-Package Dapper
-</code></pre>
-<p>This will install the required files for <code>SQLite</code> and <code>Dapper</code> into your solution along with any dependencies that they might have.</p>
-<h2 id="connecting-to-the-database">Connecting to the Database</h2>
-<p>The connection strings used in <code>SQLite</code> are pretty straight forward seeing that it is a server-less database engine and for this project is as simple as <code>Data Source=FilePath.sqlite;Version=3;</code>. The connection does support additional parameters like credentials, but that is beyond the scope of this tutorial.</p>
-<p>To connect to our database (and create it, if missing) add a <code>CreateAndOpenDb()</code> method with the following body:</p>
+
+<p>
+	First thing we need to do is create a new console application in Visual Studio and install <code>SQLite</code> and <code>Dapper</code> via the package manager console.
+</p>
+
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token function">Install-Package</span> System<span class="token punctuation">.</span><span class="token keyword">Data</span><span class="token punctuation">.</span>SQLite<span class="token punctuation">.</span>Core
+<span class="token function">Install-Package</span> Dapper</code></pre>
+
+<p>
+	This will install the required files for <code>SQLite</code> and <code>Dapper</code> into your solution along with any dependencies that they might have.
+</p>
+
+<h3 id="connecting-to-db">Connecting to the Database</h3>
+
+<p>
+	The connection strings used in <code>SQLite</code> are pretty straight forward seeing that it is a server-less database engine and for this project is as simple as 
+	<code>Data Source=FilePath.sqlite;Version=3;</code>. The connection does support additional parameters like credentials, but that is beyond the scope of this tutorial.
+</p>
+
+<p>
+	To connect to our database (and create it, if missing) add a <code>CreateAndOpenDb()</code> method with the following body:
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">SQLiteConnection</span> _dbConnection<span class="token punctuation">;</span>
 <span class="token comment">// ...</span>
 <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">CreateAndOpenDb</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -352,11 +383,17 @@ Install-Package Dapper
     _dbConnection <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">SQLiteConnection</span><span class="token punctuation">(</span><span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Format</span><span class="token punctuation">(</span>
         <span class="token string">"Data Source={0};Version=3;"</span><span class="token punctuation">,</span> dbFilePath<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     _dbConnection<span class="token punctuation">.</span><span class="token function">Open</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-</code></pre>
+<span class="token punctuation">}</span></code></pre>
+
 <p>Quickly running the code confirms that I am able to create and connect to my new database.</p>
-<h2 id="extension-methods">Extension methods</h2>
-<p>I would suggest creating some extension/helper methods for common <code>SQLite</code> tasks to help speed up development, and will start off by creating a new <code>SQLiteExtensions</code> class as listed below:</p>
+
+<h3 id="ext-methods">Extension methods</h3>
+
+<p>
+	I would suggest creating some extension/helper methods for common <code>SQLite</code> tasks to help speed up development, and will start off by creating a new 
+	<code>SQLiteExtensions</code> class as listed below:
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span>
     <span class="token keyword">this</span> <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">,</span>
     <span class="token class-name"><span class="token keyword">string</span></span> commandText<span class="token punctuation">)</span>
@@ -376,8 +413,14 @@ Install-Package Dapper
     <span class="token comment">// Use Dapper to execute the given query</span>
     connection<span class="token punctuation">.</span><span class="token function">Execute</span><span class="token punctuation">(</span>commandText<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<h2 id="initial-database-seeding">Initial Database Seeding</h2>
-<p>After creating the DB you will need to create all the tables and objects that your application needs in order to run, I would suggest creating a seed method that gets called when the database is first created. Below is the contents of my <code>SeedDatabase()</code> method.</p>
+
+<h3 id="initial-seeding">Initial Database Seeding</h3>
+
+<p>
+	After creating the DB you will need to create all the tables and objects that your application needs in order to run, I would suggest creating a seed method that gets called 
+	when the database is first created. Below is the contents of my <code>SeedDatabase()</code> method.
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SeedDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token comment">// Create a Users table</span>
@@ -397,10 +440,19 @@ Install-Package Dapper
         VALUES
             ('admin', 'niemand.richard@gmail.com', 'test')"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>This will create and seed a <code>Users</code> table with an <code>admin</code> user.</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/ZyXFS3yfA7-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/ZyXFS3yfA7-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/ZyXFS3yfA7-680.png" alt="" width="680" height="126"></picture>
-<h2 id="simple-user-model">Simple User model</h2>
-<p>Next, we will create a <code>User</code> class to represent an entry in the <code>Users</code> table. This class should have a property per column you wish to interact with from the target database table.</p>
+
+<p>This will create and seed a `Users` table with an `admin` user.</p>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-30/ZyXFS3yfA7-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-30/ZyXFS3yfA7-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-30/ZyXFS3yfA7-680.png" alt="" width="680" height="126"></picture>
+
+<h2 id="user-management">User Management</h2>
+<h3 id="user-model">Simple User model</h3>
+
+<p>
+	Next, we will create a <code>User</code> class to represent an entry in the <code>Users</code> table. This class should have a property per column you wish to 
+	interact with from the target database table.
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">int</span></span> Id <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
@@ -409,20 +461,31 @@ Install-Package Dapper
     <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">string</span></span> Password <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
     <span class="token keyword">public</span> <span class="token return-type class-name">DateTime</span> DateCreated <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>We will now make use of Dappers <code>Query&lt;T&gt;</code> method to map our <code>admin</code> user to the newly created User class.</p>
-<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token class-name"><span class="token keyword">var</span></span> adminUser <span class="token operator">=</span> _dbConnection<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Query</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>User<span class="token punctuation">></span></span></span><span class="token punctuation">(</span>
-    <span class="token string">"SELECT * FROM Users WHERE Username = 'admin'"</span><span class="token punctuation">)</span></code></pre>
+
+<pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token class-name"><span class="token keyword">var</span></span> adminUser <span class="token operator">=</span> _dbConnection<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">Query</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>User<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token string">"SELECT * FROM Users WHERE Username = 'admin'"</span><span class="token punctuation">)</span></code></pre>
+
 <p>Which results in the user being mapped like so:</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/7A5mrokHag-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/7A5mrokHag-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/7A5mrokHag-680.png" alt="" width="680" height="210"></picture>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-30/7A5mrokHag-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-30/7A5mrokHag-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-30/7A5mrokHag-680.png" alt="" width="680" height="210"></picture>
+
 <p>Dapper is amazing!</p>
-<h2 id="creating-a-new-user">Creating a new user</h2>
-<p>Now it's time to add a new user to the database, but only if the user doesn't already exist. In order to do this, I will need to perform the following actions:</p>
+
+<h3 id="create-user">Creating a new user</h3>
+
+<p>
+	Now it's time to add a new user to the database, but only if the user doesn't already exist. In order to do this, I will need to perform the following actions:
+</p>
+
 <ul>
-<li>Create a new <code>User</code> object to save to the database</li>
-<li>Check to see that the user doesn't already exist</li>
-<li>Insert the user into the database</li>
+	<li>Create a new <code>User</code> object to save to the database</li>
+	<li>Check to see that the user doesn't already exist</li>
+	<li>Insert the user into the database</li>
 </ul>
+
 <p>I will need to modify my <code>ExecuteNonQuery()</code> method a bit to make things easier.</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span>
     <span class="token keyword">this</span> <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">,</span>
     <span class="token class-name"><span class="token keyword">string</span></span> commandText<span class="token punctuation">,</span>
@@ -444,8 +507,15 @@ Install-Package Dapper
     <span class="token comment">// Use Dapper to execute the given query</span>
     connection<span class="token punctuation">.</span><span class="token function">Execute</span><span class="token punctuation">(</span>commandText<span class="token punctuation">,</span> param<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
-<p>This now allows for an optional <code>object</code> to be passed into the method, which is used by Dapper to replace any <code>@parameter</code> placeholders in the given command text.</p>
-<p>To help make working with <code>Users</code> easier I added a new <code>UserExtensions</code> class to the project to house all database/user related code.</p>
+
+<p>
+	This now allows for an optional <code>object</code> to be passed into the method, which is used by Dapper to replace any <code>@parameter</code> placeholders in the given command text.
+</p>
+
+<p>
+	To help make working with <code>Users</code> easier I added a new <code>UserExtensions</code> class to the project to house all database/user related code.
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">UserExtensions</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">SaveAsNewUser</span><span class="token punctuation">(</span>
@@ -469,7 +539,11 @@ Install-Package Dapper
         <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> rows<span class="token punctuation">.</span><span class="token function">First</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>Count <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>This now allows me to add a <code>CreateSecondUser()</code> method to my Program class with the following body:</p>
+
+<p>
+	This now allows me to add a <code>CreateSecondUser()</code> method to my Program class with the following body:
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">CreateSecondUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token class-name"><span class="token keyword">var</span></span> secondUser <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token constructor-invocation class-name">User</span>
@@ -484,10 +558,20 @@ Install-Package Dapper
         secondUser<span class="token punctuation">.</span><span class="token function">SaveAsNewUser</span><span class="token punctuation">(</span>_dbConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>This approach allows for more readable code, and helps a lot with code refactoring, as all of your management code is in one single place. After compiling and running the code I now have my second <code>Rachel</code> user.</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/uQtL9ez6ku-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/uQtL9ez6ku-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/uQtL9ez6ku-680.png" alt="" width="680" height="143"></picture>
-<h2 id="updating-a-user">Updating a user</h2>
-<p>I now add a <code>GetUserByName()</code> and <code>SaveChanges()</code> method to <code>UserExtensions</code>, allowing me to easily save any changes I make to a user back to the database.</p>
+
+<p>
+	This approach allows for more readable code, and helps a lot with code refactoring, as all of your management code is in one single place. After compiling and running the 
+	code I now have my second <code>Rachel</code> user.
+</p>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-30/uQtL9ez6ku-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-30/uQtL9ez6ku-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-30/uQtL9ez6ku-680.png" alt="" width="680" height="143"></picture>
+
+<h3 id="update-user">Updating a user</h3>
+
+<p>
+	I now add a <code>GetUserByName()</code> and <code>SaveChanges()</code> method to <code>UserExtensions</code>, allowing me to easily save any changes I make to a user back to the database.
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">User</span> <span class="token function">GetUserByName</span><span class="token punctuation">(</span>
     <span class="token keyword">this</span> <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">,</span>
     <span class="token class-name"><span class="token keyword">string</span></span> username<span class="token punctuation">)</span>
@@ -509,7 +593,9 @@ Install-Package Dapper
         Email = @Email, Password = @Password
         WHERE Id = @Id"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>Next I add a <code>ModifyAdminUser()</code> method to <code>Program</code> with the following body.</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">ModifyAdminUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token class-name"><span class="token keyword">var</span></span> adminUser <span class="token operator">=</span> _dbConnection<span class="token punctuation">.</span><span class="token function">GetUserByName</span><span class="token punctuation">(</span><span class="token string">"admin"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -517,10 +603,19 @@ Install-Package Dapper
         <span class="token string">"pass_{0}"</span><span class="token punctuation">,</span> DateTime<span class="token punctuation">.</span>Now<span class="token punctuation">.</span>Millisecond<span class="token punctuation">)</span><span class="token punctuation">;</span>
     adminUser<span class="token punctuation">.</span><span class="token function">SaveChanges</span><span class="token punctuation">(</span>_dbConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>Compiling and running the project results in my <code>admin</code> users password being updated.</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/qbGvWqyEZF-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/qbGvWqyEZF-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/qbGvWqyEZF-680.png" alt="" width="680" height="142"></picture>
-<h2 id="more-more-more-users">More, more, more users</h2>
-<p>I added a <code>AddMoreUsers()</code> method to <code>Program</code> to allow me to add user accounts easily. This method takes in a number of users to add and makes use of a <a href="https://stackoverflow.com/questions/1122483/random-string-generator-returning-same-string">RandomString()</a> method I found online to help generate some unique usernames.</p>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-30/qbGvWqyEZF-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-30/qbGvWqyEZF-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-30/qbGvWqyEZF-680.png" alt="" width="680" height="142"></picture>
+
+<h3 id="more-more-users">More, more, more users</h3>
+
+<p>
+	I added a <code>AddMoreUsers()</code> method to <code>Program</code> to allow me to add user accounts easily. This method takes in a number of users to add and makes 
+	use of a <a href="https://stackoverflow.com/questions/1122483/random-string-generator-returning-same-string" target="_blank">RandomString()</a> method I found online 
+	to help generate some unique usernames.
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">AddMoreUsers</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> amount<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token class-name"><span class="token keyword">var</span></span> baseUsername <span class="token operator">=</span> <span class="token keyword">string</span><span class="token punctuation">.</span><span class="token function">Format</span><span class="token punctuation">(</span>
@@ -546,10 +641,18 @@ Install-Package Dapper
         tempUser<span class="token punctuation">.</span><span class="token function">SaveAsNewUser</span><span class="token punctuation">(</span>_dbConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>Now I have loads of user accounts to mess around with.</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/PZqYhbMIz3-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/PZqYhbMIz3-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/PZqYhbMIz3-680.png" alt="" width="680" height="221"></picture>
-<h2 id="removing-a-user">Removing a User</h2>
-<p>The last thing I would like to cover is deleting users from the DB. To do this I added the <code>GetLastUser()</code> and <code>RemoveFromDb()</code> methods to the <code>UserExtensions</code> class with the following body.</p>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-30/PZqYhbMIz3-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-30/PZqYhbMIz3-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-30/PZqYhbMIz3-680.png" alt="" width="680" height="221"></picture>
+
+<h3 id="removing-users">Removing a User</h3>
+
+<p>
+	The last thing I would like to cover is deleting users from the DB. To do this I added the <code>GetLastUser()</code> and <code>RemoveFromDb()</code> methods to the 
+	<code>UserExtensions</code> class with the following body.
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">User</span> <span class="token function">GetLastUser</span><span class="token punctuation">(</span>
     <span class="token keyword">this</span> <span class="token class-name">SQLiteConnection</span> connection<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -565,28 +668,40 @@ Install-Package Dapper
     connection<span class="token punctuation">.</span><span class="token function">ExecuteNonQuery</span><span class="token punctuation">(</span>
         <span class="token string">"DELETE FROM Users WHERE Id = @Id"</span><span class="token punctuation">,</span> user<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>These methods allow me to add a new <code>RemoveLastNonAdminUser()</code> method to the <code>Program</code> class with the following body.</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">static</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">RemoveLastNonAdminUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token class-name"><span class="token keyword">var</span></span> user <span class="token operator">=</span> _dbConnection<span class="token punctuation">.</span><span class="token function">GetLastUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span>user<span class="token punctuation">.</span>Username <span class="token operator">==</span> <span class="token string">"admin"</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
     user<span class="token punctuation">.</span><span class="token function">RemoveFromDb</span><span class="token punctuation">(</span>_dbConnection<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>Each time this method is run the last user in the database is dropped.</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/X0BuEQLz3h-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/X0BuEQLz3h-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/X0BuEQLz3h-680.png" alt="" width="680" height="287"></picture>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-30/X0BuEQLz3h-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-30/X0BuEQLz3h-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-30/X0BuEQLz3h-680.png" alt="" width="680" height="287"></picture>
+
 <p>After another run of <code>RemoveLastNonAdminUser()</code>...</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-07-29/post2/lG3FMXGQJg-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-29/post2/lG3FMXGQJg-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-29/post2/lG3FMXGQJg-680.png" alt="" width="680" height="289"></picture>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-30/lG3FMXGQJg-680.avif 680w"><source type="image/webp" srcset="/blog/2016/2016-07-30/lG3FMXGQJg-680.webp 680w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-30/lG3FMXGQJg-680.png" alt="" width="680" height="289"></picture>
+
 <h2 id="source-code">Source Code</h2>
-<p>The source code for this project can be found on my <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2016/2016-07-29">code-samples GitHub repository</a>.</p>
+
+<p>
+	The source code for this project can be found on my <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2016/2016-07-29" target="_blank">code-samples GitHub repository</a>.
+</p>
+
 <p>I welcome feedback and pull requests and am always open to any suggestions you may have.</p>
+
 <p>I hope that you found this informative.</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2016/2016-07-29/post1/">Pong (or my first attempt at JS game development)</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2016/2016-07-29/">Pong (or my first attempt at JS game development)</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2016/2016-08-02/post/">Pong - Update 2</a></span>
+	<span class="text-end">Next<br><a href="/blog/2016/2016-08-02/">Pong - Update 2</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -603,7 +718,7 @@ Install-Package Dapper
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2016/2016-07-29/post2/` was built on 2025-07-16T21:25:28.794Z -->
+		<!-- This page `/blog/2016/2016-07-30/` was built on 2025-07-17T22:35:38.735Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

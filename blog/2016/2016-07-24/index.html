@@ -320,12 +320,32 @@ pre[class*="language-diff-"] {
 	</span>
 </div>
 
-<p>This post is meant to serve as a simple guide to get you up and running with Castle Windsor in your next WebAPI project.</p>
-<p>First you will need to install Castle Windsor - open up the package manager console and enter in the following command (making sure that your targeted project is set correctly in the projects drop-down list).</p>
-<pre class="language-cs" tabindex="0"><code class="language-cs">Install<span class="token operator">-</span>Package Castle<span class="token punctuation">.</span>Windsor</code></pre>
-<p>The idea of dependency injection (DI) in WebAPI is simple enough - we are going to be replacing the default <a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/hh834502(v=vs.118)?redirectedfrom=MSDN">HttpControllerActivator</a> that the pipeline makes use of with a &quot;smarter&quot; one (in our case Castle) that is able to resolve and inject any dependencies that the controller being spun up is looking for.</p>
-<p>This is my way of implementing DI in my applications and may be a bit different to the way you may do it. Please keep this in mind while looking through my code ;)</p>
+
+<p>
+	This post is meant to serve as a simple guide to get you up and running with <strong>Castle Windsor</strong> in your next WebAPI project.
+</p>
+
+<p>
+	First you will need to install Castle Windsor - open up the package manager console and enter in the following command (making sure that your 
+	targeted project is set correctly in the projects drop-down list).
+</p>
+
+<pre class="language-powershell" tabindex="0"><code class="language-powershell"><span class="token function">Install-Package</span> Castle<span class="token punctuation">.</span>Windsor</code></pre>
+
+<p>
+	The idea of dependency injection (<strong>DI</strong>) in WebAPI is simple enough - we are going to be replacing the default 
+	<a href="https://docs.microsoft.com/en-us/previous-versions/aspnet/hh834502(v=vs.118)?redirectedfrom=MSDN" target="_blank">HttpControllerActivator</a>
+	that the pipeline makes use of with a "smarter" one (in our case Castle) that is able to resolve and inject any dependencies that the controller 
+	being spun up is looking for.
+</p>
+
+<p>
+	This is my way of implementing DI in my applications and may be a bit different to the way you may do it. Please keep this in mind while looking 
+	through my code.
+</p>
+
 <p>First, we will need to create a dependency scope to help manage the lifecycle of any components we pull out of our DI container.</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WindsorDependencyScope</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IDependencyScope</span></span>
 <span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token keyword">readonly</span> <span class="token class-name">IWindsorContainer</span> _container<span class="token punctuation">;</span>
@@ -357,7 +377,9 @@ pre[class*="language-diff-"] {
         _scope<span class="token punctuation">.</span><span class="token function">Dispose</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>Once I have my scope defined, I create a dependency resolver which will be used later on.</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WindsorHttpDependencyResolver</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IDependencyResolver</span></span>
 <span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token keyword">readonly</span> <span class="token class-name">IWindsorContainer</span> _container<span class="token punctuation">;</span>
@@ -391,7 +413,12 @@ pre[class*="language-diff-"] {
     <span class="token punctuation">{</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>To assist me when I am in a pinch and need access to the Castle container I normally create a class like &quot;CastleHelper&quot; that gives me access to the Windsor Container through the use of a simple static class (this is not required in most implementations though).</p>
+
+<p>
+	To assist me when I am in a pinch and need access to the Castle container I normally create a class like <code>CastleHelper</code> that 
+	gives me access to the Windsor Container through the use of a simple static class (this is not required in most implementations though).
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">class</span> <span class="token class-name">CastleHelper</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token return-type class-name">WindsorContainer</span> Container <span class="token punctuation">{</span> <span class="token keyword">get</span><span class="token punctuation">;</span> <span class="token keyword">private</span> <span class="token keyword">set</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
@@ -416,7 +443,11 @@ pre[class*="language-diff-"] {
         <span class="token keyword">return</span> _resolver<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>Next up I create an installer using the &quot;IWindsorInstaller&quot; interface that discovers and instals all classes derived from the APIController class.</p>
+
+<p>
+	Next up I create an installer using the <code>IWindsorInstaller</code> interface that discovers and instals all classes derived from the APIController class.
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">WebApiControllerInstaller</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IWindsorInstaller</span></span>
 <span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Install</span><span class="token punctuation">(</span><span class="token class-name">IWindsorContainer</span> container<span class="token punctuation">,</span> <span class="token class-name">IConfigurationStore</span> store<span class="token punctuation">)</span>
@@ -426,9 +457,16 @@ pre[class*="language-diff-"] {
             <span class="token punctuation">.</span><span class="token function">LifestylePerWebRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>Next up, I add the following line to the &quot;<code>WebApiConfig.cs</code>&quot; file to replace the default dependency resolver with our newly created &quot;<code>WindsorHttpDependencyResolver</code>&quot;.</p>
+
+<p>
+	Next up, I add the following line to the <code>WebApiConfig.cs</code> file to replace the default dependency resolver with our newly 
+	created <code>WindsorHttpDependencyResolver</code>.
+</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs">config<span class="token punctuation">.</span>DependencyResolver <span class="token operator">=</span> CastleHelper<span class="token punctuation">.</span><span class="token function">GetDependencyResolver</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
 <p>To test that everything is working as expected I usually create a test service like so:</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">ITestService</span>
 <span class="token punctuation">{</span>
     <span class="token return-type class-name"><span class="token keyword">string</span></span> <span class="token function">GetName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -441,7 +479,9 @@ pre[class*="language-diff-"] {
         <span class="token keyword">return</span> <span class="token string">"Test Service"</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>...and install it using the following installer:</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ServiceInstaller</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">IWindsorInstaller</span></span>
 <span class="token punctuation">{</span>
     <span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Install</span><span class="token punctuation">(</span><span class="token class-name">IWindsorContainer</span> container<span class="token punctuation">,</span> <span class="token class-name">IConfigurationStore</span> store<span class="token punctuation">)</span>
@@ -452,7 +492,9 @@ pre[class*="language-diff-"] {
             <span class="token punctuation">.</span><span class="token function">LifestylePerWebRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>...finally pulling it altogether using a test controller like so:</p>
+
 <pre class="language-cs" tabindex="0"><code class="language-cs"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestController</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">ApiController</span></span>
 <span class="token punctuation">{</span>
     <span class="token keyword">private</span> <span class="token keyword">readonly</span> <span class="token class-name">ITestService</span> _testService<span class="token punctuation">;</span>
@@ -468,8 +510,13 @@ pre[class*="language-diff-"] {
         <span class="token keyword">return</span> <span class="token function">Ok</span><span class="token punctuation">(</span>_testService<span class="token punctuation">.</span><span class="token function">GetName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
-<p>To ensure everything is working 100%, compile your project and head over to the newly created TestController, you should get the following response:</p>
-<picture><source type="image/avif" srcset="/blog/2016/2016-07-24/post/ZvpcrfGmcg-662.avif 662w"><source type="image/webp" srcset="/blog/2016/2016-07-24/post/ZvpcrfGmcg-662.webp 662w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-24/post/ZvpcrfGmcg-662.png" alt="" width="662" height="102"></picture>
+
+<p>
+	To ensure everything is working 100%, compile your project and head over to the newly created TestController, you should get the following response:
+</p>
+
+<picture><source type="image/avif" srcset="/blog/2016/2016-07-24/ZvpcrfGmcg-662.avif 662w"><source type="image/webp" srcset="/blog/2016/2016-07-24/ZvpcrfGmcg-662.webp 662w"><img loading="lazy" decoding="async" src="/blog/2016/2016-07-24/ZvpcrfGmcg-662.png" alt="" width="662" height="102"></picture>
+
 <p>That's all there is to it :)</p>
 
 <div class="d-flex mb-3 prev-next">
@@ -477,7 +524,7 @@ pre[class*="language-diff-"] {
 	<span class="text-start">Previous<br><a href="/blog/2016/2016-04-07/">Simplest way to access POST data after model binding (Web API)</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2016/2016-07-25/post/">Singleton Pattern in TypeScript</a></span>
+	<span class="text-end">Next<br><a href="/blog/2016/2016-07-25/">Singleton Pattern in TypeScript</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -494,7 +541,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2016/2016-07-24/post/` was built on 2025-07-16T21:25:28.793Z -->
+		<!-- This page `/blog/2016/2016-07-24/` was built on 2025-07-17T22:35:38.735Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
