@@ -1,0 +1,250 @@
+---
+title: Arduino Cheat Sheet
+date: 2017-02-27
+tags: [arduino]
+logo: arduino.png
+---
+
+<p>
+	The majority of content found on this cheat sheet comes from the <a href="https://www.arduino.cc/" target="_blank">official Arduino documentation</a>, if you 
+	find that something is lacking please comment and I will update this post accordingly.
+</p>
+
+<h2 id="including-files">Including Files</h2>
+
+{% highlight "cpp" %}
+#include <Adafruit_GFX.h>
+{% endhighlight %}
+
+<p>
+	Using <code>#include &lt;...&gt;</code> the compiler searches in an implementation dependent manner, normally in search directories pre-designated by the compiler/IDE
+</p>
+
+{% highlight "cpp" %}
+#include "joystick.h"
+{% endhighlight %}
+
+<p>
+	Using <code>#include "..."</code> the compiler searches in the same directory as the file containing the directive.
+</p>
+
+<h2 id="data-types">Data Types</h2>
+<p>Below is a complete list of all <strong>data types</strong> available when programming on the Arduino platform. I will try to keep this section up to date as I learn more.</p>
+
+<table class="table table-sm table-striped table-hover w-auto">
+	<thead>
+		<tr>
+			<th>Type</th>
+			<th>Example</th>
+			<th>Storage</th>
+			<th>Range</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><code>void</code></td>
+			<td><code>void setup() { ... }</code></td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><code>boolean</code></td>
+			<td><code>true</code></td>
+			<td>1 byte (8 bit)</td>
+			<td>true|false</td>
+		</tr>
+		<tr>
+			<td><code>char</code></td>
+			<td><code>&#39;A&#39;</code></td>
+			<td>1 byte (8 bit)</td>
+			<td>-</td>
+		</tr>
+		<tr>
+			<td><code>byte</code></td>
+			<td><code>128</code></td>
+			<td>1 byte (8-bit)</td>
+			<td>0 to 255</td>
+		</tr>
+		<tr>
+			<td><code>int</code></td>
+			<td><code>64</code></td>
+			<td>2 byte (16 bit)</td>
+			<td>-2,147,483,648 to 2,147,483,647</td>
+		</tr>
+		<tr>
+			<td><code>word</code></td>
+			<td><code>10000</code></td>
+			<td>&nbsp;</td>
+			<td>2|4 byte (16|>32-bit)</td>
+		</tr>
+		<tr>
+			<td><code>long</code></td>
+			<td><code>186000L</code></td>
+			<td>4 bytes (32 bits)</td>
+			<td>2,147,483,648 to 2,147,483,647</td>
+		</tr>
+		<tr>
+			<td><code>short</code></td>
+			<td><code>13</code></td>
+			<td>2 bytes (16 bits)</td>
+			<td>-32,768 to 32,767</td>
+		</tr>
+		<tr>
+			<td><code>float</code></td>
+			<td>&nbsp;</td>
+			<td>4 bytes (32 bits)</td>
+			<td>-3.4028235E+38 to 3.4028235E+38</td>
+		</tr>
+		<tr>
+			<td><code>double</code></td>
+			<td><code>1.117</code></td>
+			<td>8 bytes (64 bits)*</td>
+			<td><code>...</code></td>
+		</tr>
+		<tr>
+			<td><code>string char[]</code></td>
+			<td><code>&quot;arduino&quot;</code></td>
+			<td>varies</td>
+			<td>varies</td>
+		</tr>
+		<tr>
+			<td><code>String</code></td>
+			<td><code>&quot;arduino&quot;</code></td>
+			<td>varies</td>
+			<td>varies</td>
+		</tr>
+		<tr>
+			<td><code>array</code></td>
+			<td><code>vals[0] == 2</code></td>
+			<td>varies</td>
+			<td>varies</td>
+		</tr>
+	</tbody>
+</table>
+
+<h2 id="core-methods">Core Methods</h2>
+
+<p>Some useful methods / functions for writing your applications.</p>
+
+<h3 id="m-delay">delay()</h3>
+
+<p>Pauses the program for the amount of time (in milliseconds) specified as parameter. (There are 1000 milliseconds in a second.)</p>
+
+{% highlight "cpp" %}
+delay(1000)
+{% endhighlight %}
+
+<h3 id="workingwithio">Working with IO</h3>
+
+<p>Useful methods when working with Arduino pins.</p>
+
+{% highlight "cpp" %}
+// Sets the pin as input (using internal pullup resistor)
+pinMode(JOY_BTN, INPUT_PULLUP);
+
+// Sets the pin as an input
+pinMode(JOY_X, INPUT);
+
+// Reads data from an analog pin (0-1024)
+int aData = analogRead(pinX);
+
+// Reads data from a digital pin (0-1)
+int dData = digitalRead(pinBtn);
+{% endhighlight %}
+
+<ul>
+	<li><strong>Digital</strong> - used to read high or low (<code>1</code> or <code>0</code>)</li>
+	<li><strong>Analog</strong> - used to read a value between <code>0</code> and <code>1024</code></li>
+</ul>
+
+<h3 id="workingwithserial">Working with Serial.</h3>
+
+{% highlight "cpp" %}
+// Start serial @ 9600 bps
+Serial.begin(9600);
+
+// Append given value to current line
+Serial.print("...");
+
+// Append given value to line and insert a line break
+Serial.println("...");
+{% endhighlight %}
+
+<h3 id="comments">Comments</h3>
+
+{% highlight "cpp" %}
+// (single line comment)
+/* */ (multi-line comment)
+{% endhighlight %}
+
+<h3 id="constants">Constants</h3>
+<pre>
+HIGH | LOW
+INPUT | OUTPUT | INPUT_PULLUP
+LED_BUILTIN
+true | false
+</pre>
+
+<h3 id="time">Time</h3>
+<ul>
+	<li>millis()</li>
+	<li>micros()</li>
+	<li>delay()</li>
+	<li>delayMicroseconds()</li>
+</ul>
+
+<h3 id="math">Math</h3>
+<ul>
+	<li>min()</li>
+	<li>max()</li>
+	<li>abs()</li>
+	<li>constrain()</li>
+	<li>map()</li>
+	<li>pow()</li>
+	<li>sqrt()</li>
+	<li>sin()</li>
+	<li>cos()</li>
+	<li>tan()</li>
+</ul>
+
+<h3 id="characters">Characters</h3>
+<ul>
+	<li>isAlphaNumeric()</li>
+	<li>isAlpha()</li>
+	<li>isAscii()</li>
+	<li>isWhitespace()</li>
+	<li>isControl()</li>
+	<li>isDigit()</li>
+	<li>isGraph()</li>
+	<li>isLowerCase()</li>
+	<li>isPrintable()</li>
+	<li>isPunct()</li>
+	<li>isSpace()</li>
+	<li>isUpperCase()</li>
+	<li>isHexadecimalDigit()</li>
+</ul>
+
+<h3 id="random-numbers">Random Numbers</h3>
+<ul>
+	<li>randomSeed()</li>
+	<li>random()</li>
+</ul>
+
+<h3 id="bits-and-bytes">Bits and Bytes</h3>
+<ul>
+	<li>lowByte()</li>
+	<li>highByte()</li>
+	<li>bitRead()</li>
+	<li>bitWrite()</li>
+	<li>bitSet()</li>
+	<li>bitClear()</li>
+	<li>bit()</li>
+</ul>
+
+<h2 id="interrupts">Interrupts</h2>
+<ul>
+	<li>attachInterrupt() - External</li>
+	<li>detachInterrupt() - External</li>
+	<li>interrupts()</li>
+	<li>noInterrupts()</li>
+</ul>

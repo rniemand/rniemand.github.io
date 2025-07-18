@@ -1,0 +1,73 @@
+---
+title: Mosquitto on Windows
+date: 2017-06-07
+tags: [iot]
+logo: mqtt.png
+---
+
+<p>After discovering the joys and simplicity of using <strong>MQTT</strong> on IoT enabled devices such as an NodeMCU ESP8266 I decided I wanted to host my own local (and with the right configuration public) instance of <a href="https://mosquitto.org/download/">mosquitto</a> for my devices to make use of. This post covers the basics of getting everything up and running on a Windows environment.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+<p>There are 3 prerequisites when it comes to installing mosquitto locally:</p>
+<ul>
+<li><a href="https://slproweb.com/products/Win32OpenSSL.html">Open SSL</a></li>
+<li>pthreads</li>
+<li><a href="https://mosquitto.org/download/">Mosquitto</a></li>
+</ul>
+<p>First, download and install <strong>Open SSL</strong> (I used <code>Win64OpenSSL_Light-1_0_2L.exe</code>), please take note of the installation directory.</p>
+{% highlight "txt" %}
+C:\OpenSSL-Win32
+{% endhighlight %}
+<p>Next you will need to grab <code>pthreadVC2.dll</code> from <code>ftp://sourceware.org/pub/pthreads-win32/dll-latest/dll/x64/</code>, all you need is the <code>pthreadVC2.dll</code> file.</p>
+<p>Lastly you will need to grab the latest version of mosquitto (in my case this was <code>mosquitto-1.4.12-install-win32.exe</code>).</p>
+
+<h2 id="installing">Installing</h2>
+<p>Installation of mosquitto is a bit tricky, and I find that the following process works well for myself.</p>
+<p>First you need to install <code>Open SSL</code> - feel free to change the installation directory, but be sure to take note of where you are installing it to (in my case: <code>C:\OpenSSL-Win32</code>).</p>
+<p>Next install mosquitto as you would normally, again taking note of the installation directory (in my case: <code>C:\Program Files (x86)\mosquitto</code>), complete and close the installer.</p>
+<p>Finally you will need to copy the following files into your mosquitto installation directory:</p>
+<p>From: C:\OpenSSL-Win64:</p>
+<ul>
+<li>libeay32.dll</li>
+<li>ssleay32.dll</li>
+</ul>
+<p>From: Download:</p>
+<ul>
+<li>pthreadVC2.dll</li>
+</ul>
+<p>You should now be able to run mosquito with the following command line:</p>
+{% highlight "shell" %}
+mosquitto.exe -v
+{% endhighlight %}
+<img src="./images/06/07-001.png" alt="">
+
+<h2 id="securing">Securing</h2>
+<p>I highly recommend securing mosquitto if you are planning to use it on the web. It is simple to do and should only take a few moments.</p>
+<p>Open a command window in the context of your mosquitto installation directory and enter the following command.</p>
+{% highlight "shell" %}
+mosquitto_passwd.exe -c pwfile user
+{% endhighlight %}
+<p>Be sure to replace pwfile with the name of the password file you want to create, and user with your desired username. Once the command is completed you should have a password file with the specified user in it.</p>
+<img src="./images/06/07-002.png" alt="">
+<p>To add another user to the file you use the command:</p>
+{% highlight "shell" %}
+mosquitto_passwd.exe pwfile newuser
+{% endhighlight %}
+<p>Lastly we need to update the <code>mosquitto.conf</code> file and make it aware of the password file you created. Find the following lines in the config file and update them as required, in my case:</p>
+{% highlight "txt" %}
+password_file pwfile
+allow_anonymous false
+{% endhighlight %}
+<p>You are done locking down mosquitto!</p>
+
+<h2 id="running">Running</h2>
+<p>Lastly we will need to run mosquitto using the updated configuration file, to do this you can simply open a command window in the context of your mosquitto installation directory and run the following command:</p>
+{% highlight "txt" %}
+mosquitto -c mosquitto.conf
+{% endhighlight %}
+<p>This is far from ideal, but it&#39;s a step in the right direction. I am planning on creating another post on how to run mosquitto as a service (should you not want to use the provided broker service that is installed by default). For now I find that creating a bat file with the following commands does the job quite nicely.</p>
+{% highlight "shell" %}
+cd "C:\Program Files (x86)\mosquitto\"
+mosquitto.exe -v -c mosquitto.conf
+{% endhighlight %}
+<p>That's all there is to it.</p>

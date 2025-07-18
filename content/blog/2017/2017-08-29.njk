@@ -1,0 +1,75 @@
+---
+title: MQTT Dumper (Alpha)
+date: 2017-08-29
+tags: [.net]
+logo: dotnet.png
+---
+
+<p><strong>MQTT Dumper</strong> is a simple utility (well, <code>console application</code> at the moment) that I put together in about an hour to help me spy on the communication of all my IoT devices at home. Currently the utility has the below features:</p>
+<ul>
+<li>Configurable server address (and port)</li>
+<li>Dump messages to <code>.log</code> file (always enabled)</li>
+<li>Dump messages to <code>.csv</code> file (optional)</li>
+<li>Configurable output folder for log files</li>
+<li>Ability to subscribe to a custom topic (defaults to <code>#</code>)</li>
+</ul>
+
+<h2 id="screen-shots">Screen Shots</h2>
+<p>For the moment <code>MQTT-Dumper</code> will run as a console application (shown below):</p>
+<img src="./images/08/29-001.png" alt="" />
+<p>This will generate a similar log file like this:</p>
+<img src="./images/08/29-002.png" alt="" />
+<p>With the CSV option enabled:</p>
+<img src="./images/08/29-003.png" alt="" />
+
+<h2 id="configuration">Configuration</h2>
+<p>The following configuration options are available:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTT.ServerAddress</td>
+<td>Address of your MQTT server</td>
+</tr>
+<tr>
+<td>MQTT.ServerPort</td>
+<td>The communication port to use (1889 is default)</td>
+</tr>
+<tr>
+<td>MQTT.BaseTopic</td>
+<td>The base topic to subscribe to (# for all)</td>
+</tr>
+<tr>
+<td>MQTT.Username</td>
+<td>Login username (blank for no auth)</td>
+</tr>
+<tr>
+<td>MQTT.Password</td>
+<td>Login password (blank for no auth)</td>
+</tr>
+<tr>
+<td>MQTT.DumpRootFolder</td>
+<td>Base folder to dump generated files to</td>
+</tr>
+<tr>
+<td>MQTT.DumpCSV</td>
+<td>If &quot;true&quot; a csv file will be generated</td>
+</tr>
+</tbody>
+</table>
+<p>These settings are found in the <code>MQTT-Dumper.exe.config</code> file included with the alpha release.</p>
+<img src="./images/08/29-004.png" alt="" />
+<h2 id="source-code">Source Code</h2>
+<p>At the moment MQTT-Dumper is in the alpha stage, so the code is a bit of a mess, and as a result has not been made public yet. Once I have had some time to refactor the code and have been able to use the tool a bit I will upload the code to Github :).</p>
+
+<h2 id="download">Download</h2>
+<p>At the moment you can grab the alpha build on my public DropBox share listed below:</p>
+<ul>
+<li><a href="https://www.dropbox.com/s/ha15xleajmswrsh/MQTT-Dumper%20%28Alpha%29.zip?dl=0">MQTT-Dumper (Alpha).zip</a> - 79.83 KB</li>
+</ul>
+<p>Please feel free to leave some feedback / comments below using disqus.</p>

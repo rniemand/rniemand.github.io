@@ -1,0 +1,38 @@
+---
+title: Running Mosquitto as a Windows Service
+date: 2017-06-08
+tags: [iot]
+logo: mqtt.png
+---
+
+<p>In <a href="/blog/2017/2017-06-07/">my last post</a> I ran over the required steps to get <code>mosquitto</code> up and running on a Windows environment. Now somewhere during my initial install I managed to break the Mosquitto Broker service that was installed by default, and ended up removing it using an elevated command window and the <code>SC delete NAME</code> command.</p>
+<p>This post will cover re-creating this service, and showcase a really amazing application I found to make almost anything into a Windows service.</p>
+
+<h2 id="nssm">NSSM</h2>
+<p>I stumbled upon a nifty application called <strong>NSSM</strong> (or the <code>Non-Sucking Service Manager</code>) while attempting to fix my mosquitto installation, and I am glad I did!</p>
+<p>It is available <a href="https://nssm.cc/download">here</a> and was created by <strong>Iain Patterson</strong> and as far as I can tell is free to use non commercially. Make sure that you download the <code>nssm 2.24-101-g897c7ad</code> version, and take either the 32-bit or 64-bit version depending on your system.</p>
+<p><strong>NSSM</strong> is command line driven (<a href="https://nssm.cc/commands">https://nssm.cc/commands</a>), but has a built-in GUI should you prefer it (I sure do). I highly recommend placing the <code>nssm.exe</code> in a directory that is easy to get access to. For my case I just dropped it into my mosquitto installation directory:</p>
+{% highlight "txt" %}
+C:\Program Files (x86)\mosquitto
+{% endhighlight %}
+<p>In <a href="/blog/2017/2017-06-07/">my last post</a> I covered how to run mosquitto via a command line using:</p>
+{% highlight "shell" %}
+mosquitto.exe -v -c mosquitto.conf
+{% endhighlight %}
+<p>This is the exact command that we need to use for our mosquitto service. Adding it is simple using NSSM.</p>
+<ul>
+<li>Open an elevated command window and navigate to the directory containing nssm.exe</li>
+<li>Run <code>nssm install</code> to bring up the service installation GUI</li>
+<li>Enter in the following making sure to modify the paths for your installation</li>
+</ul>
+<img src="./images/06/8-001.png" alt="">
+<ul>
+<li><strong>Path</strong>: C:\Program Files (x86)\mosquitto\mosquitto.exe</li>
+<li><strong>Startup Dir</strong>: C:\Program Files (x86)\mosquitto</li>
+<li><strong>Arguments</strong>: -c &quot;C:\Program Files (x86)\mosquitto\mosquitto.conf&quot;</li>
+<li><strong>Service Name</strong>: mosquitto</li>
+</ul>
+<p>In the details tab give your service a name and ensure that the startup type is set to automatic.</p>
+<p>Once done, click the install service button to create your service</p>
+<p>You are done.</p>
+<img src="./images/06/8-002.png" alt="">

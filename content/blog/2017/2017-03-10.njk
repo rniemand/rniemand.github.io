@@ -1,0 +1,47 @@
+---
+title: Flashing ATmega 168 (Pro Mini) with an Arduino UNO
+date: 2017-03-10
+tags: [arduino]
+logo: arduino.png
+---
+
+<p>In preparation for my post on building a pong game on Arduino I wanted to flash the game code to the smallest Arduino compatible board I had lying around (my <code>ATmega 168 Pro Mini</code> I got from <a href="https://www.aliexpress.com/item/32579326448.html?spm=2114.13010608.0.0.flKfAz">AliExpress</a>). I immediately ran into a problem as the board has no built-in flasher due to its form factor. After some Googling I found out it was possible to flash the board using an Arduino UNOusing the below process.</p>
+<h2 id="prepping-the-devices">Prepping the Devices</h2>
+<p>In order to do this the first thing you will need to do is remove the Atmel ATMega Chip from the UNO as shown in the picture below.</p>
+<img src="./images/03/10-01.jpg" alt="">
+<p>Once removed you will need to connect some jumper wires to the following pinouts on the UNO.</p>
+{% highlight "txt" %}
+RESET ................. (RST on target)
+5v .................... (VCC on target)
+GND ................... (GND on target)
+TX (1) ................ (TXO on target)
+RX (2) ................ (RXI on target)
+{% endhighlight %}
+
+<img src="./images/03/10-02.jpg" alt="">
+<p>Following the pinout above make the appropriate connections on the Pro Miniyou are wanting to flash, it should look something like this:</p>
+
+<img src="./images/03/10-03.jpg" alt="">
+<p>Now when you power up the UNO you should see that the Pro Mini gets power too.</p>
+
+<img src="./images/03/10-04.jpg" alt="">
+
+<h2 id="uploading-your-sketch">Uploading your sketch</h2>
+<p>Open the Arduino IDE with the UNO connected to your computer and make the following configuration changes under the Tools menu.</p>
+{% highlight "txt" %}
+Board: Arduino Nano
+Processor: ATmega168
+Port: (depends on your PC - mine was COM3)
+{% endhighlight %}
+
+<img src="./images/03/10-05.png" alt="">
+<p>Once done you should see your settings reflected on the bottom toolbar in the Arduino IDE.</p>
+
+<img src="./images/03/10-06.png" alt="">
+<p>You are good to upload your sketch, to do so simply click the upload button and wait for the sketch to upload as normal.</p>
+
+<img src="./images/03/10-07.png" alt="">
+
+<p>Once the upload is completed you can remove the connected jumper wires.</p>
+
+<p>Congratulations you have just flashed your Pro Mini, just don't forget to replace your "Atmel ATMega Chip" at this point to avoid losing it.</p>

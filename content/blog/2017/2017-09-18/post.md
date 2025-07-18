@@ -11,7 +11,7 @@ In order to accomplish this I will need to know a couple of things, mainly what 
 
 ## OwnTracks payload
 
-First we will need to see exactly what is being sent over the wire when OwnTracks "calls home" and identify where in that payload the phone battery level is stored. To do this I made use of my [MQTT dumper application](/blog/2017/2017-08-29/post/) filtering it to the owntracks/# publications, I forced my phone to check in and recoded the data sent over the wire:
+First we will need to see exactly what is being sent over the wire when OwnTracks "calls home" and identify where in that payload the phone battery level is stored. To do this I made use of my [MQTT dumper application](/blog/2017/2017-08-29/) filtering it to the owntracks/# publications, I forced my phone to check in and recoded the data sent over the wire:
 
 ```json
 {

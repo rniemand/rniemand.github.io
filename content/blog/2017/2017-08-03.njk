@@ -1,0 +1,69 @@
+---
+title: Changing Sonoff Firmware (Visual Guide)
+date: 2017-08-03
+tags: [arduino, iot]
+logo: sonoff.png
+---
+
+<p>About a year ago I discovered <a href="https://sonoff.tech/product/diy-smart-switch/basicr2/">Sonoff WiFi switches</a> on <a href="https://www.aliexpress.com/">AliExpress</a> and was able to pick up a couple of them for $10. These devices are basically IoT connected smart switches that you can control via your smartphone, or their website, and for the most part work pretty well right out of the box for most consumers. Until recently I was more than happy to use them &quot;as is&quot; with the shipped firmware and mobile application, and it was only when I wanted to integrate these switches into my home automation did I find the shipped firmware and software quite limiting.</p>
+<p>After some Googling I discovered an awesome project on GitHub called <a href="https://github.com/arendst/Tasmota">Sonoff-Tasmota</a>, a custom firmware created specifically for Sonoff devices that allows me to customise what these devices can do. This post will cover the steps required to get the firmware up and running on your Sonoff devices.</p>
+
+<h2 id="adding-programming-header">Adding programming header</h2>
+<p>In order to flash any firmware to your device, you are going to need to open it up and attach some header pins to the circuit board. This will make flashing the initial firmware a lot easier, and allow for troubleshooting the device over a serial connection.</p>
+<img src="./images/08/3-001.jpg" alt="">
+<p>Start by removing the cable cover plates as shown above, then using a screwdriver to pop off the backing plate of the device.</p>
+<img src="./images/08/3-002.jpg" alt="">
+<p>Next you will need to locate the programming header pin holes (on the right of the push button, just above the small microchip). There should be 5 of them.</p>
+<img src="./images/08/3-003.jpg" alt="">
+<p>Solder on some header pins as shown above, making sure you are careful not to damage any of the surrounding components.</p>
+<img src="./images/08/3-004.jpg" alt="">
+<p>New header pins on the board.</p>
+
+<h2 id="setting-up-flashing-environment">Setting up Flashing Environment</h2>
+<p>Next you will need an IDE / Application to compile &amp; upload your custom firmware. I followed the steps detailed in the official guide (<a href="https://github.com/arendst/Sonoff-Tasmota/wiki/Upload">https://github.com/arendst/Sonoff-Tasmota/wiki/Upload</a>), but decided to take the <a href="https://code.visualstudio.com/">Visual Studio Code</a> with <a href="https://platformio.org/">PlatformIO</a> as it seemed easier at the time.</p>
+<p>Open VS Code, navigate to the plugins tab and search for PlatformIO as shown below. Click install and wait for it to complete.</p>
+<img src="./images/08/3-005.png" alt="">
+<p>Once installed I recommend restarting VS Code and allowing PlatformIO to pull down any additional dependencies it may have.</p>
+
+<h2 id="download-sonoff-tasmota">Download Sonoff-Tasmota</h2>
+<p>Next, head over to the official <a href="https://github.com/arendst/Tasmota/releases">Sonoff-Tasmota</a> release page and download the latest stable version of the firmware (<code>5.5.0 20170730</code> at the time of writing).</p>
+<p>Extract the contents of the release .zip file to an easily accessible folder on your computer (in my case <code>D:\Tools\Sonoff\Sonoff-Tasmota-5.5.0</code>).</p>
+<p>Open the folder in VS Code as shown below.</p>
+<img src="./images/08/3-006.png" alt="">
+<p>You are now ready to customise your firmware.</p>
+
+<h2 id="firmware-customization">Firmware Customization</h2>
+<p>Open the <code>platform.ini</code> file (in the root folder) and locate the below line, removing the comment (;) to enable it.</p>
+{% highlight "txt" %}
+env_default = sonoff
+{% endhighlight %}
+<img src="./images/08/3-007.png" alt="">
+<p>Next open <code>sonoff/user_config.h</code>, locate the WiFi settings as shown below and modify the SSID and password for your WiFi network.</p>
+<img src="./images/08/3-008.png" alt="">
+<p>After that, locate the MQTT configuration in the same file and enter in your MQTTconfiguration. If you are using TLS you will need to complete section (1), otherwise enter your values in section (2) and save the file.</p>
+<img src="./images/08/3-009.png" alt="">
+<p>That completed all the configuration.</p>
+
+<h2 id="flashing-firmware">Flashing firmware</h2>
+<p>To flash your firmware to the Sonoff switch you will need an ISP of some sorts. Unfortunately I didn&#39;t have one on me, so I had to make a plan using an Arduino UNO with its microprocessor removed (see below).</p>
+<p>I found a nice picture detailing the pin-out on (<a href="https://randomnerdtutorials.com/">https://randomnerdtutorials.com/</a>):</p>
+<img src="./images/08/3-010.png" alt="">
+<p>Following the picture as a guide and using my UNO I made all the necessary connections to the Sonoff before giving power to the UNO.</p>
+<img src="./images/08/3-011.jpg" alt="">
+<blockquote>
+<p><strong>NOTE</strong> To put the Sonoff into flash mode you will need to hold down the power switch while powering it on!</p>
+</blockquote>
+<p>Once connected, make sure that VS Code and PlatformIO can see your programmer&#39;s (in my case the UNO) serial port. There should be a row of icons at the bottom left hand side of VS Code, provided you have the Tasmota folder open.</p>
+<img src="./images/08/3-012.png" alt="">
+<p>Click the upload button and wait for it to complete. It should take about a minute to do the initial upload as shown below.</p>
+<img src="./images/08/3-013.png" alt="">
+<p>Provided that there were no errors flashing you should be up and running with the Sonoff-Tasmota firmware.</p>
+
+<h2 id="connecting-to-your-device">Connecting to your device</h2>
+<p>The last step in the flashing process is locating and connecting to your device over the WiFi. I found an amazing Android application called <a href="https://play.google.com/store/apps/details?id=com.overlook.android.fing&amp;hl=en">Fing</a> that makes this really easy, but feel free to use any other app you are comfortable with.</p>
+<p>Once you know the IP Address of your device (in my case 192.168.0.15) open your preferred web browser and connect to it (e.g. <a href="http://192.168.0.15">http://192.168.0.15</a>). You should be presented with a screen similar to the below.</p>
+<img src="./images/08/3-014.png" alt="">
+<p>That&#39;s it, you are done</p>
+<blockquote>
+<p><strong>NOTE</strong>: The relay will not trigger if you are powering the device via an ISP, it seems to only trigger on mains</p>
+</blockquote>

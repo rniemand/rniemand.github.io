@@ -1,0 +1,48 @@
+---
+title: Arduino Board Pinouts
+date: 2017-04-05
+tags: [arduino]
+logo: arduino.png
+---
+
+<h2 id="esp8266">ESP8266</h2>
+<h3 id="lolin-nodemcu-v3">LoLin NodeMCU V3</h3>
+<img src="./images/04/05-001.jpg" alt="">
+{% highlight "cpp" %}
+SD CARD
+VCC ............ 3.3v
+GND ............ GND
+MISO ........... D6
+MOSI ........... D7
+SCK ............ D5
+CS ............. D8
+{% endhighlight %}
+
+<h3 id="wemos-esp8266-d1-mini">WeMos ESP8266 D1 Mini</h3>
+<img src="./images/04/05-002.jpg" alt="">
+{% highlight "cpp" %}
+I2C
+  SDA => D2
+  SCL => D1
+
+SPI
+  M-CLK => D5
+  MISO => D6
+  MOSI => D7
+{% endhighlight %}
+
+<h2 id="arduino-clones">Arduino Clones</h2>
+<h3 id="arduino-nano">Arduino Nano</h3>
+<img src="./images/04/05-003.png" alt="">
+{% highlight "cpp" %}
+SD CARD
+VCC ............ 3.3v
+GND ............ GND
+MISO ........... D12
+MOSI ........... D11
+SCK ............ D13
+CS ............. D4
+{% endhighlight %}
+
+<h3 id="arduino-pro-mini">Arduino Pro Mini</h3>
+<img src="./images/04/05-004.png" alt="">

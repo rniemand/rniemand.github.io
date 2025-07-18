@@ -12,7 +12,7 @@ Today I would like to cover some simple security related monitoring in Home Assi
 - [Buck converter](https://www.banggood.com/Mini-Converter-DC-DC-Adjustable-Step-down-Power-Voltage-Module-p-1064472.html?p=5T250523689812015082) needs to be this size if using my enclosure
 - **Magnet** for triggering the reed switch
 - **Wire** any reasonably gauged wire should do
-- (optional) [3D printer](https://www.banggood.com/Anet-A8-DIY-3D-Printer-Kit-1_75mm-or-0_4mm-Support-ABS-or-PLA-or-HIPS-p-1130694.html?imageAb=2&p=5T250523689812015082&akmClientCountry=CA&cur_warehouse=CN) ~$220 (or just get someone to print the enclosure for you) - [I reviewed the Anet A8 here](/blog/2017/2017-08-31/post/)
+- (optional) [3D printer](https://www.banggood.com/Anet-A8-DIY-3D-Printer-Kit-1_75mm-or-0_4mm-Support-ABS-or-PLA-or-HIPS-p-1130694.html?imageAb=2&p=5T250523689812015082&akmClientCountry=CA&cur_warehouse=CN) ~$220 (or just get someone to print the enclosure for you) - [I reviewed the Anet A8 here](/blog/2017/2017-08-31/)
 
 ## The idea
 

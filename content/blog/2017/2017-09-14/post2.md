@@ -5,7 +5,7 @@ tags: [3d printing,linux]
 logo: octoprint.png
 ---
 
-Recently I bought [my first 3D printer](/blog/2017/2017-08-31/post/) and could not be happier with it, or at least that's what I thought... While watching some YouTube videos around 3D printing I stumbled upon an amazing project called [OctoPrint](https://octoprint.org/) which blew my mind. OctoPrint's tagline is "The snappy web interface for your 3D printer", and boy does it live up to that statement!
+Recently I bought [my first 3D printer](/blog/2017/2017-08-31/) and could not be happier with it, or at least that's what I thought... While watching some YouTube videos around 3D printing I stumbled upon an amazing project called [OctoPrint](https://octoprint.org/) which blew my mind. OctoPrint's tagline is "The snappy web interface for your 3D printer", and boy does it live up to that statement!
 
 OctoPrint is written in [Python](https://www.python.org/) and can pretty much run anywhere (windows, mac, linux, etc). It interfaces with your 3D printer via it's USB cable and controls your printer through GCode commands. This offers the end user a lot of control over the print, and adds some features you would not otherwise have (e.g. the ability to pause and resume mid print). It offers an API should you want to interact with it programmatically and has a pretty big plugin repository covering all things 3D printing.
 
@@ -76,7 +76,7 @@ The timeout for shutting down the printer is configurable via OctoPrint's settin
 I would suggest using a timeout of ~2 min for the timeout to allow your hot end some time to cool down (in my case there is a cooling fan that blows directly onto it).
 
 ### MQTT
-The [MQTT](https://plugins.octoprint.org/plugins/mqtt/) plugin allows OctoPrint to publish useful print related messages over the MQTT protocol to use with your home automation. In a [previous blog post](/blog/2017/2017-08-30/post/) I covered some of the more useful messages that were published, and an example Node-RED flow you can implement with the published data.
+The [MQTT](https://plugins.octoprint.org/plugins/mqtt/) plugin allows OctoPrint to publish useful print related messages over the MQTT protocol to use with your home automation. In a [previous blog post](/blog/2017/2017-08-30/) I covered some of the more useful messages that were published, and an example Node-RED flow you can implement with the published data.
 
 Again this plugin is configurable via the built in configuration panel in OctoPrint:
 

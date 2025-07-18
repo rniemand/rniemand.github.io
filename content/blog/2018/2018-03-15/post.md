@@ -15,7 +15,7 @@ I designed a simple case using my [Anet A8 3D printer](https://www.banggood.com/
 
 <img src="./002.jpg" alt="" />
 
-Similar to my [old post](/blog/2017/2017-06-12/post/) this will be in a quick start form to help you get up and running as soon as possible, so let's get started.
+Similar to my [old post](/blog/2017/2017-06-12/) this will be in a quick start form to help you get up and running as soon as possible, so let's get started.
 
 ## Install the required packages
 I am going to make the assumption that you already have [DitePi](https://dietpi.com/) up and running on your SBC of choice and have an active SSH session to the device.
