@@ -319,21 +319,31 @@ pre[class*="language-diff-"] {
 		<time datetime="2017-03-15">15 March 2017</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#adding-attiny-support-to-arduino-ide">Adding ATTiny Support to Arduino IDE</a></li><li><a href="#attiny85-flashing-components">ATTiny85 Flashing Components</a></li><li><a href="#prepping-the-arduino-uno">Prepping the Arduino UNO</a></li><li><a href="#connecting-the-attiny-to-your-uno">Connecting the ATTiny to your UNO</a><ol><li><a href="#attiny-pinout">ATTiny pinout</a></li><li><a href="#finding-pin1">Finding pin1</a></li><li><a href="#powering-the-attiny-for-programming">Powering the ATTiny for programming</a></li><li><a href="#connecting-attiny-data-pins">Connecting ATTiny data pins</a></li></ol></li><li><a href="#burning-our-first-sketch">Burning our first sketch</a><ol><li><a href="#configuring-arduino-ide">Configuring Arduino IDE</a></li><li><a href="#burning-the-bootloader">Burning the bootloader</a></li><li><a href="#updated-blink-sketch">Updated blink sketch</a></li><li><a href="#uploading-the-sketch">Uploading the sketch</a></li></ol></li><li><a href="#running-without-arduino">Running without Arduino</a></li></ol>
+      </div>
+
 
 <p>I recently received a couple of <a href="https://www.banggood.com/ATTINY85-Mini-Usb-MCU-Development-Board-p-971122.html?imageAb=1&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">ATTINY85 micro controllers</a> from BangGood in hopes of shrinking down some of my Arduino projects in the future. Initially I was a bit stumped on how to &quot;flash (program)&quot; these chips, and the USB adapter I bought for the process was DOA. After an hour or so on Google I had my first &quot;Blink&quot; sketch up and running on my ATTiny! I decided to make this post as a reminder to myself and to help others who may want to get up and running quickly with their own ATTiny85.</p>
+
 <h2 id="adding-attiny-support-to-arduino-ide">Adding ATTiny Support to Arduino IDE</h2>
 <p>The first thing we need to do is add support for the ATTiny microprocessor family to the Arduino IDE. Now all the video tutorials I found online seemed to be pre-2015, and all of them stated that support was lacking for the microprocessor, however it seems that this is not the case anymore! Adding support seems to be straight forward.</p>
 <p>Open the Arduino IDE and navigate to <code>File</code> -&gt; <code>Preferences</code>. In the dialog that appears locate the Additional Boards Manager URLs field and set its value to the following.</p>
-<pre><code>https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json
-</code></pre>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/C0gfDtVVed-710.avif 710w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/C0gfDtVVed-710.webp 710w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/C0gfDtVVed-710.png" alt="" width="710" height="430"></picture>
+<pre class="language-txt" tabindex="0"><code class="language-txt">https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/package_damellis_attiny_index.json</code></pre>
+
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/C0gfDtVVed-710.avif 710w"><source type="image/webp" srcset="/blog/2017/2017-03-15/C0gfDtVVed-710.webp 710w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/C0gfDtVVed-710.png" alt="" width="710" height="430"></picture>
+
 <p>Once done, close the preferences dialog and launch the <strong>Board Manager</strong> dialog (<code>Tools</code> -&gt; <code>Board: xxx</code> -&gt; <code>Boards Manager</code>) and give it some time to load the new boards from the URL provided earlier. Once done you should now be able to search for ATTiny in the Board Manager window.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/eeCOYPb0f3-986.avif 986w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/eeCOYPb0f3-986.webp 986w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/eeCOYPb0f3-986.png" alt="" width="986" height="190"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/eeCOYPb0f3-986.avif 986w"><source type="image/webp" srcset="/blog/2017/2017-03-15/eeCOYPb0f3-986.webp 986w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/eeCOYPb0f3-986.png" alt="" width="986" height="190"></picture>
+
 <p>Pick (attiny by David A. Melis) from the search results and click install, once done you can close the Boards Manager. Verify that the board was installed successfully via Tools -&gt; Board...</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/9GRMd7a9g2-404.avif 404w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/9GRMd7a9g2-404.webp 404w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/9GRMd7a9g2-404.png" alt="" width="404" height="329"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/9GRMd7a9g2-404.avif 404w"><source type="image/webp" srcset="/blog/2017/2017-03-15/9GRMd7a9g2-404.webp 404w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/9GRMd7a9g2-404.png" alt="" width="404" height="329"></picture>
+
 <h2 id="attiny85-flashing-components">ATTiny85 Flashing Components</h2>
 <p>Next, we will need a couple of components in order to flash out ATTiny85, they can be seen below.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/OnT_A-NP8v-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/OnT_A-NP8v-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/OnT_A-NP8v-800.jpeg" alt="" width="800" height="557"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/OnT_A-NP8v-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/OnT_A-NP8v-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/OnT_A-NP8v-800.jpeg" alt="" width="800" height="557"></picture>
+
 <p>The component list is as follows:</p>
 <ul>
 <li><a href="https://www.banggood.com/ATTINY85-Mini-Usb-MCU-Development-Board-p-971122.html?imageAb=1&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">ATTiny85</a> microprocessor</li>
@@ -344,27 +354,32 @@ pre[class*="language-diff-"] {
 <li><a href="https://www.banggood.com/1210Pcs-14w-5-Resistors-121-Values-0_33-4_7M-Resistor-Assortment-Kits-For-Electronic-DIY-Project-p-1304571.html?p=5T250523689812015082">Resistor</a> for the LED (<code>150 ohm</code> should be fine) (<code>*</code>)</li>
 <li>9v battery, clip and regulator (used to provide 5v to the ATTiny once flashed) (<code>**</code>)</li>
 </ul>
-<p><code>(*)</code> Your resistor value may differ from mine and that's alright, anything around the <code>130 ohm</code> mark should be fine - I used <a href="https://ohmslawcalculator.com/led-resistor-calculator">this website</a> to work out the appropriate resistor using a source voltage of <code>5v</code>, LED forward voltage of <code>2v</code> and draw of <code>20 mAh</code>.</p>
+<p><code>(*)</code> Your resistor value may differ from mine and that&#39;s alright, anything around the <code>130 ohm</code> mark should be fine - I used <a href="https://ohmslawcalculator.com/led-resistor-calculator">this website</a> to work out the appropriate resistor using a source voltage of <code>5v</code>, LED forward voltage of <code>2v</code> and draw of <code>20 mAh</code>.</p>
 <p><code>(**)</code> You can use any <code>5v</code> power source to power your ATTiny, I just happened to have a regulator available.</p>
-<p>That pretty much covers all the components that you will need, let's move on.</p>
+<p>That pretty much covers all the components that you will need, let&#39;s move on.</p>
+
 <h2 id="prepping-the-arduino-uno">Prepping the Arduino UNO</h2>
 <p>Next up we will need to flash the ArduinoISP sketch to your master Arduino (in my case the UNO). Before flashing the sketch please ensure that you have selected the correct board and port then hit the upload button.</p>
 <p>Provided there were no errors writing to your Arduino you can mark this step as completed.</p>
+
 <h2 id="connecting-the-attiny-to-your-uno">Connecting the ATTiny to your UNO</h2>
-<p>The next logical step would be to wire up the ATTiny to the newly created Arduino ISP, but before we do that let's take some time to get familiar with the pinout of the ATTiny.</p>
+<p>The next logical step would be to wire up the ATTiny to the newly created Arduino ISP, but before we do that let&#39;s take some time to get familiar with the pinout of the ATTiny.</p>
 <h3 id="attiny-pinout">ATTiny pinout</h3>
 <p>Below you can see my cheat sheet for the ATTiny85 microprocessor, the pinout differs based on the version of the microprocessor you choose, so please double check the <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf">spec sheet</a> if you are using a different variant of the ATTiny.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/WjbVmNSvP1-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/WjbVmNSvP1-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/WjbVmNSvP1-800.jpeg" alt="" width="800" height="522"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/WjbVmNSvP1-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/WjbVmNSvP1-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/WjbVmNSvP1-800.jpeg" alt="" width="800" height="522"></picture>
+
 <h3 id="finding-pin1">Finding pin1</h3>
 <p><code>pin1</code> can either be marked with a small dot close to the pin (as in my case), or by a small groove carved into the top of the chip (see above picture). If your chip has a groove carved in it (opposed to the marker dot) pin-1 is usually on the left-hand side of the groove.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/C-Dk3hSQyG-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/C-Dk3hSQyG-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/C-Dk3hSQyG-800.jpeg" alt="" width="800" height="531"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/C-Dk3hSQyG-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/C-Dk3hSQyG-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/C-Dk3hSQyG-800.jpeg" alt="" width="800" height="531"></picture>
+
 <h3 id="powering-the-attiny-for-programming">Powering the ATTiny for programming</h3>
 <p>Next, we will need to provide power to the ATTiny while we are flashing it. From my cheat sheet we know that the following pins provide power to the ATTiny.</p>
-<pre><code>4 ............ GND
-8 ............ VCC (5v)
-</code></pre>
+<pre class="language-txt" tabindex="0"><code class="language-txt">4 ............ GND
+8 ............ VCC (5v)</code></pre>
+
 <p>Thankfully the Arduino UNO provides us a <code>5v</code> and <code>GND</code> pin we can use to power our ATTiny. We can provide power to the chip directly from the <code>5v</code> source on the UNO via our breadboard, as shown below.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/X7Js0MPsQ--800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/X7Js0MPsQ--800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/X7Js0MPsQ--800.jpeg" alt="" width="800" height="475"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/X7Js0MPsQ--800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/X7Js0MPsQ--800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/X7Js0MPsQ--800.jpeg" alt="" width="800" height="475"></picture>
+
 <p>Here I am doing the following:</p>
 <ul>
 <li>Jumping the 5v and GND pins to the breadboard power rail</li>
@@ -373,32 +388,36 @@ pre[class*="language-diff-"] {
 <li>Bridging the (-) rail from the top of the breadboard to the bottom (-) rail (for the capacitor)</li>
 <li>Feeding the (+) output of the capacitor to the RESET pin of the UNO (used for flashing)</li>
 </ul>
-<p><strong>NOTE</strong>: when wiring in the capacitor be sure that you get the polarity right as electrolytic caps don't like being wired in reverse polarity (ensure that the (-)pin goes to GND).</p>
+<p><strong>NOTE</strong>: when wiring in the capacitor be sure that you get the polarity right as electrolytic caps don&#39;t like being wired in reverse polarity (ensure that the (-)pin goes to GND).</p>
+
 <h3 id="connecting-attiny-data-pins">Connecting ATTiny data pins</h3>
-<p>Now all that's left here is to connect the appropriate pins from the ATTiny to our Arduino for programming. We will use the following pinout.</p>
-<pre><code>1 .............. D10
+<p>Now all that&#39;s left here is to connect the appropriate pins from the ATTiny to our Arduino for programming. We will use the following pinout.</p>
+<pre class="language-txt" tabindex="0"><code class="language-txt">1 .............. D10
 3 .............. GND
 5 .............. D11
 6 .............. D12
 7 .............. D13
-8 .............. VCC (5v)
-</code></pre>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/wujThjUjFW-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/wujThjUjFW-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/wujThjUjFW-800.jpeg" alt="" width="800" height="427"></picture>
+8 .............. VCC (5v)</code></pre>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/wujThjUjFW-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/wujThjUjFW-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/wujThjUjFW-800.jpeg" alt="" width="800" height="427"></picture>
 <p>We now have all the required pins connected, and are good to flash/burn our first sketch.</p>
+
 <h2 id="burning-our-first-sketch">Burning our first sketch</h2>
 <p>Based on all the various sources I collected my information from the process of burning your first sketch to ATTiny chips is:</p>
 <ul>
 <li>(First time only) Burn the bootloader to the ATTiny</li>
 <li>(Every time) Burn your sketch</li>
 </ul>
+
 <h3 id="configuring-arduino-ide">Configuring Arduino IDE</h3>
 <p>The first thing we need to do is ensure that we have our Arduino IDE configured correctly before continuing.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/9GRMd7a9g2-404.avif 404w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/9GRMd7a9g2-404.webp 404w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/9GRMd7a9g2-404.png" alt="" width="404" height="329"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/9GRMd7a9g2-404.avif 404w"><source type="image/webp" srcset="/blog/2017/2017-03-15/9GRMd7a9g2-404.webp 404w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/9GRMd7a9g2-404.png" alt="" width="404" height="329"></picture>
 <p>Ensure that you have the correct Board, Processor, Clock Speed and Portselected. You do not want to target your UNO at this point!</p>
+
 <h3 id="burning-the-bootloader">Burning the bootloader</h3>
 <p>To burn the bootloader to your ATTiny, please ensure that you have the correct Board, Processor, Clock Speed and Port selected before doing anything else!</p>
 <p>Once you have the correct values selected all you need to do is go Tools -&gt; Burn bootloader and watch the output console for any errors.</p>
 <p>Everything should go through fine, if not this would be a good time to double check all your connections to the ATTiny chip and ensure that you have targeted the correct board.</p>
+
 <h3 id="updated-blink-sketch">Updated blink sketch</h3>
 <p>Now the fun bit, an updated &quot;Blink&quot; sketch. We are going to upload the following code to the ATTiny.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -429,33 +448,35 @@ pre[class*="language-diff-"] {
 <li>I am cycling through 3 colors on an RGB LED</li>
 <li>I am not making use of any Serial calls (not available AFAIK).</li>
 </ul>
+
 <h3 id="uploading-the-sketch">Uploading the sketch</h3>
 <p>With your UNO connected to your computer (and making sure your targets are correct), you can just paste the code above and click upload. You should see the following output displayed in the Arduino IDE.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/k-W36JwY0Z-661.avif 661w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/k-W36JwY0Z-661.webp 661w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/k-W36JwY0Z-661.jpeg" alt="" width="661" height="209"></picture>
-<p>We have successfully flashed our sample code to the ATTiny. Let's disconnect all unneeded jump wires from the breadboard.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/k-W36JwY0Z-661.avif 661w"><source type="image/webp" srcset="/blog/2017/2017-03-15/k-W36JwY0Z-661.webp 661w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/k-W36JwY0Z-661.jpeg" alt="" width="661" height="209"></picture>
+<p>We have successfully flashed our sample code to the ATTiny. Let&#39;s disconnect all unneeded jump wires from the breadboard.</p>
 <ul>
 <li>You can remove D10, D11, D12, D13</li>
 <li>If you would like to use the arduino to power the ATTiny leave GND and 5vconnected, otherwise remove them too.</li>
 </ul>
+
 <h2 id="running-without-arduino">Running without Arduino</h2>
 <p>The last thing we need to do is get rid of that bulky Arduino UNO board and power our project through some other mechanism. Looking at the <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf">data sheet</a> it would seem that the ATTiny85 can be powered with anything from 1.8v - 5.5v.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/fOrnVT7kTV-586.avif 586w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/fOrnVT7kTV-586.webp 586w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/fOrnVT7kTV-586.png" alt="" width="586" height="137"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/fOrnVT7kTV-586.avif 586w"><source type="image/webp" srcset="/blog/2017/2017-03-15/fOrnVT7kTV-586.webp 586w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/fOrnVT7kTV-586.png" alt="" width="586" height="137"></picture>
 <p>From the cheat sheet above we know that the ATTiny draws power on pins 4and 8.</p>
-<pre><code>4 ............ GND
-8 ............ VCC (5v)
-</code></pre>
+<pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token number">4</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> GND
+<span class="token number">8</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token function">VCC</span> <span class="token punctuation">(</span><span class="token number">5</span>v<span class="token punctuation">)</span></code></pre>
+
 <p>So, all we need to do is provide our chip with a voltage higher than 1.8v but less than 5.5v and we should be good to go. As you can see from the pictures below I went with a variable power supply with an output voltage set to 5.07v, connected VCC to 8 and GND to 4 along with the required jumpers &amp; resistor to power the RGB LED.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/jgesM4Ch8w-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/jgesM4Ch8w-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/jgesM4Ch8w-800.jpeg" alt="" width="800" height="463"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/jgesM4Ch8w-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/jgesM4Ch8w-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/jgesM4Ch8w-800.jpeg" alt="" width="800" height="463"></picture>
 <p>Another picture looking down onto the breadboard.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/post/h-U-bm7tMz-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/post/h-U-bm7tMz-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/post/h-U-bm7tMz-800.jpeg" alt="" width="800" height="390"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-03-15/h-U-bm7tMz-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-15/h-U-bm7tMz-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-15/h-U-bm7tMz-800.jpeg" alt="" width="800" height="390"></picture>
 <p>That's all we need to do, our ATTiny now has our sketch loaded to it along with a stable power source, the last thing left to do is power it up and see what happens.</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2017/2017-03-10/post/">Flashing ATmega 168 (Pro Mini) with an Arduino UNO</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2017/2017-03-10/">Flashing ATmega 168 (Pro Mini) with an Arduino UNO</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2017/2017-03-17/post/">Pro Mini Digital Clock using DS3231</a></span>
+	<span class="text-end">Next<br><a href="/blog/2017/2017-03-17/">Pro Mini Digital Clock using DS3231</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -472,7 +493,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-03-15/post/` was built on 2025-07-17T22:35:38.737Z -->
+		<!-- This page `/blog/2017/2017-03-15/` was built on 2025-07-18T21:41:24.151Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

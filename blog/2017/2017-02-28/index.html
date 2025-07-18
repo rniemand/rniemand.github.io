@@ -319,38 +319,52 @@ pre[class*="language-diff-"] {
 		<time datetime="2017-02-28">28 February 2017</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#void">void</a></li><li><a href="#boolean">boolean</a></li><li><a href="#char">char</a></li><li><a href="#byte">byte</a></li><li><a href="#int">int</a></li><li><a href="#word">word</a></li><li><a href="#long">long</a></li><li><a href="#short">short</a></li><li><a href="#float">float</a></li><li><a href="#double">double</a></li><li><a href="#string-char-array">string - char array</a></li><li><a href="#string">String</a></li><li><a href="#array">array</a><ol><li><a href="#arrays-and-for-loops">Arrays and FOR Loops</a></li></ol></li></ol>
+      </div>
+
 
 <p>This is a quick reference page based on the <a href="https://www.arduino.cc/">Official Arduino Reference Guide</a> aimed at giving useful data type usage examples.</p>
+
 <h2 id="void">void</h2>
 <p>The void keyword is used only in function declarations. It indicates that the function is expected to return no information to the function from which it was called.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">setup</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token keyword">void</span> <span class="token function">loop</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span></code></pre>
+
 <h2 id="boolean">boolean</h2>
 <p>A boolean holds one of two values, true or false. (Each boolean variable occupies one byte of memory.)</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp">boolean running <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span></code></pre>
+
 <h2 id="char">char</h2>
-<p>A data type that takes up 1 byte of memory that stores a character value. Character literals are written in single quotes, like this: 'A' (for multiple characters - strings - use double quotes: &quot;ABC&quot;).</p>
+<p>A data type that takes up 1 byte of memory that stores a character value. Character literals are written in single quotes, like this: &#39;A&#39; (for multiple characters - strings - use double quotes: &quot;ABC&quot;).</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">char</span> myChar <span class="token operator">=</span> <span class="token char">'A'</span><span class="token punctuation">;</span>
 <span class="token keyword">char</span> myChar <span class="token operator">=</span> <span class="token number">65</span><span class="token punctuation">;</span>  <span class="token comment">// both are equivalent</span></code></pre>
+
 <h2 id="byte">byte</h2>
 <p>A byte stores an 8-bit unsigned number, from 0 to 255.
 byte b = B10010;  // &quot;B&quot; is the binary formatter (B10010 = 18 decimal)</p>
+
 <h2 id="int">int</h2>
 <p>Integers are your primary data-type for number storage.</p>
-<p>On the Arduino Uno (and other ATMega based boards) an int stores a 16-bit (2-byte) value. This yields a range of -32,768 to 32,767 (minimum value of -2^15 and a maximum value of (2^15) - 1).</p>
+<p>On the Arduino Uno (and other ATMega based boards) an int stores a 16-bit (2-byte) value. This yields a range of -32,768 to 32,767 (minimum value of -2^15 and a maximum value of (2^15) - 1). </p>
 <p>On the Arduino Due and SAMD based boards (like MKR1000 and Zero), an int stores a 32-bit (4-byte) value. This yields a range of -2,147,483,648 to 2,147,483,647 (minimum value of -2^31 and a maximum value of (2^31) - 1).</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">int</span> ledPin <span class="token operator">=</span> <span class="token number">13</span><span class="token punctuation">;</span></code></pre>
+
 <h2 id="word">word</h2>
 <p>On the Uno and other ATMEGA based boards, a word stores a 16-bit unsigned number. On the Due and Zero instead it stores a 32-bit unsigned number.</p>
-<pre class="language-cpp" tabindex="0"><code class="language-cpp">word w <span class="token operator">=</span> <span class="token number">10000</span><span class="token punctuation">;</span> </code></pre>
+<pre class="language-cpp" tabindex="0"><code class="language-cpp">word w <span class="token operator">=</span> <span class="token number">10000</span><span class="token punctuation">;</span></code></pre>
+
 <h2 id="long">long</h2>
 <p>Long variables are extended size variables for number storage, and store 32 bits (4 bytes), from -2,147,483,648 to 2,147,483,647.</p>
 <p>If doing math with integers, at least one of the numbers must be followed by an L, forcing it to be a long. See the Integer Constants page for details.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">long</span> speedOfLight <span class="token operator">=</span> <span class="token number">186000L</span><span class="token punctuation">;</span></code></pre>
+
 <h2 id="short">short</h2>
 <p>A short is a 16-bit data-type.
 On all Arduinos (ATMega and ARM based) a short stores a 16-bit (2-byte) value. This yields a range of -32,768 to 32,767 (minimum value of -2^15 and a maximum value of (2^15) - 1).
 short ledPin = 13;</p>
+
 <h2 id="float">float</h2>
 <p>Datatype for floating-point numbers, a number that has a decimal point. Floating-point numbers are often used to approximate analog and continuous values because they have greater resolution than integers. Floating-point numbers can be as large as 3.4028235E+38 and as low as -3.4028235E+38. They are stored as 32 bits (4 bytes) of information.</p>
 <p>Floats have only 6-7 decimal digits of precision. That means the total number of digits, not the number to the right of the decimal point. Unlike other platforms, where you can get more precision by using a double (e.g. up to 15 digits), on the Arduino, double is the same size as float.</p>
@@ -359,10 +373,12 @@ short ledPin = 13;</p>
 <p>If doing math with floats, you need to add a decimal point, otherwise it will be treated as an int. See the Floating point constants page for details.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">float</span> myfloat<span class="token punctuation">;</span>
 <span class="token keyword">float</span> sensorCalbrate <span class="token operator">=</span> <span class="token number">1.117</span><span class="token punctuation">;</span></code></pre>
+
 <h2 id="double">double</h2>
 <p>Double precision floating point number. On the Uno and other ATMEGA based boards, this occupies 4 bytes. That is, the double implementation is exactly the same as the float, with no gain in precision.</p>
 <p>On the Arduino Due, doubles have 8-byte (64 bit) precision.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">double</span> myValue <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span></code></pre>
+
 <h2 id="string-char-array">string - char array</h2>
 <p>Text strings can be represented in two ways. you can use the String data type, which is part of the core as of version 0019, or you can make a string out of an array of type char and null-terminate it. This page described the latter method. For more details on the String object, which gives you more functionality at the cost of more memory, see the String object page.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">char</span> Str1<span class="token punctuation">[</span><span class="token number">15</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -371,9 +387,11 @@ short ledPin = 13;</p>
 <span class="token keyword">char</span> Str4<span class="token punctuation">[</span> <span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"arduino"</span><span class="token punctuation">;</span>
 <span class="token keyword">char</span> Str5<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"arduino"</span><span class="token punctuation">;</span>
 <span class="token keyword">char</span> Str6<span class="token punctuation">[</span><span class="token number">15</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"arduino"</span><span class="token punctuation">;</span></code></pre>
+
 <h2 id="string">String</h2>
-<p>The String class, part of the core as of version 0019, allows you to use and manipulate strings of text in more complex ways than character arrays do. You can concatenate Strings, append to them, search for and replace substrings, and more. It takes more memory than a simple character array, but it is also more useful.</p>
+<p>The String class, part of the core as of version 0019, allows you to use and manipulate strings of text in more complex ways than character arrays do. You can concatenate Strings, append to them, search for and replace substrings, and more. It takes more memory than a simple character array, but it is also more useful. </p>
 <p>For reference, character arrays are referred to as strings with a small s, and instances of the String class are referred to as Strings with a capital S. Note that constant strings, specified in &quot;double quotes&quot; are treated as char arrays, not instances of the String class.</p>
+
 <h2 id="array">array</h2>
 <p>An array is a collection of variables that are accessed with an index number. Arrays in the C programming language, on which Arduino is based, can be complicated, but using simple arrays is relatively straightforward.</p>
 <p>Creating (Declaring) an Array</p>
@@ -391,13 +409,14 @@ short ledPin = 13;</p>
 <p>It also means that in an array with ten elements, index nine is the last element. Hence:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">int</span> myArray<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">9</span><span class="token punctuation">,</span><span class="token number">11</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token comment">// myArray[9]    contains 11</span>
-<span class="token comment">// myArray[10]   is invalid and contains random information (other memory address)      </span></code></pre>
+<span class="token comment">// myArray[10]   is invalid and contains random information (other memory address)</span></code></pre>
 <p>For this reason you should be careful in accessing arrays. Accessing past the end of an array (using an index number greater than your declared array size - 1) is reading from memory that is in use for other purposes. Reading from these locations is probably not going to do much except yield invalid data. Writing to random memory locations is definitely a bad idea and can often lead to unhappy results such as crashes or program malfunction. This can also be a difficult bug to track down.</p>
 <p>Unlike BASIC or JAVA, the C compiler does not check to see if array access is within legal bounds of the array size that you have declared.</p>
 <p>To assign a value to an array:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp">mySensVals<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span></code></pre>
 <p>To retrieve a value from an array:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp">x <span class="token operator">=</span> mySensVals<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span></code></pre>
+
 <h3 id="arrays-and-for-loops">Arrays and FOR Loops</h3>
 <p>Arrays are often manipulated inside for loops, where the loop counter is used as the index for each array element. For example, to print the elements of an array over the serial port, you could do something like this:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">int</span> i<span class="token punctuation">;</span>
@@ -407,10 +426,10 @@ short ledPin = 13;</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2017/2017-02-27/post/">Arduino Cheat Sheet</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2017/2017-02-27/">Arduino Cheat Sheet</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2017/2017-03-01/post/">Arduino + Nokia 5110 Screen</a></span>
+	<span class="text-end">Next<br><a href="/blog/2017/2017-03-01/">Arduino + Nokia 5110 Screen</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -427,7 +446,7 @@ short ledPin = 13;</p>
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-02-28/post/` was built on 2025-07-17T22:35:38.737Z -->
+		<!-- This page `/blog/2017/2017-02-28/` was built on 2025-07-18T21:41:24.150Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

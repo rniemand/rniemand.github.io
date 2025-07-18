@@ -319,9 +319,15 @@ pre[class*="language-diff-"] {
 		<time datetime="2017-08-30">30 August 2017</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#printing-events">Printing Events</a></li><li><a href="#time-lapse">Time Lapse</a></li><li><a href="#temperatures">Temperatures</a></li><li><a href="#parsing-data-in-node-red">Parsing data in Node-RED</a></li></ol>
+      </div>
 
-<p>Below you will find a list of all the MQTT events published by the <a href="https://plugins.octoprint.org/plugins/mqtt/">MQTT OctoPrint plugin</a>. I made use of my <code>MQTT-Dumper</code> application I created in <a href="/blog/2017/2017-08-29/post/">my previous post</a> to do this, and have taken the time to format some of the responses.</p>
+
+<p>Below you will find a list of all the MQTT events published by the <a href="https://plugins.octoprint.org/plugins/mqtt/">MQTT OctoPrint plugin</a>. I made use of my <code>MQTT-Dumper</code> application I created in <a href="/blog/2017/2017-08-29/">my previous post</a> to do this, and have taken the time to format some of the responses.</p>
 <p>For a complete list of all available plugins for OctoPrint please check out their <a href="https://plugins.octoprint.org/by_date/">official plugin list</a>.</p>
+
 <h2 id="printing-events">Printing Events</h2>
 <p>Print job started: <code>octoprint/event/PrintStarted</code></p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
@@ -368,6 +374,7 @@ pre[class*="language-diff-"] {
   <span class="token property">"_event"</span><span class="token operator">:</span> <span class="token string">"PrinterStateChanged"</span><span class="token punctuation">,</span>
   <span class="token property">"state_id"</span><span class="token operator">:</span> <span class="token string">"PRINTING"</span>
 <span class="token punctuation">}</span></code></pre>
+
 <h2 id="time-lapse">Time Lapse</h2>
 <p>Image capture start: <code>octoprint/event/CaptureStart</code></p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
@@ -395,6 +402,7 @@ pre[class*="language-diff-"] {
   <span class="token property">"gcode"</span><span class="token operator">:</span> <span class="token string">"NodeMCU_Case.gcode"</span><span class="token punctuation">,</span>
   <span class="token property">"movie_basename"</span><span class="token operator">:</span> <span class="token string">"NodeMCU_Case_20170829185831.mpg"</span>
 <span class="token punctuation">}</span></code></pre>
+
 <h2 id="temperatures">Temperatures</h2>
 <p>Hot End temperature: <code>octoprint/temperature/tool0</code></p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
@@ -406,11 +414,12 @@ pre[class*="language-diff-"] {
   <span class="token property">"actual"</span><span class="token operator">:</span> <span class="token number">50.0</span><span class="token punctuation">,</span>
   <span class="token property">"target"</span><span class="token operator">:</span> <span class="token number">50.0</span>
 <span class="token punctuation">}</span></code></pre>
+
 <h2 id="parsing-data-in-node-red">Parsing data in Node-RED</h2>
 <p>Lastly we will look into accessing this information using <a href="https://nodered.org/">Node-RED</a> and publishing it to a <a href="https://github.com/node-red/node-red-dashboard">node-red-dashboard</a> powered graph. Our flow will looks like this:</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/post/QMbceI2Uul-601.avif 601w"><source type="image/webp" srcset="/blog/2017/2017-08-30/post/QMbceI2Uul-601.webp 601w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/post/QMbceI2Uul-601.png" alt="" width="601" height="171"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/QMbceI2Uul-601.avif 601w"><source type="image/webp" srcset="/blog/2017/2017-08-30/QMbceI2Uul-601.webp 601w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/QMbceI2Uul-601.png" alt="" width="601" height="171"></picture>
 <p>First we will need to subscribe to the relevant events on your MQTT broker (mine is hosted locally hence the IP Address), in the below case we are subscribing to the <code>octoprint/temperature/tool0</code> event (a.k.a. the hot-end).</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/post/jOKbRZV5v4-497.avif 497w"><source type="image/webp" srcset="/blog/2017/2017-08-30/post/jOKbRZV5v4-497.webp 497w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/post/jOKbRZV5v4-497.png" alt="" width="497" height="241"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/jOKbRZV5v4-497.avif 497w"><source type="image/webp" srcset="/blog/2017/2017-08-30/jOKbRZV5v4-497.webp 497w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/jOKbRZV5v4-497.png" alt="" width="497" height="241"></picture>
 <p>I then make use of a script block with the below code to <code>JSON.parse()</code>, extract and publish the collected information out as the <code>msg.payload</code>.</p>
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">var</span> parsed <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span>msg<span class="token punctuation">.</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
@@ -421,18 +430,18 @@ pre[class*="language-diff-"] {
 <span class="token punctuation">}</span>
 
 <span class="token keyword">return</span> msg<span class="token punctuation">;</span></code></pre>
-<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/post/TckczqPBwn-504.avif 504w"><source type="image/webp" srcset="/blog/2017/2017-08-30/post/TckczqPBwn-504.webp 504w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/post/TckczqPBwn-504.png" alt="" width="504" height="295"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/TckczqPBwn-504.avif 504w"><source type="image/webp" srcset="/blog/2017/2017-08-30/TckczqPBwn-504.webp 504w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/TckczqPBwn-504.png" alt="" width="504" height="295"></picture>
 <p>This feeds into a graph node (along with the bed temperature) and can be viewed on my dashboard as shown below:</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/post/o-PkL-JQos-650.avif 650w"><source type="image/webp" srcset="/blog/2017/2017-08-30/post/o-PkL-JQos-650.webp 650w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/post/o-PkL-JQos-650.png" alt="" width="650" height="427"></picture>
-<p>Knowing the events published by your print server allows for some rather interesting work flows (I'll cover this in another post), shown below is my automated printer shutdown flow that powers down my printer using an IoT enabled power switch 4 minutes after a print job has completed.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/post/JtGvww-b61-908.avif 908w"><source type="image/webp" srcset="/blog/2017/2017-08-30/post/JtGvww-b61-908.webp 908w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/post/JtGvww-b61-908.png" alt="" width="908" height="316"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/o-PkL-JQos-650.avif 650w"><source type="image/webp" srcset="/blog/2017/2017-08-30/o-PkL-JQos-650.webp 650w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/o-PkL-JQos-650.png" alt="" width="650" height="427"></picture>
+<p>Knowing the events published by your print server allows for some rather interesting work flows (I&#39;ll cover this in another post), shown below is my automated printer shutdown flow that powers down my printer using an IoT enabled power switch 4 minutes after a print job has completed.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-08-30/JtGvww-b61-908.avif 908w"><source type="image/webp" srcset="/blog/2017/2017-08-30/JtGvww-b61-908.webp 908w"><img loading="lazy" decoding="async" src="/blog/2017/2017-08-30/JtGvww-b61-908.png" alt="" width="908" height="316"></picture>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2017/2017-08-29/post/">MQTT Dumper (Alpha)</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2017/2017-08-29/">MQTT Dumper (Alpha)</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2017/2017-08-31/post/">Anet A8 - My first 3D printer</a></span>
+	<span class="text-end">Next<br><a href="/blog/2017/2017-08-31/">Anet A8 - My first 3D printer</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -449,7 +458,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-08-30/post/` was built on 2025-07-17T22:35:38.739Z -->
+		<!-- This page `/blog/2017/2017-08-30/` was built on 2025-07-18T21:41:24.152Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
