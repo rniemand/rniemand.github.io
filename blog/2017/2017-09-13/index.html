@@ -319,6 +319,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2017-09-13">13 September 2017</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#getting-your-location">Getting your location</a></li><li><a href="#home-assistant-and-mqtt">Home Assistant and MQTT</a></li><li><a href="#setup-owntracks">Setup OwnTracks</a></li><li><a href="#zoning">Zoning</a><ol><li><a href="#troubleshooting">Troubleshooting</a></li></ol></li></ol>
+      </div>
+
 
 <p><a href="https://www.home-assistant.io/">Home Assistant</a> (<code>Hass</code>) is hands down one of the best home automation frameworks (HUBS) I have used, and offers support for over 800 devices with that number growing almost on a daily basis. It not only presents all your collected device data into a single portal, but offers a lot of automation through their scripting &amp; templating engine. After spending about a week diving into the features of Home Assistant I decided to tear everything down and start from scratch documenting my journey in order to help others get started with it.</p>
 <p>At the moment my main focus is around security and knowing what is going on at home when we are not around. I have built a couple of sensory nodes based on an ESP8266 development board (more to come in a later post) that now live in key areas of the house monitoring movement, doors &amp; windows, temperature, humidity, etc. These devices publish their information to my MQTT broker which is being monitored by Home Assistant. My main intent here is to have Home Assistant send me notifications on my mobile phone when there is movement around the house and we are not there. For this to happen I somehow need to let Home Assistant know when we are home, and when we are away so it is able to take the appropriate action when movement is detected, Enter OwnTracks.</p>
@@ -333,6 +338,7 @@ pre[class*="language-diff-"] {
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">homeassistant</span><span class="token punctuation">:</span>
   <span class="token key atrule">latitude</span><span class="token punctuation">:</span> xxx
   <span class="token key atrule">longitude</span><span class="token punctuation">:</span> xxx</code></pre>
+
 <h2 id="home-assistant-and-mqtt">Home Assistant and MQTT</h2>
 <p>Next you will need to make sure that Home Assistant can talk to your MQTT server. To do this you will need to add the appropriate configuration to your configuration.yaml again:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">mqtt</span><span class="token punctuation">:</span>
@@ -341,6 +347,7 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">username</span><span class="token punctuation">:</span> xxx
   <span class="token key atrule">password</span><span class="token punctuation">:</span> xxx</code></pre>
 <p>Provided all your settings are correct, Home Assistant should be able to talk to your MQTT server after a restart.</p>
+
 <h2 id="setup-owntracks">Setup OwnTracks</h2>
 <p>Next you will need to tell Home Assistant to track your devices via owntracks by adding in the below configuration lines into your configuration.yaml again.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">device_tracker</span><span class="token punctuation">:</span>
@@ -354,7 +361,7 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">name</span><span class="token punctuation">:</span> niemandr
   <span class="token key atrule">picture</span><span class="token punctuation">:</span>
   <span class="token key atrule">track</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-  <span class="token key atrule">vendor</span><span class="token punctuation">:</span></code></pre>
+  vendor<span class="token punctuation">:</span></code></pre>
 <p>You can customise the name of the device (in my case Richard) and add in either a URL or file path (Home Assistant will need read access to the file) to customise the icon displayed for the user:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">niemandr_richphone</span><span class="token punctuation">:</span>
   <span class="token key atrule">hide_if_away</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
@@ -363,14 +370,15 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">name</span><span class="token punctuation">:</span> Richard
   <span class="token key atrule">picture</span><span class="token punctuation">:</span> https<span class="token punctuation">:</span>//i.imgur.com/EItQMfw.png
   <span class="token key atrule">track</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-  <span class="token key atrule">vendor</span><span class="token punctuation">:</span></code></pre>
+  vendor<span class="token punctuation">:</span></code></pre>
 <p>After a quick restart of Home Assistant I can see my avatar, and an AWAY tag by my name (I was setting up remotely) - success!</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-13/post/voyQZnxqy0-228.avif 228w"><source type="image/webp" srcset="/blog/2017/2017-09-13/post/voyQZnxqy0-228.webp 228w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-13/post/voyQZnxqy0-228.png" alt="" width="228" height="86"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-13/voyQZnxqy0-228.avif 228w"><source type="image/webp" srcset="/blog/2017/2017-09-13/voyQZnxqy0-228.webp 228w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-13/voyQZnxqy0-228.png" alt="" width="228" height="86"></picture>
+
 <h2 id="zoning">Zoning</h2>
 <p>As it stands Home Assistant now knows when you are home and away, nothing more. We could leave it here, but it would be nice to know when I am at work also as there may be some automation tasks I would like to trigger when I get to work (not that I can think of any at the moment). To do this we will need to set up some <a href="https://www.home-assistant.io/integrations/zone/">zones</a>.</p>
 <p>We are going to define these in a separate file to make management of zones easier, and reference that file in our configuration.yaml by adding the following line somewhere near the bottom of it:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">zone</span><span class="token punctuation">:</span> <span class="token tag">!include</span> zones.yaml</code></pre>
-<p>This basically declares a zone configuration node and injects the contents of the referenced file zones.yaml in place of the import statement. Let's create the zones.yaml file and define all the zones you need as shown below:</p>
+<p>This basically declares a zone configuration node and injects the contents of the referenced file zones.yaml in place of the import statement. Let&#39;s create the zones.yaml file and define all the zones you need as shown below:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Work
   <span class="token key atrule">latitude</span><span class="token punctuation">:</span> xxx
   <span class="token key atrule">longitude</span><span class="token punctuation">:</span> xxx
@@ -383,20 +391,20 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">radius</span><span class="token punctuation">:</span> <span class="token number">250</span>
   <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>briefcase</code></pre>
 <p>Save the file, restart Home Assistant and if all went well you should see your new zone reflecting under your location avatar.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-13/post/vDpEj2bWdM-244.avif 244w"><source type="image/webp" srcset="/blog/2017/2017-09-13/post/vDpEj2bWdM-244.webp 244w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-13/post/vDpEj2bWdM-244.png" alt="" width="244" height="92"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-13/vDpEj2bWdM-244.avif 244w"><source type="image/webp" srcset="/blog/2017/2017-09-13/vDpEj2bWdM-244.webp 244w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-13/vDpEj2bWdM-244.png" alt="" width="244" height="92"></picture>
+
 <h3 id="troubleshooting">Troubleshooting</h3>
 <p>I actually had a lot of trouble getting this up and running initially - Home Assistant was refusing to update my location no matter what I did. I spent about 10 min redefining my zones, tweaking the radius, reloading the application to no success, it was only after configuring the logger to be more verbose that the issue became apparent. To enable <a href="https://www.home-assistant.io/integrations/logger/">logging</a> add the following to your configuration.yaml file:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">logger</span><span class="token punctuation">:</span>
   <span class="token key atrule">default</span><span class="token punctuation">:</span> debug</code></pre>
 <p>After a restart the issue was plain as day!</p>
-<pre><code>2017-09-12 08:22:42 INFO (MainThread) [homeassistant.components.device_tracker.owntracks] Ignoring location update because expected GPS accuracy 25.0 is not met: {&quot;_type&quot;:&quot;location&quot;,&quot;tid&quot;:&quot;ne&quot;,&quot;acc&quot;:32,&quot;batt&quot;:79,&quot;conn&quot;:&quot;w&quot;,&quot;lat&quot;:xxx,&quot;lon&quot;:xxx,&quot;tst&quot;:1505194769}
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">2017-09-12 08:22:42 INFO (MainThread) [homeassistant.components.device_tracker.owntracks] Ignoring location update because expected GPS accuracy 25.0 is not met: {"_type":"location","tid":"ne","acc":32,"batt":79,"conn":"w","lat":xxx,"lon":xxx,"tst":1505194769}</code></pre>
 <p>Blegh <code>expected GPS accuracy 25.0 is not met</code>! This was a simple fix:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">device_tracker</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> owntracks
     <span class="token key atrule">max_gps_accuracy</span><span class="token punctuation">:</span> <span class="token number">35</span></code></pre>
 <p>After a restart my wife's zone was reflecting!</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-13/post/GQWPWvNPw0-181.avif 181w"><source type="image/webp" srcset="/blog/2017/2017-09-13/post/GQWPWvNPw0-181.webp 181w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-13/post/GQWPWvNPw0-181.png" alt="" width="181" height="84"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-13/GQWPWvNPw0-181.avif 181w"><source type="image/webp" srcset="/blog/2017/2017-09-13/GQWPWvNPw0-181.webp 181w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-13/GQWPWvNPw0-181.png" alt="" width="181" height="84"></picture>
 <p>Hopefully this saves you some time with your home setup. As always feel free to comment or ask any questions you may have below.</p>
 
 <div class="d-flex mb-3 prev-next">
@@ -421,7 +429,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-09-13/post/` was built on 2025-07-22T20:26:45.340Z -->
+		<!-- This page `/blog/2017/2017-09-13/` was built on 2025-07-22T20:36:23.857Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
