@@ -1,0 +1,142 @@
+---
+title: Monitoring Host System with Home Assistant
+date: 2017-09-16
+tags: [home assistant]
+logo: hass.png
+---
+
+<p>Today I am going to be covering the <a href="https://www.home-assistant.io/integrations/systemmonitor/">system monitor sensor</a> for Home Assistant, specifically how to use it to monitor the underlying host computer (or system). This component exposes CPU, disk, memory and network values to Home Assistant for monitoring and alerting.</p>
+
+<h2 id="enabling-monitoring">Enabling monitoring</h2>
+<p>First we will need to enable the sensor in our <code>config/sensor.yaml</code> file. In order to monitor your network interface on a windows computer you will need to know the display name for your network adapter, you can get this value by running ipconfig in a command window, looking for the interface you want to monitor. The name of the interface will appear to the right of the Ethernet adapter (or wireless adapter) - in my case this is Ethernet.</p>
+<img src="./images/09/16-001.png" alt="" />
+{% highlight "yaml" %}
+- platform: systemmonitor
+  resources:
+    - type: memory_use_percent
+    - type: processor_use
+    - type: last_boot
+    - type: network_in
+      arg: 'Ethernet'
+    - type: network_out
+      arg: 'Ethernet'
+    - type: packets_in
+      arg: 'Ethernet'
+    - type: packets_out
+      arg: 'Ethernet'
+    - type: disk_use_percent
+      arg: "M:\\"
+    - type: disk_use_percent
+      arg: "N:\\"
+    - type: disk_use_percent
+      arg: "O:\\"
+    - type: disk_use_percent
+      arg: "P:\\"
+    - type: disk_use_percent
+      arg: "C:\\"
+    - type: disk_use_percent
+      arg: "I:\\"
+    - type: memory_free
+{% endhighlight %}
+<p>As you can see from above, I am going to be monitoring a lot of resources, after restarting Home Assistant all my new resources appear at the top of the Home view.</p>
+<img src="./images/09/16-002.png" alt="" />
+
+<h2 id="grouping-entities">Grouping entities</h2>
+<p>I much prefer the cards display (called groups) over the default icons as it allows me to control the grouping and ordering of these objects. In order to create a group we will need to know the entity_id&#39;s for the targeted objects, we can get these from the state view <a href="https://:8123/dev-state">https://:8123/dev-state</a> my new objects are:</p>
+<ul>
+<li>sensor.cpu_use</li>
+<li>sensor.diskusec</li>
+<li>sensor.diskusei</li>
+<li>sensor.diskusem</li>
+<li>sensor.diskusen</li>
+<li>sensor.diskuseo</li>
+<li>sensor.diskusep</li>
+<li>sensor.last_boot</li>
+<li>sensor.packetsreceivedethernet</li>
+<li>sensor.packetssentethernet</li>
+<li>sensor.ram_use</li>
+<li>sensor.received_ethernet</li>
+<li>sensor.sent_ethernet</li>
+<li>sensor.ram_free</li>
+</ul>
+<p>Let&#39;s start off by grouping all my hard drives together, to do this I will need to create a new group and add all the entities we want to include. In my config/groups.yaml file I added the following group:</p>
+{% highlight "yaml" %}
+host_drives_group:
+  name: NAS Disks
+  entities:
+    - sensor.disk_use_c
+    - sensor.disk_use_i
+    - sensor.disk_use_m
+    - sensor.disk_use_n
+    - sensor.disk_use_o
+    - sensor.disk_use_p
+{% endhighlight %}
+<p>After restarting Home Assistant my new group exists:</p>
+<img src="./images/09/16-003.png" alt="" />
+<p>I used the same flow to create my Nas Network group:</p>
+{% highlight "yaml" %}
+host_network_overview:
+  name: NAS Network
+  entities:
+    - sensor.sent_ethernet
+    - sensor.received_ethernet
+    - sensor.packets_sent_ethernet
+    - sensor.packets_received_ethernet
+{% endhighlight %}
+<img src="./images/09/16-004.png" alt="" />
+<p>And finally one more last time to create my NAS Performance group:</p>
+{% highlight "yaml" %}
+host_performance_group:
+  name: NAS Performance
+  entities:
+    - sensor.cpu_use
+    - sensor.ram_use
+    - sensor.ram_free
+    - sensor.last_boot
+{% endhighlight %}
+<img src="./images/09/16-005.png" alt="" />
+
+<h2 id="creating-views">Creating views</h2>
+<p>Lastly I would like to create a view (basically a tab on the top of the Home Assistant&#39;s UI) to display everything performance monitoring related. Views are a nice way to group together similar components and provide an uncluttered view into your home automation when compared to the default home view. View are basically groups with the view: yes attribute set, and are declared using the same syntax, i.e. we will need to know what we would like to display, in my case that was:</p>
+<ul>
+<li>group.hostdrivesgroup</li>
+<li>group.hostnetworkoverview</li>
+<li>group.hostperformancegroup</li>
+</ul>
+<p>You can use any <a href="https://materialdesignicons.com/">material design icon</a> to replace the default icons used by Home Assistant (provided you prefix them with mdi:), so for my view I am going to be using the desktop-classic icon:</p>
+{% highlight "yaml" %}
+host_overview_view:
+  name: NAS Overview
+  view: yes
+  icon: mdi:desktop-classic
+  entities:
+    - group.host_network_overview
+    - group.host_drives_group
+    - group.host_performance_group
+{% endhighlight %}
+<p>Restart Home Assistance and my new view appears!</p>
+<img src="./images/09/16-006.png" alt="" />
+
+<h2 id="customising-icons">Customising icons</h2>
+<p>Just like with the views, any displayed entity on Home Assistants user interface can be customized, and have its default icon replaced with a new one. Unlike views and groups though, you need to make these customizations under the homeassistant root configuration property using the customize: attribute. To keep things simple I prefer to break these customizations out into their own file (config/customize.yaml) and reference them in as shown below:</p>
+{% highlight "yaml" %}
+homeassistant:
+  ...
+  customize: !include config/customize.yaml
+{% endhighlight %}
+<p>For now I would like to change the icons for the NAS Network card:</p>
+<img src="./images/09/16-007.png" alt="" />
+<p>In config/customize.yaml I added the following:</p>
+{% highlight "yaml" %}
+sensor.packets_sent_ethernet:
+  icon: mdi:upload-network
+sensor.packets_received_ethernet:
+  icon: mdi:download-network
+sensor.received_ethernet:
+  icon: mdi:arrow-down-bold-circle-outline
+sensor.sent_ethernet:
+  icon: mdi:arrow-up-bold-circle-outline
+{% endhighlight %}
+<p>After restarting Home Assistant my changes were visible. Note you can customize a lot more than just the icon of an entity (<a href="https://www.home-assistant.io/docs/configuration/customizing-devices/">full documentation here</a>), and as a result can produce some pretty interesting ways of displaying your data.</p>
+<img src="./images/09/16-008.png" alt="" />
+<p>That's all for now, hopefully you found this post interesting and I look forward to any comments / suggestions below.</p>

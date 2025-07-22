@@ -1,0 +1,81 @@
+---
+title: Wondrous OctoPrint & My OrangePi Lite
+date: 2017-09-15
+tags: [3d printing,linux]
+logo: octoprint.png
+---
+
+<p>Recently I bought <a href="/blog/2017/2017-08-31/">my first 3D printer</a> and could not be happier with it, or at least that&#39;s what I thought... While watching some YouTube videos around 3D printing I stumbled upon an amazing project called <a href="https://octoprint.org/">OctoPrint</a> which blew my mind. OctoPrint&#39;s tagline is &quot;The snappy web interface for your 3D printer&quot;, and boy does it live up to that statement!</p>
+<p>OctoPrint is written in <a href="https://www.python.org/">Python</a> and can pretty much run anywhere (windows, mac, linux, etc). It interfaces with your 3D printer via it&#39;s USB cable and controls your printer through GCode commands. This offers the end user a lot of control over the print, and adds some features you would not otherwise have (e.g. the ability to pause and resume mid print). It offers an API should you want to interact with it programmatically and has a pretty big plugin repository covering all things 3D printing.</p>
+<p>Right out of the box OctoPrint is usable, and has more than enough built in features to get your first print out perfectly. Below you can see the base plugins that come with OctoPrint.</p>
+<img src="./images/09/14-008.png" alt="" />
+<p>One of my favourite features is the GCode Viewer that provides a visual representation of the print head movement while printing your selected model. It has the ability to synchronise the preview of the GCode with the actual print progress, and can show you the previous / next layers to give you an idea of what&#39;s coming up next.</p>
+<img src="./images/09/14-009.png" alt="" />
+
+<h2 id="hardware">Hardware</h2>
+<p>For my OctoPrint setup I decided to go with an <a href="https://www.banggood.com/Orange-Pi-Lite-with-Quad-Core-1_2GHz-512MB-DDR3-WiFi-Mini-PC-p-1101903.html?cur_warehouse=CN">OrangePi Lite</a> from BangGood, as it was only $15 and came with WiFi, Quad Core 1.2 Ghz processor and 512 MB of RAM - which is more than enough to run OctoPrint. The OrangePi is basically a cheaper clone of the Raspberry Pi range of computers, and in my opinion gives you a lot more bang for your money.</p>
+<p>After a bit of time on Google I managed to find <a href="https://www.cnx-software.com/2017/07/11/how-to-use-octoprint-on-orange-pi-lite-board-amlogic-s905x-and-s912-tv-boxes/">this blog post</a> detailing the steps on how to get OctoPrint up and running on an OrangePi, and more importantly provides links to an image file with everything you need setup ready for writing with <a href="https://sourceforge.net/projects/win32diskimager/">win32 disk imager</a>. Like the Raspberry Pi you will need a microSD card to burn the image to (anything over 4Gb will suffice), and please make sure that the card is at least a class 10 (anything lower and things pretty much grind to a halt).</p>
+<p>Once flashed, you will need to plug in your OrangePi into a display and follow the steps detailed in <a href="https://www.cnx-software.com/2017/07/11/how-to-use-octoprint-on-orange-pi-lite-board-amlogic-s905x-and-s912-tv-boxes/">the blog post</a> to expand your disk image, connect to the WiFi and set a new password for the default user account. I highly recommend that you assign a static IP Address to the OrangePi (and enforce it with your router&#39;s DHCP service) as in most cases you are going to want to run this as a headless server. Once you have an IP Address configured I suggest running a test login via Putty to make sure you can remote into the device should you need to do maintenance. Once you are happy with your setup, shut down the OrangePi and set it up next to your printer, not forgetting to plug in the USB cable.</p>
+<p>There are plenty of ways to power your print server, but the one that makes the most sense to me is to have it powered off your printer&#39;s PSU. You will need a <a href="https://www.aliexpress.com/item/32695785476.html">buck converter</a> to drop the voltage down to the 5v needed and will set you back about $0.50. The benefits of having it run off your printers PSU are:</p>
+<ul>
+<li>OctoPrint will only run when your printer is on</li>
+<li>When OctoPrint completes booting the printer is already connected (there is no need to manually do this each time)</li>
+<li>You don&#39;t need any additional plugs to power your OrangePi</li>
+<li>The device uses so little current it will not add strain on the PSU</li>
+<li>When the printer turns off, so does the print server</li>
+</ul>
+
+<h2 id="ui">UI</h2>
+<p>The default user interface (UI) provided by OctoPrint is more than enough to get you up and running, and comes with the following:</p>
+<ul>
+<li>Temperature monitoring of your extruder(s) and print bed:</li>
+</ul>
+<img src="./images/09/14-008.png" alt="" />
+<ul>
+<li>State monitoring of your print job, with quick controls:</li>
+</ul>
+<img src="./images/09/14-010.png" alt="" />
+<ul>
+<li>Webcam and manual controls for all printer functions</li>
+</ul>
+<img src="./images/09/14-011.png" alt="" />
+<ul>
+<li>GCode viewer:</li>
+</ul>
+<img src="./images/09/14-012.png" alt="" />
+<ul>
+<li>Terminal view to send / receive commands from your printer</li>
+</ul>
+<img src="./images/09/14-013.png" alt="" />
+<ul>
+<li>Time Lapse functionality</li>
+</ul>
+<img src="./images/09/14-014.png" alt="" />
+<p>As I said, right out the box there is pretty much nothing else needed to get up and running with your first print. This leads me onto my next section...</p>
+
+<h2 id="plugins">Plugins</h2>
+<p>OctoPrint has a lot of <a href="https://plugins.octoprint.org/">plugins</a> that build onto the existing functionality and blend in well with the look and feel of the application. Most users won&#39;t need to add any additional plugins into OctoPrint in my opinion, but for the ones that do they should be more than happy with what&#39;s available out there. Should you not be able to find what you are looking for, there is an SDK available to develop plugins for OctoPrint which is pretty well documented. I highly recommend the following plugins:</p>
+
+<h3 id="automaticshutdown">AutomaticShutdown</h3>
+<p>The <a href="https://plugins.octoprint.org/plugins/automaticshutdown/">AutomaticShutdown</a> plugin as the name suggests provides the option to shut down your printer based on a timer once your current print job has completed:</p>
+<img src="./images/09/14-015.png" alt="" />
+<p>The timeout for shutting down the printer is configurable via OctoPrint&#39;s settings panel:</p>
+<img src="./images/09/14-016.png" alt="" />
+<p>I would suggest using a timeout of ~2 min for the timeout to allow your hot end some time to cool down (in my case there is a cooling fan that blows directly onto it).</p>
+
+<h3 id="mqtt">MQTT</h3>
+<p>The <a href="https://plugins.octoprint.org/plugins/mqtt/">MQTT</a> plugin allows OctoPrint to publish useful print related messages over the MQTT protocol to use with your home automation. In a <a href="/blog/2017/2017-08-30/">previous blog post</a> I covered some of the more useful messages that were published, and an example Node-RED flow you can implement with the published data.</p>
+<p>Again this plugin is configurable via the built in configuration panel in OctoPrint:</p>
+<img src="./images/09/14-017.png" alt="" />
+<p>Some example messages from OctoPrint can be seen below:</p>
+<img src="./images/09/14-018.png" alt="" />
+
+<h3 id="printer-statistics">Printer Statistics</h3>
+<p>The last plugin I have been playing around with is <a href="https://plugins.octoprint.org/plugins/stats/">printer statistics</a>, which as the name suggests provides some deeper insight into how your printer is performing. If configured correctly you will be able to calculate things like:</p>
+<ul>
+<li>Print job successes, failures, etc.</li>
+<li>Power consumption per device</li>
+<li>Power consumption per print</li>
+</ul>
+<img src="./images/09/14-019.png" alt="" />
+<p>That covers everything I have discovered with OctoPrint. The developers have put a lot of work into it, and it shows. Hopefully you found this post informative and I look forward to any comments / suggestions below.</p>

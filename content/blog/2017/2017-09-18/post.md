@@ -5,7 +5,7 @@ tags: [home assistant]
 logo: hass.png
 ---
 
-Following on from a [previous post](/blog/2017/2017-09-15/post/) I would like to extend the functionality of [Home Assistant](https://www.home-assistant.io/) using the [OwnTracks](https://www.home-assistant.io/integrations/owntracks/) plugin to get an idea of how full my phone battery is. This information could be used to send an alert to you should your battery drop too low and you are at home, or let you know that your spouse's battery is low when they are out and about (the only limit here is your imagination).
+Following on from a [previous post](/blog/2017/2017-09-16/) I would like to extend the functionality of [Home Assistant](https://www.home-assistant.io/) using the [OwnTracks](https://www.home-assistant.io/integrations/owntracks/) plugin to get an idea of how full my phone battery is. This information could be used to send an alert to you should your battery drop too low and you are at home, or let you know that your spouse's battery is low when they are out and about (the only limit here is your imagination).
 
 In order to accomplish this I will need to know a couple of things, mainly what data is being sent by OwnTracks, and how to get at this bits of it I want.
 

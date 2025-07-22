@@ -1,0 +1,78 @@
+---
+title: Monitoring Internet Speed with Home Assistant
+date: 2017-09-14
+tags: [home assistant]
+logo: hass.png
+---
+
+<p>Continuing with my series around home automation using <a href="https://www.home-assistant.io/">Home Assistant</a> I would like to cover the <code>speedtest</code> sensor component. As the name suggests this component makes use of <a href="https://www.speedtest.net/">speedtest.net</a> to periodically test your server&#39;s internet connection and graphs the results for you to keep an eye on.</p>
+<p>When it comes to the configuration for this component I am going to be splitting up the main <code>configuration.yaml</code> file used by Home Assistant into smaller, more specific <code>*.yaml</code> files and referencing them using the <code>!include</code> keyword. This allows our configuration file to stay nice and small, and helps to break up the configuration for all your plugins. Lets begin:</p>
+
+<h2 id="configure-the-sensor">Configure the sensor</h2>
+<p>The <a href="https://www.home-assistant.io/integrations/speedtest/">speedtest</a> component falls under the <code>sensor</code> category in Home Assistant, and as such needs to appear in your main sensor list. We are going to break this list out of the main configuration file into a new file called <code>config/sensor.yaml</code> (I keep all my config in it&#39;s own directory to make backups easier). Let&#39;s create the <code>config/sensor.yaml</code> configuration file and add the below configuration:</p>
+{% highlight "yaml" %}
+- platform: speedtest
+  monitored_conditions:
+    - ping
+    - download
+    - upload
+  minute: 30
+{% endhighlight %}
+<p>This will enable the <a href="https://www.home-assistant.io/integrations/speedtest/">speedtest</a> component, and monitor ping, download and upload speeds. The minute argument tells Home Assistant to run this test every 30 min, this is covered more in depth on the components page.</p>
+<p>Next we will need to reference this file back in our configuration.yaml file using the below command.</p>
+{% highlight "yaml" %}
+sensor: !include config/sensor.yaml
+{% endhighlight %}
+<p>Basically this declares a sensor key, imports the contents of config/sensor.yamlat run time and replaces &quot;!include config/sensor.yaml&quot; with the actual referenced files content (this is why spacing in these files are so important).</p>
+<p>Save all of your files, restart Home Assistant.</p>
+<img src="./images/09/14-001.png" alt="" />
+
+<h2 id="creating-groups">Creating groups</h2>
+<p>I personally prefer the cards (groups) over the &quot;bubbles&quot; on the Home Assistant UI, so next I would like to move the newly added Speedtest components into their own &quot;Internet Speed&quot; card.</p>
+<p>To do this we will follow the same steps as adding the sensor, i.e. we will create a new configuration file called config/groups.yaml and declare our group in that file.</p>
+<p>To do this we will need the name of the objects created by the speedtest component, you can get these values from the states button on the main menu.</p>
+<img src="./images/09/14-002.png" alt="" />
+<p>They should appear somewhere in the full list of items, below you can see mine:</p>
+<img src="./images/09/14-003.png" alt="" />
+<p>So our group we are going to be creating will need to contain the following entities.</p>
+<ul>
+<li>sensor.speedtest_download</li>
+<li>sensor.speedtest_ping</li>
+<li>sensor.speedtest_upload</li>
+</ul>
+<p>We define our group in config/groups.yaml as shown below (making sure to replace your entities names if they differ from mine):</p>
+{% highlight "yaml" %}
+internet_speed_group:
+  name: Internet Speed
+  entities:
+    - sensor.speedtest_download
+    - sensor.speedtest_ping
+    - sensor.speedtest_upload
+{% endhighlight %}
+<p>After a quick restart of Home Assistant we are now able to see our new Internet Speed group.</p>
+<img src="./images/09/14-004.png" alt="" />
+<p>Things are starting to shape up, however there is one last bit of customization I would like to do, and that is changing the default names of the speedtest components.</p>
+
+<h2 id="renaming-things">Renaming things</h2>
+<p>To change the name of any object in Home Assistant you will need to make use of the customize property, which is nested under the root homeassistant configuration node. To keep things simple we will create a new file called config/customize.yaml and reference it back in using the below import statement.</p>
+{% highlight "yaml" %}
+homeassistant:
+  customize: !include config/customize.yaml
+{% endhighlight %}
+<p>We will make use of the object ids discovered previously to target and rename our sensors. The contents of config/customize.yaml looks like this:</p>
+{% highlight "yaml" %}
+sensor.speedtest_download:
+  friendly_name: Download Rate
+sensor.speedtest_ping:
+  friendly_name: Last Ping
+sensor.speedtest_upload:
+  friendly_name: Upload Rate
+{% endhighlight %}
+<p>Along with the name you can also change the icon, visible state, unit of measurement and more - <a href="https://www.home-assistant.io/docs/configuration/customizing-devices/">full documentation can be found here</a>. To keep this post short, we will just focus on the names for now.</p>
+<p>After a quick restart of Home Assistant I can see that my name changes were a success.</p>
+<img src="./images/09/14-005.png" alt="" />
+<p>Clicking on the Download Rate property will pop up a graph with all your recorded data (this was after 24 hours, yours will need +- 30 min to get the first data point).</p>
+<img src="./images/09/14-006.png" alt="" />
+<p>Finally checking on the history component, we can see that all our speedtest data is being recorded as expected.</p>
+<img src="./images/09/14-007.png" alt="" />
+<p>I hope that you found this post helpful, and as always I look forward to any comments, suggestions or questions below!</p>
