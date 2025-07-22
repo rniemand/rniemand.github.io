@@ -316,42 +316,39 @@ pre[class*="language-diff-"] {
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="post-date">
 		<i class="bi bi-calendar-plus-fill"></i>
-		<time datetime="2017-09-11">11 September 2017</time>
+		<time datetime="2017-09-08">08 September 2017</time>
 	</span>
 </div>
 
+
 <p>I have been watching a lot of videos about home automation lately and found that <a href="https://www.home-assistant.io/">Home Assistant</a> (<code>HASS</code>) seems to be the most popular choice when it comes to consolidating all of your IoT enabled devices. Hass offers a clean, powerful and easy to use interface that displays all of your nodes / sensory data through a consistent, mobile friendly viewport with support for over 800 unique inputs into the system.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post1/j7oSwvmRrK-353.avif 353w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post1/j7oSwvmRrK-353.webp 353w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post1/j7oSwvmRrK-353.png" alt="" width="353" height="327"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-08/j7oSwvmRrK-353.avif 353w"><source type="image/webp" srcset="/blog/2017/2017-09-08/j7oSwvmRrK-353.webp 353w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-08/j7oSwvmRrK-353.png" alt="" width="353" height="327"></picture>
 <p>I was sold on this pretty much straight away and wanted to get up and running as soon as possible. I downloaded and installed the latest stable release of <a href="https://www.python.org/">Python</a> (ensuring to add the python executable to my system <code>PATH</code>) and ran the install command:</p>
-<pre><code>pip3 install homeassistant
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">pip3 <span class="token function">install</span> homeassistant</code></pre>
 <p>Unfortunately I was greeted with the following error:</p>
-<pre><code>2017-09-04 17:40:29 ERROR (SyncWorker_6) [homeassistant.util.package] Unable to install package netdisco==1.1.0: Command &quot;c:\users\administrator\appdata\local\programs\python\python36-32\python.exe -u -c &quot;import setuptools, tokenize;__file__='C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\2\\pip-build-d9xyxziz\\netifaces\\setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))&quot; install --record C:\Users\ADMINI~1\AppData\Local\Temp\2\pip-3vu4z519-record\install-record.txt --single-version-externally-managed --compile --user --prefix=&quot; failed with error code 1 in C:\Users\ADMINI~1\AppData\Local\Temp\2\pip-build-d9xyxziz\netifaces\
+<pre class="language-txt" tabindex="0"><code class="language-txt">2017-09-04 17:40:29 ERROR (SyncWorker_6) [homeassistant.util.package] Unable to install package netdisco==1.1.0: Command "c:\users\administrator\appdata\local\programs\python\python36-32\python.exe -u -c "import setuptools, tokenize;__file__='C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\2\\pip-build-d9xyxziz\\netifaces\\setup.py';f=getattr(tokenize, 'open', open)(__file__);code=f.read().replace('\r\n', '\n');f.close();exec(compile(code, __file__, 'exec'))" install --record C:\Users\ADMINI~1\AppData\Local\Temp\2\pip-3vu4z519-record\install-record.txt --single-version-externally-managed --compile --user --prefix=" failed with error code 1 in C:\Users\ADMINI~1\AppData\Local\Temp\2\pip-build-d9xyxziz\netifaces\
 2017-09-04 17:40:29 ERROR (MainThread) [homeassistant.setup] Not initializing discovery because could not install dependency netdisco==1.1.0
 2017-09-04 17:40:29 ERROR (MainThread) [homeassistant.setup] Setup failed for discovery: Could not install all requirements.
-2017-09-04 17:40:30 ERROR (MainThread) [homeassistant.core] Error doing job: Exception in callback _ProactorReadPipeTransport._loop_reading(&lt;_OverlappedF...op_reading()]&gt;)
+2017-09-04 17:40:30 ERROR (MainThread) [homeassistant.core] Error doing job: Exception in callback _ProactorReadPipeTransport._loop_reading(&lt;_OverlappedF...op_reading()]>)
 Traceback (most recent call last):
-  File &quot;c:\users\administrator\appdata\local\programs\python\python36-32\lib\asyncio\events.py&quot;, line 127, in _run
+  File "c:\users\administrator\appdata\local\programs\python\python36-32\lib\asyncio\events.py", line 127, in _run
     self._callback(*self._args)
-  File &quot;c:\users\administrator\appdata\local\programs\python\python36-32\lib\asyncio\proactor_events.py&quot;, line 190, in _loop_reading
-    data = fut.result()  # deliver data later in &quot;finally&quot; clause
-  File &quot;c:\users\administrator\appdata\local\programs\python\python36-32\lib\asyncio\futures.py&quot;, line 239, in result
+  File "c:\users\administrator\appdata\local\programs\python\python36-32\lib\asyncio\proactor_events.py", line 190, in _loop_reading
+    data = fut.result()  # deliver data later in "finally" clause
+  File "c:\users\administrator\appdata\local\programs\python\python36-32\lib\asyncio\futures.py", line 239, in result
     raise InvalidStateError('Result is not ready.')
-asyncio.base_futures.InvalidStateError: Result is not ready.
-</code></pre>
+asyncio.base_futures.InvalidStateError: Result is not ready.</code></pre>
 <p>Basically the error was saying that the installation of HASS was failing due to a missing dependency (<code>netifaces</code>), I attempted to install this using an elevated command prompt window and the following command:</p>
-<pre><code>pip3 install netifaces
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">pip3 <span class="token function">install</span> netifaces</code></pre>
 <p>This too failed, and when looking at the output it became apparent that I was missing <code>Microsoft Visual C++ 14.0</code>:</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post1/85cP27xDU8-663.avif 663w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post1/85cP27xDU8-663.webp 663w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post1/85cP27xDU8-663.png" alt="" width="663" height="333"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-08/85cP27xDU8-663.avif 663w"><source type="image/webp" srcset="/blog/2017/2017-09-08/85cP27xDU8-663.webp 663w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-08/85cP27xDU8-663.png" alt="" width="663" height="333"></picture>
 <p>This is simple enough to fix, and after a quick search on Google I found the relevant build of Microsoft Visual C++ 14.0 for my system here. I downloaded them and ran the installer:</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post1/oj7N2WhtIi-465.avif 465w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post1/oj7N2WhtIi-465.webp 465w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post1/oj7N2WhtIi-465.png" alt="" width="465" height="219"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-08/oj7N2WhtIi-465.avif 465w"><source type="image/webp" srcset="/blog/2017/2017-09-08/oj7N2WhtIi-465.webp 465w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-08/oj7N2WhtIi-465.png" alt="" width="465" height="219"></picture>
 <p>Once completed I re-opened a new command prompt window and attempted to install netifaces again:</p>
-<pre><code>pip3 install netifaces
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">pip3 <span class="token function">install</span> netifaces</code></pre>
 <p>Great success, the installation went through without any hitches:</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-11/post1/EI8Ebfkrk9-665.avif 665w"><source type="image/webp" srcset="/blog/2017/2017-09-11/post1/EI8Ebfkrk9-665.webp 665w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-11/post1/EI8Ebfkrk9-665.png" alt="" width="665" height="181"></picture>
-<p>I re-ran the installer for HASS and it completed successfully, now I just need to start plugging in all my devices :)</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-08/EI8Ebfkrk9-665.avif 665w"><source type="image/webp" srcset="/blog/2017/2017-09-08/EI8Ebfkrk9-665.webp 665w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-08/EI8Ebfkrk9-665.png" alt="" width="665" height="181"></picture>
+<p>I re-ran the installer for HASS and it completed successfully, now I just need to start plugging in all my devices</p>
 <p>Hopefully this will save you some time in the future when setting everything up on windows.</p>
 
 <div class="d-flex mb-3 prev-next">
@@ -359,7 +356,7 @@ asyncio.base_futures.InvalidStateError: Result is not ready.
 	<span class="text-start">Previous<br><a href="/blog/2017/2017-08-31/">Anet A8 - My first 3D printer</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2017/2017-09-11/post2/">Running Home Assistant as a Windows Service</a></span>
+	<span class="text-end">Next<br><a href="/blog/2017/2017-09-09/">Running Home Assistant as a Windows Service</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -376,7 +373,7 @@ asyncio.base_futures.InvalidStateError: Result is not ready.
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-09-11/post1/` was built on 2025-07-18T21:41:24.157Z -->
+		<!-- This page `/blog/2017/2017-09-08/` was built on 2025-07-22T20:26:45.338Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
