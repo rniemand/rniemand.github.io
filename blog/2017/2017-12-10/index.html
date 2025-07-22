@@ -319,15 +319,21 @@ pre[class*="language-diff-"] {
 		<time datetime="2017-12-10">10 December 2017</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#configuration">Configuration</a></li><li><a href="#viewing-published-data">Viewing Published Data</a></li><li><a href="#hass-integration">HASS Integration</a></li><li><a href="#diagrams">Diagrams</a></li></ol>
+      </div>
+
 
 <p>Today I would like to look into an awesome project called <a href="https://www.letscontrolit.com/wiki/index.php/ESPEasy">ESPEasy</a> and how one may use it to publish temperature data collected via a <code>DHT11</code> or similar module.</p>
 <p>As the name suggests <code>ESPEasy</code> aims to be a simple to use (and install) firmware to transform your ESP module into an easy multi-function sensor device for Home Automation solutions. Installation is straightforward and covered <a href="https://www.letscontrolit.com/wiki/index.php/Basics:_Connecting_and_flashing_the_ESP8266">in great detail here</a>.</p>
 <p>For the rest of this post I am going to assume that you have successfully flashed your ESP with the latest build and have connected your device to your home network.</p>
+
 <h2 id="configuration">Configuration</h2>
 <p>The first thing you will need to do is connect your <code>DHT sensor</code> to your ESP similar to the diagram shown below, taking note of the pin used for the data signal (in the case below that is <code>D4</code>).</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/post/pfCKFYaWKx-787.avif 787w"><source type="image/webp" srcset="/blog/2017/2017-12-10/post/pfCKFYaWKx-787.webp 787w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/post/pfCKFYaWKx-787.png" alt="" width="787" height="559"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/pfCKFYaWKx-787.avif 787w"><source type="image/webp" srcset="/blog/2017/2017-12-10/pfCKFYaWKx-787.webp 787w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/pfCKFYaWKx-787.png" alt="" width="787" height="559"></picture>
 <p>Next, navigate to the devices screen and click the edit button on any free slot.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/post/AHjCK1A9fE-617.avif 617w"><source type="image/webp" srcset="/blog/2017/2017-12-10/post/AHjCK1A9fE-617.webp 617w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/post/AHjCK1A9fE-617.png" alt="" width="617" height="186"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/AHjCK1A9fE-617.avif 617w"><source type="image/webp" srcset="/blog/2017/2017-12-10/AHjCK1A9fE-617.webp 617w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/AHjCK1A9fE-617.png" alt="" width="617" height="186"></picture>
 <p>On the screen that appears next you will need to make the following changes:</p>
 <ul>
 <li>Select the type of device you would like to configure (in our case this will be the DHT module)</li>
@@ -343,14 +349,16 @@ pre[class*="language-diff-"] {
 <li>Choose the decimals (optionally the formula for publishing the collected data).</li>
 <li>Finally give the values a friendly name (this will form part of the topic when publishing over MQTT).</li>
 </ul>
-<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/post/V5FV9IoTDU-721.avif 721w"><source type="image/webp" srcset="/blog/2017/2017-12-10/post/V5FV9IoTDU-721.webp 721w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/post/V5FV9IoTDU-721.png" alt="" width="721" height="569"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/V5FV9IoTDU-721.avif 721w"><source type="image/webp" srcset="/blog/2017/2017-12-10/V5FV9IoTDU-721.webp 721w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/V5FV9IoTDU-721.png" alt="" width="721" height="569"></picture>
 <p>Click the submit button to save your changes, and if all went well you should start seeing the collected temperature data being displayed.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/post/qfmLJW7TWU-878.avif 878w"><source type="image/webp" srcset="/blog/2017/2017-12-10/post/qfmLJW7TWU-878.webp 878w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/post/qfmLJW7TWU-878.png" alt="" width="878" height="112"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/qfmLJW7TWU-878.avif 878w"><source type="image/webp" srcset="/blog/2017/2017-12-10/qfmLJW7TWU-878.webp 878w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/qfmLJW7TWU-878.png" alt="" width="878" height="112"></picture>
+
 <h2 id="viewing-published-data">Viewing Published Data</h2>
 <p>As mentioned above the values entered in when configuring your ESP and the DHT11 device are used to generate a unique MQTT Topic for publishing the collected temperature data.</p>
 <p>You can use a tool like <a href="https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=en">MQTTLens</a> to spy on your generated topic, or if you are unsure of what it maybe you can spy on the # global topic. After a while you should see some information being published from your device (mine is every 30 seconds according to my configuration).</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/post/YnmZq4zDcS-375.avif 375w"><source type="image/webp" srcset="/blog/2017/2017-12-10/post/YnmZq4zDcS-375.webp 375w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/post/YnmZq4zDcS-375.png" alt="" width="375" height="233"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/YnmZq4zDcS-375.avif 375w"><source type="image/webp" srcset="/blog/2017/2017-12-10/YnmZq4zDcS-375.webp 375w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/YnmZq4zDcS-375.png" alt="" width="375" height="233"></picture>
 <p>The published values are determined by the following formula <code>/%sysname%/%tskname%/%valname%</code>, so that becomes <code>/ESP03/dht/Temperature</code> and <code>/ESP03/dht/Humidity</code>. The formula can be configured globally on the ESP via the main configuration screen.</p>
+
 <h2 id="hass-integration">HASS Integration</h2>
 <p>The last thing I would like to do is to display the collected temperature and humidity information in Home Assistant (HASS) for easy viewing and historical graphing. To do this I will need to create a couple of MQTT sensors in HASS with the following configuration:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
@@ -365,16 +373,17 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">qos</span><span class="token punctuation">:</span> <span class="token number">0</span>
   <span class="token key atrule">unit_of_measurement</span><span class="token punctuation">:</span> <span class="token string">"%"</span></code></pre>
 <p>After a quick reboot (or reload of the core configuration) I am able to see the published information easily on my home screen...</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/post/-Ae4xRAh8O-184.avif 184w"><source type="image/webp" srcset="/blog/2017/2017-12-10/post/-Ae4xRAh8O-184.webp 184w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/post/-Ae4xRAh8O-184.png" alt="" width="184" height="103"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/-Ae4xRAh8O-184.avif 184w"><source type="image/webp" srcset="/blog/2017/2017-12-10/-Ae4xRAh8O-184.webp 184w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/-Ae4xRAh8O-184.png" alt="" width="184" height="103"></picture>
 <p>... and after a while I can view all the collected data points over time.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/post/zlnwLwnyPP-431.avif 431w"><source type="image/webp" srcset="/blog/2017/2017-12-10/post/zlnwLwnyPP-431.webp 431w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/post/zlnwLwnyPP-431.png" alt="" width="431" height="319"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/zlnwLwnyPP-431.avif 431w"><source type="image/webp" srcset="/blog/2017/2017-12-10/zlnwLwnyPP-431.webp 431w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/zlnwLwnyPP-431.png" alt="" width="431" height="319"></picture>
+
 <h2 id="diagrams">Diagrams</h2>
 <p>The below diagram shows you the most common pin mapping of 90% of the ESP8266 boards when using the ESPEasy firmware.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/post/dh8mVm1-ov-616.avif 616w"><source type="image/webp" srcset="/blog/2017/2017-12-10/post/dh8mVm1-ov-616.webp 616w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/post/dh8mVm1-ov-616.png" alt="" width="616" height="519"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-12-10/dh8mVm1-ov-616.avif 616w"><source type="image/webp" srcset="/blog/2017/2017-12-10/dh8mVm1-ov-616.webp 616w"><img loading="lazy" decoding="async" src="/blog/2017/2017-12-10/dh8mVm1-ov-616.png" alt="" width="616" height="519"></picture>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2017/2017-10-30/post/">Arduino Basics: LDR</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2017/2017-10-30/">Arduino Basics: LDR</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="text-end">Next<br><a href="/blog/2018/2018-01-08/post/">Installing Mosquitto on (DietPi / Raspbian / Debian)</a></span>
@@ -394,7 +403,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-12-10/post/` was built on 2025-07-22T21:22:51.708Z -->
+		<!-- This page `/blog/2017/2017-12-10/` was built on 2025-07-22T21:39:56.567Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
