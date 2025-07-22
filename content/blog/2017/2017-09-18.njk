@@ -1,0 +1,96 @@
+---
+title: Monitoring Phone Battery with OwnTracks & Home Assistant
+date: 2017-09-18
+tags: [home assistant]
+logo: hass.png
+---
+
+<p>Following on from a <a href="/blog/2017/2017-09-16/">previous post</a> I would like to extend the functionality of <a href="https://www.home-assistant.io/">Home Assistant</a> using the <a href="https://www.home-assistant.io/integrations/owntracks/">OwnTracks</a> plugin to get an idea of how full my phone battery is. This information could be used to send an alert to you should your battery drop too low and you are at home, or let you know that your spouse&#39;s battery is low when they are out and about (the only limit here is your imagination).</p>
+<p>In order to accomplish this I will need to know a couple of things, mainly what data is being sent by OwnTracks, and how to get at this bits of it I want.</p>
+
+<h2 id="owntracks-payload">OwnTracks payload</h2>
+<p>First we will need to see exactly what is being sent over the wire when OwnTracks &quot;calls home&quot; and identify where in that payload the phone battery level is stored. To do this I made use of my <a href="/blog/2017/2017-08-29/">MQTT dumper application</a> filtering it to the owntracks/# publications, I forced my phone to check in and recoded the data sent over the wire:</p>
+{% highlight "json" %}
+{
+  "_type": "location",
+  "tid": "xt",
+  "acc": 22,
+  "batt": 15,
+  "conn": "w",
+  "lat": xxx,
+  "lon": xxx,
+  "tst": 1505225118,
+  "_cp": true
+}
+{% endhighlight %}
+<p>It seems that the batt property is what we are looking for, and a quick cross-check with the <a href="https://owntracks.org/booklet/tech/json/">OwnTracks booklet</a> confirmed my suspicion:</p>
+<img src="images/09/18-001.png" alt="" />
+<blockquote>
+<p>Something to note here &quot;iOS,Android/integer/percent/optional&quot;</p>
+</blockquote>
+<p>There is a possibility that this value won&#39;t always be there, and this is due to the fact that you can enable / disable advanced reporting in the application. We will need to make sure that this case is catered for when we attempt to collect this information.</p>
+
+<h2 id="tracking-battery-usage">Tracking battery usage</h2>
+<p>In order to store and present this information in Home Assistant we will need to make use of a sensor, more specifically the <a href="https://www.home-assistant.io/integrations/sensor.mqtt">mqtt sensor</a>. This sensor will allow us to subscribe to any MQTT topic and collect data from it, with the added bonus of being able to manipulate this data using the <a href="https://www.home-assistant.io/docs/configuration/templating/">templating engine</a> built into Home Assistant.</p>
+<p>I created this sensor in my config/sensor.yaml file, with the following config:</p>
+{% highlight "yaml" %}
+- platform: mqtt
+  state_topic: owntracks/xxx/xxx
+  name: Phone Battery (Richard)
+  unit_of_measurement: "%"
+  value_template: ...
+{% endhighlight %}
+<p>Most of it is self-explanatory with the exception of the value_template, which I am sure most of you can work out. Basically this template first checks that we have some battery information to extract (value_json.batt) and providing we do it will extract it, should there be no information to extract it will use the last known value of the battery. I found that sometimes OwnTracks would check in without sending battery information, this is just a safeguard against that.</p>
+<p>After restarting Home Assistant, and checking in with my phone I am able to see my battery information!</p>
+<img src="images/09/18-002.png" alt="" />
+
+<h2 id="tracking-wifi-mobile">Tracking WiFi / Mobile</h2>
+<p>Using the same approach as above I was able to add the following sensor to Home Assistant to track what type of connection my phone was using to call home (either WiFi or mobile data). This information could be used to alert you when you are at home and not on the WiFi network, and possibly save you some money :).</p>
+<p>This sensor is configured as below, using very similar logic to the battery code:</p>
+{% highlight "yaml" %}
+- platform: mqtt
+  state_topic: owntracks/niemandr/hwnxt
+  name: Connection (Richard)
+  value_template: ...
+{% endhighlight %}
+<p>After another restart of Home Assistant (notice a trend here) I was able to see my WiFi / mobile connection information.</p>
+<img src="images/09/18-003.png" alt="" />
+
+<h2 id="tracking-gps-accuracy">Tracking GPS accuracy</h2>
+<p>The last bit of useful data from the &quot;call home&quot; payload of OwnTracks is the GPS accuracy value. Personally I have yet to think of a useful flow involving this data, but I am collecting it nonetheless just in case.</p>
+<p>To track this information you will need to add another sensor with the following configuration:</p>
+{% highlight "yaml" %}
+- platform: mqtt
+  state_topic: owntracks/niemandr/hwnxt
+  name: GPS Accuracy
+  value_template: ...
+{% endhighlight %}
+<p>After restarting Home Assistant I can now see my GPS accuracy in meters I believe:</p>
+<img src="images/09/18-004.png" alt="" />
+
+<h2 id="create-a-nice-card">Create a nice card</h2>
+<p>To better display this information on the Home Assistant UI (and to stop cluttering up the top bar) I like to group related values together in cards (or groups). To do this I added the following group to my config/groups.yaml file:</p>
+{% highlight "yaml" %}
+richard_phone_group:
+  name: Richard Phone
+  entities:
+    - sensor.connection_richard
+    - sensor.gps_accuracy
+    - sensor.phone_battery_richard
+    - device_tracker.niemandr_hwnxt
+{% endhighlight %}
+<p>Restart Home Assistant and voila:</p>
+<img src="images/09/18-005.png" alt="" />
+<p>If you want to you can create a new TAB with the below view for quick access to your mobile data should you want to track multiple users:</p>
+{% highlight "yaml" %}
+phone_overview_group:
+  name: Phones Overview
+  view: yes
+  icon: mdi:cellphone-android
+  entities:
+    - device_tracker.niemandr_hwnxt
+    - group.phone_richard_group
+{% endhighlight %}
+<p>Not too bad for 20 min of effort</p>
+<img src="images/09/18-006.png" alt="" />
+<p>Hopefully you found this post useful and as always I look forward to any comments, questions and suggestions below.</p>
