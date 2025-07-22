@@ -1,0 +1,108 @@
+---
+title: Tracking User Presence (HASS and OwnTracks)
+date: 2017-09-13
+tags: [home assistant]
+logo: hass.png
+---
+
+<p><a href="https://www.home-assistant.io/">Home Assistant</a> (<code>Hass</code>) is hands down one of the best home automation frameworks (HUBS) I have used, and offers support for over 800 devices with that number growing almost on a daily basis. It not only presents all your collected device data into a single portal, but offers a lot of automation through their scripting &amp; templating engine. After spending about a week diving into the features of Home Assistant I decided to tear everything down and start from scratch documenting my journey in order to help others get started with it.</p>
+<p>At the moment my main focus is around security and knowing what is going on at home when we are not around. I have built a couple of sensory nodes based on an ESP8266 development board (more to come in a later post) that now live in key areas of the house monitoring movement, doors &amp; windows, temperature, humidity, etc. These devices publish their information to my MQTT broker which is being monitored by Home Assistant. My main intent here is to have Home Assistant send me notifications on my mobile phone when there is movement around the house and we are not there. For this to happen I somehow need to let Home Assistant know when we are home, and when we are away so it is able to take the appropriate action when movement is detected, Enter OwnTracks.</p>
+<blockquote>
+<p>OwnTracks allows you to keep track of your own location. You can build your private location diary or share it with your family and friends. OwnTracks is open-source and uses open protocols for communication so you can be sure your data stays secure and private.</p>
+</blockquote>
+<p>I installed the client on my phone,configured it to talk to my home MQTT server, and making use of my <a href="/blog/2017/2017-08-29/">MQTT dumper application</a> confirmed that it was indeed able to publish my location correctly. Now comes the fun part of getting everything up and running on Home Assistant.</p>
+<h2 id="getting-your-location">Getting your location</h2>
+<p>Home Assistant needs to know your home location in order to determine whether you are home or not, and for the most part the installer does a pretty good job at guessing your coordinates, however you will need to refine them a bit to ensure that everything works properly.</p>
+<p>To do this you will need the <code>latitude</code> and <code>longitude</code> of your home location. For mine I made use of the <a href="https://www.latlong.net/">following site</a> to work this out, but you can also do this via Google maps by pulling the values out of the URL - the site was a bit easier IMO.</p>
+<p>Once you have your coordinates you will need to add them to the configuration.yaml under the homeassistant configuration property as shown below:</p>
+{% highlight "yaml" %}
+homeassistant:
+  latitude: xxx
+  longitude: xxx
+{% endhighlight %}
+
+<h2 id="home-assistant-and-mqtt">Home Assistant and MQTT</h2>
+<p>Next you will need to make sure that Home Assistant can talk to your MQTT server. To do this you will need to add the appropriate configuration to your configuration.yaml again:</p>
+{% highlight "yaml" %}
+mqtt:
+  broker: 192.168.0.5
+  port: 1883
+  username: xxx
+  password: xxx
+{% endhighlight %}
+<p>Provided all your settings are correct, Home Assistant should be able to talk to your MQTT server after a restart.</p>
+
+<h2 id="setup-owntracks">Setup OwnTracks</h2>
+<p>Next you will need to tell Home Assistant to track your devices via owntracks by adding in the below configuration lines into your configuration.yaml again.</p>
+{% highlight "yaml" %}
+device_tracker:
+  - platform: owntracks
+    max_gps_accuracy: 20
+{% endhighlight %}
+<p>By default this will assume that you are using MQTT to track your mobile devices, and after restarting the Home Assistant service (application) you should see a new file called known_devices.yaml in your configuration directory. This file will contain an entry for each device that it discovered along with some default values for some of the key properties:</p>
+{% highlight "yaml" %}
+niemandr_raesphone:
+  hide_if_away: false
+  icon:
+  mac:
+  name: niemandr
+  picture:
+  track: true
+  vendor:
+{% endhighlight %}
+<p>You can customise the name of the device (in my case Richard) and add in either a URL or file path (Home Assistant will need read access to the file) to customise the icon displayed for the user:</p>
+{% highlight "yaml" %}
+niemandr_richphone:
+  hide_if_away: false
+  icon:
+  mac:
+  name: Richard
+  picture: https://i.imgur.com/EItQMfw.png
+  track: true
+  vendor:
+{% endhighlight %}
+<p>After a quick restart of Home Assistant I can see my avatar, and an AWAY tag by my name (I was setting up remotely) - success!</p>
+<img src="./images/09/13-001.png" alt="" />
+
+<h2 id="zoning">Zoning</h2>
+<p>As it stands Home Assistant now knows when you are home and away, nothing more. We could leave it here, but it would be nice to know when I am at work also as there may be some automation tasks I would like to trigger when I get to work (not that I can think of any at the moment). To do this we will need to set up some <a href="https://www.home-assistant.io/integrations/zone/">zones</a>.</p>
+<p>We are going to define these in a separate file to make management of zones easier, and reference that file in our configuration.yaml by adding the following line somewhere near the bottom of it:</p>
+{% highlight "yaml" %}
+zone: !include zones.yaml
+{% endhighlight %}
+<p>This basically declares a zone configuration node and injects the contents of the referenced file zones.yaml in place of the import statement. Let&#39;s create the zones.yaml file and define all the zones you need as shown below:</p>
+{% highlight "yaml" %}
+- name: Work
+  latitude: xxx
+  longitude: xxx
+  radius: 250
+  icon: mdi:briefcase
+
+- name: Not Work
+  latitude: xxx
+  longitude: xxx
+  radius: 250
+  icon: mdi:briefcase
+{% endhighlight %}
+<p>Save the file, restart Home Assistant and if all went well you should see your new zone reflecting under your location avatar.</p>
+<img src="./images/09/13-002.png" alt="" />
+
+<h3 id="troubleshooting">Troubleshooting</h3>
+<p>I actually had a lot of trouble getting this up and running initially - Home Assistant was refusing to update my location no matter what I did. I spent about 10 min redefining my zones, tweaking the radius, reloading the application to no success, it was only after configuring the logger to be more verbose that the issue became apparent. To enable <a href="https://www.home-assistant.io/integrations/logger/">logging</a> add the following to your configuration.yaml file:</p>
+{% highlight "yaml" %}
+logger:
+  default: debug
+{% endhighlight %}
+<p>After a restart the issue was plain as day!</p>
+{% highlight "text" %}
+2017-09-12 08:22:42 INFO (MainThread) [homeassistant.components.device_tracker.owntracks] Ignoring location update because expected GPS accuracy 25.0 is not met: {"_type":"location","tid":"ne","acc":32,"batt":79,"conn":"w","lat":xxx,"lon":xxx,"tst":1505194769}
+{% endhighlight %}
+<p>Blegh <code>expected GPS accuracy 25.0 is not met</code>! This was a simple fix:</p>
+{% highlight "yaml" %}
+device_tracker:
+  - platform: owntracks
+    max_gps_accuracy: 35
+{% endhighlight %}
+<p>After a restart my wife's zone was reflecting!</p>
+<img src="./images/09/13-003.png" alt="" />
+<p>Hopefully this saves you some time with your home setup. As always feel free to comment or ask any questions you may have below.</p>

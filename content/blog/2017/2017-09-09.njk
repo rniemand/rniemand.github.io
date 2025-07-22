@@ -8,7 +8,7 @@ logo: hass.png
 <p>In this post I will cover some simple steps on how to get <a href="https://www.home-assistant.io/">Home Assistant</a> as a service on windows. I will be making use of a nifty utility called <a href="https://nssm.cc/">nssm</a> (the <code>Non-Sucking Service Manager</code>) which lives up to its name. Before you begin you will need to have the following prerequisites met:</p>
 <ul>
 <li><a href="https://www.python.org/">Python 3.x</a> installed (do not use 2.x)</li>
-<li><a href="/blog/2017/2017-09-11/post1/">netifaces and Microsoft Visual C++ 14.0</a></li>
+<li><a href="/blog/2017/2017-09-08/">netifaces and Microsoft Visual C++ 14.0</a></li>
 <li><a href="https://www.home-assistant.io/">Home Assistant</a> installed under some elevated account<ul>
 <li>In my case I am using the Administrator account :/</li>
 </ul>
@@ -29,7 +29,7 @@ nssm.exe install
 <p>On the Application tab populate the following fields:</p>
 <ul>
 <li><strong>Path</strong>: <code>C:\Users\&lt;user&gt;\AppData\Local\Programs\Python\Python36-32\Scripts\hass.exe</code></li>
-<li><strong>Startup directory</strong>: C:\Users\<user>\AppData\Roaming.homeassistant</li>
+<li><strong>Startup directory</strong>: C:\Users\&lt;user&gt;\AppData\Roaming.homeassistant</li>
 <li><strong>Service name</strong>: HomeAssistant</li>
 </ul>
 <img src="./images/09/11-006.png" alt="" />
