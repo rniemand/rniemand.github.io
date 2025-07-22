@@ -1,0 +1,108 @@
+---
+title: Monitoring a Door with Home Assistant
+date: 2017-10-19
+tags: [home assistant]
+logo: hass.png
+---
+
+<p>Today I would like to cover setting up alerts through Home Assistant when my kitchen door is opened. In the future this will be used with the built in presence detection offered by <a href="https://www.home-assistant.io/">Home Assistant</a> to only allow these alerts through when I am not at home, or it&#39;s late at night. For now however, I am going to start off with the simplest part (the sensor and alerting).</p>
+
+<h2 id="the-basic-concept">The Basic Concept</h2>
+<p>We are currently renting the house that we stay in so any modifications that I make need to be reversible once we leave. Thankfully we already have an alarm system installed which I am going to be piggy-backing off for this modification. In theory the idea is pretty straight forward:</p>
+<p>I am going to be <code>3D printing</code> an enclosure for a <a href="https://en.wikipedia.org/wiki/Reed_switch">reed switch</a> which will be stuck onto the existing home alarm contacts - this will allow me to make use of the already installed magnets for the alarm system.</p>
+<p>I have posted the relevant model files on Thingiverse (<a href="https://www.thingiverse.com/thing:2542138">you can grab them here</a>) should you want to print and use them yourself. At the time all I had access to was speaker wire so the enclosure is a lot bigger than I would have liked it to be, however I will be updating the design going forward once my 0.2mm wire arrives from China. The printed enclosure came out pretty well, and the reed switch fits nice and snugly.</p>
+<img src="./images/10/19-001.jpg" alt="" />
+<p>Next up I designed a simple enclosure for a buck converter and an <a href="https://www.banggood.com/5pcs-D1-Mini-Lite-V1_0_0-WIFI-Internet-Of-Things-Development-Board-Based-ESP8285-1MB-FLASH-p-1295715.html?imageAb=2&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">ESP8266 D1 Mini</a> module to sit in. Once printed everything fits nice and neatly into the enclosure and is held in place by some spacers. I will need to modify the design a bit though as soldering so close to the walls of the box was a bit challenging.</p>
+<img src="./images/10/19-002.jpg" alt="" />
+<p>Because of the small footprint of the box it can easily be placed anywhere (and secured with double sided tape or presstic). Powering the device is as simple as plugging in a 5v mini USB cable into the hole added to the side of the case.</p>
+
+<h2 id="code-hardware-setup">Code &amp; Hardware Setup</h2>
+<p>In one of my <a href="/blog/2017/2017-09-19/post/">previous posts</a> I created a <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2017/Gate%20Alarm">simple arduino sketch</a> to monitor our main gate, and with some minor tweaks to the code it will work perfectly for our application. You can grab the Arduino sketch <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2017/Gate%20Alarm">from here</a>, and follow the below instructions to get it up and running on your Home Automation setup.</p>
+<p>The only real changes required to the sketch is configuring the WiFi and MQTT Broker settings, this can be done by changing the values highlighted below in the sketch. In addition to the connection options you may want to play around with the DEBUG and REEDSW_PIN values to track down any issues you may run into with the sketch on your home network.</p>
+<img src="./images/10/19-003.png" alt="" />
+<p>To upload the sketch simply use the <a href="https://www.arduino.cc/en/software">Arduino IDE</a> with the relevant board selected, once uploaded (and with debugging enabled) you can open the Arduino serial monitor to confirm that the device was able to connect to your WiFi network.</p>
+<img src="./images/10/19-004.png" alt="" />
+<p>The sketch will publish state changes for the reed switch on the <code>security/reed_switch/&lt;node&gt;</code> topic, and listen on the <code>cmd/&lt;node&gt;</code> topic for commands. At the moment there is only support for the <code>update_all</code> command.</p>
+<blockquote>
+<p><strong>Note</strong>: The value of node will be derived from the MQTT_CLIENT_NAME property</p>
+</blockquote>
+<p>To issue a test command to the device open up any MQTT client (in my case I am using <a href="https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=en">MQTTLens</a>) and send an <code>update_all</code> command to the client as shown below:</p>
+<img src="./images/10/19-005.png" alt="" />
+<p>It should reply with the current state of the reed switch.</p>
+<img src="./images/10/19-006.png" alt="" />
+<p>For installation of the switches I made use of <a href="https://diy.bostik.com/en-ZA">prestik</a> to secure my reed switch on top of the existing one used for our home alarm system, but for a more permanent solution you may want to look at tapping into your home alarm control panel to make full use of all your sensors / <a href="https://en.wikipedia.org/wiki/Passive_infrared_sensor">PIRs</a>.</p>
+<img src="./images/10/19-007.jpg" alt="" />
+
+<h2 id="home-assistant-configuration">Home Assistant Configuration</h2>
+<p>The Home Assistant portion of this setup is simple enough and can be accomplished with the following steps:</p>
+<ul>
+<li>Create an <a href="https://www.home-assistant.io/integrations/binary_sensor.mqtt">MQTT Binary Sensor</a></li>
+<li>Setup a notification channel (in my case <a href="https://www.home-assistant.io/integrations/pushover/">Pushover</a>)</li>
+<li>Create an <a href="https://www.home-assistant.io/docs/automation/">Automation rule</a> to alert on state change</li>
+</ul>
+
+<h3 id="mqtt-binary-sensor">MQTT Binary Sensor</h3>
+<p>When it comes to sensors in Home Assistant I prefer to create a file per sensor and include them using the below statement in my main configuration file <code>.homeassistant/configuration.yaml</code>:</p>
+{% highlight "yaml" %}
+binary_sensor: !include_dir_list config/binary_sensors/
+{% endhighlight %}
+<p>I created a new binary sensor file called <code>config\binary_sensors\reed_kitchen_door.yaml</code> which listens for changes over the <code>security/reed_switch/node_kitchen</code> topic as shown below:</p>
+{% highlight "yaml" %}
+platform: mqtt
+state_topic: "security/reed_switch/node_kitchen"
+name: "Kitchen Door"
+qos: 0
+payload_on: "OPEN"
+payload_off: "CLOSED"
+device_class: opening
+{% endhighlight %}
+
+<h3 id="notifications">Notifications</h3>
+<p>The notification channel is equally as simple, I created a new file called <code>config/notify.yaml</code> and entered in my current pushover configuration...</p>
+{% highlight "yaml" %}
+- name: pushover
+  platform: pushover
+  api_key: ABCDEFGHJKLMNOPQRSTUVXYZ
+  user_key: ABCDEFGHJKLMNOPQRSTUVXYZ
+{% endhighlight %}
+<p>... and referenced this file in my main <code>configuration.yaml</code> with the below import statement:</p>
+{% highlight "yaml" %}
+notify: !include config/notify.yaml
+{% endhighlight %}
+<p>We now have a new notification channel called pushover to send messages over.</p>
+
+<h3 id="automation-rule">Automation Rule</h3>
+<p>Lastly we need to set up an automation rule to fire off a notification each time the reed switch state changes from off to on. When this occurs we will push a notification over our pushover channel.</p>
+<p>I created a new file called <code>config/automations.yaml</code> with the below rule:</p>
+{% highlight "yaml" %}
+- alias: Monitor Kitchen Door
+  trigger:
+    platform: state
+    entity_id: binary_sensor.kitchen_door
+    to: "on"
+    from: "off"
+  action:
+    service: notify.pushover
+    data:
+      message: "Kitchen door is open"
+      title: "Kitchen Door"
+      target: ""
+{% endhighlight %}
+<p>This rule monitors the state of the reed switch and should its state change from off to on it will send a notification via the notify.pushover service.</p>
+<p>After restarting Home Assistant we can now see our new automation rule.</p>
+<img src="./images/10/19-008.png" alt="" />
+
+<h2 id="testing-it-all-out">Testing it all out</h2>
+<p>The only thing left to do is to test it all out, there are 2 ways of doing this:</p>
+<ul>
+<li><strong>Simple</strong> Open the door and wait for our alert</li>
+<li><strong>Hard</strong> Fake the door state via a MQTT message</li>
+</ul>
+<p>I went with the simple approach and just opened the door, almost immediately the door&#39;s state was reflected on its panel...</p>
+<img src="./images/10/19-009.png" alt="" />
+<p>... and a couple of seconds later I received a push message on my phone...</p>
+<img src="./images/10/19-010.png" alt="" />
+<p>... which is reflected on my Pebble also</p>
+<img src="./images/10/19-011.jpg" alt="" />
+<p>It seems that everything is working as expected, and with minimal hardware / software changes I now know when someone opens my kitchen door. In the future I plan to expand this out to only notify me during certain times (or when I am not at home), but for now this will suffice.</p>
+<p>I hope that you found this post helpful and as always I welcome any comments / feedback you may have below.</p>
