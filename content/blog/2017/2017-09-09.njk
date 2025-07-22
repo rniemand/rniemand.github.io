@@ -1,0 +1,59 @@
+---
+title: Running Home Assistant as a Windows Service
+date: 2017-09-09
+tags: [home assistant]
+logo: hass.png
+---
+
+<p>In this post I will cover some simple steps on how to get <a href="https://www.home-assistant.io/">Home Assistant</a> as a service on windows. I will be making use of a nifty utility called <a href="https://nssm.cc/">nssm</a> (the <code>Non-Sucking Service Manager</code>) which lives up to its name. Before you begin you will need to have the following prerequisites met:</p>
+<ul>
+<li><a href="https://www.python.org/">Python 3.x</a> installed (do not use 2.x)</li>
+<li><a href="/blog/2017/2017-09-11/post1/">netifaces and Microsoft Visual C++ 14.0</a></li>
+<li><a href="https://www.home-assistant.io/">Home Assistant</a> installed under some elevated account<ul>
+<li>In my case I am using the Administrator account :/</li>
+</ul>
+</li>
+</ul>
+
+<h2 id="initial-service-installation">Initial Service Installation</h2>
+<p>The first thing you will need to do is find the location of <code>hass.exe</code> for the selected user account, in my case this was the path:</p>
+{% highlight "shell" %}
+C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32\Scripts\hass.exe
+{% endhighlight %}
+<p>Take note of the path for <code>hass.exe</code>, then download the latest release of <a href="https://nssm.cc/download">nssm</a> and place the <code>nssm.exe</code> in a location where it won&#39;t be deleted (you will need the exe for the lifetime of the service - I placed mine in <code>p:\tools\nssm.exe</code>). Open an elevated command prompt, navigate to the folder containing <code>nssm.exe</code> and run the below command:</p>
+{% highlight "shell" %}
+nssm.exe install
+{% endhighlight %}
+<p>You will be presented with the following dialog:</p>
+<img src="./images/09/11-005.png" alt="" />
+<p>On the Application tab populate the following fields:</p>
+<ul>
+<li><strong>Path</strong>: <code>C:\Users\&lt;user&gt;\AppData\Local\Programs\Python\Python36-32\Scripts\hass.exe</code></li>
+<li><strong>Startup directory</strong>: C:\Users\<user>\AppData\Roaming.homeassistant</li>
+<li><strong>Service name</strong>: HomeAssistant</li>
+</ul>
+<img src="./images/09/11-006.png" alt="" />
+<p>On the Log on tab, ensure that you configure the service to run using the selected account you used to install Home Assistant (in my case this is the Administrator account).</p>
+<img src="./images/09/11-007.png" alt="" />
+<p>Feel free to add some additional context to the Details tab, in my case I set it to the following:</p>
+<img src="./images/09/11-008.png" alt="" />
+<p>Click Install Service to create the initial service (mine says Edit as I only took screenshots after getting it up and running). You should now have your newly installed Home Assistant service.</p>
+<img src="./images/09/11-009.png" alt="" />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>At this point I tried running the service, only to be greeted with absolutely nothing in my browser. Thankfully nssm comes with a nifty I/O feature that allows you to redirect the stdin, stdout and stderr streams to / from files on disk. To enable this logging you will need to edit your home assistant service by running the following command:</p>
+{% highlight "shell" %}
+nssm edit HomeAssistant
+{% endhighlight %}
+<p>You will be presented with a slightly modified install screen where you can make changes to the service, more specifically the following changes on the I/Otab:</p>
+<ul>
+<li><strong>Output</strong>: <code>C:\Users\&lt;user&gt;\Desktop\output.log</code></li>
+<li><strong>Error</strong>: <code>C:\Users\&lt;user&gt;\Desktop\error.log</code></li>
+</ul>
+<img src="./images/09/11-010.png" alt="" />
+<p>Save your changes and restart the Home Assistant service while keeping an eye on your log files. I like to make use of <a href="https://www.baremetalsoft.com/baretail/">baretail</a> for this as it provides real time updates as the log file changes. After a few seconds my initial problem became clear:</p>
+<img src="./images/09/11-011.png" alt="" />
+<p>The Home Assistant instance I was running was not running under the correct user context hence the welcome message being displayed (not to worry this is corrected in the installation section above). After editing my service via nssm everything was working perfectly:</p>
+<img src="./images/09/11-012.png" alt="" />
+<p>Hopefully this saves you some time.</p>
+<p>Please feel free to leave any comments, suggestions or improvements below as they are appreciated.</p>
