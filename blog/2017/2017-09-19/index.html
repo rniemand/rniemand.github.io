@@ -319,6 +319,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2017-09-19">19 September 2017</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#the-idea">The idea</a></li><li><a href="#the-arduino-code">The Arduino code</a></li><li><a href="#the-enclosure">The enclosure</a></li><li><a href="#the-binary-sensor">The binary sensor</a></li><li><a href="#grouping-it">Grouping it</a></li><li><a href="#creating-an-alert">Creating an alert</a></li></ol>
+      </div>
+
 
 <p>Today I would like to cover some simple security related monitoring in Home Assistant using the below components for under $5.00:</p>
 <ul>
@@ -329,43 +334,45 @@ pre[class*="language-diff-"] {
 <li><strong>Wire</strong> any reasonably gauged wire should do</li>
 <li>(optional) <a href="https://www.banggood.com/Anet-A8-DIY-3D-Printer-Kit-1_75mm-or-0_4mm-Support-ABS-or-PLA-or-HIPS-p-1130694.html?imageAb=2&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">3D printer</a> ~$220 (or just get someone to print the enclosure for you) - <a href="/blog/2017/2017-08-31/">I reviewed the Anet A8 here</a></li>
 </ul>
+
 <h2 id="the-idea">The idea</h2>
-<p>I would like to receive push notifications as soon as my gate opens at home, so I can tell when my wife gets home in the afternoon, and to be alerted at night should someone try to lift it off the runners or force it open. I wanted to create a self-contained unit that I could print with my 3D printer, hide in the gate's motor enclosure and power it off the 12v backup battery of the gate.</p>
+<p>I would like to receive push notifications as soon as my gate opens at home, so I can tell when my wife gets home in the afternoon, and to be alerted at night should someone try to lift it off the runners or force it open. I wanted to create a self-contained unit that I could print with my 3D printer, hide in the gate&#39;s motor enclosure and power it off the 12v backup battery of the gate.</p>
 <p>This will be monitored as a <a href="https://www.home-assistant.io/integrations/binary_sensor.mqtt">MQTT binary sensor</a> in Home Assistant, where a number of rules can be configured to fire upon the state change of the entity.</p>
+
 <h2 id="the-arduino-code">The Arduino code</h2>
 <p>I have pushed the required Arduino code to my <a href="https://github.com/rniemand/code-samples/tree/main/blog-posts/2017/Arduino%20Gate%20Alarm">github repository</a> under the name gate-alarm. The code is pretty simple, and should take only a few seconds to customize to your home network. The only changes you will need to make are shown below.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/2dm_EX2j6o-595.avif 595w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/2dm_EX2j6o-595.webp 595w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/2dm_EX2j6o-595.png" alt="" width="595" height="171"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/2dm_EX2j6o-595.avif 595w"><source type="image/webp" srcset="/blog/2017/2017-09-19/2dm_EX2j6o-595.webp 595w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/2dm_EX2j6o-595.png" alt="" width="595" height="171"></picture>
 <ul>
-<li>Configure your WiFi settings
-<ul>
+<li>Configure your WiFi settings<ul>
 <li>Enter in your WiFi name for <code>WLAN_SSID</code></li>
 <li>Enter in your WiFi password <code>WLAN_PASS</code></li>
 </ul>
 </li>
-<li>Configure your MQTT server settings
-<ul>
+<li>Configure your MQTT server settings<ul>
 <li>At the moment the code does not support <code>TLS</code></li>
 <li>Ensure that you change the <code>MQTT_CLIENT_NAME</code></li>
 </ul>
 </li>
 </ul>
 <p>Once you have made the appropriate configuration changes for your home setup, upload the sketch to the ESP using the <a href="https://www.arduino.cc/en/software">Arduino software</a> and you are good to go.</p>
+
 <h2 id="the-enclosure">The enclosure</h2>
 <blockquote>
 <p><strong>Note</strong>: This step is optional. Thingiverse files <a href="https://www.thingiverse.com/thing:2542138">here</a></p>
 </blockquote>
-<p>Powering it off the battery was a lot simpler than using the 14v regulated power that comes into the main controller board of the gate, and less complex to hook up. The ESP8266 I have chosen requires 3.3v to operate and thus requires a buck converter to step down the 12-14v supplied by the gate's battery.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/7Wu2RnzeJp-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/7Wu2RnzeJp-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/7Wu2RnzeJp-800.jpeg" alt="" width="800" height="564"></picture>
+<p>Powering it off the battery was a lot simpler than using the 14v regulated power that comes into the main controller board of the gate, and less complex to hook up. The ESP8266 I have chosen requires 3.3v to operate and thus requires a buck converter to step down the 12-14v supplied by the gate&#39;s battery.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/7Wu2RnzeJp-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/7Wu2RnzeJp-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/7Wu2RnzeJp-800.jpeg" alt="" width="800" height="564"></picture>
 <p>The print came out pretty good, and all the components fit pretty snugly too.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/_DdgozYjbG-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/_DdgozYjbG-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/_DdgozYjbG-800.jpeg" alt="" width="800" height="549"></picture>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/7IF4R22wg7-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/7IF4R22wg7-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/7IF4R22wg7-800.jpeg" alt="" width="800" height="650"></picture>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/Tx4xSJbOGL-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/Tx4xSJbOGL-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/Tx4xSJbOGL-800.jpeg" alt="" width="800" height="235"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/_DdgozYjbG-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/_DdgozYjbG-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/_DdgozYjbG-800.jpeg" alt="" width="800" height="549"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/7IF4R22wg7-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/7IF4R22wg7-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/7IF4R22wg7-800.jpeg" alt="" width="800" height="650"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/Tx4xSJbOGL-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/Tx4xSJbOGL-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/Tx4xSJbOGL-800.jpeg" alt="" width="800" height="235"></picture>
 <p>My wiring however, leaves a lot to be desired - and this was mainly due to the fact that I had soldered on the headers for the ESP8266 a while ago when working on another project. In the end I just broke off the one bit that was annoying me and soldered directly to the exposed pin :)</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/54sE86nzpw-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/54sE86nzpw-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/54sE86nzpw-800.jpeg" alt="" width="800" height="597"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/54sE86nzpw-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/54sE86nzpw-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/54sE86nzpw-800.jpeg" alt="" width="800" height="597"></picture>
 <p>This is what the final product looked like when all closed up:</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/v9LgKmyeAE-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/v9LgKmyeAE-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/v9LgKmyeAE-800.jpeg" alt="" width="800" height="585"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/v9LgKmyeAE-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-09-19/v9LgKmyeAE-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/v9LgKmyeAE-800.jpeg" alt="" width="800" height="585"></picture>
+
 <h2 id="the-binary-sensor">The binary sensor</h2>
-<p>Once the sketch has been uploaded you can power up the ESP using an external power source (USB or power from a battery using the buck converter). Using a tool like <a href="https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=en">MQTTLens</a> subscribed to <code>security/reed_switch/#</code> you should see a couple of messages being published by the ESP during its startup phase. If you don't see these, try restarting the device, double checking your credentials (WiFi and MQTT) or re-uploading the code.</p>
+<p>Once the sketch has been uploaded you can power up the ESP using an external power source (USB or power from a battery using the buck converter). Using a tool like <a href="https://chrome.google.com/webstore/detail/mqttlens/hemojaaeigabkbcookmlgmdigohjobjm?hl=en">MQTTLens</a> subscribed to <code>security/reed_switch/#</code> you should see a couple of messages being published by the ESP during its startup phase. If you don&#39;t see these, try restarting the device, double checking your credentials (WiFi and MQTT) or re-uploading the code.</p>
 <p>We will now create a new binary_sensor in my config/binary_sensors.yaml file as shown below:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
   <span class="token key atrule">state_topic</span><span class="token punctuation">:</span> <span class="token string">"security/reed_switch/node_kitchen"</span>
@@ -375,14 +382,14 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"CLOSED"</span>
   <span class="token key atrule">device_class</span><span class="token punctuation">:</span> opening</code></pre>
 <p>If you have not done so, you will need to reference the config/binary_sensors.yamlfile in your main configuration.yaml file with the following statement:</p>
-<pre><code>binary_sensor: !include config/binary_sensors.yaml
-</code></pre>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">binary_sensor</span><span class="token punctuation">:</span> <span class="token tag">!include</span> config/binary_sensors.yaml</code></pre>
 <p>After restarting Home Assistant we get our sensor showing up.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/vxKlafcYLU-234.avif 234w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/vxKlafcYLU-234.webp 234w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/vxKlafcYLU-234.png" alt="" width="234" height="96"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/vxKlafcYLU-234.avif 234w"><source type="image/webp" srcset="/blog/2017/2017-09-19/vxKlafcYLU-234.webp 234w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/vxKlafcYLU-234.png" alt="" width="234" height="96"></picture>
 <p>We can test that this sensor is working correctly by publishing an OPEN event on your devices channel.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/bZTIdNRw1j-458.avif 458w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/bZTIdNRw1j-458.webp 458w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/bZTIdNRw1j-458.png" alt="" width="458" height="357"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/bZTIdNRw1j-458.avif 458w"><source type="image/webp" srcset="/blog/2017/2017-09-19/bZTIdNRw1j-458.webp 458w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/bZTIdNRw1j-458.png" alt="" width="458" height="357"></picture>
 <p>If you see the icon change to the open state everything is working as expected.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/cf84vqsBUo-238.avif 238w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/cf84vqsBUo-238.webp 238w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/cf84vqsBUo-238.png" alt="" width="238" height="101"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/cf84vqsBUo-238.avif 238w"><source type="image/webp" srcset="/blog/2017/2017-09-19/cf84vqsBUo-238.webp 238w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/cf84vqsBUo-238.png" alt="" width="238" height="101"></picture>
+
 <h2 id="grouping-it">Grouping it</h2>
 <p>I prefer having all my sensors appear as cards in Home Assistant, so I added the following group definition in my config/groups.yaml file:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">security_kitchen_group</span><span class="token punctuation">:</span>
@@ -390,7 +397,7 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">entities</span><span class="token punctuation">:</span>
     <span class="token punctuation">-</span> binary_sensor.kitchen_door</code></pre>
 <p>Restart Home Assistant...</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/G_WURJ09LK-400.avif 400w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/G_WURJ09LK-400.webp 400w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/G_WURJ09LK-400.png" alt="" width="400" height="146"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/G_WURJ09LK-400.avif 400w"><source type="image/webp" srcset="/blog/2017/2017-09-19/G_WURJ09LK-400.webp 400w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/G_WURJ09LK-400.png" alt="" width="400" height="146"></picture>
 <p>Then decided to create a new security view via the below view definition in my config/groups.yaml file:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">kitchen_view</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> Kitchen
@@ -401,8 +408,9 @@ pre[class*="language-diff-"] {
     <span class="token punctuation">-</span> device_tracker.niemandr_raesphone
     <span class="token punctuation">-</span> group.security_kitchen_group</code></pre>
 <p>Another Home Assistant restart...</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/h3u1Sr3ruP-820.avif 820w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/h3u1Sr3ruP-820.webp 820w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/h3u1Sr3ruP-820.png" alt="" width="820" height="344"></picture>
-<p>That's much better.</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/h3u1Sr3ruP-820.avif 820w"><source type="image/webp" srcset="/blog/2017/2017-09-19/h3u1Sr3ruP-820.webp 820w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/h3u1Sr3ruP-820.png" alt="" width="820" height="344"></picture>
+<p>That&#39;s much better.</p>
+
 <h2 id="creating-an-alert">Creating an alert</h2>
 <p>Next I would like to get an alert when the door opens or closes. I did this by adding in the following automation task in Home Assistant - in a new file called config/automation/kitchen_door_closed.yaml:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Kitchen Door Closed
@@ -422,17 +430,17 @@ pre[class*="language-diff-"] {
 <p>I reference my automation tasks in Home Assistant using the below statement paying special attention to the warning above:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">automation</span><span class="token punctuation">:</span> <span class="token tag">!include_dir_list</span> config/automation/</code></pre>
 <p>Another restart of Home Assistant and my new automation tasks shows up.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/a3blnyNQj3-306.avif 306w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/a3blnyNQj3-306.webp 306w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/a3blnyNQj3-306.png" alt="" width="306" height="384"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/a3blnyNQj3-306.avif 306w"><source type="image/webp" srcset="/blog/2017/2017-09-19/a3blnyNQj3-306.webp 306w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/a3blnyNQj3-306.png" alt="" width="306" height="384"></picture>
 <p>Sending the CLOSED state via MQTTLens results in an alert via pushbullet and a state change on the door entity.</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/VHFfwxMxVm-360.avif 360w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/VHFfwxMxVm-360.webp 360w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/VHFfwxMxVm-360.png" alt="" width="360" height="119"></picture>
-<p>When I open the door the state is reset :)</p>
-<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/post/9hZXSmS_zp-277.avif 277w"><source type="image/webp" srcset="/blog/2017/2017-09-19/post/9hZXSmS_zp-277.webp 277w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/post/9hZXSmS_zp-277.png" alt="" width="277" height="54"></picture>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/VHFfwxMxVm-360.avif 360w"><source type="image/webp" srcset="/blog/2017/2017-09-19/VHFfwxMxVm-360.webp 360w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/VHFfwxMxVm-360.png" alt="" width="360" height="119"></picture>
+<p>When I open the door the state is reset</p>
+<picture><source type="image/avif" srcset="/blog/2017/2017-09-19/9hZXSmS_zp-277.avif 277w"><source type="image/webp" srcset="/blog/2017/2017-09-19/9hZXSmS_zp-277.webp 277w"><img loading="lazy" decoding="async" src="/blog/2017/2017-09-19/9hZXSmS_zp-277.png" alt="" width="277" height="54"></picture>
 <p>Great success!</p>
 <p>Hopefully you found this post interesting, please feel free to comment or ask any questions you may have below!</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2017/2017-09-18/post/">Monitoring Phone Battery with OwnTracks &amp; Home Assistant</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2017/2017-09-18/">Monitoring Phone Battery with OwnTracks &amp; Home Assistant</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="text-end">Next<br><a href="/blog/2017/2017-09-26/post/">Monitoring Temperature with MQTT and Home Assistant</a></span>
@@ -452,7 +460,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2017/2017-09-19/post/` was built on 2025-07-22T20:52:37.736Z -->
+		<!-- This page `/blog/2017/2017-09-19/` was built on 2025-07-22T21:18:55.825Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
