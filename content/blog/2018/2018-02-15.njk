@@ -1,0 +1,43 @@
+---
+title: Upgrading Home Assistant on DietPi
+date: 2018-02-15
+tags: [home assistant]
+logo: hass.png
+---
+
+<p>This is a quick post on how to update <a href="https://www.home-assistant.io/">Home Assistant</a> running on <a href="https://dietpi.com/">DietPi</a> or any other <code>Debian</code> build of Linux (e.g. <code>Raspbian</code>).</p>
+
+<h2 id="stop-home-assistant">Stop Home Assistant</h2>
+{% highlight "shell" %}
+systemctl stop home-assistant@homeassistant.service
+{% endhighlight %}
+
+<h2 id="switch-to-the-homeassistant-user-context">Switch to the homeassistant user context</h2>
+<p>If you installed Home Assistant using their <a href="https://www.home-assistant.io/installation">installation method</a> chances are you would have installed HASS under a new user context called <code>homeassistant</code>, the below commands will switch you into that context in order to perform the upgrade.</p>
+{% highlight "shell" %}
+sudo su homeassistant -s /bin/bash
+source /srv/homeassistant/bin/activate
+{% endhighlight %}
+
+<h2 id="upgrade-home-assistant">Upgrade Home Assistant</h2>
+{% highlight "shell" %}
+pip3 install --upgrade homeassistant
+{% endhighlight %}
+<img src="./images/02/15-001.png" alt="" />
+
+<h2 id="exiting-the-homeassistant-context">Exiting the homeassistant context</h2>
+<p>To switch back to your original user context run the below command.</p>
+{% highlight "shell" %}
+exit
+{% endhighlight %}
+
+<h2 id="starting-home-assistant">Starting Home Assistant</h2>
+{% highlight "shell" %}
+systemctl start home-assistant@homeassistant.service
+{% endhighlight %}
+
+<h2 id="all-done">All Done</h2>
+<p>That&#39;s it - you can now enjoy the latest features!</p>
+<p>As always comments / feedback is always welcome.</p>
+<img src="./images/02/15-002.png" alt="" />
+

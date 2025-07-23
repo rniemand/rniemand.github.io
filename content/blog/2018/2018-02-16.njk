@@ -1,0 +1,52 @@
+---
+title: MySQL and Home Assistant
+date: 2018-02-16
+tags: [home assistant, database]
+logo: hass.png
+---
+
+<p>To get the best performance out of <a href="https://www.home-assistant.io/">Home Assistant</a> I always like to make use of <a href="https://www.mysql.com/">MySQL</a> as a data store hosted on another computer / device (connected via LAN). Previously I was running my entire Home Assistant setup on a Windows server, but since I moved to Canada I have made the jump to running it on an Orange Pi One and could not be happier.</p>
+<p>I am running the latest build of <a href="https://dietpi.com/">DietPi</a> on my server to get the most out of it, and have already got the latest version of HASS running on it (0.63.2 at the time of writing).</p>
+
+<h2 id="installing-mysql">Installing MySQL</h2>
+<p>The first thing you will need to do is install the MySQL Client via pip, initially I tried running the following command after logging into my Pi:</p>
+{% highlight "shell" %}
+pip3 install mysqlclient
+{% endhighlight %}
+<p>This resulted in a pretty confusing error:</p>
+<img src="./images/02/16-001.png" alt="" />
+<p>After doing some digging around, and referring to the <a href="https://www.home-assistant.io/integrations/recorder/">recorder documents for HASS</a> I finally caught on to my mistake, I was not running under the same user context that Home Assistant was installed under.</p>
+<p>running under the same user context that Home Assistant was installed under.</p>
+<img src="./images/02/16-002.png" alt="" />
+<blockquote>
+<p>After following their commands, I was able to successfully install the mysqlclient package.</p>
+</blockquote>
+
+<h2 id="configuring-home-assistant">Configuring Home Assistant</h2>
+<p>To configure Home Assistant to connect to your MySQL server you will need to add/modify the following line in your <code>configuration.yaml</code> file, be sure to replace the relevant placeholders.</p>
+{% highlight "yaml" %}
+recorder:
+  db_url: mysql://<user>:<pass>@<ip>/<db>
+{% endhighlight %}
+<p>Also ensure that your targeted database exists on your MySQL instance...</p>
+<img src="./images/02/16-003.png" alt="" />
+<p>You can easily create your database via <a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>, or the below command.</p>
+<img src="./images/02/16-004.png" alt="" />
+<p>After that, the Home Assistant should be good to go.</p>
+<img src="./images/02/16-005.png" alt="" />
+
+<h2 id="performance">Performance</h2>
+<p>As you would expect, the performance is much better right off the bat when using MySQL (you are starting fresh with no history). Using the built in analysis dashboard in MySQL Workbench you can see that my server is running well.</p>
+<img src="./images/02/16-006.png" alt="" />
+<p>I am able to fetch 140 entries from the DB in less than 0.09 seconds.</p>
+<img src="./images/02/16-007.png" alt="" />
+<p>After letting Home Assistant do its thing for a while I decided to run another check on the server performance, and was presently surprised to see that the efficiency increased dramatically over the course of the day.</p>
+<img src="./images/02/16-008.png" alt="" />
+<p>Any retrieving 2032 entries is still coming in under 0.95 seconds!</p>
+<img src="./images/02/16-009.png" alt="" />
+<p>The MySQL service on my host computer is also using &lt; 200 Mb when running and less than 0.04 % of my CPU overall.</p>
+<img src="./images/02/16-010.png" alt="" />
+<p>Compared to the default SQLite implementation, and given the choice I will always opt in to using MySQL when running Home Assistant for a large number of devices and automations.</p>
+
+<h2 id="enjoy">Enjoy</h2>
+<p>I hope that you found this post helpful and somewhat interesting, please feel free to leave any comments or suggestions below.</p>

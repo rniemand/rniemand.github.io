@@ -5,7 +5,7 @@ tags: [home assistant]
 logo: hass.png
 ---
 
-> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/)** of getting up and running with Home Assistant from scratch.
 
 Today I am adding in two new sensors which will be used in some upcoming automation rules in Home Assistant, namely:
 

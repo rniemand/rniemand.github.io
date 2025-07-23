@@ -1,0 +1,119 @@
+---
+title: "Installing Mosquitto on (DietPi / Raspbian / Debian)"
+date: 2018-01-08
+tags: [iot]
+logo: mqtt.png
+---
+
+<p>At the end of December last year my family and I immigrated to Canada (from South Africa) for a fresh start and to allow my wife to be closer to her family. We decided to only bring the essentials with us to make things easier and to reduce the cost of the immigration. Now that we are starting to find our feet I have decided to pick up where I left off with my endeavours into home automation and to start setting up <a href="https://www.home-assistant.io/">Home Assistant</a> again, starting with my MQTT Broker of choice - <a href="https://mosquitto.org/">Mosquitto</a>.</p>
+<p>To save on costs I decided to make use of an old Raspberry Pi I packed running the <a href="https://dietpi.com/">DietPi OS</a> (lightweight version of Raspbian), as opposed to my original <a href="/blog/2017/2017-06-08/">Windows Server running Mosquitto</a> I used to use. This post is just a quick high-level overview of how to get up and running with Mosquitto in under <code>10 minutes</code>, so let&#39;s dive in.</p>
+
+<h2 id="recommended-tools">Recommended Tools</h2>
+<p>To make things a lot easier I highly recommend the following tools for this tutorial:</p>
+<ul>
+<li><a href="https://mobaxterm.mobatek.net/">MobaXterm</a> - 100% better than <a href="https://www.putty.org/">Putty</a> with some seriously advanced features</li>
+<li><a href="https://apps.microsoft.com/store/detail/mqttbox/9NBLGGH55JZG?hl=en-us&amp;gl=US">MQTTBox</a> - Chrome MQTT client</li>
+</ul>
+<h2 id="install-mosquitto">Install Mosquitto</h2>
+<p>Open up a ssh session to your Raspberry Pi and run the obligatory <code>apt-get update</code>.</p>
+{% highlight "shell" %}
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt-get -y install mosquitto
+{% endhighlight %}
+
+<h2 id="configuring-mosquitto">Configuring Mosquitto</h2>
+<p>Once installed you will need to crate a <code>mosquitto.conf</code> configuration file:</p>
+{% highlight "shell" %}
+sudo nano /etc/mosquitto/conf.d/mosquitto.conf
+{% endhighlight %}
+<p>Add the following lines to your file, note I am going to be locking down my instance with a username / password, if you do not want this functionality be sure to comment out the <code>password_file</code> line and to set <code>allow_anonymous</code> to true.</p>
+{% highlight "conf" %}
+# Config file for mosquitto
+#
+# See mosquitto.conf(5) for more information.
+
+user mosquitto
+max_queued_messages 200
+message_size_limit 0
+allow_zero_length_clientid true
+allow_duplicate_messages false
+
+listener 1883
+autosave_interval 900
+autosave_on_changes false
+persistence true
+persistence_file mosquitto.db
+
+allow_anonymous false
+password_file /etc/mosquitto/conf.d/passwd
+{% endhighlight %}
+
+<h2 id="disable-auto-start-for-now-">Disable auto-start (for now)</h2>
+<p>Just for the time being I am going to remove any potentially installed service for Mosquitto from my system (we will add it back later with more granular control). To remove any potential services you will need to run the following commands:</p>
+{% highlight "shell" %}
+sudo systemctl stop mosquitto
+sudo update-rc.d mosquitto remove
+sudo rm /etc/init.d/mosquitto
+{% endhighlight %}
+
+<h2 id="create-our-mosquitto-service">Create our Mosquitto service</h2>
+<p>Next let&#39;s create a <code>systemctl</code> compatible service for Mosquitto, to do this we will need to create a <code>mosquitto.service</code> by running...</p>
+{% highlight "shell" %}
+sudo nano /etc/systemd/system/mosquitto.service
+{% endhighlight %}
+<p>... and setting the files contents to the below (updating paths to match your preferred configuration).</p>
+{% highlight "conf" %}
+[Unit]
+Description=MQTT v3.1 message broker
+After=network.target
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/sbin/mosquitto -c /etc/mosquitto/conf.d/mosquitto.conf
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+{% endhighlight %}
+
+<h2 id="create-mosquitto-users">Create Mosquitto users</h2>
+<p>Adding a new user to Mosquitto is as simple as running ...</p>
+{% highlight "shell" %}
+sudo mosquitto_passwd -c /etc/mosquitto/conf.d/passwd <username></username>
+{% endhighlight %}
+<p>... making sure to replace <code>&lt;username&gt;</code> with your desired username.</p>
+<p>This will prompt you for the password for the user and update the targeted passwd file (in my case <code>/etc/mosquitto/conf.d/passwd</code>) with the user / password.</p>
+
+<h2 id="re-enable-mosquitto-service">Re-Enable Mosquitto Service</h2>
+<p>Lastly we will need to re-enable the Mosquitto service by running the following commands:</p>
+{% highlight "shell" %}
+sudo systemctl daemon-reload
+sudo systemctl enable mosquitto
+sudo systemctl start mosquitto.service
+{% endhighlight %}
+<p>Should you have done everything right you will be able to connect to your broker!</p>
+<p>Bonus: Mosquitto will automatically start when your Pi boots thanks to the mosquitto.service we created.</p>
+
+<h2 id="adding-more-users">Adding more users</h2>
+<p>To add additional users to your Mosquitto broker you will need to run the following command:</p>
+{% highlight "shell" %}
+sudo mosquitto_passwd /etc/mosquitto/conf.d/passwd <username></username>
+{% endhighlight %}
+<blockquote>
+<p><strong>NOTE</strong>: I omitted the -c used earlier, if you fail to do this you are going to override your password file!</p>
+</blockquote>
+<p>Once the user has been added you will need to restart your broker with the following command:</p>
+{% highlight "shell" %}
+sudo systemctl restart mosquitto.service
+{% endhighlight %}
+
+<h2 id="screenshots">Screenshots</h2>
+<p>Here are a couple of screenshots of the various apps mentioned above.</p>
+<img src="./images/01/08-001.png" alt="" />
+<p>Mosquitto is happily running after a restart.</p>
+<img src="./images/01/08-002.png" alt="" />
+<img src="./images/01/08-003.png" alt="" />
+<p>My login credentials are working perfectly.</p>
+<p>Good luck!</p>

@@ -5,7 +5,7 @@ tags: [home assistant]
 logo: hass.png
 ---
 
-> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/)** of getting up and running with Home Assistant from scratch.
 
 Today I am going to be covering secrets and security in Home Assistant along with a semi-decent workflow to use with your Home Assistant deployment which will allow for easy management and rollback of your configuration.
 
@@ -101,7 +101,7 @@ Everything should still work as expected, that's all there is to it.
 
 The last thing I would like to cover today, although it's not required, is adding your configuration to some form of source control system (e.g. git). This will give you the freedom to confidently make changes to your home setup and roll back to any older version of your configuration should you feel the need to. This will give you more freedom with your setup as you will always have a fall back should something go wrong.
 
-Personally I will be storing my configuration on a public [GitHub](https://github.com/) repository to serve as my personal backup and as a supplementary repository for this series. I will be using [Gitkraken](https://www.gitkraken.com/) on my Windows computer and managing the configuration through a mapped file share (set up in the last [post using Samba](/blog/2018/2018-06-27/post/)). This is more for convenience for me than anything else as I already have Git setup on my computer with my SSH keys.
+Personally I will be storing my configuration on a public [GitHub](https://github.com/) repository to serve as my personal backup and as a supplementary repository for this series. I will be using [Gitkraken](https://www.gitkraken.com/) on my Windows computer and managing the configuration through a mapped file share (set up in the last [post using Samba](/blog/2018/2018-06-27/)). This is more for convenience for me than anything else as I already have Git setup on my computer with my SSH keys.
 
 ### Create your repository
 

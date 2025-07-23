@@ -1,0 +1,76 @@
+---
+title: NodeRED on DietPi
+date: 2018-03-15
+tags: [iot]
+logo: node-red.png
+---
+
+<p>Today I set out to get Node-RED up and running on a <a href="https://wiki.friendlyarm.com/wiki/index.php/NanoPi_NEO2">NanoPi NEO2</a> to help automate some simple tasks in my home automation setup.</p>
+<p>The NanoPi NEO2 is a really small SBC similar to a Raspberry Pi, but has a better performance / cost ratio (imho).</p>
+<img src="./images/03/15-001.jpg" alt="" />
+<p>I designed a simple case using my <a href="https://www.banggood.com/Anet-A8-DIY-3D-Printer-Kit-1_75mm-or-0_4mm-Support-ABS-or-PLA-or-HIPS-p-1130694.html?imageAb=2&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">Anet A8 3D printer</a>, which I think came out pretty nicely.</p>
+<img src="./images/03/15-002.jpg" alt="" />
+<p>Similar to my <a href="/blog/2017/2017-06-12/">old post</a> this will be in a quick start form to help you get up and running as soon as possible, so let&#39;s get started.</p>
+
+<h2 id="install-the-required-packages">Install the required packages</h2>
+<p>I am going to make the assumption that you already have <a href="https://dietpi.com/">DitePi</a> up and running on your SBC of choice and have an active SSH session to the device.</p>
+<p>We will be installing <code>node.js</code>, <code>python</code> (with pip) and <code>node-red</code>.</p>
+<p>To install Node.js run the following command:</p>
+{% highlight "shell" %}
+dietpi-software install 9
+{% endhighlight %}
+<p>To install python run the following command:</p>
+{% highlight "shell" %}
+dietpi-software install 130
+{% endhighlight %}
+<p>To install Node-RED run the following command:</p>
+{% highlight "shell" %}
+dietpi-software install 122
+{% endhighlight %}
+<p>The node-red service should automatically start after the installation has been completed, you can confirm this by running the below command:</p>
+{% highlight "shell" %}
+systemctl status node-red.service
+{% endhighlight %}
+<img src="./images/03/15-003.png" alt="" />
+<p>If for some reason node-red is not installed as a service on your device you can manually register it via the following command:</p>
+{% highlight "shell" %}
+systemctl enable node-red.service
+{% endhighlight %}
+
+<h2 id="securing-node-red">Securing Node-RED</h2>
+<p>Like my original post, I highly recommend securing your Node-RED instance, especially if you would like to access it via the web. To do this we will need to install the <code>node-red-admin</code> tool to generate a password string that you can then add into your <code>/root/.node-red/settings.js</code> settings file, this process is pretty simple:</p>
+{% highlight "shell" %}
+npm install -g node-red-admin
+node-red-admin hash-pw
+{% endhighlight %}
+<p>Copy the generated password, and proceed to edit your settings file:</p>
+{% highlight "shell" %}
+nano /root/.node-red/settings.js
+{% endhighlight %}
+<p>Find the below lines and un-comment them making sure to update the password with the one copied earlier.</p>
+<img src="./images/03/15-004.png" alt="" />
+<p>Next you will need to stop and start Node-RED for the settings to be applied:</p>
+{% highlight "shell" %}
+systemctl stop nodered.service
+systemctl start nodered.service
+{% endhighlight %}
+<p>If all went well you should now be presented with a login screen similar to the one below.</p>
+<img src="./images/03/15-005.png" alt="" />
+
+<h2 id="tip-backing-up-your-flows">TIP: Backing up your flows</h2>
+<p>I highly recommend doing daily \ weekly backups of your Node-RED flows just in case something happens to your computer, or you accidentally delete one.</p>
+<p>At the moment I am doing this manually by first searching for all my Node-RED flows using this command ...</p>
+{% highlight "shell" %}
+find / -name *flows*.json
+{% endhighlight %}
+<p>... which results in a list of my flows ...</p>
+{% highlight "shell" %}
+/root/.node-red/flows_RNPI02.json
+.. or ..
+/mnt/dietpi_userdata/node-red/
+{% endhighlight %}
+<p>... and once I know the location of my flows I am using <a href="https://winscp.net/eng/download.php">WinSCP</a> to copy them off my Pi. In the future I will automate this process, but for now I am happy doing this manually.</p>
+
+<h2 id="all-done">All Done</h2>
+<p>That&#39;s pretty much all there is to it, hopefully you found this post helpful and saved some time with your setup. As always comments / suggestions are always welcome and I look forward to any feedback that you may have.</p>
+<img src="./images/03/15-006.jpg" alt="" />

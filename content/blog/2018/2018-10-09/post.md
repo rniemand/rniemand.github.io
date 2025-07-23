@@ -5,7 +5,7 @@ tags: [home assistant, 3d printing]
 logo: hass.png
 ---
 
-> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/)** of getting up and running with Home Assistant from scratch.
 
 Today I will be adding my 3D printer to Home Assistant via the [octoprint integration](https://www.home-assistant.io/integrations/octoprint/), this post will build up on core concepts that have already been covered in some of my previous posts.
 

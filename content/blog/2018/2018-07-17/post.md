@@ -5,7 +5,7 @@ tags: [home assistant, database]
 logo: hass.png
 ---
 
-> This is one **[post in a series](/blog/2018/2018-06-27/post/)** of getting up and running with Home Assistant from scratch.
+> This is one **[post in a series](/blog/2018/2018-06-27/)** of getting up and running with Home Assistant from scratch.
 
 Today I would like to cover switching from the default SQLite database that Home Assistant uses over to MySQL - there is a slight performance update when making this switch, not to mention that it frees up valuable resources on my Raspberry Pi.
 
