@@ -319,9 +319,15 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-03-22">22 March 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#required-hardware">Required Hardware</a></li><li><a href="#esp8266-tools-arduino">ESP8266 tools &amp; Arduino</a></li><li><a href="#download-tasmota">Download Tasmota</a></li><li><a href="#configure-tasmota">Configure Tasmota</a><ol><li><a href="#pro-tip-make-a-flash-cable">Pro Tip: Make a Flash Cable</a></li></ol></li><li><a href="#verify-the-firmware">Verify the Firmware</a></li><li><a href="#connect-your-sonoff">Connect your Sonoff</a></li><li><a href="#upload-the-firmware">Upload the firmware</a></li><li><a href="#connect-and-configure">Connect and configure</a><ol><li><a href="#pro-tip-use-fing-for-a-good-time">Pro Tip: Use Fing for a good time</a></li></ol></li><li><a href="#final-thoughts">Final thoughts</a></li></ol>
+      </div>
+
 
 <p>This post is an update to my previous &quot;<a href="/blog/2017/2017-08-03/">Changing Sonoff Firmware (Visual Guide)</a>&quot;, and is based on the following <a href="https://www.youtube.com/watch?v=c2IUIUnxjUY&amp;list=PLsc3WxZ0b5g2Y9AoWrJTPKy7-Q0GZAhIH&amp;index=2">Youtube video</a> which makes use of a much simpler flashing method.</p>
 <p>All credits to <code>Justin</code> from <a href="https://www.youtube.com/channel/UC7G4tLa4Kt6A9e3hJ-HO8ng/featured">DrZzs</a> - keep up the good work!</p>
+
 <h2 id="required-hardware">Required Hardware</h2>
 <p>If you are planning to follow along with this blog post, you will require the following items:</p>
 <ul>
@@ -329,58 +335,62 @@ pre[class*="language-diff-"] {
 <li><a href="https://www.banggood.com/Geekcreit-3-IN-1-120pcs-10cm-Male-To-Female-Female-To-Female-Male-To-Male-Jumper-Cable-For-p-1054670.html?imageAb=2&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">Jumper / Dupont wires</a></li>
 <li>ISP programmer (or in my case an <a href="https://www.banggood.com/Wholesale-Geekcreit-UNO-R3-ATmega16U2-AVR-USB-Development-Main-Board-Geekcreit-for-Arduino-products-that-work-with-official-Arduino-boards-p-68537.html?imageAb=2&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">Arduino UNO</a> with the chip removed)</li>
 </ul>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/fKtg7QP8un-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/fKtg7QP8un-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/fKtg7QP8un-700.jpeg" alt="" width="700" height="383"></picture>
-<h2 id="esp8266-tools-and-arduino">ESP8266 tools &amp; Arduino</h2>
-<p>To save on some time and to try to keep this post short, I am going to assume that you have the <code>ESP8266 community tools</code> already installed alongside your Arduino IDE, if you do not <a href="/blog/2018/2018-03-19/post/">this post</a> will get you up and running quickly.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/fKtg7QP8un-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-22/fKtg7QP8un-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/fKtg7QP8un-700.jpeg" alt="" width="700" height="383"></picture>
+
+<h2 id="esp8266-tools-arduino">ESP8266 tools &amp; Arduino</h2>
+<p>To save on some time and to try to keep this post short, I am going to assume that you have the <code>ESP8266 community tools</code> already installed alongside your Arduino IDE, if you do not <a href="/blog/2018/2018-03-19/">this post</a> will get you up and running quickly.</p>
 <h2 id="download-tasmota">Download Tasmota</h2>
 <p>You are going to need the latest <code>stable</code> build of the Tasmota firmware, you can download it from the link below (please be sure to download the Source Code (zip) release).</p>
 <ul>
-<li>https://github.com/arendst/Sonoff-Tasmota/releases</li>
+<li><a href="https://github.com/arendst/Sonoff-Tasmota/releases">https://github.com/arendst/Sonoff-Tasmota/releases</a></li>
 </ul>
-<p>Once downloaded, extract the contents of the zip file to a local folder on your computer and ensure that your Arduino IDE is closed - we are going to be updating your Arduino's libraries folder with the ones included in the Tasmota zip file. To do this you will need to copy all contents from <code>C:\&lt;extracted-folder&gt;\Sonoff-Tasmota-x.xx.x\lib</code> into <code>C:\Users\&lt;user&gt;\Documents\Arduino\libraries</code>.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/lmW2rkiSef-824.avif 824w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/lmW2rkiSef-824.webp 824w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/lmW2rkiSef-824.png" alt="" width="824" height="486"></picture>
+<p>Once downloaded, extract the contents of the zip file to a local folder on your computer and ensure that your Arduino IDE is closed - we are going to be updating your Arduino&#39;s libraries folder with the ones included in the Tasmota zip file. To do this you will need to copy all contents from <code>C:\&lt;extracted-folder&gt;\Sonoff-Tasmota-x.xx.x\lib</code> into <code>C:\Users\&lt;user&gt;\Documents\Arduino\libraries</code>.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/lmW2rkiSef-824.avif 824w"><source type="image/webp" srcset="/blog/2018/2018-03-22/lmW2rkiSef-824.webp 824w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/lmW2rkiSef-824.png" alt="" width="824" height="486"></picture>
 <blockquote>
 <p><strong>NOTE</strong>: ensure that you replace any existing libraries with the ones provided!</p>
 </blockquote>
+
 <h2 id="configure-tasmota">Configure Tasmota</h2>
 <p>This is the section where all the magic happens, and shows how much work has been put into the actual Tasmota firmware by the developers. Unlike my <a href="/blog/2017/2017-08-03/">original flashing guide</a> this method is 100 times simpler and more robust should your network become completely unreachable to your Sonoff device.</p>
 <p>The only configuration change we are going to make to the Tasmota firmware is tell it to enter into <code>WIFI_MANAGER</code> mode whenever it is unable to connect to any of the configured WiFi networks, in this case the Sonoff will enter Access Point (<code>AP</code>) mode and host its own WiFi network for you to connect to and configure the device. No more hacking about configuration ever!</p>
 <p>We will need to open the &quot;project&quot; in the Arduino IDE, locate and open the <code>sonoff.ino</code> sketch file in the unpacked Tasmota firmware folder, in my case it was found here: <code>C:\Users\Richard\Downloads\Sonoff-Tasmota-5.12.0\sonoff\sonoff.ino</code></p>
 <p>Once open, locate the <code>userconfig.h</code> file in the open tabs as shown below:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/iSkcFOSLEG-837.avif 837w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/iSkcFOSLEG-837.webp 837w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/iSkcFOSLEG-837.png" alt="" width="837" height="317"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/iSkcFOSLEG-837.avif 837w"><source type="image/webp" srcset="/blog/2018/2018-03-22/iSkcFOSLEG-837.webp 837w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/iSkcFOSLEG-837.png" alt="" width="837" height="317"></picture>
 <p>Locate the following line ...</p>
 <p><code>#define WIFI_CONFIG_TOOL       WIFI_WPSCONFIG</code></p>
 <p>... and replace <code>WIFI_WPSCONFIG</code> with <code>WIFI_MANAGER</code> like shown below.</p>
 <p><code>#define WIFI_CONFIG_TOOL       WIFI_MANAGER</code></p>
-<p>That's all we need to do for our configuration, it's that simple.</p>
+<p>That&#39;s all we need to do for our configuration, it&#39;s that simple.</p>
+
 <h3 id="pro-tip-make-a-flash-cable">Pro Tip: Make a Flash Cable</h3>
 <p>I find that the simplest way to flash my Sonoffs is to make my own flashing cable using 4 (or 5) Dupont cables. I normally use a female header to align them, and join them together using some super glue and a bit or cardboard.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/7b3u99zSZM-712.avif 712w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/7b3u99zSZM-712.webp 712w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/7b3u99zSZM-712.png" alt="" width="712" height="399"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/7b3u99zSZM-712.avif 712w"><source type="image/webp" srcset="/blog/2018/2018-03-22/7b3u99zSZM-712.webp 712w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/7b3u99zSZM-712.png" alt="" width="712" height="399"></picture>
 <p>Once I have made my &quot;<code>programming header / cable</code>&quot; I use one of my Arduino UNOboards with the processor removed as an ISP flasher. The connection from my cable to the Arduino UNO board is as shown in the below diagram (please note the orientation of the Sonoff board).</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/1OOkhx_Hw7-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/1OOkhx_Hw7-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/1OOkhx_Hw7-700.jpeg" alt="" width="700" height="442"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/1OOkhx_Hw7-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-22/1OOkhx_Hw7-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/1OOkhx_Hw7-700.jpeg" alt="" width="700" height="442"></picture>
 <p>This method of connecting to the Sonoff saves me a lot of time / solder and male header connectors - just be sure that you are making a good electrical connection to the programming headers when flashing the sketch!</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/AQiXeOXOO_-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/AQiXeOXOO_-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/AQiXeOXOO_-700.jpeg" alt="" width="700" height="373"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/AQiXeOXOO_-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-22/AQiXeOXOO_-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/AQiXeOXOO_-700.jpeg" alt="" width="700" height="373"></picture>
+
 <h2 id="verify-the-firmware">Verify the Firmware</h2>
-<p>The next thing we need to do before attempting to flash the Tasmota firmware to our device is to compile it. Depending on your computer's performance this could take a while, and depending on whether you copied the libraries or not, you may need to address some compilation issues.</p>
-<p>The next thing we need to do before attempting to flash the Tasmota firmware to our device is to compile it. Depending on your computer's performance this could take a while, and depending on whether you copied the libraries or not, you may need to address some compilation issues.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/2337muusXH-860.avif 860w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/2337muusXH-860.webp 860w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/2337muusXH-860.png" alt="" width="860" height="559"></picture>
-<pre><code>Board:         Generic &quot;ESP8266 Module&quot;
+<p>The next thing we need to do before attempting to flash the Tasmota firmware to our device is to compile it. Depending on your computer&#39;s performance this could take a while, and depending on whether you copied the libraries or not, you may need to address some compilation issues.</p>
+<p>The next thing we need to do before attempting to flash the Tasmota firmware to our device is to compile it. Depending on your computer&#39;s performance this could take a while, and depending on whether you copied the libraries or not, you may need to address some compilation issues.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/2337muusXH-860.avif 860w"><source type="image/webp" srcset="/blog/2018/2018-03-22/2337muusXH-860.webp 860w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/2337muusXH-860.png" alt="" width="860" height="559"></picture>
+<pre class="language-text" tabindex="0"><code class="language-text">Board:         Generic "ESP8266 Module"
 Flash Mode:    DOUT
 Flash Size:    1M (no SPIFFS)
 Debug Port:    Disabled
 Debug Level:   None
-IwIP Variant:  &quot;v1.4 Prebuilt&quot;
-Reset Method:  &quot;nodemcu&quot;
+IwIP Variant:  "v1.4 Prebuilt"
+Reset Method:  "nodemcu"
 Crystal Freq:  26 MHz
 Flash Freq:    40 MHz
 CPU Freq:      80 MHz
-Upload Speed:  115200
-</code></pre>
+Upload Speed:  115200</code></pre>
 <p>Once you have verified, and are happy with your board configuration press the tick to start compiling / verifying the firmware (this can take a while). Hopefully everything goes well and you end up with success as shown below.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/5xsYNd9aLa-870.avif 870w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/5xsYNd9aLa-870.webp 870w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/5xsYNd9aLa-870.png" alt="" width="870" height="165"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/5xsYNd9aLa-870.avif 870w"><source type="image/webp" srcset="/blog/2018/2018-03-22/5xsYNd9aLa-870.webp 870w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/5xsYNd9aLa-870.png" alt="" width="870" height="165"></picture>
+
 <h2 id="connect-your-sonoff">Connect your Sonoff</h2>
 <p>Next we will need to connect an ISP to the programming headers on your Sonoff device, depending on what ISP you are using this can vary slightly, however the general principle is the same. As mentioned earlier I am making use of an old Arduino UNO board with the processor removed as my programmer. Below you can see how I hooked it all up.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/mystX5dA4w-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/mystX5dA4w-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/mystX5dA4w-700.jpeg" alt="" width="700" height="491"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/mystX5dA4w-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-22/mystX5dA4w-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/mystX5dA4w-700.jpeg" alt="" width="700" height="491"></picture>
 <blockquote>
 <p><strong>NOTE</strong>: Read below before powering up your ISP / Sonoff</p>
 </blockquote>
@@ -393,20 +403,24 @@ Upload Speed:  115200
 <li>Wait 5 seconds and release the button</li>
 </ul>
 <p>If done correctly the light on the Sonoff should remain off, if it is flashing your timing is out and you will need to disconnect the power and try again.</p>
+
 <h2 id="upload-the-firmware">Upload the firmware</h2>
 <p>When the connection has been made, and the Sonoff is in flashing mode (<code>done by holding down the push button when powering up the device</code>), press the upload button in the Arduino IDE to flash Tasmota to your device. The upload will take a while to complete and should output as shown below:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/9mbtTK17rO-861.avif 861w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/9mbtTK17rO-861.webp 861w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/9mbtTK17rO-861.png" alt="" width="861" height="366"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/9mbtTK17rO-861.avif 861w"><source type="image/webp" srcset="/blog/2018/2018-03-22/9mbtTK17rO-861.webp 861w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/9mbtTK17rO-861.png" alt="" width="861" height="366"></picture>
 <p>After the upload has completed your Sonoff should reboot and blink the green status LED indicating that it was unable to connect to a WiFi network, and as a result is in configuration / access point mode.</p>
-<picture><source type="image/webp" srcset="/blog/2018/2018-03-22/post/T8Obt9N__y-600.webp 600w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/T8Obt9N__y-600.gif" alt="" width="600" height="338"></picture>
+<picture><source type="image/webp" srcset="/blog/2018/2018-03-22/T8Obt9N__y-600.webp 600w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/T8Obt9N__y-600.gif" alt="" width="600" height="338"></picture>
+
 <h2 id="connect-and-configure">Connect and configure</h2>
-<p>When your Sonoff first powers on it won't be able to connect to your WiFi network and will put itself into Access Point mode, this is indicated by the rapidly flashing green LED above. When the Sonoff is in AP mode it will create its own WiFi network that you can connect to with your phone / laptop and configure, in my case the sonoff-2399 network was created.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/GWQfuyzLSQ-350.avif 350w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/GWQfuyzLSQ-350.webp 350w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/GWQfuyzLSQ-350.png" alt="" width="350" height="622"></picture>
+<p>When your Sonoff first powers on it won&#39;t be able to connect to your WiFi network and will put itself into Access Point mode, this is indicated by the rapidly flashing green LED above. When the Sonoff is in AP mode it will create its own WiFi network that you can connect to with your phone / laptop and configure, in my case the sonoff-2399 network was created.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/GWQfuyzLSQ-350.avif 350w"><source type="image/webp" srcset="/blog/2018/2018-03-22/GWQfuyzLSQ-350.webp 350w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/GWQfuyzLSQ-350.png" alt="" width="350" height="622"></picture>
 <p>Connecting to this WiFi network should launch your web browser and bring up the Tasmota configuration page, here you are free to configure the Sonoff device as you would normally do, once complete just restart the Sonoff and it will boot up using the new settings and connect to your home WiFi network.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/VqF6mhwZSN-350.avif 350w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/VqF6mhwZSN-350.webp 350w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/VqF6mhwZSN-350.png" alt="" width="350" height="622"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/VqF6mhwZSN-350.avif 350w"><source type="image/webp" srcset="/blog/2018/2018-03-22/VqF6mhwZSN-350.webp 350w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/VqF6mhwZSN-350.png" alt="" width="350" height="622"></picture>
+
 <h3 id="pro-tip-use-fing-for-a-good-time">Pro Tip: Use Fing for a good time</h3>
 <p>If you are like me and want to assign a static <code>IP Address</code> to your Sonoff once it has booted, or do not know what the initial IP Address assigned to it by your router is you can make use of <a href="https://www.fing.com/">Fing</a> on your mobile device to discover your Sonoff:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/post/MUCBeyTT2I-350.avif 350w"><source type="image/webp" srcset="/blog/2018/2018-03-22/post/MUCBeyTT2I-350.webp 350w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/post/MUCBeyTT2I-350.png" alt="" width="350" height="622"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-22/MUCBeyTT2I-350.avif 350w"><source type="image/webp" srcset="/blog/2018/2018-03-22/MUCBeyTT2I-350.webp 350w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-22/MUCBeyTT2I-350.png" alt="" width="350" height="622"></picture>
 <p>Once you know the IP and MAC address of the Sonoff you can make it static on your router :)</p>
+
 <h2 id="final-thoughts">Final thoughts</h2>
 <p>Although this was a long post I do feel that the overall process of flashing the Sonoff was a log simpler and quicker, thanks to the following factors:</p>
 <ul>
@@ -420,10 +434,10 @@ Upload Speed:  115200
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-03-19/post/">Setting up ESP8266 on Arduino</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-03-19/">Setting up ESP8266 on Arduino</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-06-19/post/">Alert Maker Revival</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-06-19/">Alert Maker Revival</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -440,7 +454,7 @@ Upload Speed:  115200
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-03-22/post/` was built on 2025-07-22T21:39:56.575Z -->
+		<!-- This page `/blog/2018/2018-03-22/` was built on 2025-07-23T20:01:06.718Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

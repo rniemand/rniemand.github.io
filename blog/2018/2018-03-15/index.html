@@ -319,69 +319,68 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-03-15">15 March 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#install-the-required-packages">Install the required packages</a></li><li><a href="#securing-node-red">Securing Node-RED</a></li><li><a href="#tip-backing-up-your-flows">TIP: Backing up your flows</a></li><li><a href="#all-done">All Done</a></li></ol>
+      </div>
+
 
 <p>Today I set out to get Node-RED up and running on a <a href="https://wiki.friendlyarm.com/wiki/index.php/NanoPi_NEO2">NanoPi NEO2</a> to help automate some simple tasks in my home automation setup.</p>
 <p>The NanoPi NEO2 is a really small SBC similar to a Raspberry Pi, but has a better performance / cost ratio (imho).</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/post/tIdcRz8KUR-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-15/post/tIdcRz8KUR-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/post/tIdcRz8KUR-700.jpeg" alt="" width="700" height="636"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/tIdcRz8KUR-700.avif 700w"><source type="image/webp" srcset="/blog/2018/2018-03-15/tIdcRz8KUR-700.webp 700w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/tIdcRz8KUR-700.jpeg" alt="" width="700" height="636"></picture>
 <p>I designed a simple case using my <a href="https://www.banggood.com/Anet-A8-DIY-3D-Printer-Kit-1_75mm-or-0_4mm-Support-ABS-or-PLA-or-HIPS-p-1130694.html?imageAb=2&amp;p=5T250523689812015082&amp;akmClientCountry=CA&amp;cur_warehouse=CN">Anet A8 3D printer</a>, which I think came out pretty nicely.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/post/xZCN212K3a-650.avif 650w"><source type="image/webp" srcset="/blog/2018/2018-03-15/post/xZCN212K3a-650.webp 650w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/post/xZCN212K3a-650.jpeg" alt="" width="650" height="451"></picture>
-<p>Similar to my <a href="/blog/2017/2017-06-12/">old post</a> this will be in a quick start form to help you get up and running as soon as possible, so let's get started.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/xZCN212K3a-650.avif 650w"><source type="image/webp" srcset="/blog/2018/2018-03-15/xZCN212K3a-650.webp 650w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/xZCN212K3a-650.jpeg" alt="" width="650" height="451"></picture>
+<p>Similar to my <a href="/blog/2017/2017-06-12/">old post</a> this will be in a quick start form to help you get up and running as soon as possible, so let&#39;s get started.</p>
+
 <h2 id="install-the-required-packages">Install the required packages</h2>
 <p>I am going to make the assumption that you already have <a href="https://dietpi.com/">DitePi</a> up and running on your SBC of choice and have an active SSH session to the device.</p>
 <p>We will be installing <code>node.js</code>, <code>python</code> (with pip) and <code>node-red</code>.</p>
 <p>To install Node.js run the following command:</p>
-<pre><code>dietpi-software install 9
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">dietpi-software <span class="token function">install</span> <span class="token number">9</span></code></pre>
 <p>To install python run the following command:</p>
-<pre><code>dietpi-software install 130
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">dietpi-software <span class="token function">install</span> <span class="token number">130</span></code></pre>
 <p>To install Node-RED run the following command:</p>
-<pre><code>dietpi-software install 122
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">dietpi-software <span class="token function">install</span> <span class="token number">122</span></code></pre>
 <p>The node-red service should automatically start after the installation has been completed, you can confirm this by running the below command:</p>
-<pre><code>systemctl status node-red.service
-</code></pre>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/post/7JtjZcCQzW-732.avif 732w"><source type="image/webp" srcset="/blog/2018/2018-03-15/post/7JtjZcCQzW-732.webp 732w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/post/7JtjZcCQzW-732.png" alt="" width="732" height="129"></picture>
+<pre class="language-shell" tabindex="0"><code class="language-shell">systemctl status node-red.service</code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/7JtjZcCQzW-732.avif 732w"><source type="image/webp" srcset="/blog/2018/2018-03-15/7JtjZcCQzW-732.webp 732w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/7JtjZcCQzW-732.png" alt="" width="732" height="129"></picture>
 <p>If for some reason node-red is not installed as a service on your device you can manually register it via the following command:</p>
-<pre><code>systemctl enable node-red.service
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">systemctl <span class="token builtin class-name">enable</span> node-red.service</code></pre>
+
 <h2 id="securing-node-red">Securing Node-RED</h2>
 <p>Like my original post, I highly recommend securing your Node-RED instance, especially if you would like to access it via the web. To do this we will need to install the <code>node-red-admin</code> tool to generate a password string that you can then add into your <code>/root/.node-red/settings.js</code> settings file, this process is pretty simple:</p>
-<pre><code>npm install -g node-red-admin
-node-red-admin hash-pw
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> node-red-admin
+node-red-admin hash-pw</code></pre>
 <p>Copy the generated password, and proceed to edit your settings file:</p>
-<pre><code>nano /root/.node-red/settings.js
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">nano</span> /root/.node-red/settings.js</code></pre>
 <p>Find the below lines and un-comment them making sure to update the password with the one copied earlier.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/post/EvI3d_oaEr-688.avif 688w"><source type="image/webp" srcset="/blog/2018/2018-03-15/post/EvI3d_oaEr-688.webp 688w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/post/EvI3d_oaEr-688.png" alt="" width="688" height="197"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/EvI3d_oaEr-688.avif 688w"><source type="image/webp" srcset="/blog/2018/2018-03-15/EvI3d_oaEr-688.webp 688w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/EvI3d_oaEr-688.png" alt="" width="688" height="197"></picture>
 <p>Next you will need to stop and start Node-RED for the settings to be applied:</p>
-<pre><code>systemctl stop nodered.service
-systemctl start nodered.service
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">systemctl stop nodered.service
+systemctl start nodered.service</code></pre>
 <p>If all went well you should now be presented with a login screen similar to the one below.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/post/ph_lzG4SU--608.avif 608w"><source type="image/webp" srcset="/blog/2018/2018-03-15/post/ph_lzG4SU--608.webp 608w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/post/ph_lzG4SU--608.png" alt="" width="608" height="359"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/ph_lzG4SU--608.avif 608w"><source type="image/webp" srcset="/blog/2018/2018-03-15/ph_lzG4SU--608.webp 608w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/ph_lzG4SU--608.png" alt="" width="608" height="359"></picture>
+
 <h2 id="tip-backing-up-your-flows">TIP: Backing up your flows</h2>
 <p>I highly recommend doing daily \ weekly backups of your Node-RED flows just in case something happens to your computer, or you accidentally delete one.</p>
 <p>At the moment I am doing this manually by first searching for all my Node-RED flows using this command ...</p>
-<pre><code>find / -name *flows*.json
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">find</span> / <span class="token parameter variable">-name</span> *flows*.json</code></pre>
 <p>... which results in a list of my flows ...</p>
-<pre><code>/root/.node-red/flows_RNPI02.json
-.. or ..
-/mnt/dietpi_userdata/node-red/
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">/root/.node-red/flows_RNPI02.json
+<span class="token punctuation">..</span> or <span class="token punctuation">..</span>
+/mnt/dietpi_userdata/node-red/</code></pre>
 <p>... and once I know the location of my flows I am using <a href="https://winscp.net/eng/download.php">WinSCP</a> to copy them off my Pi. In the future I will automate this process, but for now I am happy doing this manually.</p>
+
 <h2 id="all-done">All Done</h2>
-<p>That's pretty much all there is to it, hopefully you found this post helpful and saved some time with your setup. As always comments / suggestions are always welcome and I look forward to any feedback that you may have.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/post/Lw__R1NjCz-650.avif 650w"><source type="image/webp" srcset="/blog/2018/2018-03-15/post/Lw__R1NjCz-650.webp 650w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/post/Lw__R1NjCz-650.jpeg" alt="" width="650" height="468"></picture>
-_My "super high-tech" Home Assistant and Node-RED servers :)_
+<p>That&#39;s pretty much all there is to it, hopefully you found this post helpful and saved some time with your setup. As always comments / suggestions are always welcome and I look forward to any feedback that you may have.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-03-15/Lw__R1NjCz-650.avif 650w"><source type="image/webp" srcset="/blog/2018/2018-03-15/Lw__R1NjCz-650.webp 650w"><img loading="lazy" decoding="async" src="/blog/2018/2018-03-15/Lw__R1NjCz-650.jpeg" alt="" width="650" height="468"></picture>
+
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-02-16/post/">MySQL and Home Assistant</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-02-16/">MySQL and Home Assistant</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-03-19/post/">Setting up ESP8266 on Arduino</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-03-19/">Setting up ESP8266 on Arduino</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -398,7 +397,7 @@ _My "super high-tech" Home Assistant and Node-RED servers :)_
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-03-15/post/` was built on 2025-07-22T21:39:56.575Z -->
+		<!-- This page `/blog/2018/2018-03-15/` was built on 2025-07-23T20:01:06.718Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

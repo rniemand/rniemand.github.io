@@ -320,52 +320,60 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-02-16">16 February 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#installing-mysql">Installing MySQL</a></li><li><a href="#configuring-home-assistant">Configuring Home Assistant</a></li><li><a href="#performance">Performance</a></li><li><a href="#enjoy">Enjoy</a></li></ol>
+      </div>
+
 
 <p>To get the best performance out of <a href="https://www.home-assistant.io/">Home Assistant</a> I always like to make use of <a href="https://www.mysql.com/">MySQL</a> as a data store hosted on another computer / device (connected via LAN). Previously I was running my entire Home Assistant setup on a Windows server, but since I moved to Canada I have made the jump to running it on an Orange Pi One and could not be happier.</p>
 <p>I am running the latest build of <a href="https://dietpi.com/">DietPi</a> on my server to get the most out of it, and have already got the latest version of HASS running on it (0.63.2 at the time of writing).</p>
+
 <h2 id="installing-mysql">Installing MySQL</h2>
 <p>The first thing you will need to do is install the MySQL Client via pip, initially I tried running the following command after logging into my Pi:</p>
-<pre><code>pip3 install mysqlclient
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">pip3 <span class="token function">install</span> mysqlclient</code></pre>
 <p>This resulted in a pretty confusing error:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/rdn6mjm3VV-910.avif 910w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/rdn6mjm3VV-910.webp 910w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/rdn6mjm3VV-910.png" alt="" width="910" height="83"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/rdn6mjm3VV-910.avif 910w"><source type="image/webp" srcset="/blog/2018/2018-02-16/rdn6mjm3VV-910.webp 910w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/rdn6mjm3VV-910.png" alt="" width="910" height="83"></picture>
 <p>After doing some digging around, and referring to the <a href="https://www.home-assistant.io/integrations/recorder/">recorder documents for HASS</a> I finally caught on to my mistake, I was not running under the same user context that Home Assistant was installed under.</p>
 <p>running under the same user context that Home Assistant was installed under.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/gTBBomOoWf-705.avif 705w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/gTBBomOoWf-705.webp 705w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/gTBBomOoWf-705.png" alt="" width="705" height="196"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/gTBBomOoWf-705.avif 705w"><source type="image/webp" srcset="/blog/2018/2018-02-16/gTBBomOoWf-705.webp 705w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/gTBBomOoWf-705.png" alt="" width="705" height="196"></picture>
 <blockquote>
 <p>After following their commands, I was able to successfully install the mysqlclient package.</p>
 </blockquote>
+
 <h2 id="configuring-home-assistant">Configuring Home Assistant</h2>
 <p>To configure Home Assistant to connect to your MySQL server you will need to add/modify the following line in your <code>configuration.yaml</code> file, be sure to replace the relevant placeholders.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">recorder</span><span class="token punctuation">:</span>
   <span class="token key atrule">db_url</span><span class="token punctuation">:</span> mysql<span class="token punctuation">:</span>//&lt;user<span class="token punctuation">></span><span class="token punctuation">:</span>&lt;pass<span class="token punctuation">></span>@&lt;ip<span class="token punctuation">></span>/&lt;db<span class="token punctuation">></span></code></pre>
 <p>Also ensure that your targeted database exists on your MySQL instance...</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/9lEbY2ur4q-915.avif 915w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/9lEbY2ur4q-915.webp 915w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/9lEbY2ur4q-915.png" alt="" width="915" height="139"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/9lEbY2ur4q-915.avif 915w"><source type="image/webp" srcset="/blog/2018/2018-02-16/9lEbY2ur4q-915.webp 915w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/9lEbY2ur4q-915.png" alt="" width="915" height="139"></picture>
 <p>You can easily create your database via <a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a>, or the below command.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/3U9HE-m4bv-487.avif 487w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/3U9HE-m4bv-487.webp 487w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/3U9HE-m4bv-487.png" alt="" width="487" height="151"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/3U9HE-m4bv-487.avif 487w"><source type="image/webp" srcset="/blog/2018/2018-02-16/3U9HE-m4bv-487.webp 487w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/3U9HE-m4bv-487.png" alt="" width="487" height="151"></picture>
 <p>After that, the Home Assistant should be good to go.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/-LGmASJj8s-790.avif 790w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/-LGmASJj8s-790.webp 790w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/-LGmASJj8s-790.png" alt="" width="790" height="69"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/-LGmASJj8s-790.avif 790w"><source type="image/webp" srcset="/blog/2018/2018-02-16/-LGmASJj8s-790.webp 790w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/-LGmASJj8s-790.png" alt="" width="790" height="69"></picture>
+
 <h2 id="performance">Performance</h2>
 <p>As you would expect, the performance is much better right off the bat when using MySQL (you are starting fresh with no history). Using the built in analysis dashboard in MySQL Workbench you can see that my server is running well.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/miJCpQjtqe-995.avif 995w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/miJCpQjtqe-995.webp 995w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/miJCpQjtqe-995.png" alt="" width="995" height="640"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/miJCpQjtqe-995.avif 995w"><source type="image/webp" srcset="/blog/2018/2018-02-16/miJCpQjtqe-995.webp 995w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/miJCpQjtqe-995.png" alt="" width="995" height="640"></picture>
 <p>I am able to fetch 140 entries from the DB in less than 0.09 seconds.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/b8fX9Hs4l4-1060.avif 1060w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/b8fX9Hs4l4-1060.webp 1060w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/b8fX9Hs4l4-1060.png" alt="" width="1060" height="182"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/b8fX9Hs4l4-1060.avif 1060w"><source type="image/webp" srcset="/blog/2018/2018-02-16/b8fX9Hs4l4-1060.webp 1060w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/b8fX9Hs4l4-1060.png" alt="" width="1060" height="182"></picture>
 <p>After letting Home Assistant do its thing for a while I decided to run another check on the server performance, and was presently surprised to see that the efficiency increased dramatically over the course of the day.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/gYD-uvuf2j-991.avif 991w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/gYD-uvuf2j-991.webp 991w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/gYD-uvuf2j-991.png" alt="" width="991" height="645"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/gYD-uvuf2j-991.avif 991w"><source type="image/webp" srcset="/blog/2018/2018-02-16/gYD-uvuf2j-991.webp 991w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/gYD-uvuf2j-991.png" alt="" width="991" height="645"></picture>
 <p>Any retrieving 2032 entries is still coming in under 0.95 seconds!</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/YyaC9foXm4-1068.avif 1068w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/YyaC9foXm4-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/YyaC9foXm4-1068.png" alt="" width="1068" height="130"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/YyaC9foXm4-1068.avif 1068w"><source type="image/webp" srcset="/blog/2018/2018-02-16/YyaC9foXm4-1068.webp 1068w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/YyaC9foXm4-1068.png" alt="" width="1068" height="130"></picture>
 <p>The MySQL service on my host computer is also using &lt; 200 Mb when running and less than 0.04 % of my CPU overall.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/post/WA5Rb_w8_t-533.avif 533w"><source type="image/webp" srcset="/blog/2018/2018-02-16/post/WA5Rb_w8_t-533.webp 533w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/post/WA5Rb_w8_t-533.png" alt="" width="533" height="378"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-02-16/WA5Rb_w8_t-533.avif 533w"><source type="image/webp" srcset="/blog/2018/2018-02-16/WA5Rb_w8_t-533.webp 533w"><img loading="lazy" decoding="async" src="/blog/2018/2018-02-16/WA5Rb_w8_t-533.png" alt="" width="533" height="378"></picture>
 <p>Compared to the default SQLite implementation, and given the choice I will always opt in to using MySQL when running Home Assistant for a large number of devices and automations.</p>
+
 <h2 id="enjoy">Enjoy</h2>
 <p>I hope that you found this post helpful and somewhat interesting, please feel free to leave any comments or suggestions below.</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-02-15/post/">Upgrading Home Assistant on DietPi</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-02-15/">Upgrading Home Assistant on DietPi</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-03-15/post/">NodeRED on DietPi</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-03-15/">NodeRED on DietPi</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -382,7 +390,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-02-16/post/` was built on 2025-07-22T21:39:56.569Z -->
+		<!-- This page `/blog/2018/2018-02-16/` was built on 2025-07-23T20:01:06.717Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

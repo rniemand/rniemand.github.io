@@ -319,43 +319,55 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-06-27">27 June 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#the-posts">The Posts</a></li><li><a href="#installation">Installation</a><ol><li><a href="#hardware">Hardware</a></li><li><a href="#flashing-the-software">Flashing the Software</a></li><li><a href="#first-boot">First Boot</a></li></ol></li><li><a href="#add-ons">Add-ons</a><ol><li><a href="#configurator">Configurator</a></li><li><a href="#ssh-server">SSH Server</a></li><li><a href="#samba-share">Samba share</a></li></ol></li><li><a href="#deployment">Deployment</a></li></ol>
+      </div>
+
 
 <p>This series of posts will cover setting up my Home Assistant setup from scratch back to, and beyond my old setup I was running back in South Africa. Our little family picked up and moved to Canada at the end of 2017 and recently purchased a property, now I have free reign to re-imagine my Home Automation setup from the ground up. Rather than me just doing it, I thought that it would be beneficial to document everything for someone just starting out and finding everything a bit overwhelming.</p>
 <p>Please be sure to keep checking back on this post as I will be updating the list below with all future posts relating to this topic.</p>
+
 <h2 id="the-posts">The Posts</h2>
 <p>You can view the complete post listing <a href="/series/">here</a>.</p>
+
 <h2 id="installation">Installation</h2>
 <p>This post will cover the bare bones installation of Home Assistant on a Raspberry Pi 3 using the Hass.io image. In addition to the installation I will cover the setup of some core plugins to ensure that you get the most out of your Home Assistant installation.</p>
+
 <h3 id="hardware">Hardware</h3>
 <p>With my initial Home Assistant setup I was <a href="/blog/2017/2017-09-09/">running everything on Windows</a> which worked perfectly fine. However I have been wanting to test out <a href="https://www.home-assistant.io/getting-started">Hass.io</a> as it offers a simpler way of managing your Home Assistant installation, updates and configuration.</p>
 <p>My hardware consists of a <a href="https://www.adafruit.com/product/3055">Raspberry Pi 3 - Model B</a> from <a href="https://www.adafruit.com/">Adafruit</a> along with a reliable <code>16 GB class 10 micro SD card</code> to write the image to.</p>
 <p>For a case I am using one of <a href="https://www.thingiverse.com/thing:2979595">my own designs</a> as I am planning on mounting it on a pegboard along with all my other Single Board Computers (<code>SBC</code>), this way the cable management is a lot better and it keeps my desk free of additional clutter.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/qmg8-JXRul-800.avif 800w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/qmg8-JXRul-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/qmg8-JXRul-800.jpeg" alt="" width="800" height="526"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/qmg8-JXRul-800.avif 800w"><source type="image/webp" srcset="/blog/2018/2018-06-27/qmg8-JXRul-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/qmg8-JXRul-800.jpeg" alt="" width="800" height="526"></picture>
 <blockquote>
 <p><strong>Note</strong> Use a class 10 or above SD card for this installation, anything slower becomes unbearably noticeable in the long run.</p>
 </blockquote>
+
 <h3 id="flashing-the-software">Flashing the Software</h3>
 <p>For this installation I am going with <a href="https://www.home-assistant.io/installation">Hass.io</a>, which is an all in one image for your SBC and installation could not be simpler. All you need to do is burn the image to your SD card using an application like <a href="https://sourceforge.net/projects/win32diskimager/">Win32 Disk Imager</a> or <a href="https://www.balena.io/etcher/">Etcher</a> like so:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/HlNBPwwbPU-946.avif 946w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/HlNBPwwbPU-946.webp 946w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/HlNBPwwbPU-946.png" alt="" width="946" height="375"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/HlNBPwwbPU-946.avif 946w"><source type="image/webp" srcset="/blog/2018/2018-06-27/HlNBPwwbPU-946.webp 946w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/HlNBPwwbPU-946.png" alt="" width="946" height="375"></picture>
 <p>Ensure that the correct SD card is selected, then hit the Write button to burn the image.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/h0IT02hZbA-484.avif 484w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/h0IT02hZbA-484.webp 484w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/h0IT02hZbA-484.png" alt="" width="484" height="344"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/h0IT02hZbA-484.avif 484w"><source type="image/webp" srcset="/blog/2018/2018-06-27/h0IT02hZbA-484.webp 484w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/h0IT02hZbA-484.png" alt="" width="484" height="344"></picture>
+
 <h3 id="first-boot">First Boot</h3>
 <p>Once you have the Hass.io image on your SD card, insert it into your Raspberry Pi, connect a network cable (WiFi is not a great idea for HASS imho), screen and power cable to boot your Pi. You should see the following screen when Home Assistant is configuring itself. If you do not see this, it is possible that your image may have not been burnt correctly and you may need to try again.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/QEIyq0iM2B-893.avif 893w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/QEIyq0iM2B-893.webp 893w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/QEIyq0iM2B-893.jpeg" alt="" width="893" height="580"></picture>
-<p>If you navigate over to http://hassio.local:8123 by default, or http://PI'S-IP-ADDRESS:8123 you should see the following welcome screen:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/bTDG-biZG5-461.avif 461w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/bTDG-biZG5-461.webp 461w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/bTDG-biZG5-461.png" alt="" width="461" height="606"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/QEIyq0iM2B-893.avif 893w"><source type="image/webp" srcset="/blog/2018/2018-06-27/QEIyq0iM2B-893.webp 893w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/QEIyq0iM2B-893.jpeg" alt="" width="893" height="580"></picture>
+<p>If you navigate over to <a href="http://hassio.local:8123">http://hassio.local:8123</a> by default, or <a href="http://PI&#39;S-IP-ADDRESS:8123">http://PI&#39;S-IP-ADDRESS:8123</a> you should see the following welcome screen:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/bTDG-biZG5-461.avif 461w"><source type="image/webp" srcset="/blog/2018/2018-06-27/bTDG-biZG5-461.webp 461w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/bTDG-biZG5-461.png" alt="" width="461" height="606"></picture>
 <p>As stated above this can (and will) take a while to complete, initially I thought that my RasPi had frozen and rebooted it only to have to go through the whole waiting process again (be patient!). After about 20 min the browser should refresh and present you with a vanilla installation of Home Assistant.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/i9igFqbn-K-638.avif 638w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/i9igFqbn-K-638.webp 638w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/i9igFqbn-K-638.png" alt="" width="638" height="573"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/i9igFqbn-K-638.avif 638w"><source type="image/webp" srcset="/blog/2018/2018-06-27/i9igFqbn-K-638.webp 638w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/i9igFqbn-K-638.png" alt="" width="638" height="573"></picture>
+
 <h2 id="add-ons">Add-ons</h2>
-<p>Now that we have a functioning installation of Home Assistant, it's time to take advantage of the nifty features offered by Hass.io. The biggest draw for me is the ability to install add-ons which extend the functionality of your installation and allow for quick and easier configuration of common features you would have otherwise would have done manually.</p>
+<p>Now that we have a functioning installation of Home Assistant, it&#39;s time to take advantage of the nifty features offered by Hass.io. The biggest draw for me is the ability to install add-ons which extend the functionality of your installation and allow for quick and easier configuration of common features you would have otherwise would have done manually.</p>
 <p>For this installation I am going to start off with some of the more common plugins that most people will need right out of the box, these are namely:</p>
 <ul>
 <li><a href="https://github.com/home-assistant/addons/blob/master/configurator/README.md">Configurator</a> - Web-based editor to modify your files with syntax highlighting</li>
 <li><a href="https://github.com/home-assistant/addons/blob/master/ssh/README.md">SSH Server</a> - allows SSH access to your RasPi</li>
 <li><a href="https://github.com/home-assistant/addons/blob/master/samba/README.md">Samba Share</a> - allows Samba server to access hass.io folders</li>
 </ul>
-<p>To install add-ons you will need to click the side menu button -&gt; Hass.io -&gt; Add-on store (Tab) to display a list of the currently available add-on's under the Community Hass.io Add-ons repository. You are free to add 3rd party repositories to get even more out of your installation, but for now I will stick with the defaults.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/qtiDcBePJZ-787.avif 787w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/qtiDcBePJZ-787.webp 787w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/qtiDcBePJZ-787.png" alt="" width="787" height="395"></picture>
+<p>To install add-ons you will need to click the side menu button -&gt; Hass.io -&gt; Add-on store (Tab) to display a list of the currently available add-on&#39;s under the Community Hass.io Add-ons repository. You are free to add 3rd party repositories to get even more out of your installation, but for now I will stick with the defaults.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/qtiDcBePJZ-787.avif 787w"><source type="image/webp" srcset="/blog/2018/2018-06-27/qtiDcBePJZ-787.webp 787w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/qtiDcBePJZ-787.png" alt="" width="787" height="395"></picture>
+
 <h3 id="configurator">Configurator</h3>
 <p>The Configurator add-on gives you the ability to edit your Home Assistant configuration files in your browser with no need to mess around with file shares. This is great when you want to make a quick change to Home Assistant.</p>
 <p>Installation is straight forward, just click the install button and wait for the task to complete. Once installed you will need to set a desired username / password under the configuration section.</p>
@@ -363,15 +375,16 @@ pre[class*="language-diff-"] {
 	<span class="token property">"username"</span><span class="token operator">:</span> <span class="token string">"&lt;username>"</span><span class="token punctuation">,</span>
 	<span class="token property">"password"</span><span class="token operator">:</span> <span class="token string">"&lt;password>"</span>
 <span class="token punctuation">}</span></code></pre>
-<p>In addition to setting up credentials for yourself you will also need to ensure that you white-list your home IP Range for access (if you do not do this you won't be able to access the web UI), again this is a setting under the configuration section.</p>
-<pre class="language-yaml" tabindex="0"><code class="language-yaml"> <span class="token key atrule">"allowed_networks"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
+<p>In addition to setting up credentials for yourself you will also need to ensure that you white-list your home IP Range for access (if you do not do this you won&#39;t be able to access the web UI), again this is a setting under the configuration section.</p>
+<pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">"allowed_networks"</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>
     <span class="token string">"10.0.0.0/16"</span>
   <span class="token punctuation">]</span><span class="token punctuation">,</span></code></pre>
-<p>In my case I am allowing all IP Addresses in the 10.0.0.0/16 range.</p>
-<p>Once that's done ensure that Start on boot and Auto update are enabled, then click Start to fire up Configurator.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/htdpP9JSiE-756.avif 756w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/htdpP9JSiE-756.webp 756w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/htdpP9JSiE-756.png" alt="" width="756" height="288"></picture>
+<p>In my case I am allowing all IP Addresses in the <code>10.0.0.0/16</code> range.</p>
+<p>Once that&#39;s done ensure that Start on boot and Auto update are enabled, then click Start to fire up Configurator.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/htdpP9JSiE-756.avif 756w"><source type="image/webp" srcset="/blog/2018/2018-06-27/htdpP9JSiE-756.webp 756w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/htdpP9JSiE-756.png" alt="" width="756" height="288"></picture>
 <p>If all went well, clicking Open Web UI should launch a new browser tab, prompt you for your credentials and show you the editor.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/6uva0-SnBv-869.avif 869w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/6uva0-SnBv-869.webp 869w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/6uva0-SnBv-869.png" alt="" width="869" height="419"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/6uva0-SnBv-869.avif 869w"><source type="image/webp" srcset="/blog/2018/2018-06-27/6uva0-SnBv-869.webp 869w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/6uva0-SnBv-869.png" alt="" width="869" height="419"></picture>
+
 <h3 id="ssh-server">SSH Server</h3>
 <p>By default SSH access is disabled on the Hass.io image, and this is where the SSH Server add-on comes in handy. This will install an <a href="https://www.openssh.com/">Open SSH</a> server on your device and allow you to SSH into your SBC to make changes, install software or control Home Assistant via their command line tools.</p>
 <p>Installation is as simple as selecting the add-on from the store. Once installed you will need to set a password via the Config section (remembering to save).</p>
@@ -381,7 +394,8 @@ pre[class*="language-diff-"] {
 <span class="token punctuation">}</span></code></pre>
 <p>Like we did with Configurator, ensure that Start on boot and Auto update are enabled, then click Start.</p>
 <p>Using a tool like <a href="https://www.putty.org/">Putty</a> or <a href="https://mobaxterm.mobatek.net/">MobaXterm</a> attempt to connect to your RasPi (using its IP Address) and the root user account along with the password that you specified. If all goes well you should see the following welcome screen.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/KQ77Pq31Cv-538.avif 538w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/KQ77Pq31Cv-538.webp 538w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/KQ77Pq31Cv-538.png" alt="" width="538" height="346"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/KQ77Pq31Cv-538.avif 538w"><source type="image/webp" srcset="/blog/2018/2018-06-27/KQ77Pq31Cv-538.webp 538w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/KQ77Pq31Cv-538.png" alt="" width="538" height="346"></picture>
+
 <h3 id="samba-share">Samba share</h3>
 <p>The last add-on that I want to cover for now is <a href="https://github.com/home-assistant/addons/blob/master/samba/README.md">Samba</a>, although it is not technically required when using Configurator it is extremely useful should you want to manually back up your files from your Windows computer. I normally use the backup feature of Hass.io along with a weekly manual backup of the generated files and using Samba makes it a lot easier for me.</p>
 <p>Once you have installed Samba from the Add-on store we will need to make the following configuration changes under the Config section:</p>
@@ -391,16 +405,17 @@ pre[class*="language-diff-"] {
   <span class="token property">"password"</span><span class="token operator">:</span> <span class="token string">"&lt;password>"</span>
 <span class="token punctuation">}</span></code></pre>
 <p>Ensure that Start on boot and Auto update are enabled then start the add-on. Open an explorer window and navigate to your server's address, when prompted for credentials enter them in and enjoy!</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/b1FiY9Xj6V-760.avif 760w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/b1FiY9Xj6V-760.webp 760w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/b1FiY9Xj6V-760.png" alt="" width="760" height="238"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/b1FiY9Xj6V-760.avif 760w"><source type="image/webp" srcset="/blog/2018/2018-06-27/b1FiY9Xj6V-760.webp 760w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/b1FiY9Xj6V-760.png" alt="" width="760" height="238"></picture>
+
 <h2 id="deployment">Deployment</h2>
 <p>Once you are happy with the base setup of your Home Automation platform, it is time to move it off your desk into a more permanent location. For me this is on my pegboard along with a whole host of other devices (we will cover later on), and thanks to <a href="https://www.thingiverse.com/thing:2979595">my case</a> it is &quot;neatly&quot; out of the way.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/post/JI_az1n2_e-628.avif 628w"><source type="image/webp" srcset="/blog/2018/2018-06-27/post/JI_az1n2_e-628.webp 628w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/post/JI_az1n2_e-628.jpeg" alt="" width="628" height="472"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-27/JI_az1n2_e-628.avif 628w"><source type="image/webp" srcset="/blog/2018/2018-06-27/JI_az1n2_e-628.webp 628w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-27/JI_az1n2_e-628.jpeg" alt="" width="628" height="472"></picture>
 <p>Although this was a long post we only scraped the surface of Home Assistant and have a long way to go before my setup is back to functioning normally. I plan to document every step of my setup no matter how small and trivial it may seem as if I can help out one person just starting out it will be all worth it.</p>
 <p>Feel free to leave any comments / feedback / questions below and I will do my best to get to them.</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-06-19/post/">Alert Maker Revival</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-06-19/">Alert Maker Revival</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="text-end">Next<br><a href="/blog/2018/2018-06-28/post1/">Home Assistant From Scratch - Setting Up Plex</a></span>
@@ -420,7 +435,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-06-27/post/` was built on 2025-07-22T21:39:56.576Z -->
+		<!-- This page `/blog/2018/2018-06-27/` was built on 2025-07-23T20:01:06.718Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
