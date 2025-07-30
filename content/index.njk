@@ -12,7 +12,7 @@ pagination:
 
 {% set postsCount = collections.posts | length %}
 {% set latestPostsCount = postsCount | min(5) %}
-<h2 class="pt-3">Last {{ latestPostsCount }} Post{% if latestPostsCount != 1 %}s{% endif %}</h2>
+<h2 class="pt-3">Latest Blog Posts</h2>
 
 {% set postslist = collections.posts | head(-1 * 5) %}
 {% set postslistCounter = postsCount %}
