@@ -1,0 +1,82 @@
+---
+title: Home Assistant From Scratch - Setting Up Plex
+date: 2018-06-28
+tags: [home assistant]
+logo: hass.png
+---
+
+<blockquote>
+<p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
+</blockquote>
+
+<p>Today I would like to get <a href="https://www.plex.tv/">Plex</a> configured and running in <a href="https://www.home-assistant.io/">Home Assistant</a>.</p>
+<p>Thanks to all the hard work put in by the developers of Home Assistant this is a pretty trivial task on their side, with a little bit of leg work on ours to get a Plex token.</p>
+<p>Before you begin you will need to make sure that you meet the following criteria.</p>
+<ul>
+<li>You have a working Home Assistant setup</li>
+<li>You have a <a href="https://www.plex.tv/">Plex Media Server</a> (PMS) installed and running somewhere in your home.</li>
+<li>You have an <a href="https://www.plex.tv/sign-up/">account with Plex</a> - we use this account to obtain a long-living token for Home Assistant to use</li>
+<li><a href="https://www.postman.com/">Postman</a> - used to obtain the Plex token</li>
+</ul>
+
+<h2 id="obtaining-your-plex-token">Obtaining your Plex Token</h2>
+<p>The first thing we will need to do is get a long-lived Plex token for Home Assistant to use when making calls to your Plex Media Server. If you look at the <a href="https://www.home-assistant.io/integrations/plex/">Plex Component</a> page you will see that they refer to <a href="https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/">this method</a> to get a token, however this is a temporary token and will expire after some time - so this is of no use to us.</p>
+<p>Let’s do that now, first we will need to open Postman and configure it as shown below:</p>
+<img src="./images/06/28-011.png" alt="" />
+{% highlight "text" %}
+Request Type: POST
+URL: https://plex.tv/users/sign_in.json
+Headers:
+    X-Plex-Client-Identifier = hass
+    X-Plex-Product:= hass
+    X-Plex-Version = 1.0.0
+Body:
+    Content Type: form-data
+    user[login] : <your_login_email>
+    user[password] : <your password>
+{% endhighlight %}
+<img src="./images/06/28-012.png" alt="" />
+<p>Click send to make the request. If you entered in everything correctly you should be greeted with a successful login:</p>
+<img src="./images/06/28-013.png" alt="" />
+<p>In the response body you will see a property called <code>“authentication_token”</code> - this is what we want. Take note of the token as we will be using it in the next step.</p>
+
+<h2 id="adding-plex-to-home-assistant">Adding Plex to Home Assistant</h2>
+<p>As mentioned above the Home Assistant side of things is way simpler, provided that your HASS server is on the same network as your Plex Media Server and discovery (GDM) is enabled in Plex (as far as I know this is the default setting).</p>
+<p>When you navigate over to HASS you should see a card similar to the one below telling you that Home Assistant has found an instance of Plex running on its network.</p>
+<img src="./images/06/28-014.png" alt="" />
+<p>Click the configure button, and enter in the token collected above into the appropriate field as shown below:</p>
+<img src="./images/06/28-015.png" alt="" />
+<p>Click confirm, and you are done. After a few seconds you should see a new card per plex enabled device currently on your network:</p>
+<img src="./images/06/28-016.png" alt="" />
+<p>Any device currently watching something on Plex should pop up as a card like so:</p>
+<img src="./images/06/28-017.png" alt="" />
+<p>Now you have the option to play, pause, stop, skip and change the volume on the streaming device:</p>
+<img src="./images/06/28-018.png" alt="" />
+
+<h2 id="don-t-commit-personal-files">Don’t commit personal files</h2>
+<p>Once Plex has been added to Home Assistant, and providing that you are following along with this series, a couple of new files should have been added to your Home Assistant directory, namely:</p>
+<ul>
+<li><code>plex.conf</code> - configuration file that contains your Plex access token among other things</li>
+<li><code>entity_registry.yaml</code> - device registry kept by Home Assistant to help identify devices and customise their display names (you can find out more about the entity registry here)</li>
+</ul>
+<img src="./images/06/28-019.png" alt="" />
+<p>These files are required for Home Assistant to do its thing, but should not be made public if you are using GitHub to manage your configuration like I do. We will need to add these two files to the .gitignore file to prevent accidental publication of your Plex token and home entities information, this is as simple as adding the following lines to your .gitignore file:</p>
+{% highlight "text" %}
+Entity_registry\.yaml
+plex\.conf
+{% endhighlight %}
+
+<h2 id="do-a-manual-backup">Do a manual backup</h2>
+<p>Until we cover an automated backup flow for your personal files in Home Assistant, now would be a good time to do a manual backup of the following files to a safe location - just in case.</p>
+<ul>
+<li>entity_registry.yaml</li>
+<li>secrets.yaml</li>
+<li>plex.conf</li>
+</ul>
+<p>This will allow you to quickly recover from accidental file deletion \ corrupt SD Card easily when paired with your public GitHub repository.</p>
+
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>We finally have something to look at on our Home Assistant deployment (besides the welcome and discovery cards), but this is just the beginning.</p>
+<p>In the next few posts we will be adding more and more components to Home Assistant in preparation for a post covering Groups and Views, which is one of the most useful features in Home Assistant.</p>
+<p>There is still a lot of theory to go over, but as this series progresses I am going to be moving to a more high-level approach to it all, only diving in deep for important \ crucial concepts, otherwise linking to the official Home Assistant documentation.</p>
+<p>As always I welcome any feedback, comments and questions.</p>

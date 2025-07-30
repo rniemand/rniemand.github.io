@@ -1,0 +1,97 @@
+---
+title: Home Assistant From Scratch - Presence Detection
+date: 2018-07-19
+tags: [home assistant]
+logo: hass.png
+---
+
+<blockquote>
+<p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
+</blockquote>
+
+<p>Today we are going to make our Home Assistant deployment a bit smarter by adding in presence detection. For this I am going to be making use of the <a href="https://www.home-assistant.io/integrations/google_maps/">Google Maps Location Sharing</a> component as I find it to be more reliable than my old self-hosted OwnTracks instance, and both my wife&#39;s phone and mine already have Google Maps installed with location sharing enabled (so there is no need to install another application on Rae&#39;s phone).</p>
+
+<h2 id="core-configuration">Core Configuration</h2>
+<p>Below are the steps required to get up and running with the Google Maps Location Sharing component.</p>
+<blockquote>
+<p><strong>Note</strong>: I strongly recommend creating a new Google account to be used with Home Assistant for this, mainly due to the fact that you will need to share your location with it.</p>
+</blockquote>
+
+<h3 id="google-account-configuration">Google Account Configuration</h3>
+<p>You will also need to enable <a href="https://myaccount.google.com/lesssecureapps?pli=1&amp;rapt=AEjHL4PmYNJjr7LhnWj_lt7RNWbWlRF2t9o63ABWOnZ4_hKtad_9LXD3C0v9ie3V7MeagABgpmi8r_v91ZUSqz64rMhfEoO86A">less secure application sign in</a> for the new account, along with approving the login on the <a href="https://myaccount.google.com/device-activity">device activity</a> overview page after your initial spin up of Home Assistant with Google Maps location sharing enabled.</p>
+<p>I noticed when I initially created the account it took a day or so before HASS was able to log into the new account properly to retrieve our device location. I would suggest creating the account, following the steps below and giving it a day or so for your settings to take effect.</p>
+<p>Once your account is created, open up Google Maps on your phone, enable location sharing and share your location with your new account - be sure to share your location as ongoing.</p>
+<img src="./images/07/19-001.png" alt="" />
+
+<h3 id="hass-configuration">HASS Configuration</h3>
+<p>Enabling Google Maps Location Sharing in Home Assistant (HASS) is as simple as adding the following 2 lines into your secrets.yaml file...</p>
+{% highlight "yaml" %}
+google_user: xxx@gmail.com
+google_pass: dddd
+{% endhighlight %}
+<p>... the below into your `configuration.yaml` file ...</p>
+{% highlight "yaml" %}
+device_tracker:
+  - platform: google_maps
+    username: !secret google_user
+    password: !secret google_pass
+{% endhighlight %}
+<p>... validating your configuration and restarting Home Assistant, when Home Assistant comes back up you should see all people sharing their location with your new Google account as shown below.</p>
+<img src="./images/07/19-002.png" alt="" />
+
+<h3 id="known_devices-yaml">known_devices.yaml</h3>
+<p>Home Assistant will generate a new file called <code>known_devices.yaml</code> (if there isn&#39;t already one) which it uses to store information about discovered devices. The contents of the file should look something like this:</p>
+{% highlight "yaml" %}
+google_maps_<random_uuid>:
+  hide_if_away: false
+  icon:
+  mac:
+  name: <random_uuid>
+  picture: https://l.../photo.jpg
+  track: true
+{% endhighlight %}
+<p>This file (<code>known_devices.yaml</code>) is specific to your Home Assistant setup and should not be committed to source control, it is safe to add to your .gitignore file.</p>
+<p>If you wish to change the display names for your tracked users, this is the file to do it in, simply enter in the desired name for the user into the name property, reload Home Assistant and voila.</p>
+<img src="./images/07/19-003.png" alt="" />
+
+<h2 id="zones">Zones</h2>
+<p>Home Assistant allows us to configure custom zones through the <a href="https://www.home-assistant.io/integrations/zone/">zone component</a>.</p>
+<blockquote>
+<p>Zones allow you to specify certain regions on earth. When a device tracker sees a device to be within a zone, the state will take the name from the zone. Zones can also be used as a trigger or condition inside automation setups.</p>
+</blockquote>
+<p>Let&#39;s see this in action by defining a Gym zone to see how active I am (spoiler - not very).</p>
+
+<h3 id="creating-a-gym-zone">Creating a Gym zone</h3>
+<p>First thing you will need in order to define a zone is the longitude and latitude coordinates for your desired zone. I find the best way to get these values is by finding the desired area on Google Maps and extracting the values from the URL.</p>
+<img src="./images/07/19-004.png" alt="" />
+{% highlight "text" %}
+https://www.google.co.za/maps/@53.5292089,-113.291217,18.25z
+{% endhighlight %}
+<p>So my latitude should be 53.5292089 and longitude should be -113.291217 - give or take. I can now create my custom zone in the configuration.yaml file like so:</p>
+{% highlight "yaml" %}
+zone:
+  - name: Gym
+    latitude: 53.5301052
+    longitude: -113.2932228
+    radius: 150
+    icon: mdi:dumbbell
+{% endhighlight %}
+<p>After validating my configuration and restarting Home Assistant the gym popped up on the map and Rae's location was updated to reflect the new name.</p>
+<img src="./images/07/19-005.png" alt="" />
+<img src="./images/07/19-006.png" alt="" />
+<p>You can repeat this process as many times as you need, just make sure to follow the examples on the zone components page when defining more than one zone.</p>
+<h2 id="history">History</h2>
+<p>The last bit of customization I would like to do today would be to address the names that appear in the history view for our devices.</p>
+<img src="./images/07/19-007.png" alt="" />
+<p>To do this, simply add in the below configuration for each device you want to rename into your customization.yaml file ...</p>
+{% highlight "yaml" %}
+device_tracker.google_maps_<guid>:
+  friendly_name: Richard
+{% endhighlight %}
+<p>... validate configuration, and restart Home Assistant.</p>
+<p>Initially this change did not work for me and the devices kept their auto generated names, however the next day the changes took effect.</p>
+<img src="./images/07/19-008.png" alt="" />
+<p>I suspect that this has something to do with the way history is recorded in the DB, but don't be discouraged if your change doesn't show up immediately either.</p>
+
+<h2 id="in-closing">In Closing</h2>
+<p>As always I hope that you found this post interesting and welcome all comments, questions and feedback.</p>

@@ -1,0 +1,108 @@
+---
+title: Home Assistant From Scratch - Hue Lights
+date: 2018-07-02
+tags: [home assistant]
+logo: hass.png
+---
+
+<blockquote>
+<p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
+</blockquote>
+
+<p>Today&#39;s objective is pretty straight forward, we are going to be adding some <a href="https://www.philips-hue.com/en-ca">Philips Hue lights</a> to our Home Assistant setup in order to control them from the Home Assistant application, and later use them in automation rules.</p>
+<p>For this we will need to complete the following steps:</p>
+<ul>
+<li>Connect the Hue bridge to Home Assistant</li>
+<li>Group the lights we want to see together</li>
+<li>Customize our lights<ul>
+<li>Hide &quot;rooms&quot; imported from the Hue app</li>
+</ul>
+</li>
+<li>Committing your changes to GitHub</li>
+</ul>
+
+<h2 id="groups">Groups</h2>
+<p>We will be working with groups in this post, and as the name suggests groups are a collection of things in Home Assistant that you would like to appear together on the same card in the Web UI.</p>
+<p>By default, groups are defined in the groups.yaml file, which can be found in your Home Assistant&#39;s configuration folder. Groups are defined in YAML and follow the strict nesting structure of the markup.</p>
+<p>You add entities (devices) to groups by using their fully qualified name (e.g. light.bedroom_light) which Home Assistant will parse and display. You can get an entities fully qualified name through the states section of the developer tools (at the bottom of the main menu):</p>
+<img src="./images/07/02-001.png" alt="" />
+<p>Once there, find the entity that you are interested in adding to your group and copy its Entity name.</p>
+<img src="./images/07/02-002.png" alt="" />
+
+<h2 id="process">Process</h2>
+
+<h3 id="connecting-the-hue-bridge">Connecting the Hue Bridge</h3>
+<p>As per the norm, Home Assistant has made it really easy to connect to your Hue Bridge providing that <a href="https://en.wikipedia.org/wiki/Zero-configuration_networking">Zero-configuration networking</a> is enabled and your Hue Bridge is on the same network as Home Assistant. When you open Home Assistant in your browser you should see your Hue Bridge listed under the discovered devices card:</p>
+<img src="./images/07/02-003.png" alt="" />
+<p>Click configure and follow the simple on-screen steps which require you to press the sync button on the Hub...</p>
+<img src="./images/07/02-004.png" alt="" />
+<p>... followed by submit on the popup and waiting a few seconds.</p>
+<img src="./images/07/02-005.png" alt="" />
+<p>It's that simple, and after a second or so you should see all your lights:</p>
+<img src="./images/07/02-006.png" alt="" />
+
+<h3 id="grouping-lights-together">Grouping lights together</h3>
+<p>As you can see above, all my lights were successfully imported into Home Assistant along with what seem to be doubles of each bulb. These &quot;doubles&quot; are actually the rooms (groups) I have defined in the Philips Hue application, and are intended to quickly turn on / off all the lights in a defined room.</p>
+<p>I really don&#39;t need both the rooms and lights for my setup, and would prefer to simply have a group containing only the lights that I want to control. Thankfully this is a simple task to achieve through a <a href="https://www.home-assistant.io/integrations/group/">group</a> in Home Assistant, all we need for this to work is a name for the group and a list of the devices (lights) we want to group together.</p>
+<p>As mentioned above you can get the names of your devices through the stateview (under the developer tools section of the menu), as shown here:</p>
+<img src="./images/07/02-007.png" alt="" />
+<p>To group the selected lights together all we need to do is simply add the following lines to the groups.yaml file making sure that we watch our spacing and get the entities names correct:</p>
+{% highlight "yaml" %}
+hue_lights_group:
+  name: Hue Lights
+  entities:
+    - light.bedroom_light
+    - light.lounge_light
+    - light.workbench_light
+{% endhighlight %}
+<p>After validating our configuration and reloading Home Assistants Groups we are presented with the following:</p>
+<img src="./images/07/02-008.png" alt="" />
+
+<h3 id="customizing-our-lights">Customizing our lights</h3>
+<p>I am a visual person, and as such prefer to have the icons representing each light to differ from each-other for quick identification when scrolling through my Home Assistant devices. I would like each light to look different, and preferably to have an icon that more closely represents the shape of the light fixture.</p>
+<p>Luckily for us such customization is possible in Home Assistant through the cuztomize.yaml file. In this file you are able to customize <a href="https://www.home-assistant.io/docs/configuration/customizing-devices/">some basic characteristics</a> of devices in Home Assistant, and even hide ones that should you want to. The syntax is simple (and well documented) making it easy to get up and running quickly. In my case I used the following configuration for my lights:</p>
+{% highlight "yaml" %}
+light.bedroom_light:
+  friendly_name: Bedroom
+  icon: mdi:hotel
+
+light.lounge_light:
+  friendly_name: Lounge
+  icon: mdi:floor-lamp
+
+light.workbench_light:
+  friendly_name: Workbench
+  icon: mdi:desk-lamp
+{% endhighlight %}
+<p>After a quick validation and reloading of the core components of Home Assistant things are looking a lot better:</p>
+<img src="./images/07/02-009.png" alt="" />
+<blockquote>
+<p><strong>Icons</strong>: You can use any icon from <a href="https://materialdesignicons.com">https://materialdesignicons.com</a> provided that you prefix the name with mdi: as shown above</p>
+</blockquote>
+<p>I would like to hide the rooms imported with the lights, so I added the following configuration to cuztomize.yaml:</p>
+{% highlight "yaml" %}
+light.lounge:
+  hidden: true
+
+light.workbench:
+  hidden: true
+
+light.bedroom:
+  hidden: true
+{% endhighlight %}
+<p>After a quick core reload all I am left with are my lights</p>
+
+<h3 id="committing-changes">Committing changes</h3>
+<p>The last thing left to do now is ignore any files that expose personal data, and commit our changes to GitHub.</p>
+<p>If you haven&#39;t done so already you will need to add .config_entries.json to your git.ignore file before pushing your changes to GutHub (or whatever source control you are using). As the name suggests this file contains configuration specific to the devices in your Home Automation setup, and could potentially contain sensitive information such as an API key, MAC Address and so on:</p>
+<img src="./images/07/02-010.png" alt="" />
+<p>I strongly suggest ignoring these types of files and manually backing them up on a schedule.</p>
+
+<h2 id="final-thoughts">Final thoughts</h2>
+<p>There is just something magical about the consistency that Home Assistant has when it comes to its user interface (compared to the quickly thrown together application made by the hardware manufacturers). Add to that, the fact that Home Assistant is able to determine the capabilities of the connected device and present you the appropriate options makes it all that much better:</p>
+<p>This is the UI for a Hue bulb:</p>
+<img src="./images/07/02-011.png" alt="" />
+<p>This is the UI for a standard white bulb:</p>
+<img src="./images/07/02-012.png" alt="" />
+<p>This is a good start to expanding out our Home Automation and will allow for some pretty awesome automation rules in the not too far future. There is a lot of power packed into Home Assistant, and we have a lot more ground to cover.</p>
+<p>As always, I hope that you found this post useful and I welcome any feedback / questions below.</p>

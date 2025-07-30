@@ -1,0 +1,103 @@
+---
+title: Home Assistant From Scratch - Speedtest.net
+date: 2018-07-03
+tags: [home assistant]
+logo: hass.png
+---
+
+<blockquote>
+<p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
+</blockquote>
+
+<p>In preparation for an upcoming blog post on the recorder and history component we are going to need some historical data to work with. I would like to keep tabs on the performance of our internet connection using the <a href="https://www.home-assistant.io/integrations/speedtestdotnet/">speedtest.net component</a>, we will be doing this in the following steps:</p>
+<ul>
+<li>Add the Speedtest.net sensor to Home Assistant</li>
+<li>Create a group to display the measured values</li>
+<li>Trigger initial data collection through a service</li>
+<li>Customize our group</li>
+</ul>
+
+<h2 id="process">Process</h2>
+
+<h3 id="speedtest-net-sensor">Speedtest.net sensor</h3>
+<p>Looking at the speedtest sensor&#39;s documentation adding the sensor as a new platform under the sensor node. Once added there are a couple of options available on the conditions that you would like to monitor, in my case I am going to be collecting information about ping, download and upload speeds.</p>
+<p>To do this we will need to add the following configuration to the <code>configuration.yaml</code> file:</p>
+{% highlight "yaml" %}
+sensor:
+  - platform: speedtest
+    monitored_conditions:
+      - ping
+      - download
+      - upload
+    minute:
+      - 0
+      - 15
+      - 30
+      - 45
+{% endhighlight %}
+<p>The above configuration will run a speed test every 15 min (0, 15, 30 and 45 past the hour), these counters will be stored via the recorder &amp; history components.</p>
+<p>After a quick configuration check and reload of Home Assistant we can see our new counters in the status area:</p>
+<img src="./images/07/03-001.png" alt="" />
+
+<h3 id="create-a-group">Create a group</h3>
+<p>I would prefer to have these counters displayed as a card in Home Assistant rather than in the status area. To do this we can simply create a group, list the components that we would like to see in the group and reload the core components of Home Assistant.</p>
+<p>To create our group we will first need the component id&#39;s of our new counters, you can get the id&#39;s through the states view under the developer tools.</p>
+<p>We will define our group as below in the <code>groups.yaml</code> file:</p>
+{% highlight "yaml" %}
+internet_speed:
+  name: Internet Speed
+  entities:
+    - sensor.speedtest_download
+    - sensor.speedtest_upload
+    - sensor.speedtest_ping
+{% endhighlight %}
+<p>After reloading the groups we are presented with the following:</p>
+<img src="./images/07/03-002.png" alt="" />
+
+<h3 id="triggering-data-collection">Triggering data collection</h3>
+<p>At the moment we don&#39;t have any data from Speedtest (as it only collects every 15 min) so we can trigger the collection manually to get our initial counters.</p>
+<p>Most components in Home Assistant expose services which can be called either through code or via custom automation rules. Services can range from something as simple as getting \ setting a state on a component or running a complex command for the targeted entity.</p>
+<p>You can easily see a list of all available services that you can call in Home Assistant through the services developer tool which is listed under the Developer tools section in the main menu.</p>
+<img src="./images/07/03-003.png" alt="" />
+<p>The service we are interested in calling is the sensor.update_speedtest service, to do this select it from the drop down list and click the call service button to execute it.</p>
+<img src="./images/07/03-004.png" alt="" />
+<p>Some services may require additional parameters to function correctly, if that is the case (as with the recorder component) the service will list all available parameters and a description for each one. Passing parameters to a service is as simple as creating a JSON object containing each parameter that you want to post as a property.</p>
+<img src="./images/07/03-005.png" alt="" />
+{% highlight "json" %}
+{ "keep_days": 7, "repack": false }
+{% endhighlight %}
+
+<h3 id="customizing-our-counters">Customizing our counters</h3>
+<p>Lastly I would like to do some basic customization of the collected counters, namely I would like to rename them and add a custom icon per value.</p>
+<p>We can make these changes in the customize.yaml file by adding the following lines:</p>
+{% highlight "yaml" %}
+sensor.speedtest_download:
+  friendly_name: Download Speed
+  icon: mdi:cloud-download
+
+sensor.speedtest_upload:
+  friendly_name: Upload Speed
+  icon: mdi:cloud-upload
+
+sensor.speedtest_ping:
+  friendly_name: Ping
+  icon: mdi:mixcloud
+{% endhighlight %}
+<p>After a quick configuration validation and reloading of Home Assistants core components our counters look a lot better:</p>
+<img src="./images/07/03-006.png" alt="" />
+<p>Clicking on any of the counters (after a while) will result in a graph containing the collected data - this data comes from the history component.</p>
+<img src="./images/07/03-007.png" alt="" />
+
+<h2 id="committing-changes">Committing Changes</h2>
+<p>If you are using some form of source control, now would be a good time to commit your changes.</p>
+
+<h2 id="final-thoughts">Final thoughts</h2>
+<p>This was one of the last posts where I will dive into so much detail around simple configuration tasks in Home Assistant. I will elaborate any topics that require it, but for now please keep the following in mind:</p>
+<ul>
+<li><code>configuration.yaml</code> - stores all configuration relating to adding new components and sensors to Home Assistant</li>
+<li><code>customize.yaml</code> - allows the customization of all your entities (e.g. name, icons and visibility)</li>
+<li><code>groups.yaml</code> - use to group entities together and create views</li>
+<li><code>automations.yaml</code> - place where you create and store custom automation rules</li>
+<li><code>secrest.yaml</code> - used to store sensitive data that you don&#39;t want to commit to your configuration repository (provided it&#39;s ignored via the .gitignore file).</li>
+</ul>
+<p>I hope that you found this post helpful, and as always I welcome any comments, feedback and questions below.</p>
