@@ -320,15 +320,23 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-07-17">17 July 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#why-use-mysql-">Why use MySQL?</a></li><li><a href="#the-process">The process</a><ol><li><a href="#creating-the-database">Creating the database</a></li><li><a href="#creating-the-hass_user-account">Creating the hass_user account</a></li><li><a href="#configuring-home-assistant">Configuring Home Assistant</a></li><li><a href="#enjoy-the-boost">Enjoy the boost</a></li></ol></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
 </blockquote>
+
 <p>Today I would like to cover switching from the default SQLite database that Home Assistant uses over to MySQL - there is a slight performance update when making this switch, not to mention that it frees up valuable resources on my Raspberry Pi.</p>
-<h2 id="why-use-mysql">Why use MySQL?</h2>
+
+<h2 id="why-use-mysql-">Why use MySQL?</h2>
 <p>My main driver for switching from SQLite to MySQL is performance and resources. If you have been following <a href="/series/">this series</a> you will know that I am running my Home Assistant setup on a Raspberry Pi (through <a href="https://www.home-assistant.io/getting-started">hass.io</a>) for ease of use. This works amazingly well, however the throughput of the default database suffers due to the limited resources on the Pi.</p>
 <p>I already have a <a href="https://www.mysql.com/products/community/">MySQL Community Edition</a> server running on my home network complete with weekly backups of some select databases. So for me it makes sense to create a new home_assistant schema on my server and gain the performance benefits over SQLite.</p>
 <p>For the remainder of this post I am going to presume that you have an instance of MySQL running somewhere on your home network (<a href="https://dev.mysql.com/doc/refman/8.0/en/windows-installation.html">official installation guide</a>) along with <a href="https://www.mysql.com/products/workbench/">MySQL Workbench</a> to manage your server.</p>
+
 <h2 id="the-process">The process</h2>
 <p>The process to switch over to MySQL is pretty straight forward, and requires only 3 lines of configuration in Home Assistant (2 if you are not using a secrets.yaml file), and will comprise of the following steps:</p>
 <ul>
@@ -337,19 +345,22 @@ pre[class*="language-diff-"] {
 <li>Configure Home Assistant to point to your MySQL server</li>
 <li>Restart Home Assistant and enjoy</li>
 </ul>
+
 <h3 id="creating-the-database">Creating the database</h3>
 <p>Creating the database is as simple as connecting to your server through MySQL Workbench and clicking the create new schema shortcut, giving the schema a name and clicking create.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/DCMKngNIlG-284.avif 284w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/DCMKngNIlG-284.webp 284w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/DCMKngNIlG-284.png" alt="" width="284" height="85"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/DCMKngNIlG-284.avif 284w"><source type="image/webp" srcset="/blog/2018/2018-07-17/DCMKngNIlG-284.webp 284w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/DCMKngNIlG-284.png" alt="" width="284" height="85"></picture>
 <p>Once done you should have a new schema called home_assistant ready to go.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/Sy4gX_9uFK-548.avif 548w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/Sy4gX_9uFK-548.webp 548w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/Sy4gX_9uFK-548.png" alt="" width="548" height="250"></picture>
-<h3 id="creating-the-hass-user-account">Creating the hass_user account</h3>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/Sy4gX_9uFK-548.avif 548w"><source type="image/webp" srcset="/blog/2018/2018-07-17/Sy4gX_9uFK-548.webp 548w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/Sy4gX_9uFK-548.png" alt="" width="548" height="250"></picture>
+
+<h3 id="creating-the-hass_user-account">Creating the hass_user account</h3>
 <p>To create the hass_user account simply click on the Users and Privileges link found under the Navigator pane followed by the Add Account button at the far bottom.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/a4dwS06Har-217.avif 217w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/a4dwS06Har-217.webp 217w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/a4dwS06Har-217.png" alt="" width="217" height="141"></picture>
-<p>Be sure to generate a strong password for the account, along with allowing all hosts <code>%</code> to connect as this user - this is important as the user account will be coming in from your Home Assistant server and not your MySQL server's localhost.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/5Up1BkyESM-644.avif 644w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/5Up1BkyESM-644.webp 644w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/5Up1BkyESM-644.png" alt="" width="644" height="292"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/a4dwS06Har-217.avif 217w"><source type="image/webp" srcset="/blog/2018/2018-07-17/a4dwS06Har-217.webp 217w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/a4dwS06Har-217.png" alt="" width="217" height="141"></picture>
+<p>Be sure to generate a strong password for the account, along with allowing all hosts <code>%</code> to connect as this user - this is important as the user account will be coming in from your Home Assistant server and not your MySQL server&#39;s localhost.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/5Up1BkyESM-644.avif 644w"><source type="image/webp" srcset="/blog/2018/2018-07-17/5Up1BkyESM-644.webp 644w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/5Up1BkyESM-644.png" alt="" width="644" height="292"></picture>
 <p>In terms of privileges for the account, be sure to select what makes sense for your user (I was not 100% sure what to grant, so I gave my account DBA rights). I would suggest limiting the privileges for your setup, but my MySQL server does not face the internet, and the box it is running on is pretty boring to potential attackers.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/fuJVSv7vkp-504.avif 504w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/fuJVSv7vkp-504.webp 504w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/fuJVSv7vkp-504.png" alt="" width="504" height="246"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/fuJVSv7vkp-504.avif 504w"><source type="image/webp" srcset="/blog/2018/2018-07-17/fuJVSv7vkp-504.webp 504w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/fuJVSv7vkp-504.png" alt="" width="504" height="246"></picture>
 <p>Click OK to create the user account.</p>
+
 <h3 id="configuring-home-assistant">Configuring Home Assistant</h3>
 <p>We will need to configure the <a href="https://www.home-assistant.io/integrations/recorder/">recorder component</a> and tell it to store \ retrieve all state and history information from MySQL instead of the default SQLite database.</p>
 <p>In order to do this we will need to create a connection string for MySQL using the following structure: <code>mysql://&lt;user&gt;:&lt;pass&gt;@&lt;host&gt;/&lt;schema&gt;</code></p>
@@ -360,24 +371,26 @@ pre[class*="language-diff-"] {
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">recorder</span><span class="token punctuation">:</span>
   <span class="token key atrule">db_url</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> db_mysql</code></pre>
 <p>Once done be sure to validate your configuration and restart Home Assistant.</p>
+
 <h3 id="enjoy-the-boost">Enjoy the boost</h3>
 <p>After Home Assistant comes back up you should see that there are some new tables in your database, along with all the current state information for your home setup.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/VZLKWW0jGo-543.avif 543w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/VZLKWW0jGo-543.webp 543w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/VZLKWW0jGo-543.png" alt="" width="543" height="244"></picture>
-<p>That's it, you are now using MySQL - now would be a good time to remove the default &quot;home-assistant_v2.db&quot; file from your Raspberry Pi.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/k4u_WpqRty-711.avif 711w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/k4u_WpqRty-711.webp 711w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/k4u_WpqRty-711.png" alt="" width="711" height="395"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/VZLKWW0jGo-543.avif 543w"><source type="image/webp" srcset="/blog/2018/2018-07-17/VZLKWW0jGo-543.webp 543w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/VZLKWW0jGo-543.png" alt="" width="543" height="244"></picture>
+<p>That&#39;s it, you are now using MySQL - now would be a good time to remove the default &quot;home-assistant_v2.db&quot; file from your Raspberry Pi.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/k4u_WpqRty-711.avif 711w"><source type="image/webp" srcset="/blog/2018/2018-07-17/k4u_WpqRty-711.webp 711w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/k4u_WpqRty-711.png" alt="" width="711" height="395"></picture>
 <p>Home Assistant will feel really fast now, this is mainly due to the fact that you have lost all your state information and will need to build it back up. However things should remain pretty quick even when things are back to normal (data wise) as shown here:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/rMyB3VO4Q_-918.avif 918w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/rMyB3VO4Q_-918.webp 918w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/rMyB3VO4Q_-918.png" alt="" width="918" height="119"></picture>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/post/pQQRxyKSrj-996.avif 996w"><source type="image/webp" srcset="/blog/2018/2018-07-17/post/pQQRxyKSrj-996.webp 996w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/post/pQQRxyKSrj-996.png" alt="" width="996" height="459"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/rMyB3VO4Q_-918.avif 918w"><source type="image/webp" srcset="/blog/2018/2018-07-17/rMyB3VO4Q_-918.webp 918w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/rMyB3VO4Q_-918.png" alt="" width="918" height="119"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-17/pQQRxyKSrj-996.avif 996w"><source type="image/webp" srcset="/blog/2018/2018-07-17/pQQRxyKSrj-996.webp 996w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-17/pQQRxyKSrj-996.png" alt="" width="996" height="459"></picture>
 <p>Hopefully you see the same performance gains as I did with the switch over to MySQL.</p>
+
 <h2 id="in-closing">In Closing</h2>
 <p>Although this change is not a requirement for your home setup, and depending on the size / amount of data you are collecting and reporting on may not be required I still highly recommend it. It makes management of your database a lot easier and helps reduce the amount of resources being used on your Home Assistant host device. On the flip side this can be another potential point of failure for your setup, but it is unlikely as MySQL is super stable from my personal experience.</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-07-16/post/">Home Assistant From Scratch - MQTT</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-07-16/">Home Assistant From Scratch - MQTT</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-07-19/post/">Home Assistant From Scratch - Presence Detection</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-07-19/">Home Assistant From Scratch - Presence Detection</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -394,7 +407,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-07-17/post/` was built on 2025-07-30T17:04:14.538Z -->
+		<!-- This page `/blog/2018/2018-07-17/` was built on 2025-07-30T17:53:20.341Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

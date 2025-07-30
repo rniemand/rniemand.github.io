@@ -319,23 +319,33 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-07-25">25 July 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#new-terminology">New Terminology</a><ol><li><a href="#entities">Entities</a></li><li><a href="#domains">Domains</a></li></ol></li><li><a href="#world-clock-sensor">World Clock Sensor</a></li><li><a href="#history-component">History Component</a><ol><li><a href="#ignoring-a-specific-entity">Ignoring a specific entity</a></li><li><a href="#ignoring-a-domain">Ignoring a domain</a></li></ol></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
 </blockquote>
+
 <p>Today I would like to cover the History component of Home Assistant, and show you how to ignore certain entities or domains altogether through it.</p>
+
 <h2 id="new-terminology">New Terminology</h2>
-<p>In this post I will be talking about <code>entities</code> and <code>domains</code> in Home Assistant, these are relatively simple terms which you are familiar with already, albeit you didn't know the proper names for them.</p>
+<p>In this post I will be talking about <code>entities</code> and <code>domains</code> in Home Assistant, these are relatively simple terms which you are familiar with already, albeit you didn&#39;t know the proper names for them.</p>
+
 <h3 id="entities">Entities</h3>
-<p>An entity in Home Assistant is anything that you can interact with, for example one of the <a href="/blog/2018/2018-07-02/post/">Philips Hue lights we added in an earlier post</a>. All objects in Home Assistant inherit from the <a href="https://github.com/home-assistant/core/blob/dev/homeassistant/helpers/entity.py">entity base class</a>, and can be seen in the states section of the developer tools.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post1/DDXsknqOvD-250.avif 250w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post1/DDXsknqOvD-250.webp 250w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post1/DDXsknqOvD-250.png" alt="" width="250" height="132"></picture>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post1/p2dvEL-Wq0-727.avif 727w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post1/p2dvEL-Wq0-727.webp 727w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post1/p2dvEL-Wq0-727.png" alt="" width="727" height="301"></picture>
-<p>It is these names (I like to think of them as the entity's fully qualified name) that we use to configure certain aspects of Home Assistant - like creating groups, views or automatons. A fully qualified name of an entity follows the <code>&lt;domain&gt;.&lt;entity_id&gt;</code> naming convention.</p>
+<p>An entity in Home Assistant is anything that you can interact with, for example one of the <a href="/blog/2018/2018-07-02/">Philips Hue lights we added in an earlier post</a>. All objects in Home Assistant inherit from the <a href="https://github.com/home-assistant/core/blob/dev/homeassistant/helpers/entity.py">entity base class</a>, and can be seen in the states section of the developer tools.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/DDXsknqOvD-250.avif 250w"><source type="image/webp" srcset="/blog/2018/2018-07-25/DDXsknqOvD-250.webp 250w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/DDXsknqOvD-250.png" alt="" width="250" height="132"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/p2dvEL-Wq0-727.avif 727w"><source type="image/webp" srcset="/blog/2018/2018-07-25/p2dvEL-Wq0-727.webp 727w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/p2dvEL-Wq0-727.png" alt="" width="727" height="301"></picture>
+<p>It is these names (I like to think of them as the entity&#39;s fully qualified name) that we use to configure certain aspects of Home Assistant - like creating groups, views or automatons. A fully qualified name of an entity follows the <code>&lt;domain&gt;.&lt;entity_id&gt;</code> naming convention.</p>
+
 <h3 id="domains">Domains</h3>
 <p>Entities are grouped together into collections known as <code>domains</code> in Home Assistant, making them easier to manage, and helps provide some insight into what a particular entity does (e.g. deck is less helpful when compared to <code>light.deck</code>).</p>
-<p>Again we have already seen domains in action when creating the custom light group back in <a href="/blog/2018/2018-07-02/post/">this post</a>, with the groups we created again being added to the group domain.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post1/7YSTf6gU1H-604.avif 604w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post1/7YSTf6gU1H-604.webp 604w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post1/7YSTf6gU1H-604.png" alt="" width="604" height="104"></picture>
+<p>Again we have already seen domains in action when creating the custom light group back in <a href="/blog/2018/2018-07-02/">this post</a>, with the groups we created again being added to the group domain.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/7YSTf6gU1H-604.avif 604w"><source type="image/webp" srcset="/blog/2018/2018-07-25/7YSTf6gU1H-604.webp 604w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/7YSTf6gU1H-604.png" alt="" width="604" height="104"></picture>
 <p>This concept is useful in Home Assistant (as you will see later) as it allows you to exclude / include a dynamic collection of entities rather than listing them one at a time.</p>
+
 <h2 id="world-clock-sensor">World Clock Sensor</h2>
 <p>I am going to add the <a href="https://www.home-assistant.io/integrations/worldclock/">world clock sensor</a> to Home Assistant to allow me to keep tabs on the time in Canada and South Africa. We do this by adding the following lines to the configuration.yaml file ...</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor</span><span class="token punctuation">:</span>
@@ -353,25 +363,29 @@ pre[class*="language-diff-"] {
     <span class="token punctuation">-</span> sensor.world_clock_canada
     <span class="token punctuation">-</span> sensor.world_clock_south_africa</code></pre>
 <p>This will result in the following new panel on your Home Assistant dashboard.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post1/uE0v_0l0wu-500.avif 500w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post1/uE0v_0l0wu-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post1/uE0v_0l0wu-500.png" alt="" width="500" height="182"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/uE0v_0l0wu-500.avif 500w"><source type="image/webp" srcset="/blog/2018/2018-07-25/uE0v_0l0wu-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/uE0v_0l0wu-500.png" alt="" width="500" height="182"></picture>
+
 <h2 id="history-component">History Component</h2>
 <p>The <a href="https://www.home-assistant.io/integrations/history/">history component</a> will track everything that is going on within Home Assistant and allows the user to browse through it. It depends on the <a href="https://www.home-assistant.io/integrations/recorder/">recorder component</a> for storing the data and uses the same database setting.</p>
-<p>As you can see the history component is great as it allows us to query the state of any component in Home Assistant from the past, what is not so great is the fact that every component in Home Assistant is tracked automatically, including every state change. For something that changes as often as a clock, or for entities we don't care about, this is a waste of storage and can slow down your database (depending on where it is hosted).</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post1/OOiCk291hl-603.avif 603w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post1/OOiCk291hl-603.webp 603w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post1/OOiCk291hl-603.png" alt="" width="603" height="74"></picture>
-<p>We are already getting data stored in history for our clock, let's stop that!</p>
+<p>As you can see the history component is great as it allows us to query the state of any component in Home Assistant from the past, what is not so great is the fact that every component in Home Assistant is tracked automatically, including every state change. For something that changes as often as a clock, or for entities we don&#39;t care about, this is a waste of storage and can slow down your database (depending on where it is hosted).</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/OOiCk291hl-603.avif 603w"><source type="image/webp" srcset="/blog/2018/2018-07-25/OOiCk291hl-603.webp 603w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/OOiCk291hl-603.png" alt="" width="603" height="74"></picture>
+<p>We are already getting data stored in history for our clock, let&#39;s stop that!</p>
+
 <h3 id="ignoring-a-specific-entity">Ignoring a specific entity</h3>
-<p>Unfortunately for me the world clock sensor is part of the <code>sensor's</code> domain so we cannot exclude it by the domain name - if we were to do this we would lose all sensor information, what we need to do in this case is exclude our clocks by <code>entity</code> name.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post1/ULVUmHbPuz-608.avif 608w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post1/ULVUmHbPuz-608.webp 608w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post1/ULVUmHbPuz-608.png" alt="" width="608" height="83"></picture>
+<p>Unfortunately for me the world clock sensor is part of the <code>sensor&#39;s</code> domain so we cannot exclude it by the domain name - if we were to do this we would lose all sensor information, what we need to do in this case is exclude our clocks by <code>entity</code> name.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/ULVUmHbPuz-608.avif 608w"><source type="image/webp" srcset="/blog/2018/2018-07-25/ULVUmHbPuz-608.webp 608w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/ULVUmHbPuz-608.png" alt="" width="608" height="83"></picture>
 <p>To exclude an entity from the history component is as simple as adding it to the exclusion list like shown in the documentation:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">history</span><span class="token punctuation">:</span>
   <span class="token key atrule">exclude</span><span class="token punctuation">:</span>
     <span class="token key atrule">entities</span><span class="token punctuation">:</span>
       <span class="token punctuation">-</span> sensor.world_clock_canada
       <span class="token punctuation">-</span> sensor.world_clock_south_africa</code></pre>
-<p>After validating your configuration to ensure that you didn't make any typos, restart Home Assistant for the changes to take effect. If done correctly you will no longer have any new history entries being recorded for your world_clockcomponents.</p>
+<p>After validating your configuration to ensure that you didn&#39;t make any typos, restart Home Assistant for the changes to take effect. If done correctly you will no longer have any new history entries being recorded for your world_clockcomponents.</p>
+
 <blockquote>
 <p><strong>Note</strong>: You will need to wait a day or so for the data to be removed from the history view, this is because we stopped new data from being recorded and did not delete the recorded data from the DB.</p>
 </blockquote>
+
 <h3 id="ignoring-a-domain">Ignoring a domain</h3>
 <p>In some cases you may not want to collect history for a group of entities in Home Assistant, for me this is all items in the group domain. As mentioned earlier domains are the leading bit in an entity name (e.g. <code>mediaplayer.loungespeaker</code> - the domain is <code>media_player</code>), you can get an idea of all the domains you are using through the States View.</p>
 <p>Like with single entities, you can exclude a domain through the exclude option on the history component, so in my case I can exclude all groups with the following configuration:</p>
@@ -379,17 +393,18 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">exclude</span><span class="token punctuation">:</span>
     <span class="token key atrule">domains</span><span class="token punctuation">:</span>
       <span class="token punctuation">-</span> group</code></pre>
-<p>After a quick validation of my configuration, a restart of Home Assistant (and some time for the history to roll over to the next day) - I no longer have any group history :)</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/post1/q4SNnJnkwb-800.avif 800w"><source type="image/webp" srcset="/blog/2018/2018-07-25/post1/q4SNnJnkwb-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/post1/q4SNnJnkwb-800.png" alt="" width="800" height="456"></picture>
+<p>After a quick validation of my configuration, a restart of Home Assistant (and some time for the history to roll over to the next day) - I no longer have any group history</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-25/q4SNnJnkwb-800.avif 800w"><source type="image/webp" srcset="/blog/2018/2018-07-25/q4SNnJnkwb-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-25/q4SNnJnkwb-800.png" alt="" width="800" height="456"></picture>
+
 <h2 id="in-closing">In Closing</h2>
 <p>As always, I hope that you found this post interesting and helpful. I am always looking for any feedback, comments or suggestions to help provide better content.</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-07-19/post/">Home Assistant From Scratch - Presence Detection</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-07-19/">Home Assistant From Scratch - Presence Detection</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-07-25/post2/">Home Assistant From Scratch - Weather and System Monitoring</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-07-26/">Home Assistant From Scratch - Weather and System Monitoring</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -406,7 +421,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-07-25/post1/` was built on 2025-07-30T17:04:14.538Z -->
+		<!-- This page `/blog/2018/2018-07-25/` was built on 2025-07-30T17:53:20.342Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

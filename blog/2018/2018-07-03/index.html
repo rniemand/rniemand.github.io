@@ -319,10 +319,16 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-07-03">03 July 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#process">Process</a><ol><li><a href="#speedtest-net-sensor">Speedtest.net sensor</a></li><li><a href="#create-a-group">Create a group</a></li><li><a href="#triggering-data-collection">Triggering data collection</a></li><li><a href="#customizing-our-counters">Customizing our counters</a></li></ol></li><li><a href="#committing-changes">Committing Changes</a></li><li><a href="#final-thoughts">Final thoughts</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
 </blockquote>
+
 <p>In preparation for an upcoming blog post on the recorder and history component we are going to need some historical data to work with. I would like to keep tabs on the performance of our internet connection using the <a href="https://www.home-assistant.io/integrations/speedtestdotnet/">speedtest.net component</a>, we will be doing this in the following steps:</p>
 <ul>
 <li>Add the Speedtest.net sensor to Home Assistant</li>
@@ -330,9 +336,11 @@ pre[class*="language-diff-"] {
 <li>Trigger initial data collection through a service</li>
 <li>Customize our group</li>
 </ul>
+
 <h2 id="process">Process</h2>
+
 <h3 id="speedtest-net-sensor">Speedtest.net sensor</h3>
-<p>Looking at the speedtest sensor's documentation adding the sensor as a new platform under the sensor node. Once added there are a couple of options available on the conditions that you would like to monitor, in my case I am going to be collecting information about ping, download and upload speeds.</p>
+<p>Looking at the speedtest sensor&#39;s documentation adding the sensor as a new platform under the sensor node. Once added there are a couple of options available on the conditions that you would like to monitor, in my case I am going to be collecting information about ping, download and upload speeds.</p>
 <p>To do this we will need to add the following configuration to the <code>configuration.yaml</code> file:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">sensor</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> speedtest
@@ -347,10 +355,11 @@ pre[class*="language-diff-"] {
       <span class="token punctuation">-</span> <span class="token number">45</span></code></pre>
 <p>The above configuration will run a speed test every 15 min (0, 15, 30 and 45 past the hour), these counters will be stored via the recorder &amp; history components.</p>
 <p>After a quick configuration check and reload of Home Assistant we can see our new counters in the status area:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/tHWuy9qVeu-284.avif 284w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/tHWuy9qVeu-284.webp 284w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/tHWuy9qVeu-284.png" alt="" width="284" height="101"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/tHWuy9qVeu-284.avif 284w"><source type="image/webp" srcset="/blog/2018/2018-07-03/tHWuy9qVeu-284.webp 284w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/tHWuy9qVeu-284.png" alt="" width="284" height="101"></picture>
+
 <h3 id="create-a-group">Create a group</h3>
 <p>I would prefer to have these counters displayed as a card in Home Assistant rather than in the status area. To do this we can simply create a group, list the components that we would like to see in the group and reload the core components of Home Assistant.</p>
-<p>To create our group we will first need the component id's of our new counters, you can get the id's through the states view under the developer tools.</p>
+<p>To create our group we will first need the component id&#39;s of our new counters, you can get the id&#39;s through the states view under the developer tools.</p>
 <p>We will define our group as below in the <code>groups.yaml</code> file:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">internet_speed</span><span class="token punctuation">:</span>
   <span class="token key atrule">name</span><span class="token punctuation">:</span> Internet Speed
@@ -359,17 +368,19 @@ pre[class*="language-diff-"] {
     <span class="token punctuation">-</span> sensor.speedtest_upload
     <span class="token punctuation">-</span> sensor.speedtest_ping</code></pre>
 <p>After reloading the groups we are presented with the following:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/RTg1FUitFk-502.avif 502w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/RTg1FUitFk-502.webp 502w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/RTg1FUitFk-502.png" alt="" width="502" height="230"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/RTg1FUitFk-502.avif 502w"><source type="image/webp" srcset="/blog/2018/2018-07-03/RTg1FUitFk-502.webp 502w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/RTg1FUitFk-502.png" alt="" width="502" height="230"></picture>
+
 <h3 id="triggering-data-collection">Triggering data collection</h3>
-<p>At the moment we don't have any data from Speedtest (as it only collects every 15 min) so we can trigger the collection manually to get our initial counters.</p>
+<p>At the moment we don&#39;t have any data from Speedtest (as it only collects every 15 min) so we can trigger the collection manually to get our initial counters.</p>
 <p>Most components in Home Assistant expose services which can be called either through code or via custom automation rules. Services can range from something as simple as getting \ setting a state on a component or running a complex command for the targeted entity.</p>
 <p>You can easily see a list of all available services that you can call in Home Assistant through the services developer tool which is listed under the Developer tools section in the main menu.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/Drksy0S4Tl-304.avif 304w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/Drksy0S4Tl-304.webp 304w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/Drksy0S4Tl-304.png" alt="" width="304" height="123"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/Drksy0S4Tl-304.avif 304w"><source type="image/webp" srcset="/blog/2018/2018-07-03/Drksy0S4Tl-304.webp 304w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/Drksy0S4Tl-304.png" alt="" width="304" height="123"></picture>
 <p>The service we are interested in calling is the sensor.update_speedtest service, to do this select it from the drop down list and click the call service button to execute it.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/DbCNDeIaJ_-519.avif 519w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/DbCNDeIaJ_-519.webp 519w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/DbCNDeIaJ_-519.png" alt="" width="519" height="254"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/DbCNDeIaJ_-519.avif 519w"><source type="image/webp" srcset="/blog/2018/2018-07-03/DbCNDeIaJ_-519.webp 519w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/DbCNDeIaJ_-519.png" alt="" width="519" height="254"></picture>
 <p>Some services may require additional parameters to function correctly, if that is the case (as with the recorder component) the service will list all available parameters and a description for each one. Passing parameters to a service is as simple as creating a JSON object containing each parameter that you want to post as a property.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/2Vc5u4J9FQ-917.avif 917w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/2Vc5u4J9FQ-917.webp 917w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/2Vc5u4J9FQ-917.png" alt="" width="917" height="385"></picture>
-<p><code>{ &quot;keep_days&quot;: 7, &quot;repack&quot;: false }</code></p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/2Vc5u4J9FQ-917.avif 917w"><source type="image/webp" srcset="/blog/2018/2018-07-03/2Vc5u4J9FQ-917.webp 917w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/2Vc5u4J9FQ-917.png" alt="" width="917" height="385"></picture>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span> <span class="token property">"keep_days"</span><span class="token operator">:</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token property">"repack"</span><span class="token operator">:</span> <span class="token boolean">false</span> <span class="token punctuation">}</span></code></pre>
+
 <h3 id="customizing-our-counters">Customizing our counters</h3>
 <p>Lastly I would like to do some basic customization of the collected counters, namely I would like to rename them and add a custom icon per value.</p>
 <p>We can make these changes in the customize.yaml file by adding the following lines:</p>
@@ -385,11 +396,13 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">friendly_name</span><span class="token punctuation">:</span> Ping
   <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>mixcloud</code></pre>
 <p>After a quick configuration validation and reloading of Home Assistants core components our counters look a lot better:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/jUrQcA1HBa-500.avif 500w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/jUrQcA1HBa-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/jUrQcA1HBa-500.png" alt="" width="500" height="234"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/jUrQcA1HBa-500.avif 500w"><source type="image/webp" srcset="/blog/2018/2018-07-03/jUrQcA1HBa-500.webp 500w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/jUrQcA1HBa-500.png" alt="" width="500" height="234"></picture>
 <p>Clicking on any of the counters (after a while) will result in a graph containing the collected data - this data comes from the history component.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/post/M_bcVZRVUI-469.avif 469w"><source type="image/webp" srcset="/blog/2018/2018-07-03/post/M_bcVZRVUI-469.webp 469w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/post/M_bcVZRVUI-469.png" alt="" width="469" height="576"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-07-03/M_bcVZRVUI-469.avif 469w"><source type="image/webp" srcset="/blog/2018/2018-07-03/M_bcVZRVUI-469.webp 469w"><img loading="lazy" decoding="async" src="/blog/2018/2018-07-03/M_bcVZRVUI-469.png" alt="" width="469" height="576"></picture>
+
 <h2 id="committing-changes">Committing Changes</h2>
 <p>If you are using some form of source control, now would be a good time to commit your changes.</p>
+
 <h2 id="final-thoughts">Final thoughts</h2>
 <p>This was one of the last posts where I will dive into so much detail around simple configuration tasks in Home Assistant. I will elaborate any topics that require it, but for now please keep the following in mind:</p>
 <ul>
@@ -397,16 +410,16 @@ pre[class*="language-diff-"] {
 <li><code>customize.yaml</code> - allows the customization of all your entities (e.g. name, icons and visibility)</li>
 <li><code>groups.yaml</code> - use to group entities together and create views</li>
 <li><code>automations.yaml</code> - place where you create and store custom automation rules</li>
-<li><code>secrest.yaml</code> - used to store sensitive data that you don't want to commit to your configuration repository (provided it's ignored via the .gitignore file).</li>
+<li><code>secrest.yaml</code> - used to store sensitive data that you don&#39;t want to commit to your configuration repository (provided it&#39;s ignored via the .gitignore file).</li>
 </ul>
 <p>I hope that you found this post helpful, and as always I welcome any comments, feedback and questions below.</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-07-02/post/">Home Assistant From Scratch - Hue Lights</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-07-02/">Home Assistant From Scratch - Hue Lights</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-07-16/post/">Home Assistant From Scratch - MQTT</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-07-16/">Home Assistant From Scratch - MQTT</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -423,7 +436,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-07-03/post/` was built on 2025-07-30T17:04:14.537Z -->
+		<!-- This page `/blog/2018/2018-07-03/` was built on 2025-07-30T17:53:20.341Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

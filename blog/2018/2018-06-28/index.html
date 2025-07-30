@@ -319,10 +319,16 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-06-28">28 June 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#obtaining-your-plex-token">Obtaining your Plex Token</a></li><li><a href="#adding-plex-to-home-assistant">Adding Plex to Home Assistant</a></li><li><a href="#don-t-commit-personal-files">Don’t commit personal files</a></li><li><a href="#do-a-manual-backup">Do a manual backup</a></li><li><a href="#final-thoughts">Final Thoughts</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
 </blockquote>
+
 <p>Today I would like to get <a href="https://www.plex.tv/">Plex</a> configured and running in <a href="https://www.home-assistant.io/">Home Assistant</a>.</p>
 <p>Thanks to all the hard work put in by the developers of Home Assistant this is a pretty trivial task on their side, with a little bit of leg work on ours to get a Plex token.</p>
 <p>Before you begin you will need to make sure that you meet the following criteria.</p>
@@ -332,11 +338,12 @@ pre[class*="language-diff-"] {
 <li>You have an <a href="https://www.plex.tv/sign-up/">account with Plex</a> - we use this account to obtain a long-living token for Home Assistant to use</li>
 <li><a href="https://www.postman.com/">Postman</a> - used to obtain the Plex token</li>
 </ul>
+
 <h2 id="obtaining-your-plex-token">Obtaining your Plex Token</h2>
 <p>The first thing we will need to do is get a long-lived Plex token for Home Assistant to use when making calls to your Plex Media Server. If you look at the <a href="https://www.home-assistant.io/integrations/plex/">Plex Component</a> page you will see that they refer to <a href="https://support.plex.tv/articles/204059436-finding-an-authentication-token-x-plex-token/">this method</a> to get a token, however this is a temporary token and will expire after some time - so this is of no use to us.</p>
 <p>Let’s do that now, first we will need to open Postman and configure it as shown below:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post1/SAZQKxohXO-732.avif 732w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post1/SAZQKxohXO-732.webp 732w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post1/SAZQKxohXO-732.png" alt="" width="732" height="264"></picture>
-<pre><code>Request Type: POST
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/SAZQKxohXO-732.avif 732w"><source type="image/webp" srcset="/blog/2018/2018-06-28/SAZQKxohXO-732.webp 732w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/SAZQKxohXO-732.png" alt="" width="732" height="264"></picture>
+<pre class="language-text" tabindex="0"><code class="language-text">Request Type: POST
 URL: https://plex.tv/users/sign_in.json
 Headers:
     X-Plex-Client-Identifier = hass
@@ -344,36 +351,37 @@ Headers:
     X-Plex-Version = 1.0.0
 Body:
     Content Type: form-data
-    user[login] : &lt;your_login_email&gt;
-    user[password] : &lt;your password&gt;
-</code></pre>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post1/TDj5NNOKCg-612.avif 612w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post1/TDj5NNOKCg-612.webp 612w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post1/TDj5NNOKCg-612.png" alt="" width="612" height="245"></picture>
+    user[login] : <your_login_email>
+    user[password] : <your password=""></your></your_login_email></code></pre>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/TDj5NNOKCg-612.avif 612w"><source type="image/webp" srcset="/blog/2018/2018-06-28/TDj5NNOKCg-612.webp 612w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/TDj5NNOKCg-612.png" alt="" width="612" height="245"></picture>
 <p>Click send to make the request. If you entered in everything correctly you should be greeted with a successful login:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post1/k3KpxBmMHu-768.avif 768w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post1/k3KpxBmMHu-768.webp 768w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post1/k3KpxBmMHu-768.png" alt="" width="768" height="398"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/k3KpxBmMHu-768.avif 768w"><source type="image/webp" srcset="/blog/2018/2018-06-28/k3KpxBmMHu-768.webp 768w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/k3KpxBmMHu-768.png" alt="" width="768" height="398"></picture>
 <p>In the response body you will see a property called <code>“authentication_token”</code> - this is what we want. Take note of the token as we will be using it in the next step.</p>
+
 <h2 id="adding-plex-to-home-assistant">Adding Plex to Home Assistant</h2>
 <p>As mentioned above the Home Assistant side of things is way simpler, provided that your HASS server is on the same network as your Plex Media Server and discovery (GDM) is enabled in Plex (as far as I know this is the default setting).</p>
 <p>When you navigate over to HASS you should see a card similar to the one below telling you that Home Assistant has found an instance of Plex running on its network.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post1/r8vPqaODkG-502.avif 502w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post1/r8vPqaODkG-502.webp 502w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post1/r8vPqaODkG-502.png" alt="" width="502" height="140"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/r8vPqaODkG-502.avif 502w"><source type="image/webp" srcset="/blog/2018/2018-06-28/r8vPqaODkG-502.webp 502w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/r8vPqaODkG-502.png" alt="" width="502" height="140"></picture>
 <p>Click the configure button, and enter in the token collected above into the appropriate field as shown below:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post1/sNeTIcepOR-381.avif 381w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post1/sNeTIcepOR-381.webp 381w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post1/sNeTIcepOR-381.png" alt="" width="381" height="357"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/sNeTIcepOR-381.avif 381w"><source type="image/webp" srcset="/blog/2018/2018-06-28/sNeTIcepOR-381.webp 381w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/sNeTIcepOR-381.png" alt="" width="381" height="357"></picture>
 <p>Click confirm, and you are done. After a few seconds you should see a new card per plex enabled device currently on your network:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post1/oxQR3ffYfJ-511.avif 511w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post1/oxQR3ffYfJ-511.webp 511w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post1/oxQR3ffYfJ-511.png" alt="" width="511" height="348"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/oxQR3ffYfJ-511.avif 511w"><source type="image/webp" srcset="/blog/2018/2018-06-28/oxQR3ffYfJ-511.webp 511w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/oxQR3ffYfJ-511.png" alt="" width="511" height="348"></picture>
 <p>Any device currently watching something on Plex should pop up as a card like so:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post1/kuIc7atkTO-498.avif 498w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post1/kuIc7atkTO-498.webp 498w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post1/kuIc7atkTO-498.png" alt="" width="498" height="357"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/kuIc7atkTO-498.avif 498w"><source type="image/webp" srcset="/blog/2018/2018-06-28/kuIc7atkTO-498.webp 498w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/kuIc7atkTO-498.png" alt="" width="498" height="357"></picture>
 <p>Now you have the option to play, pause, stop, skip and change the volume on the streaming device:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post1/rvA-83zSIr-382.avif 382w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post1/rvA-83zSIr-382.webp 382w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post1/rvA-83zSIr-382.png" alt="" width="382" height="315"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/rvA-83zSIr-382.avif 382w"><source type="image/webp" srcset="/blog/2018/2018-06-28/rvA-83zSIr-382.webp 382w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/rvA-83zSIr-382.png" alt="" width="382" height="315"></picture>
+
 <h2 id="don-t-commit-personal-files">Don’t commit personal files</h2>
 <p>Once Plex has been added to Home Assistant, and providing that you are following along with this series, a couple of new files should have been added to your Home Assistant directory, namely:</p>
 <ul>
 <li><code>plex.conf</code> - configuration file that contains your Plex access token among other things</li>
 <li><code>entity_registry.yaml</code> - device registry kept by Home Assistant to help identify devices and customise their display names (you can find out more about the entity registry here)</li>
 </ul>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post1/AfqrgEO2Mj-390.avif 390w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post1/AfqrgEO2Mj-390.webp 390w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post1/AfqrgEO2Mj-390.png" alt="" width="390" height="147"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/AfqrgEO2Mj-390.avif 390w"><source type="image/webp" srcset="/blog/2018/2018-06-28/AfqrgEO2Mj-390.webp 390w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/AfqrgEO2Mj-390.png" alt="" width="390" height="147"></picture>
 <p>These files are required for Home Assistant to do its thing, but should not be made public if you are using GitHub to manage your configuration like I do. We will need to add these two files to the .gitignore file to prevent accidental publication of your Plex token and home entities information, this is as simple as adding the following lines to your .gitignore file:</p>
-<pre><code>Entity_registry\.yaml
-plex\.conf
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">Entity_registry\.yaml
+plex\.conf</code></pre>
+
 <h2 id="do-a-manual-backup">Do a manual backup</h2>
 <p>Until we cover an automated backup flow for your personal files in Home Assistant, now would be a good time to do a manual backup of the following files to a safe location - just in case.</p>
 <ul>
@@ -382,6 +390,7 @@ plex\.conf
 <li>plex.conf</li>
 </ul>
 <p>This will allow you to quickly recover from accidental file deletion \ corrupt SD Card easily when paired with your public GitHub repository.</p>
+
 <h2 id="final-thoughts">Final Thoughts</h2>
 <p>We finally have something to look at on our Home Assistant deployment (besides the welcome and discovery cards), but this is just the beginning.</p>
 <p>In the next few posts we will be adding more and more components to Home Assistant in preparation for a post covering Groups and Views, which is one of the most useful features in Home Assistant.</p>
@@ -393,7 +402,7 @@ plex\.conf
 	<span class="text-start">Previous<br><a href="/blog/2018/2018-06-27/">Home Assistant From Scratch - Installation</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-06-28/post2/">Home Assistant From Scratch - Secrets and Security</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-06-29/">Home Assistant From Scratch - Secrets and Security</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -410,7 +419,7 @@ plex\.conf
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-06-28/post1/` was built on 2025-07-30T17:04:14.537Z -->
+		<!-- This page `/blog/2018/2018-06-28/` was built on 2025-07-30T17:53:20.341Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

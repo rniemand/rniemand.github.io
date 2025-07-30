@@ -316,13 +316,19 @@ pre[class*="language-diff-"] {
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="post-date">
 		<i class="bi bi-calendar-plus-fill"></i>
-		<time datetime="2018-06-28">28 June 2018</time>
+		<time datetime="2018-06-29">29 June 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#core-concepts">Core Concepts</a><ol><li><a href="#components">Components</a></li><li><a href="#yaml">YAML</a></li><li><a href="#configurator">Configurator</a></li></ol></li><li><a href="#securing-the-web-interface">Securing the web interface</a></li><li><a href="#using-secrets">Using Secrets</a></li><li><a href="#version-controlled-configuration">Version Controlled Configuration</a><ol><li><a href="#create-your-repository">Create your repository</a></li><li><a href="#copy-your-current-configuration">Copy your current configuration</a></li><li><a href="#overwrite-hass-config-files">Overwrite HASS Config Files</a></li></ol></li><li><a href="#final-thoughts">Final Thoughts</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
 </blockquote>
+
 <p>Today I am going to be covering secrets and security in Home Assistant along with a semi-decent workflow to use with your Home Assistant deployment which will allow for easy management and rollback of your configuration.</p>
 <p>We will be making the following changes to our installation today:</p>
 <ul>
@@ -330,12 +336,15 @@ pre[class*="language-diff-"] {
 <li>Using secrets for sensitive data</li>
 <li>Version Controlled Configuration with <a href="https://github.com/">GitHub</a></li>
 </ul>
+
 <h2 id="core-concepts">Core Concepts</h2>
 <p>Before we dive right into locking down Home Assistant (known going forward as HASS) there are a few concepts we need to bed down first. Once you are familiar with the below HASS becomes a whole lot less scary and complex, and you should be making changes to your configuration in no time flat.</p>
+
 <h3 id="components">Components</h3>
 <p>Home Assistant could be thought of as a framework for collecting, aggregating, managing and displaying data from IoT (or smart home) devices. The way this is achieved is through the use of custom components written for the &quot;thing&quot; in question.</p>
 <p>Home Assistant components cover a wide plethora of devices from a simple store bought device (e.g. Philips Hue) to something custom like an ESP8266 running custom code communicating over <a href="https://mqtt.org/">MQTT</a>. Regardless of the thing you want to control, Home Assistant will most likely have a component for it - this could be a generic component (e.g. <a href="https://www.home-assistant.io/integrations/light.mqtt">MQTT Light</a>) or a fully fledged one (e.g. <a href="https://www.home-assistant.io/integrations/hue/">Philips Hue Light</a>).</p>
 <p>Components are defined and configured through the <code>configuration.yaml</code> file, and is done so by adding in the component-specific keyword followed by any additional settings required. When Home Assistant starts up it loads this configuration file and sets up all your user-defined components. These loaded components are then managed by Home Assistant and displayed to you through the <a href="https://www.home-assistant.io/integrations/http/">web interface</a>.</p>
+
 <h3 id="yaml">YAML</h3>
 <p><a href="https://en.wikipedia.org/wiki/YAML">YAML</a> is the preferred configuration file format used by Home Assistant, which in essence is a human-readable configuration file format which is unforgiving when it comes to the usage of spaces (think of Python).</p>
 <p>YAML aims to have all configuration files consistent through its strict spacing rules (which can be a pain to debug), but that pain is worth it - believe me.</p>
@@ -343,11 +352,13 @@ pre[class*="language-diff-"] {
 <blockquote>
 <p>In YAML spacing is everything!</p>
 </blockquote>
+
 <h3 id="configurator">Configurator</h3>
 <p><a href="https://github.com/home-assistant/addons/blob/master/configurator/README.md">Configurator</a> is an add-on that is available for Home Assistant when running their &quot;all-in-one-image&quot; on something like a Raspberry Pi or other supported single board computer.</p>
 <p>In a nutshell, Configurator is a web based text editor which allows you to make changes to your Home Assistant setup without the need to access the configuration files through some other mechanism (e.g. FTP / SSH/ File Share). It is simple to use and is great for making quick changes to your Home Assistant setup.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/nORbkiUY25-645.avif 645w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/nORbkiUY25-645.webp 645w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/nORbkiUY25-645.png" alt="" width="645" height="352"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/nORbkiUY25-645.avif 645w"><source type="image/webp" srcset="/blog/2018/2018-06-29/nORbkiUY25-645.webp 645w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/nORbkiUY25-645.png" alt="" width="645" height="352"></picture>
 <p>Configurator can be accessed through the Hass.io -&gt; Configurator add-on as shown above.</p>
+
 <h2 id="securing-the-web-interface">Securing the web interface</h2>
 <p>The web interface for Home Assistant is controlled through the <a href="https://www.home-assistant.io/integrations/http/">HTTP component</a>.</p>
 <p>In order to lock it down we will need to add the following configuration property under the http component section in your Home Assistant configuration.yaml file:</p>
@@ -357,72 +368,76 @@ pre[class*="language-diff-"] {
 <p>Note the additional (2 spaces) before api_password, if these are omitted you will run into issues.</p>
 </blockquote>
 <p>Once done, save your changes and validate your configuration - this is done by navigating to Configuration on the side menu -&gt; General -&gt; Check Config. If your configuration is correct you should see the following response:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/7MFAe8AF1g-606.avif 606w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/7MFAe8AF1g-606.webp 606w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/7MFAe8AF1g-606.png" alt="" width="606" height="273"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/7MFAe8AF1g-606.avif 606w"><source type="image/webp" srcset="/blog/2018/2018-06-29/7MFAe8AF1g-606.webp 606w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/7MFAe8AF1g-606.png" alt="" width="606" height="273"></picture>
 <p>It is now safe to click the Restart button below to restart Home Assistant and apply your changes.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/R4x6qYYjUH-610.avif 610w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/R4x6qYYjUH-610.webp 610w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/R4x6qYYjUH-610.png" alt="" width="610" height="173"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/R4x6qYYjUH-610.avif 610w"><source type="image/webp" srcset="/blog/2018/2018-06-29/R4x6qYYjUH-610.webp 610w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/R4x6qYYjUH-610.png" alt="" width="610" height="173"></picture>
 <p>Home Assistant should now prompt you for your password.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/sJizVT3YKa-585.avif 585w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/sJizVT3YKa-585.webp 585w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/sJizVT3YKa-585.png" alt="" width="585" height="454"></picture>
-<p>That's all there is to securing your setup!</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/sJizVT3YKa-585.avif 585w"><source type="image/webp" srcset="/blog/2018/2018-06-29/sJizVT3YKa-585.webp 585w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/sJizVT3YKa-585.png" alt="" width="585" height="454"></picture>
+<p>That&#39;s all there is to securing your setup!</p>
+
 <h2 id="using-secrets">Using Secrets</h2>
 <p>The <code>secrets.yaml</code> file can be found in the same directory as your <code>configuration.yaml</code> file and is intended to store sensitive information for your setup.</p>
 <p>This extremely simple, yet unbelievably powerful concept makes it easy (and safe) to share your configuration with the community without any sensitive information (e.g. your password). You can simply omit this file when you share your configuration with someone else.</p>
 <p>Any key added into secrets.yaml is available in any other Home Assistant configuration file through the <code>!secret KEY_NAME</code> syntax, more info on secrets can be <a href="https://www.home-assistant.io/docs/configuration/secrets/">found here</a>.</p>
-<p>I think that it is best to see this sort of thing in action though, so let's move our web interface password out of our configuration.yaml to allow us to &quot;share&quot; our configuration.</p>
+<p>I think that it is best to see this sort of thing in action though, so let&#39;s move our web interface password out of our configuration.yaml to allow us to &quot;share&quot; our configuration.</p>
 <p>Add the following line into secrets.yaml: <code>http_password: your_password</code></p>
 <p>Then modify <code>configuration.yaml</code> to use the secret version of your password instead of hard-coding it into your main configuration file.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">http</span><span class="token punctuation">:</span>
   <span class="token key atrule">api_password</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> http_password</code></pre>
 <p>Validate your configuration (like we did above) and restart Home Assistant.</p>
-<p>Everything should still work as expected, that's all there is to it.</p>
+<p>Everything should still work as expected, that&#39;s all there is to it.</p>
+
 <h2 id="version-controlled-configuration">Version Controlled Configuration</h2>
-<p>The last thing I would like to cover today, although it's not required, is adding your configuration to some form of source control system (e.g. git). This will give you the freedom to confidently make changes to your home setup and roll back to any older version of your configuration should you feel the need to. This will give you more freedom with your setup as you will always have a fall back should something go wrong.</p>
+<p>The last thing I would like to cover today, although it&#39;s not required, is adding your configuration to some form of source control system (e.g. git). This will give you the freedom to confidently make changes to your home setup and roll back to any older version of your configuration should you feel the need to. This will give you more freedom with your setup as you will always have a fall back should something go wrong.</p>
 <p>Personally I will be storing my configuration on a public <a href="https://github.com/">GitHub</a> repository to serve as my personal backup and as a supplementary repository for this series. I will be using <a href="https://www.gitkraken.com/">Gitkraken</a> on my Windows computer and managing the configuration through a mapped file share (set up in the last <a href="/blog/2018/2018-06-27/">post using Samba</a>). This is more for convenience for me than anything else as I already have Git setup on my computer with my SSH keys.</p>
+
 <h3 id="create-your-repository">Create your repository</h3>
 <p>Head over to GitHub and create a new repository for your configuration to live in:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/xo0G7OUmBW-732.avif 732w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/xo0G7OUmBW-732.webp 732w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/xo0G7OUmBW-732.png" alt="" width="732" height="291"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/xo0G7OUmBW-732.avif 732w"><source type="image/webp" srcset="/blog/2018/2018-06-29/xo0G7OUmBW-732.webp 732w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/xo0G7OUmBW-732.png" alt="" width="732" height="291"></picture>
 <p>Once created check it out with Gitkraken to any folder on your computer, we will be moving it shortly.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/Ax5AvHkVsA-983.avif 983w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/Ax5AvHkVsA-983.webp 983w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/Ax5AvHkVsA-983.png" alt="" width="983" height="534"></picture>
-<p>Be sure to open, initialize, commit and push your changes back to GitHub - don't worry Gitkraken will prompt you for these steps, once done your first commit should be live.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/Ax5AvHkVsA-983.avif 983w"><source type="image/webp" srcset="/blog/2018/2018-06-29/Ax5AvHkVsA-983.webp 983w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/Ax5AvHkVsA-983.png" alt="" width="983" height="534"></picture>
+<p>Be sure to open, initialize, commit and push your changes back to GitHub - don&#39;t worry Gitkraken will prompt you for these steps, once done your first commit should be live.</p>
+
 <h3 id="copy-your-current-configuration">Copy your current configuration</h3>
 <p>Copy everything from your Home Assistants configuration folder (e.g. <code>\\10.0.0.103\config</code>) into the root folder where you checked out your GitHub repository.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/EA_BMhURu6-730.avif 730w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/EA_BMhURu6-730.webp 730w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/EA_BMhURu6-730.png" alt="" width="730" height="394"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/EA_BMhURu6-730.avif 730w"><source type="image/webp" srcset="/blog/2018/2018-06-29/EA_BMhURu6-730.webp 730w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/EA_BMhURu6-730.png" alt="" width="730" height="394"></picture>
 <blockquote>
 <p><strong>NOTE</strong>: If you run into access issues try changing the following registry key <code>\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters\AllowInsecureGuestAuth</code> to <code>1</code> - it did wonders for me.</p>
 </blockquote>
 <p>Once we have our files in the folder we will need to add a .gitignore file to exclude our secrets.yaml file and any other non-essential files from being committed. To create the .gitignore file open a command prompt window, navigate to your repository folder and run this command.</p>
-<pre><code>&quot;&quot; &gt; .gitignore
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token string">""</span> <span class="token operator">></span> .gitignore</code></pre>
 <p>Open the .gitignore file and add the following exclusions to the file.</p>
-<pre><code>\.HA_VERSION
+<pre class="language-text" tabindex="0"><code class="language-text">\.HA_VERSION
 \.uuid
 home-assistant_v2\.db
 home-assistant\.log
 secrets\.yaml
 tts/
-\.cloud/
-</code></pre>
+\.cloud/</code></pre>
 <p>Save and close the file, you are now ready to commit your changes to GitHub.</p>
 <p>Open Gitkraken and click on the latest change set, it should look something like this:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/NKZcg0w3HW-415.avif 415w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/NKZcg0w3HW-415.webp 415w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/NKZcg0w3HW-415.png" alt="" width="415" height="333"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/NKZcg0w3HW-415.avif 415w"><source type="image/webp" srcset="/blog/2018/2018-06-29/NKZcg0w3HW-415.webp 415w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/NKZcg0w3HW-415.png" alt="" width="415" height="333"></picture>
 <p>Take note that our secrets.yaml and home-assistant_v2.db files are missing, great!</p>
 <p>Stage, Commit and push your changes.</p>
+
 <h3 id="overwrite-hass-config-files">Overwrite HASS Config Files</h3>
 <p>Now that we are happy with our git setup we can move all our files back over to our Home Assistant server making sure to replace any conflicting files. Essentially we are just moving the .gitignore and .get file and folder over.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/KMlabHWnRD-851.avif 851w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/KMlabHWnRD-851.webp 851w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/KMlabHWnRD-851.png" alt="" width="851" height="421"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/KMlabHWnRD-851.avif 851w"><source type="image/webp" srcset="/blog/2018/2018-06-29/KMlabHWnRD-851.webp 851w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/KMlabHWnRD-851.png" alt="" width="851" height="421"></picture>
 <p>Close Gitkraken, delete your temporary repository (checked out above), map your remote configuration folder (in my case H:) and open it back up in Gitkraken.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-06-28/post2/g44GStvhiG-750.avif 750w"><source type="image/webp" srcset="/blog/2018/2018-06-28/post2/g44GStvhiG-750.webp 750w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-28/post2/g44GStvhiG-750.png" alt="" width="750" height="312"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-06-29/g44GStvhiG-750.avif 750w"><source type="image/webp" srcset="/blog/2018/2018-06-29/g44GStvhiG-750.webp 750w"><img loading="lazy" decoding="async" src="/blog/2018/2018-06-29/g44GStvhiG-750.png" alt="" width="750" height="312"></picture>
 <p>Now any changes you make to Home Assistant via Configuration can be tracked and committed to version control.</p>
+
 <h2 id="final-thoughts">Final Thoughts</h2>
-<p>Although this was a long post, we only covered the 3 S's of our Home Assistant setup (security, secrets and source control), in addition to that I covered some basic concepts that we will use going forward in an effort to save time later on. Armed with this you now know enough to be dangerous :).</p>
+<p>Although this was a long post, we only covered the 3 S&#39;s of our Home Assistant setup (security, secrets and source control), in addition to that I covered some basic concepts that we will use going forward in an effort to save time later on. Armed with this you now know enough to be dangerous :).</p>
 <p>In the nest post we will finally look at doing something with the UI and perhaps adding in a device or two.</p>
 <p>As always I welcome any feedback, comments and questions.</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-06-28/post1/">Home Assistant From Scratch - Setting Up Plex</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-06-28/">Home Assistant From Scratch - Setting Up Plex</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-07-02/post/">Home Assistant From Scratch - Hue Lights</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-07-02/">Home Assistant From Scratch - Hue Lights</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -439,7 +454,7 @@ tts/
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-06-28/post2/` was built on 2025-07-30T17:04:14.537Z -->
+		<!-- This page `/blog/2018/2018-06-29/` was built on 2025-07-30T17:53:20.341Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
