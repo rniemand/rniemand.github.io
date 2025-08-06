@@ -1,0 +1,353 @@
+---
+title: Installing OctoPrint on Armbian from Source
+date: 2018-12-12
+tags: [3d printing]
+logo: octoprint.png
+---
+
+<p>In this post I will cover the setup and configuration of OctoPrint from scratch. I will cover everything from installing OctoPrint to getting a webcam up and running. This post is a bit longer than my normal ones but I need to cover a lot of ground here. This is a collection of commands from various sources online, I have credited the original authors in each section.</p>
+
+<h2 id="installing-octoprint">Installing Octoprint</h2>
+<p>I claim no credit to this process, the majority of the steps are from <a href="https://www.youtube.com/watch?v=LzLb_FnXu70">this YouTube video</a> which was a big help in getting up and running.</p>
+
+<h3 id="flashing-armbian">Flashing Armbian</h3>
+<p>You will need to download the version of Armbian that is compatible with your device, in my case that is the Orange Pi One: <code>https://www.armbian.com/orange-pi-one/</code></p>
+<p>You can find a full list of <a href="https://www.armbian.com/download/">supported devices here</a>.</p>
+<p>Once you have the image, write it to an SD card using either <a href="https://sourceforge.net/projects/win32diskimager/files/latest/download">Win32 Disk Imager</a> or <a href="https://www.balena.io/etcher/">Etcher</a>.</p>
+<p>Next, you will need to boot your device and get its assigned IP Address (in my case this was <code>10.0.0.112</code>) - there are tools like <a href="https://www.fing.com/">Fing</a> or <a href="https://angryip.org/download/#windows">Angry IP Scanner</a> that should make discovering your device&#39;s IP Address a bit easier.</p>
+
+<h3 id="connect-to-your-device">Connect to your Device</h3>
+<p>Connect to your device using an ssh client like <a href="https://www.putty.org/">Putty</a> or <a href="https://mobaxterm.mobatek.net/">MobaXterm</a>, the default username is <code>root</code> with a password of <code>1234</code>, you will be prompted to change this on the first login.</p>
+<p>When \ If prompted to create a user account for yourself to use.</p>
+
+<h3 id="installing-octoprint-prerequisites">Installing OctoPrint Prerequisites</h3>
+<p>First we need to update all installed packages for good measure.</p>
+{% highlight "shell" %}
+sudo apt-get update
+sudo apt-get upgrade
+{% endhighlight %}
+<p>Next, we need to create an <code>OctoPrint</code> user to run the service.</p>
+{% highlight "shell" %}
+sudo adduser octoprint
+{% endhighlight %}
+<p>You can use any password you like for the user as it will be removed later on in the installation process.</p>
+<p>Next, we need to add the required permissions to the OctoPrint user.</p>
+{% highlight "shell" %}
+sudo usermod -a -G tty octoprint
+sudo usermod -a -G dialout octoprint
+{% endhighlight %}
+<p>Then add him to the list of <code>sudo</code> users:</p>
+{% highlight "shell" %}
+sudo adduser octoprint sudo
+{% endhighlight %}
+<p>Next, edit the sudo file and add the following line:</p>
+{% highlight "shell" %}
+sudo visudo
+octoprint ALL=(ALL) NOPASSWD:ALL
+{% endhighlight %}
+<img src="./images/12/12-001.png" alt="" />
+<ul>
+<li>CTRL + O to save the file</li>
+<li>CTRL + X to exit</li>
+</ul>
+<p>Remove the password from the OctoPrint user with the following command:</p>
+{% highlight "shell" %}
+sudo passwd octoprint -d
+{% endhighlight %}
+<p>Install required supporting software:</p>
+{% highlight "shell" %}
+sudo apt-get install git python-pip python-dev python-setuptools psmisc virtualenv
+{% endhighlight %}
+<p>Switch over to the OctoPrint user account</p>
+{% highlight "shell" %}
+sudo su octoprint
+{% endhighlight %}
+<p>Switch to home directory</p>
+{% highlight "shell" %}
+cd ~
+{% endhighlight %}
+<p>Download and install py-serial:</p>
+{% highlight "shell" %}
+wget https://pypi.python.org/packages/source/p/pyserial/pyserial-2.7.tar.gz
+tar -zxf pyserial-2.7.tar.gz
+cd pyserial-2.7
+sudo python setup.py install
+cd ~
+{% endhighlight %}
+
+<h3 id="installing-octoprint2">Installing OctoPrint</h3>
+<p>As the OctoPrint user navigate to your home directory and clone the latest copy of Octoprint:</p>
+{% highlight "shell" %}
+cd ~
+git clone https://github.com/foosel/OctoPrint.git
+cd OctoPrint
+{% endhighlight %}
+<p>Start up they python virtual environment (<code>virtualenv</code>)</p>
+{% highlight "shell" %}
+virtualenv venv
+{% endhighlight %}
+<p>Use python to setup and compile OctoPrint on you device</p>
+{% highlight "shell" %}
+./venv/bin/python setup.py install
+{% endhighlight %}
+<p>Once the build has completed you can start OctoPrint using the following command:</p>
+{% highlight "shell" %}
+~/OctoPrint/venv/bin/octoprint serve
+{% endhighlight %}
+<p>Once started you should be able to connect to OctoPrint in your web browser using the following URL <code>http://&lt;device-ip-address&gt;:5000</code> so in my case that would be <a href="http://10.0.0.112:5000/">http://10.0.0.112:5000/</a>. This will present you with the OctoPrint Setup Wizard - complete it as normal.</p>
+<img src="./images/12/12-002.png" alt="" />
+<p>Once done press CTRL and Z to kill OctoPrint in your connected ssh session.</p>
+
+<h3 id="auto-starting-octoprint">Auto Starting OctoPrint</h3>
+<p>Copy relevant files and configure OctoPrint to start on boot with the following commands:</p>
+{% highlight "shell" %}
+sudo cp ~/OctoPrint/scripts/octoprint.init /etc/init.d/octoprint
+sudo chmod +x /etc/init.d/octoprint
+sudo cp ~/OctoPrint/scripts/octoprint.default /etc/default/octoprint
+{% endhighlight %}
+<p>Edit the default configuration for OctoPrint</p>
+{% highlight "shell" %}
+sudo nano /etc/default/octoprint
+{% endhighlight %}
+<p>Change user account from <code>pi</code> to <code>octoprint</code>:</p>
+<img src="./images/12/12-003.png" alt="" />
+<p>Enable and change the daemon directory</p>
+{% highlight "shell" %}
+DAEMON=/home/octoprint/OctoPrint/venv/bin/octoprint
+{% endhighlight %}
+<img src="./images/12/12-004.png" alt="" />
+<p>Next, we need to commit the updates we made</p>
+{% highlight "shell" %}
+sudo update-rc.d octoprint defaults
+{% endhighlight %}
+<p>Finally you can start the OctoPrint service with the following command</p>
+{% highlight "shell" %}
+sudo service octoprint start
+{% endhighlight %}
+
+<h2 id="webcam-setup">Webcam Setup</h2>
+<p>Next we will install <a href="https://github.com/jacksonliam/mjpg-streamer">mjpg-streamer</a> to allow us to keep an eye on our prints while away, the majority of these steps were taken from this <a href="https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-MJPEG-Streamer-Install-&amp;-Setup-&amp;-FFMpeg-Recording">amazing GitHub post</a>.</p>
+<h3 id="installing-mjpg-streamer">Installing mjpg-streamer</h3>
+<p>Let&#39;s start off by installing the required dependencies:</p>
+{% highlight "shell" %}
+sudo apt-get install cmake libjpeg8-dev
+sudo apt-get install gcc g++
+{% endhighlight %}
+<p>Now clone the repo:</p>
+{% highlight "shell" %}
+cd /tmp
+git clone https://github.com/jacksonliam/mjpg-streamer.git
+cd mjpg-streamer/mjpg-streamer-experimental
+{% endhighlight %}
+<p>Compile <code>mjpg-streamer</code>:</p>
+{% highlight "shell" %}
+make
+sudo make install
+{% endhighlight %}
+<p>Test to see if everything is working with the following command:</p>
+{% highlight "shell" %}
+/usr/local/bin/mjpg_streamer -i "input_uvc.so -r 1280x720 -d /dev/video0 -f 30 -q 80" -o "output_http.so -p 8080 -w /usr/local/share/mjpg-streamer/www"
+{% endhighlight %}
+<p>You should be able to connect to mjpg_streamer using the following URL http://<device-ip-address>:8080/?action=stream, so in my case that would be <code>http://10.0.0.112:8080/?action=stream</code>:</p>
+<img src="./images/12/12-005.jpeg" alt="" />
+
+<h3 id="auto-starting-mjpg-streamer">Auto starting mjpg-streamer</h3>
+<p>We will need to create a startup file:</p>
+{% highlight "shell" %}
+nano /home/octoprint/mjpg-streamer.sh
+{% endhighlight %}
+<p>For the contents of the file, add in the below code (from <a href="https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-MJPEG-Streamer-Install-&amp;-Setup-&amp;-FFMpeg-Recording">this post</a>):</p>
+{% highlight "bash" %}
+#!/bin/bash
+# chmod +x mjpg-streamer.sh
+# Crontab: @reboot /home/octoprint/mjpg-streamer/mjpg-streamer.sh start
+# Crontab: @reboot /home/octoprint/mjpg-streamer/mjpg-streamer-experimental/mjpg-streamer.sh start
+
+MJPG_STREAMER_BIN="/usr/local/bin/mjpg_streamer"  # "$(dirname $0)/mjpg_streamer"
+MJPG_STREAMER_WWW="/usr/local/share/mjpg-streamer/www"
+MJPG_STREAMER_LOG_FILE="${0%.*}.log"  # "$(dirname $0)/mjpg-streamer.log"
+RUNNING_CHECK_INTERVAL="2" # how often to check to make sure the server is running (in seconds)
+HANGING_CHECK_INTERVAL="3" # how often to check to make sure the server is not hanging (in seconds)
+
+VIDEO_DEV="/dev/video0"
+FRAME_RATE="5"
+QUALITY="80"
+RESOLUTION="1280x720"  # 160x120 176x144 320x240 352x288 424x240 432x240 640x360 640x480 800x448 800x600 960x544 1280x720 1920x1080 (QVGA, VGA, SVGA, WXGA)   #  lsusb -s 001:006 -v | egrep "Width|Height" # https://www.textfixer.com/tools/alphabetical-order.php  # v4l2-ctl --list-formats-ext  # Show Supported Video Formates
+PORT="8080"
+YUV="yes"
+
+################INPUT_OPTIONS="-r ${RESOLUTION} -d ${VIDEO_DEV} -f ${FRAME_RATE} -q ${QUALITY} -pl 60hz"
+INPUT_OPTIONS="-r ${RESOLUTION} -d ${VIDEO_DEV} -q ${QUALITY} -pl 60hz --every_frame 2"  # Limit Framerate with  "--every_frame ", ( mjpg_streamer --input "input_uvc.so --help" )
+
+if [ "${YUV}" == "true" ]; then
+    INPUT_OPTIONS+=" -y"
+fi
+
+OUTPUT_OPTIONS="-p ${PORT} -w ${MJPG_STREAMER_WWW}"
+
+# ==========================================================
+function running() {
+    if ps aux | grep ${MJPG_STREAMER_BIN} | grep ${VIDEO_DEV} >/dev/null 2>&1; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+function start() {
+    if running; then
+        echo "[$VIDEO_DEV] already started"
+        return 1
+    fi
+
+    export LD_LIBRARY_PATH="$(dirname $MJPG_STREAMER_BIN):."
+
+    echo "Starting: [$VIDEO_DEV] ${MJPG_STREAMER_BIN} -i \"input_uvc.so ${INPUT_OPTIONS}\" -o \"output_http.so ${OUTPUT_OPTIONS}\""
+    ${MJPG_STREAMER_BIN} -i "input_uvc.so ${INPUT_OPTIONS}" -o "output_http.so ${OUTPUT_OPTIONS}" >> ${MJPG_STREAMER_LOG_FILE} 2>&1 &
+
+    sleep 1
+
+    if running; then
+        if [ "$1" != "nocheck" ]; then
+            check_running & > /dev/null 2>&1 # start the running checking task
+            check_hanging & > /dev/null 2>&1 # start the hanging checking task
+        fi
+
+        echo "[$VIDEO_DEV] started"
+        return 0
+
+    else
+        echo "[$VIDEO_DEV] failed to start"
+        return 1
+    fi
+}
+
+function stop() {
+    if ! running; then
+        echo "[$VIDEO_DEV] not running"
+        return 1
+    fi
+
+    own_pid=$$
+
+    if [ "$1" != "nocheck" ]; then
+        # stop the script running check task
+        ps aux | grep $0 | grep start | tr -s ' ' | cut -d ' ' -f 2 | grep -v ${own_pid} | xargs -r kill
+        sleep 0.5
+    fi
+
+    # stop the server
+    ps aux | grep ${MJPG_STREAMER_BIN} | grep ${VIDEO_DEV} | tr -s ' ' | cut -d ' ' -f 2 | grep -v ${own_pid} | xargs -r kill
+
+    echo "[$VIDEO_DEV] stopped"
+    return 0
+}
+
+function check_running() {
+    echo "[$VIDEO_DEV] starting running check task" >> ${MJPG_STREAMER_LOG_FILE}
+
+    while true; do
+        sleep ${RUNNING_CHECK_INTERVAL}
+
+        if ! running; then
+            echo "[$VIDEO_DEV] server stopped, starting" >> ${MJPG_STREAMER_LOG_FILE}
+            start nocheck
+        fi
+    done
+}
+
+function check_hanging() {
+    echo "[$VIDEO_DEV] starting hanging check task" >> ${MJPG_STREAMER_LOG_FILE}
+
+    while true; do
+        sleep ${HANGING_CHECK_INTERVAL}
+
+        # treat the "error grabbing frames" case
+        if tail -n2 ${MJPG_STREAMER_LOG_FILE} | grep -i "error grabbing frames" > /dev/null; then
+            echo "[$VIDEO_DEV] server is hanging, killing" >> ${MJPG_STREAMER_LOG_FILE}
+            stop nocheck
+        fi
+    done
+}
+
+function help() {
+    echo "Usage: $0 [start|stop|restart|status]"
+    return 0
+}
+
+if [ "$1" == "start" ]; then
+    start && exit 0 || exit -1
+
+elif [ "$1" == "stop" ]; then
+    stop && exit 0 || exit -1
+
+elif [ "$1" == "restart" ]; then
+    stop && sleep 1
+    start && exit 0 || exit -1
+
+elif [ "$1" == "status" ]; then
+    if running; then
+        echo "[$VIDEO_DEV] running"
+        exit 0
+    else
+        echo "[$VIDEO_DEV] stopped"
+        exit 1
+    fi
+else
+    help
+fi
+{% endhighlight %}
+<p>We will need to make this file executable:</p>
+{% highlight "shell" %}
+chmod +x /home/octoprint/mjpg-streamer.sh
+{% endhighlight %}
+<p>Then add it to the CRON jobs...</p>
+{% highlight "shell" %}
+crontab -e
+{% endhighlight %}
+<p>... by adding the following line to the bottom of the file</p>
+{% highlight "shell" %}
+@reboot /home/octoprint/mjpg-streamer.sh start
+{% endhighlight %}
+<p>Save the file and exit, reboot your device to see if the webcam comes up.</p>
+<img src="./images/12/12-005.jpeg" alt="" />
+
+<h3 id="installing-ffmpeg">Installing ffmpeg</h3>
+<p>Next we will need to install ffmpeg to allow OctoPrint to render time-lapses etc, to do this all we need to do is run the following command:</p>
+{% highlight "shell" %}
+apt-get install ffmpeg
+{% endhighlight %}
+
+<h2 id="configuring-octoprint">Configuring OctoPrint</h2>
+<p>We are so close to being done, the last thing we need to do is configure OctoPrint and make it aware of all our configuration. We will be doing all of this configuration through OctoPrint&#39;s web interface (<a href="http://10.0.0.112:5000/">http://10.0.0.112:5000/</a>), let&#39;s get started:</p>
+
+<h3 id="adding-in-the-webcam">Adding in the webcam</h3>
+<p>Open settings and navigate to the Webcam &amp; Timelapse page, here we will enter in the following information:</p>
+<ul>
+<li><strong>Stream URL</strong>: <a href="http://10.0.0.112:8080/?action=stream">http://10.0.0.112:8080/?action=stream</a></li>
+<li><strong>Snapshot URL</strong>: <a href="http://10.0.0.112:8080/?action=snapshot">http://10.0.0.112:8080/?action=snapshot</a></li>
+<li><strong>Path to FFMPEG</strong>: /usr/bin/ffmpeg</li>
+</ul>
+<img src="./images/12/12-006.png" alt="" />
+<h3 id="server-controls">Server Controls</h3>
+<p>The next thing I would like to do is enable the server controls in OctoPrint (e.g. shutdown, restart, etc.).</p>
+<img src="./images/12/12-007.png" alt="" />
+<p>These can be added under the Server configuration section, all that&#39;s required here is to enter in the correct commands for the desired action, for e.g.:</p>
+<img src="./images/12/12-008.png" alt="" />
+<ul>
+<li><strong>Restart OctoPrint</strong> - sudo service octoprint restart</li>
+<li><strong>Restart System</strong> - sudo shutdown -r now</li>
+<li><strong>Shutdown System</strong> - sudo shutdown -h now</li>
+</ul>
+<p>Once you have entered the relevant commands, save the changes so that they can take effect.</p>
+
+<h3 id="keeping-octoprint-up-to-date">Keeping OctoPrint up to date</h3>
+<p>Provided that you followed the installation steps listed above you should be able to update OctoPrint through the web interface whenever there is a new release of the software.</p>
+<p>Unlike the pre-configured image I am running on my Orange Pi Lite where you can update directly from the notification, you will need to manually update through the settings page which is a slight bummer.</p>
+<p>I noticed that I got a couple of warnings \ errors logged to the console while applying the latest update, however the update completed fine and everything seems to be working as expected.</p>
+<img src="./images/12/12-009.png" alt="" />
+
+<h2 id="final-thoughts">Final thoughts</h2>
+<p>Although it took me the better part of 3 hours to scrape everything together for this post, it should take you no more than 20-30 min to follow along for yourself.</p>
+<p>OctoPrint is by far worth the effort and breathes new life into even the oldest of 3D printers, I love having the ability to remotely control \ monitor my printers and when paired with a Sonoff Basic and an empty print bed - you don&#39;t even need to be by your printer to start a print.</p>
+<p>As always I welcome all feedback, comments and suggestions, happy printing!</p>

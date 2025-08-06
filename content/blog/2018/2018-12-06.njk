@@ -1,0 +1,126 @@
+---
+title: Home Assistant From Scratch - Breaking up Config
+date: 2018-12-06
+tags: [home assistant]
+logo: hass.png
+---
+
+<blockquote>
+<p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
+</blockquote>
+<p>Today I would like to tackle breaking up your configuration file (<code>configuration.yaml</code>) into smaller, more manageable parts to make configuring Home Assistant a lot easier.</p>
+
+<h2 id="home-assistant-yaml-commands">Home Assistant YAML Commands</h2>
+<p>Home Assistant offers the following helper keywords for use in your configuration files:</p>
+<ul>
+<li><code>!include_dir_list</code> will return the content of a directory as a list with each file content being an entry in the list.</li>
+<li><code>!include_dir_named</code> will return the content of a directory as a dictionary which maps filename =&gt; content of file.</li>
+<li><code>!include_dir_merge_list</code> will return the content of a directory as a list by merging all files (which should contain a list) into 1 big list.</li>
+<li><code>!include_dir_merge_named</code> will return the content of a directory as a dictionary by loading each file and merging it into 1 big dictionary.</li>
+</ul>
+<p>The full list of commands can be <a href="https://www.home-assistant.io/docs/configuration/splitting_configuration/">found here</a>, however in my experience the most commonly used command is <code>!include</code>.</p>
+
+<h2 id="the-basic-idea">The basic idea</h2>
+<p>To make my configuration more manageable I would like to do the following:</p>
+<ul>
+<li>Break the configuration out into smaller files</li>
+<li>Move those files into a /config directory to clean up the root folder</li>
+</ul>
+<p>To achieve this I will be making use of the <code>!include</code> and <code>!include_dir_list</code> commands and convert configuration like this:</p>
+{% highlight "yaml" %}
+switch:
+  - platform: mqtt
+    command_topic: "cmnd/xmas/POWER"
+    state_topic: "stat/xmas/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    name: "XMas Lights"
+    optimistic: false
+    retain: true
+
+  - platform: mqtt
+    command_topic: "cmnd/windowlights/POWER"
+    state_topic: "stat/windowlights/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    name: "Window Lights"
+    optimistic: false
+    retain: true
+{% endhighlight %}
+<p>into this:</p>
+{% highlight "yaml" %}
+switch: !include_dir_list /config/switches
+{% endhighlight %}
+
+<h2 id="-include_dir_list">!include_dir_list</h2>
+<p>The !include_dir_list command allows you to include all files nested in the target folder, this is ideal if you want to manage multiple components and prefer to have a file for each one.</p>
+<p>You will be required to make some changes to the configuration to make this work, namely:</p>
+<ul>
+<li>You are limited to 1 entity per file</li>
+<li>You need to flatten your YAML (no need for indents)</li>
+</ul>
+<p>Let&#39;s use this switch configuration as an example:</p>
+{% highlight "yaml" %}
+switch:
+  - platform: mqtt
+    command_topic: "cmnd/xmas/POWER"
+    state_topic: "stat/xmas/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    name: "XMas Lights"
+    optimistic: false
+    retain: true
+{% endhighlight %}
+<p>This would become a new file called <code>/config/switches/xmas.yaml</code> with the following contents:</p>
+{% highlight "yaml" %}
+platform: mqtt
+command_topic: "cmnd/xmas/POWER"
+state_topic: "stat/xmas/POWER"
+payload_on: "ON"
+payload_off: "OFF"
+name: "XMas Lights"
+optimistic: false
+retain: true
+{% endhighlight %}
+<p>Note the lack of spacing in the new file, and would be included with the following statement in your main <code>configuration.yaml</code> file: <code>switch: !include_dir_list config/switches</code></p>
+<blockquote>
+<p><strong>Note</strong>: I got an error when testing this out with only 1 file in the target folder, this went away as soon as I added a second one though!</p>
+</blockquote>
+
+<h2 id="-include">!include</h2>
+<p>The other command I use a lot when breaking up my configuration is the <code>!include</code> command, this essentially places the targeted file directly in place of the !include placeholder.</p>
+<p>Like <code>!include_dir_list</code> you will need to pay attention to the spacing used in your referenced file - normally you can get away with removing 1 level of indentation with most configuration files. I would suggest making use of the Configuration Validation tool found under the configuration section.</p>
+<img src="./images/12/06-001.png" alt="" />
+<p>Once you have broken up your configuration, you just need to reference it in your configuration.yaml file as shown below.</p>
+{% highlight "yaml" %}
+weather: !include config/weather.yaml
+device_tracker: !include config/device_tracker.yaml
+zone: !include config/zones.yaml
+sabnzbd: !include config/sabnzbd.yaml
+tts: !include config/tts.yaml
+mqtt: !include config/mqtt.yaml
+group: !include config/groups.yaml
+{% endhighlight %}
+<p>At the end of the process your configuration file will just be a list of includes</p>
+
+<h2 id="breaking-up-groups-yaml">Breaking up groups.yaml</h2>
+<p>With all the devices taking part in my home automation deployment my groups.yaml file was looking pretty scary and was a mission to manage. I decided that I would take a similar approach to the rest of my configuration and break out the groups into smaller more manageable files (in a config/groups folder) and include the definitions in a similar manner to the sensors and lights covered above.</p>
+<p>Initially I tried using the !include_dir_list command, this passed the configuration validation on Home Assistant but ended up missing out on all of my groups. After some testing I found that the !include_dir_merge_named command did the trick and I was able to break up my configuration as shown below:</p>
+<img src="./images/12/06-002.png" alt="" />
+<p>This allows me to keep my group definitions smaller, keep similar entities grouped together and gives me the ability to quickly disable a collection of groups by just simply appending an _ to the end of a group file&#39;s name.</p>
+<blockquote>
+<p><strong>Note</strong> I strongly recommend keeping all your view definitions in the same file, this allows you to control the order that they appear in as the files are loaded alphabetically from the configuration directory when using !includedirmerge_named</p>
+</blockquote>
+
+<h2 id="tips">Tips</h2>
+<p>Here are some useful tips to consider when breaking up your Home Assistant configuration:</p>
+<ul>
+<li>If you wish to disable an included file using the <code>!include_dir_list</code> command you can just add an <code>_</code> to the end of the file extension (e.g. <code>xx.yaml_</code>) and restart Home Assistant.</li>
+<li>You can use a program like <a href="https://www.baremetalsoft.com/baretail/">BareTail</a> to tail the Home Assistant log file (or <code>tail -f /config/home-assistant.log</code> on *nix) to get some additional insight into any errors you may encounter</li>
+<li>When breaking up groups be sure to keep all your views in the same file to ensure that they appear in the order that you want.</li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Hopefully this post will help others out when it comes to making your Home Assistant deployment easier to manage. I am by no means an expert when it comes to this, but the approach listed above works well for me.</p>
+<p>You can always visit the official Home Assistant site for a <a href="https://www.home-assistant.io/examples#example-configurationyaml">big list of public configuration examples</a> should you need some more inspiration with your deployment.</p>
+<p>Please feel free to leave any comments, questions or feedback below!</p>

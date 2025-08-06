@@ -1,0 +1,134 @@
+---
+title: Home Assistant From Scratch - Octoprint
+date: 2018-10-09
+tags: [home assistant, 3d printing]
+logo: hass.png
+---
+
+<blockquote>
+<p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
+</blockquote>
+<p>Today I will be adding my 3D printer to Home Assistant via the <a href="https://www.home-assistant.io/integrations/octoprint/">octoprint integration</a>, this post will build up on core concepts that have already been covered in some of my previous posts.</p>
+
+<h2 id="requirements">Requirements</h2>
+<p>If you wish to follow along, you will need the following.</p>
+<ul>
+<li>Octoprint setup and running for your 3D printer</li>
+<li>A static IP Address assigned to your Octoprint server (makes configuration a whole lot easier)</li>
+<li>The Octoprint MQTT Plugin installed</li>
+<li>(Optional) A webcam configured in Octoprint</li>
+</ul>
+
+<h2 id="octoprint">Octoprint</h2>
+<p>As mentioned above, in order to monitor Octoprint from Home Assistant you will need the <a href="https://plugins.octoprint.org/plugins/mqtt/">Octoprint MQTT plugin</a> as this allows Octoprint to publish relative information about your printer and any running jobs.</p>
+<p>You can install the plugin through Octoprints built-in plugin manager, and configure it to point to your home MQTT server (or cloud server if you are not hosting your own).</p>
+<img src="./images/10/09-001.png" alt="" />
+<p>I would suggest picking a meaningful topic when setting up MQTT, especially if you are running more than 1 3D printer. In my case I will set this topic to octoprint/anet_a8/:</p>
+<img src="./images/10/09-002.png" alt="" />
+<p>We can confirm that our configuration is correct by subscribing to either <code>#</code> or <code>octoprint/anet_a8/#</code> in your preferred MQTT client (in my case I am using <a href="https://chrome.google.com/webstore/detail/mqttbox/kaajoficamnjijhkeomgfljpicifbkaf">MQTTBox</a>).</p>
+<img src="./images/10/09-003.png" alt="" />
+
+<h2 id="home-assistant">Home Assistant</h2>
+<p>The first thing we need to do is add the Octoprint component&#39;s configuration into your configuration.yaml file.</p>
+{% highlight "yaml" %}
+octoprint:
+  host: !secret octoprint_host
+  api_key: !secret octoprint_api
+  bed: true
+  number_of_tools: 1
+{% endhighlight %}
+<blockquote>
+<p>This is the main component to integrate OctoPrint sensors, you will have to set up sensors and binary sensors separately.</p>
+</blockquote>
+<p>Next you will need to create a new octoprint sensor (shown below) in your <code>configuration.yaml</code> file and select the monitored conditions that you are interested in.</p>
+{% highlight "yaml" %}
+- platform: octoprint
+  name: Anet A8
+  monitored_conditions:
+    - Current State
+    - Temperatures
+    - Job Percentage
+{% endhighlight %}
+<p>After a quick restart of Home Assistant you should see your new sensors.</p>
+<img src="./images/10/09-004.png" alt="" />
+
+<h3 id="grouping-and-customization">Grouping and Customization</h3>
+<p>I prefer to group similar sensors together in Home Assistant to make it easier to get to the information that I want to see. Below I am creating a new card called Anet A8 which contains all the sensors that I want to see...</p>
+{% highlight "yaml" %}
+aneta8_group:
+  name: Anet A8
+  entities:
+    - sensor.anet_a8_current_state
+    - sensor.anet_a8_job_percentage
+    - sensor.anet_a8_target_bed_temp
+    - sensor.anet_a8_actual_bed_temp
+    - sensor.anet_a8_actual_tool0_temp
+    - sensor.anet_a8_target_tool0_temp
+{% endhighlight %}
+pThis results in the following card appearing in Home Assistant after a restart.
+<img src="./images/10/09-005.png" alt="" />
+<p>If you are wondering where to get the entity names specific to your 3D printer (e.g. sensor.anet_a8_job_percentag) you can get them through the states panel under the Developer Tools section of your Home Assistant instance.</p>
+<img src="./images/10/09-006.png" alt="" />
+<img src="./images/10/09-007.png" alt="" />
+<h3 id="customizing-entities">Customizing Entities</h3>
+<p>The next thing I want to do is rename some of the automatically generated names to ones that make more sense to me. To do this I added the following configuration to my customize.yaml file:</p>
+{% highlight "yaml" %}
+sensor.anet_a8_current_state:
+  friendly_name: Status
+  icon: mdi:printer-3d
+
+sensor.anet_a8_job_percentage:
+  friendly_name: "Job %"
+  icon: mdi:percent
+
+sensor.anet_a8_target_bed_temp:
+  friendly_name: "Bed Temp (target)"
+  icon: mdi:vector-square
+
+sensor.anet_a8_actual_bed_temp:
+  friendly_name: "Bed Temp (actual)"
+  icon: mdi:vector-square
+
+sensor.anet_a8_actual_tool0_temp:
+  friendly_name: "Tool Temp (actual)"
+  icon: mdi:temperature-celsius
+
+sensor.anet_a8_target_tool0_temp:
+  friendly_name: "Tool Temp (target)"
+  icon: mdi:temperature-celsius
+{% endhighlight %}
+<p>The results after a restart can be seen below:</p>
+<img src="./images/10/09-008.png" alt="" />
+
+<h3 id="webcam-support">Webcam Support</h3>
+<p>Octoprint by default provides a webcam stream which is available at: <code>http://&lt;IP Address&gt;/webcam/?action=stream</code></p>
+<p>In my case that would make it: <code>http://10.0.0.101/webcam/?action=stream&amp;1532530153491</code></p>
+<p>To get the webcam appearing in Home Assistant all we need to do is add a new mjpeg camera with the stream URL and a meaningful name:</p>
+{% highlight "yaml" %}
+camera:
+  - platform: mjpeg
+    mjpeg_url: http://10.0.0.101/webcam/?action=stream&1532530153491
+    name: "Anet A8"
+{% endhighlight %}
+<img src="./images/10/09-009.png" alt="" />
+
+<h3 id="3d-printer-view">3D Printer View</h3>
+<p>The last thing left to do is create a 3D Printer view in Home Assistant (i.e. a TAB on the top row) which will be used to only display information from my 3D printer, to do this I added the following configuration to the groups.yaml file.</p>
+{% highlight "yaml" %}
+3d_printers_view:
+  name: "3D Printers"
+  view: yes
+  entities:
+    - device_tracker.google_maps_111184378817367767624
+    - device_tracker.google_maps_117179315722226620815
+    - group.aneta8_group
+    - camera.anet_a8
+{% endhighlight %}
+<p>After restarting Home Assistant:</p>
+<img src="./images/10/09-010.png" alt="" />
+
+<h2 id="conclusion">Conclusion</h2>
+<p>I feel a lot more comfortable being able to check on my 3D printer from another room, and having it integrate so easily into Home Assistant is a huge bonus.</p>
+<p>This also opens up the doors for a lot of automation around your printer (e.g. power down after print completion (using a Sonoff), cut power in <a href="https://reprap.org/forum/read.php?1,786827">thermal runaway</a>, etc.).</p>
+<p>Having your printer talking on MQTT also allows for integration into other tools such as <a href="https://nodered.org/">Node-RED</a> greatly expanding what you can do with your automation.</p>
+<p>I hope that you found this post helpful, and as always I welcome all feedback, comments and questions.</p>

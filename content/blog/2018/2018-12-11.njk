@@ -1,0 +1,138 @@
+---
+title: Automating .Net Core 2.x App NuGet Deployment with AppVeyor
+date: 2018-12-11
+tags: [ci-cd]
+logo: appveyor.png
+---
+
+<p>In this post I am going to cover getting one of my <code>.net core</code> projects built in <a href="https://www.appveyor.com/">AppVeyor</a> and automatically publishing to NuGet on a successful build.</p>
+
+<h2 id="project-structure">Project structure</h2>
+<p>As it stands my project currently looks like this:</p>
+<img src="./images/12/11-001.png" alt="" />
+<p>I have the main project (<code>Rn.Common</code>) that I wish to publish to NuGet, and a test project (<code>Rn.CommonTests</code>) that will be run before the publication to ensure nothing breaks between commits.</p>
+<p>Lastly, I only want to run the automated build \ publish flow when code is pushed into the master branch only, as I normally use this as a release branch.</p>
+<p>I originally had this working with the <code>.net framework</code> but it was obviously not compatible with <code>.net core</code>. After a couple of hours messing about, I managed to get everything working as I wanted, below is the process I followed.</p>
+
+<h3 id="generate-a-nuget-deployment-key">Generate a NuGet deployment key</h3>
+<p>First I headed over to <a href="https://www.nuget.org/">NuGet.org</a> and generated a deployment key to use with AppVeyor:</p>
+<img src="./images/12/11-002.png" alt="" />
+<p>Be sure to save this key in a safe place and do not expose it publicly.</p>
+
+<h3 id="configure-appveyor">Configure AppVeyor</h3>
+<p>Once we have the deployment key we will need to make a couple of changes to our AppVeyor project to support .net core - I already had an existing project to modify, but if you don&#39;t have one, now would be the time to create it.</p>
+<p>Under the Settings page for your project navigate to the General section and ensure that <code>.NET Core .csproj patching</code> has been enabled (as shown below):</p>
+<img src="./images/12/11-003.png" alt="" />
+<p>Then navigate to the Environment section and create a new environment key called <code>NUGET_API_KEY</code> (or whatever you prefer) and place in your key from step (1) for its value. This way we do not need to place this key in our build script, keeping it nice and safe.</p>
+<img src="./images/12/11-004.png" alt="" />
+<p>That&#39;s it for the AppVeyor web configuration.</p>
+
+<h3 id="create-an-appveyor-yml-file">Create an appveyor.yml file</h3>
+<p>Next you will need to create an appveyor.yml` file in the root of your repository with the following content:</p>
+{% highlight "yaml" %}
+version: 1.0.{build}
+image: Visual Studio 2017
+branches:
+  only:
+    - master
+init:
+  # Good practice, because Windows line endings are different from Unix/Linux ones
+  - cmd: git config --global core.autocrlf true
+build_script:
+  - ps: ./build/package.ps1
+{% endhighlight %}
+<p>Here we do the following key things:</p>
+<ul>
+<li>We set the build environment to <code>Visual Studio 2017</code> (required for .net core)</li>
+<li>We limit the build to only trigger on the master branch</li>
+<li>We call the <code>./build/package.ps1</code> to do all the heavy lifting</li>
+</ul>
+<p>That&#39;s it for my <code>appveyor.yml</code> file.</p>
+
+<h3 id="create-a-build-script">Create a build script</h3>
+<p>After a lot of trial and error with the appveyor.yml file I decided to use PowerShell as my main build script due to some road blocks I was getting with the yml limitations. The below is what I came up with, I will run through the main parts of the script quickly.</p>
+<p>The first thing I do is grab the build folder and build number from the available <a href="https://www.appveyor.com/docs/environment-variables/">AppVeyor variables</a>:</p>
+{% highlight "powershell" %}
+# Script static variables
+$buildDir = $env:APPVEYOR_BUILD_FOLDER # e.g. C:\projects\rn-common\
+$buildNumber = $env:APPVEYOR_BUILD_VERSION # e.g. 1.0.17
+{% endhighlight %}
+<p>Next, I define all the folders I will be working with using full paths wherever I can:</p>
+{% highlight "powershell" %}
+$projectDir = $buildDir + "\src\Rn.Common";
+$projectFile = $projectDir + "\Rn.Common.csproj";
+$testDir = $buildDir + "\src\Rn.CommonTests";
+$nugetFile = $projectDir + "\Rn.Common." + $buildNumber + ".nupkg";
+{% endhighlight %}
+<p>I print out the installed .net core version to make troubleshooting easier:</p>
+{% highlight "powershell" %}
+# Display .Net Core version
+Write-Host "Checking .NET Core version" -ForegroundColor Green
+& dotnet --version
+{% endhighlight %}
+<img src="./images/12/11-005.png" alt="" />
+<p>Next, I navigate to the project directory and run a restore:</p>
+{% highlight "powershell" %}
+# Restore the main project
+Write-Host "Restoring project" -ForegroundColor Green
+& dotnet restore $projectFile --verbosity m
+{% endhighlight %}
+<img src="./images/12/11-006.png" alt="" />
+<p>The run a publish to generate the project binaries:</p>
+{% highlight "powershell" %}
+# Publish the project
+Write-Host "Publishing project" -ForegroundColor Green
+& dotnet publish $projectFile
+{% endhighlight %}
+<img src="./images/12/11-007.png" alt="" />
+<p>Next, I navigate to the test folder and run my tests:</p>
+{% highlight "powershell" %}
+# Discover and run tests
+Write-Host "Running tests" -ForegroundColor Green
+cd $testDir
+& dotnet restore Rn.CommonTests.csproj --verbosity m
+$testOutput = & dotnet test | Out-String
+Write-Host $testOutput
+{% endhighlight %}
+<img src="./images/12/11-008.png" alt="" />
+<p>I capture the output of the tests and ensure that they passed with the below check - should the tests fail I will Exit the build script:</p>
+{% highlight "powershell" %}
+# Ensure that the tests passed
+if ($testOutput.Contains("Test Run Successful.") -eq $False) {
+  Write-Host "Build failed!";
+  Exit;
+}
+{% endhighlight %}
+<img src="./images/12/11-009.png" alt="" />
+<p>Next, I call dotnet pack to generate a NuGet package for my project using the settings defined in Visual Studio.</p>
+{% highlight "powershell" %}
+# Generate a NuGet package for publishing
+Write-Host "Generating NuGet Package" -ForegroundColor Green
+cd $projectDir
+& dotnet pack -c Release /p:PackageVersion=$buildNumber -o $projectDir
+{% endhighlight %}
+<img src="./images/12/11-010.png" alt="" />
+<p>Once that has completed, I add the generated NuGet file to AppVeyors build artefacts:</p>
+{% highlight "powershell" %}
+# Save generated artifacts
+Write-Host "Saving Artifacts" -ForegroundColor Green
+Push-AppveyorArtifact $nugetFile
+{% endhighlight %}
+<img src="./images/12/11-011.png" alt="" />
+<p>The last thing left to do it publish the package to NuGet using our API key defined earlier and referencing the package built above:</p>
+{% highlight "powershell" %}
+# Publish package to NuGet
+Write-Host "Publishing NuGet package" -ForegroundColor Green
+& nuget push $nugetFile -ApiKey $env:NUGET_API_KEY -Source https://www.nuget.org/api/v2/package
+{% endhighlight %}
+<img src="./images/12/11-012.png" alt="" />
+{% highlight "powershell" %}
+# Done
+Write-Host "Done!" -ForegroundColor Green
+{% endhighlight %}
+<p>This results in a new version of the Rn.Common package being deployed to NuGet as can be seen below.</p>
+<img src="./images/12/11-013.png" alt="" />
+
+<h2 id="final-thoughts">Final Thoughts</h2>
+<p>This is by no way the best solution to automating the build process, however it does what I need it to do. There are some limitations with AppVeyor now, with the biggest one being that they don&#39;t support .net core 2.2 at time of writing.</p>
+<p>I welcome feedback, comments and suggestions!</p>
