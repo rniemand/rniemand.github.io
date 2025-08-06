@@ -319,18 +319,27 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-12-12">12 December 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#installing-octoprint">Installing Octoprint</a><ol><li><a href="#flashing-armbian">Flashing Armbian</a></li><li><a href="#connect-to-your-device">Connect to your Device</a></li><li><a href="#installing-octoprint-prerequisites">Installing OctoPrint Prerequisites</a></li><li><a href="#installing-octoprint2">Installing OctoPrint</a></li><li><a href="#auto-starting-octoprint">Auto Starting OctoPrint</a></li></ol></li><li><a href="#webcam-setup">Webcam Setup</a><ol><li><a href="#installing-mjpg-streamer">Installing mjpg-streamer</a></li><li><a href="#auto-starting-mjpg-streamer">Auto starting mjpg-streamer</a></li><li><a href="#installing-ffmpeg">Installing ffmpeg</a></li></ol></li><li><a href="#configuring-octoprint">Configuring OctoPrint</a><ol><li><a href="#adding-in-the-webcam">Adding in the webcam</a></li><li><a href="#server-controls">Server Controls</a></li><li><a href="#keeping-octoprint-up-to-date">Keeping OctoPrint up to date</a></li></ol></li><li><a href="#final-thoughts">Final thoughts</a></li></ol>
+      </div>
+
 
 <p>In this post I will cover the setup and configuration of OctoPrint from scratch. I will cover everything from installing OctoPrint to getting a webcam up and running. This post is a bit longer than my normal ones but I need to cover a lot of ground here. This is a collection of commands from various sources online, I have credited the original authors in each section.</p>
+
 <h2 id="installing-octoprint">Installing Octoprint</h2>
 <p>I claim no credit to this process, the majority of the steps are from <a href="https://www.youtube.com/watch?v=LzLb_FnXu70">this YouTube video</a> which was a big help in getting up and running.</p>
+
 <h3 id="flashing-armbian">Flashing Armbian</h3>
 <p>You will need to download the version of Armbian that is compatible with your device, in my case that is the Orange Pi One: <code>https://www.armbian.com/orange-pi-one/</code></p>
 <p>You can find a full list of <a href="https://www.armbian.com/download/">supported devices here</a>.</p>
 <p>Once you have the image, write it to an SD card using either <a href="https://sourceforge.net/projects/win32diskimager/files/latest/download">Win32 Disk Imager</a> or <a href="https://www.balena.io/etcher/">Etcher</a>.</p>
-<p>Next, you will need to boot your device and get its assigned IP Address (in my case this was <code>10.0.0.112</code>) - there are tools like <a href="https://www.fing.com/">Fing</a> or <a href="https://angryip.org/download/#windows">Angry IP Scanner</a> that should make discovering your device's IP Address a bit easier.</p>
+<p>Next, you will need to boot your device and get its assigned IP Address (in my case this was <code>10.0.0.112</code>) - there are tools like <a href="https://www.fing.com/">Fing</a> or <a href="https://angryip.org/download/#windows">Angry IP Scanner</a> that should make discovering your device&#39;s IP Address a bit easier.</p>
+
 <h3 id="connect-to-your-device">Connect to your Device</h3>
 <p>Connect to your device using an ssh client like <a href="https://www.putty.org/">Putty</a> or <a href="https://mobaxterm.mobatek.net/">MobaXterm</a>, the default username is <code>root</code> with a password of <code>1234</code>, you will be prompted to change this on the first login.</p>
 <p>When \ If prompted to create a user account for yourself to use.</p>
+
 <h3 id="installing-octoprint-prerequisites">Installing OctoPrint Prerequisites</h3>
 <p>First we need to update all installed packages for good measure.</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> update
@@ -346,7 +355,7 @@ pre[class*="language-diff-"] {
 <p>Next, edit the sudo file and add the following line:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> visudo
 octoprint <span class="token assign-left variable">ALL</span><span class="token operator">=</span><span class="token punctuation">(</span>ALL<span class="token punctuation">)</span> NOPASSWD:ALL</code></pre>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/Um8spChewi-532.avif 532w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/Um8spChewi-532.webp 532w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/Um8spChewi-532.png" alt="" width="532" height="87"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/Um8spChewi-532.avif 532w"><source type="image/webp" srcset="/blog/2018/2018-12-12/Um8spChewi-532.webp 532w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/Um8spChewi-532.png" alt="" width="532" height="87"></picture>
 <ul>
 <li>CTRL + O to save the file</li>
 <li>CTRL + X to exit</li>
@@ -365,7 +374,8 @@ octoprint <span class="token assign-left variable">ALL</span><span class="token 
 <span class="token builtin class-name">cd</span> pyserial-2.7
 <span class="token function">sudo</span> python setup.py <span class="token function">install</span>
 <span class="token builtin class-name">cd</span> ~</code></pre>
-<h3 id="installing-octoprint-2">Installing OctoPrint</h3>
+
+<h3 id="installing-octoprint2">Installing OctoPrint</h3>
 <p>As the OctoPrint user navigate to your home directory and clone the latest copy of Octoprint:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token builtin class-name">cd</span> ~
 <span class="token function">git</span> clone https://github.com/foosel/OctoPrint.git
@@ -376,9 +386,10 @@ octoprint <span class="token assign-left variable">ALL</span><span class="token 
 <pre class="language-shell" tabindex="0"><code class="language-shell">./venv/bin/python setup.py <span class="token function">install</span></code></pre>
 <p>Once the build has completed you can start OctoPrint using the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">~/OctoPrint/venv/bin/octoprint serve</code></pre>
-<p>Once started you should be able to connect to OctoPrint in your web browser using the following URL <code>http://&lt;device-ip-address&gt;:5000</code> so in my case that would be http://10.0.0.112:5000/. This will present you with the OctoPrint Setup Wizard - complete it as normal.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/AyVwbw9kUM-788.avif 788w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/AyVwbw9kUM-788.webp 788w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/AyVwbw9kUM-788.png" alt="" width="788" height="360"></picture>
+<p>Once started you should be able to connect to OctoPrint in your web browser using the following URL <code>http://&lt;device-ip-address&gt;:5000</code> so in my case that would be <a href="http://10.0.0.112:5000/">http://10.0.0.112:5000/</a>. This will present you with the OctoPrint Setup Wizard - complete it as normal.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/AyVwbw9kUM-788.avif 788w"><source type="image/webp" srcset="/blog/2018/2018-12-12/AyVwbw9kUM-788.webp 788w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/AyVwbw9kUM-788.png" alt="" width="788" height="360"></picture>
 <p>Once done press CTRL and Z to kill OctoPrint in your connected ssh session.</p>
+
 <h3 id="auto-starting-octoprint">Auto Starting OctoPrint</h3>
 <p>Copy relevant files and configure OctoPrint to start on boot with the following commands:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">cp</span> ~/OctoPrint/scripts/octoprint.init /etc/init.d/octoprint
@@ -387,18 +398,19 @@ octoprint <span class="token assign-left variable">ALL</span><span class="token 
 <p>Edit the default configuration for OctoPrint</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/default/octoprint</code></pre>
 <p>Change user account from <code>pi</code> to <code>octoprint</code>:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/HTwzMR5gIU-510.avif 510w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/HTwzMR5gIU-510.webp 510w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/HTwzMR5gIU-510.png" alt="" width="510" height="53"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/HTwzMR5gIU-510.avif 510w"><source type="image/webp" srcset="/blog/2018/2018-12-12/HTwzMR5gIU-510.webp 510w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/HTwzMR5gIU-510.png" alt="" width="510" height="53"></picture>
 <p>Enable and change the daemon directory</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token assign-left variable">DAEMON</span><span class="token operator">=</span>/home/octoprint/OctoPrint/venv/bin/octoprint</code></pre>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/VvCybVWGsG-694.avif 694w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/VvCybVWGsG-694.webp 694w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/VvCybVWGsG-694.png" alt="" width="694" height="215"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/VvCybVWGsG-694.avif 694w"><source type="image/webp" srcset="/blog/2018/2018-12-12/VvCybVWGsG-694.webp 694w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/VvCybVWGsG-694.png" alt="" width="694" height="215"></picture>
 <p>Next, we need to commit the updates we made</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> update-rc.d octoprint defaults</code></pre>
 <p>Finally you can start the OctoPrint service with the following command</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">service</span> octoprint start</code></pre>
+
 <h2 id="webcam-setup">Webcam Setup</h2>
 <p>Next we will install <a href="https://github.com/jacksonliam/mjpg-streamer">mjpg-streamer</a> to allow us to keep an eye on our prints while away, the majority of these steps were taken from this <a href="https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-MJPEG-Streamer-Install-&amp;-Setup-&amp;-FFMpeg-Recording">amazing GitHub post</a>.</p>
 <h3 id="installing-mjpg-streamer">Installing mjpg-streamer</h3>
-<p>Let's start off by installing the required dependencies:</p>
+<p>Let&#39;s start off by installing the required dependencies:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> cmake libjpeg8-dev
 <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> gcc g++</code></pre>
 <p>Now clone the repo:</p>
@@ -411,12 +423,13 @@ octoprint <span class="token assign-left variable">ALL</span><span class="token 
 <p>Test to see if everything is working with the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">/usr/local/bin/mjpg_streamer <span class="token parameter variable">-i</span> <span class="token string">"input_uvc.so -r 1280x720 -d /dev/video0 -f 30 -q 80"</span> <span class="token parameter variable">-o</span> <span class="token string">"output_http.so -p 8080 -w /usr/local/share/mjpg-streamer/www"</span></code></pre>
 <p>You should be able to connect to mjpg_streamer using the following URL http://<device-ip-address>:8080/?action=stream, so in my case that would be <code>http://10.0.0.112:8080/?action=stream</code>:</device-ip-address></p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/u-Ttpao069-626.avif 626w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/u-Ttpao069-626.webp 626w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/u-Ttpao069-626.jpeg" alt="" width="626" height="474"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/u-Ttpao069-626.avif 626w"><source type="image/webp" srcset="/blog/2018/2018-12-12/u-Ttpao069-626.webp 626w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/u-Ttpao069-626.jpeg" alt="" width="626" height="474"></picture>
+
 <h3 id="auto-starting-mjpg-streamer">Auto starting mjpg-streamer</h3>
 <p>We will need to create a startup file:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">nano</span> /home/octoprint/mjpg-streamer.sh</code></pre>
 <p>For the contents of the file, add in the below code (from <a href="https://github.com/cncjs/cncjs/wiki/Setup-Guide:-Raspberry-Pi-%7C-MJPEG-Streamer-Install-&amp;-Setup-&amp;-FFMpeg-Recording">this post</a>):</p>
-<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token shebang important">#!/bin/bash</span>
+<pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
 <span class="token comment"># chmod +x mjpg-streamer.sh</span>
 <span class="token comment"># Crontab: @reboot /home/octoprint/mjpg-streamer/mjpg-streamer.sh start</span>
 <span class="token comment"># Crontab: @reboot /home/octoprint/mjpg-streamer/mjpg-streamer-experimental/mjpg-streamer.sh start</span>
@@ -561,44 +574,49 @@ octoprint <span class="token assign-left variable">ALL</span><span class="token 
 <p>... by adding the following line to the bottom of the file</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">@reboot /home/octoprint/mjpg-streamer.sh start</code></pre>
 <p>Save the file and exit, reboot your device to see if the webcam comes up.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/u-Ttpao069-626.avif 626w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/u-Ttpao069-626.webp 626w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/u-Ttpao069-626.jpeg" alt="" width="626" height="474"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/u-Ttpao069-626.avif 626w"><source type="image/webp" srcset="/blog/2018/2018-12-12/u-Ttpao069-626.webp 626w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/u-Ttpao069-626.jpeg" alt="" width="626" height="474"></picture>
+
 <h3 id="installing-ffmpeg">Installing ffmpeg</h3>
 <p>Next we will need to install ffmpeg to allow OctoPrint to render time-lapses etc, to do this all we need to do is run the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">apt-get</span> <span class="token function">install</span> ffmpeg</code></pre>
+
 <h2 id="configuring-octoprint">Configuring OctoPrint</h2>
-<p>We are so close to being done, the last thing we need to do is configure OctoPrint and make it aware of all our configuration. We will be doing all of this configuration through OctoPrint's web interface (http://10.0.0.112:5000/), let's get started:</p>
+<p>We are so close to being done, the last thing we need to do is configure OctoPrint and make it aware of all our configuration. We will be doing all of this configuration through OctoPrint&#39;s web interface (<a href="http://10.0.0.112:5000/">http://10.0.0.112:5000/</a>), let&#39;s get started:</p>
+
 <h3 id="adding-in-the-webcam">Adding in the webcam</h3>
 <p>Open settings and navigate to the Webcam &amp; Timelapse page, here we will enter in the following information:</p>
 <ul>
-<li><strong>Stream URL</strong>: http://10.0.0.112:8080/?action=stream</li>
-<li><strong>Snapshot URL</strong>: http://10.0.0.112:8080/?action=snapshot</li>
+<li><strong>Stream URL</strong>: <a href="http://10.0.0.112:8080/?action=stream">http://10.0.0.112:8080/?action=stream</a></li>
+<li><strong>Snapshot URL</strong>: <a href="http://10.0.0.112:8080/?action=snapshot">http://10.0.0.112:8080/?action=snapshot</a></li>
 <li><strong>Path to FFMPEG</strong>: /usr/bin/ffmpeg</li>
 </ul>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/0gG4mMeMdJ-684.avif 684w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/0gG4mMeMdJ-684.webp 684w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/0gG4mMeMdJ-684.png" alt="" width="684" height="468"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/0gG4mMeMdJ-684.avif 684w"><source type="image/webp" srcset="/blog/2018/2018-12-12/0gG4mMeMdJ-684.webp 684w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/0gG4mMeMdJ-684.png" alt="" width="684" height="468"></picture>
 <h3 id="server-controls">Server Controls</h3>
 <p>The next thing I would like to do is enable the server controls in OctoPrint (e.g. shutdown, restart, etc.).</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/miSxP3ET2w-269.avif 269w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/miSxP3ET2w-269.webp 269w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/miSxP3ET2w-269.png" alt="" width="269" height="167"></picture>
-<p>These can be added under the Server configuration section, all that's required here is to enter in the correct commands for the desired action, for e.g.:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/cXGc1xo04o-701.avif 701w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/cXGc1xo04o-701.webp 701w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/cXGc1xo04o-701.png" alt="" width="701" height="188"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/miSxP3ET2w-269.avif 269w"><source type="image/webp" srcset="/blog/2018/2018-12-12/miSxP3ET2w-269.webp 269w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/miSxP3ET2w-269.png" alt="" width="269" height="167"></picture>
+<p>These can be added under the Server configuration section, all that&#39;s required here is to enter in the correct commands for the desired action, for e.g.:</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/cXGc1xo04o-701.avif 701w"><source type="image/webp" srcset="/blog/2018/2018-12-12/cXGc1xo04o-701.webp 701w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/cXGc1xo04o-701.png" alt="" width="701" height="188"></picture>
 <ul>
 <li><strong>Restart OctoPrint</strong> - sudo service octoprint restart</li>
 <li><strong>Restart System</strong> - sudo shutdown -r now</li>
 <li><strong>Shutdown System</strong> - sudo shutdown -h now</li>
 </ul>
 <p>Once you have entered the relevant commands, save the changes so that they can take effect.</p>
+
 <h3 id="keeping-octoprint-up-to-date">Keeping OctoPrint up to date</h3>
 <p>Provided that you followed the installation steps listed above you should be able to update OctoPrint through the web interface whenever there is a new release of the software.</p>
 <p>Unlike the pre-configured image I am running on my Orange Pi Lite where you can update directly from the notification, you will need to manually update through the settings page which is a slight bummer.</p>
 <p>I noticed that I got a couple of warnings \ errors logged to the console while applying the latest update, however the update completed fine and everything seems to be working as expected.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/post/wORh3RpA1r-810.avif 810w"><source type="image/webp" srcset="/blog/2018/2018-12-12/post/wORh3RpA1r-810.webp 810w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/post/wORh3RpA1r-810.png" alt="" width="810" height="397"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-12/wORh3RpA1r-810.avif 810w"><source type="image/webp" srcset="/blog/2018/2018-12-12/wORh3RpA1r-810.webp 810w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-12/wORh3RpA1r-810.png" alt="" width="810" height="397"></picture>
+
 <h2 id="final-thoughts">Final thoughts</h2>
 <p>Although it took me the better part of 3 hours to scrape everything together for this post, it should take you no more than 20-30 min to follow along for yourself.</p>
-<p>OctoPrint is by far worth the effort and breathes new life into even the oldest of 3D printers, I love having the ability to remotely control \ monitor my printers and when paired with a Sonoff Basic and an empty print bed - you don't even need to be by your printer to start a print.</p>
+<p>OctoPrint is by far worth the effort and breathes new life into even the oldest of 3D printers, I love having the ability to remotely control \ monitor my printers and when paired with a Sonoff Basic and an empty print bed - you don&#39;t even need to be by your printer to start a print.</p>
 <p>As always I welcome all feedback, comments and suggestions, happy printing!</p>
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-12-11/post/">Automating .Net Core 2.x App NuGet Deployment with AppVeyor</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-12-11/">Automating .Net Core 2.x App NuGet Deployment with AppVeyor</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
 	<span class="text-end">Next<br><a href="/blog/2019/2019-01-04/post/">Installing InfluxDB on Windows</a></span>
@@ -618,7 +636,7 @@ octoprint <span class="token assign-left variable">ALL</span><span class="token 
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-12-12/post/` was built on 2025-07-30T17:53:20.343Z -->
+		<!-- This page `/blog/2018/2018-12-12/` was built on 2025-08-06T18:22:56.711Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

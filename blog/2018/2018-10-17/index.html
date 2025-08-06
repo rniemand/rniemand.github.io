@@ -320,12 +320,17 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-10-17">17 October 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#base-installation">Base Installation</a></li><li><a href="#creating-user-accounts">Creating User Accounts</a></li><li><a href="#allowing-remote-connections">Allowing Remote Connections</a></li><li><a href="#creating-a-database">Creating a Database</a></li><li><a href="#useful-paths">Useful Paths</a></li></ol>
+      </div>
+
 
 <h2 id="base-installation">Base Installation</h2>
 <p>To install MySQL (or more accurately MariaDB) on your DietPi \ Debian distribution all you need to do is run the following command:</p>
-<pre><code>sudo apt install mysql-server
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> mysql-server</code></pre>
 <p>This will download and install all the required packages and dependencies to get up and running quickly. Note you will need to do some additional configuration (below) in order to manage and access your MySQL instance remotely.</p>
+
 <h2 id="creating-user-accounts">Creating User Accounts</h2>
 <p>While connected to your device via ssh, run the below command to start the mysql prompt: <code>mysql</code></p>
 <p>Create a new user with the following command, replacing the values for username and password with your own values.</p>
@@ -335,19 +340,19 @@ pre[class*="language-diff-"] {
 FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span></code></pre>
 <p>Confirm that your user has been added successfully.</p>
 <pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token keyword">select</span> <span class="token keyword">user</span><span class="token punctuation">,</span>host <span class="token keyword">from</span> mysql<span class="token punctuation">.</span><span class="token keyword">user</span><span class="token punctuation">;</span></code></pre>
-<picture><source type="image/avif" srcset="/blog/2018/2018-10-17/post/ZA4owqDA_Z-425.avif 425w"><source type="image/webp" srcset="/blog/2018/2018-10-17/post/ZA4owqDA_Z-425.webp 425w"><img loading="lazy" decoding="async" src="/blog/2018/2018-10-17/post/ZA4owqDA_Z-425.png" alt="" width="425" height="127"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-10-17/ZA4owqDA_Z-425.avif 425w"><source type="image/webp" srcset="/blog/2018/2018-10-17/ZA4owqDA_Z-425.webp 425w"><img loading="lazy" decoding="async" src="/blog/2018/2018-10-17/ZA4owqDA_Z-425.png" alt="" width="425" height="127"></picture>
+
 <h2 id="allowing-remote-connections">Allowing Remote Connections</h2>
 <p>Before you can login to your MySQL server remotely you will need to make the following changes in the <code>50-server.cnf</code> file.</p>
-<pre><code>nano /etc/mysql/mariadb.conf.d/50-server.cnf
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">nano</span> /etc/mysql/mariadb.conf.d/50-server.cnf</code></pre>
 <p>Find the <code>bind-address</code> and change it to <code>0.0.0.0</code> this will allow MySQL to listen on all interfaces for incoming connections.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-10-17/post/d-fmioo1GQ-540.avif 540w"><source type="image/webp" srcset="/blog/2018/2018-10-17/post/d-fmioo1GQ-540.webp 540w"><img loading="lazy" decoding="async" src="/blog/2018/2018-10-17/post/d-fmioo1GQ-540.png" alt="" width="540" height="62"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-10-17/d-fmioo1GQ-540.avif 540w"><source type="image/webp" srcset="/blog/2018/2018-10-17/d-fmioo1GQ-540.webp 540w"><img loading="lazy" decoding="async" src="/blog/2018/2018-10-17/d-fmioo1GQ-540.png" alt="" width="540" height="62"></picture>
 <p>Save and close the file, followed by restarting the MySQL service.</p>
-<pre><code>systemctl stop mysql.service
-systemctl start mysql.service
-</code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">systemctl stop mysql.service
+systemctl start mysql.service</code></pre>
 <p>Test your connection to the server using the user created earlier.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-10-17/post/ZoLDEdwhhn-483.avif 483w"><source type="image/webp" srcset="/blog/2018/2018-10-17/post/ZoLDEdwhhn-483.webp 483w"><img loading="lazy" decoding="async" src="/blog/2018/2018-10-17/post/ZoLDEdwhhn-483.png" alt="" width="483" height="242"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-10-17/ZoLDEdwhhn-483.avif 483w"><source type="image/webp" srcset="/blog/2018/2018-10-17/ZoLDEdwhhn-483.webp 483w"><img loading="lazy" decoding="async" src="/blog/2018/2018-10-17/ZoLDEdwhhn-483.png" alt="" width="483" height="242"></picture>
+
 <h2 id="creating-a-database">Creating a Database</h2>
 <p>Open MySQL prompt: <code>mysql</code></p>
 <p>Run the following commands, in my case I am creating a database for my Home Assistant installation.</p>
@@ -357,7 +362,8 @@ systemctl start mysql.service
 FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span>
 <span class="token keyword">SHOW</span> GRANTS <span class="token keyword">FOR</span> <span class="token string">'username'</span><span class="token variable">@'%'</span><span class="token punctuation">;</span></code></pre>
 <p>Your database should now be created and accessible by your user account.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-10-17/post/BRWBHF4QXH-194.avif 194w"><source type="image/webp" srcset="/blog/2018/2018-10-17/post/BRWBHF4QXH-194.webp 194w"><img loading="lazy" decoding="async" src="/blog/2018/2018-10-17/post/BRWBHF4QXH-194.png" alt="" width="194" height="79"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-10-17/BRWBHF4QXH-194.avif 194w"><source type="image/webp" srcset="/blog/2018/2018-10-17/BRWBHF4QXH-194.webp 194w"><img loading="lazy" decoding="async" src="/blog/2018/2018-10-17/BRWBHF4QXH-194.png" alt="" width="194" height="79"></picture>
+
 <h2 id="useful-paths">Useful Paths</h2>
 <ul>
 <li><strong>MySQL data path</strong>: <code>/var/lib/mysql/</code></li>
@@ -367,10 +373,10 @@ FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuatio
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-10-09/post/">Home Assistant From Scratch - Octoprint</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-10-09/">Home Assistant From Scratch - Octoprint</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-12-06/post/">Home Assistant From Scratch - Breaking up Config</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-12-06/">Home Assistant From Scratch - Breaking up Config</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -387,7 +393,7 @@ FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuatio
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-10-17/post/` was built on 2025-07-30T17:53:20.343Z -->
+		<!-- This page `/blog/2018/2018-10-17/` was built on 2025-08-06T18:22:56.710Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

@@ -319,11 +319,17 @@ pre[class*="language-diff-"] {
 		<time datetime="2018-12-06">06 December 2018</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#home-assistant-yaml-commands">Home Assistant YAML Commands</a></li><li><a href="#the-basic-idea">The basic idea</a></li><li><a href="#-include_dir_list">!include_dir_list</a></li><li><a href="#-include">!include</a></li><li><a href="#breaking-up-groups-yaml">Breaking up groups.yaml</a></li><li><a href="#tips">Tips</a></li><li><a href="#conclusion">Conclusion</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p>This is one <strong><a href="/blog/2018/2018-06-27/">post in a series</a></strong> of getting up and running with Home Assistant from scratch.</p>
 </blockquote>
 <p>Today I would like to tackle breaking up your configuration file (<code>configuration.yaml</code>) into smaller, more manageable parts to make configuring Home Assistant a lot easier.</p>
+
 <h2 id="home-assistant-yaml-commands">Home Assistant YAML Commands</h2>
 <p>Home Assistant offers the following helper keywords for use in your configuration files:</p>
 <ul>
@@ -333,6 +339,7 @@ pre[class*="language-diff-"] {
 <li><code>!include_dir_merge_named</code> will return the content of a directory as a dictionary by loading each file and merging it into 1 big dictionary.</li>
 </ul>
 <p>The full list of commands can be <a href="https://www.home-assistant.io/docs/configuration/splitting_configuration/">found here</a>, however in my experience the most commonly used command is <code>!include</code>.</p>
+
 <h2 id="the-basic-idea">The basic idea</h2>
 <p>To make my configuration more manageable I would like to do the following:</p>
 <ul>
@@ -360,14 +367,15 @@ pre[class*="language-diff-"] {
     <span class="token key atrule">retain</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
 <p>into this:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">switch</span><span class="token punctuation">:</span> <span class="token tag">!include_dir_list</span> /config/switches</code></pre>
-<h2 id="include-dir-list">!include_dir_list</h2>
+
+<h2 id="-include_dir_list">!include_dir_list</h2>
 <p>The !include_dir_list command allows you to include all files nested in the target folder, this is ideal if you want to manage multiple components and prefer to have a file for each one.</p>
 <p>You will be required to make some changes to the configuration to make this work, namely:</p>
 <ul>
 <li>You are limited to 1 entity per file</li>
 <li>You need to flatten your YAML (no need for indents)</li>
 </ul>
-<p>Let's use this switch configuration as an example:</p>
+<p>Let&#39;s use this switch configuration as an example:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">switch</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">platform</span><span class="token punctuation">:</span> mqtt
     <span class="token key atrule">command_topic</span><span class="token punctuation">:</span> <span class="token string">"cmnd/xmas/POWER"</span>
@@ -390,10 +398,11 @@ pre[class*="language-diff-"] {
 <blockquote>
 <p><strong>Note</strong>: I got an error when testing this out with only 1 file in the target folder, this went away as soon as I added a second one though!</p>
 </blockquote>
-<h2 id="include">!include</h2>
+
+<h2 id="-include">!include</h2>
 <p>The other command I use a lot when breaking up my configuration is the <code>!include</code> command, this essentially places the targeted file directly in place of the !include placeholder.</p>
 <p>Like <code>!include_dir_list</code> you will need to pay attention to the spacing used in your referenced file - normally you can get away with removing 1 level of indentation with most configuration files. I would suggest making use of the Configuration Validation tool found under the configuration section.</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-06/post/lEfL1bn7Z9-753.avif 753w"><source type="image/webp" srcset="/blog/2018/2018-12-06/post/lEfL1bn7Z9-753.webp 753w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-06/post/lEfL1bn7Z9-753.png" alt="" width="753" height="344"></picture>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-06/lEfL1bn7Z9-753.avif 753w"><source type="image/webp" srcset="/blog/2018/2018-12-06/lEfL1bn7Z9-753.webp 753w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-06/lEfL1bn7Z9-753.png" alt="" width="753" height="344"></picture>
 <p>Once you have broken up your configuration, you just need to reference it in your configuration.yaml file as shown below.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">weather</span><span class="token punctuation">:</span> <span class="token tag">!include</span> config/weather.yaml
 <span class="token key atrule">device_tracker</span><span class="token punctuation">:</span> <span class="token tag">!include</span> config/device_tracker.yaml
@@ -402,15 +411,17 @@ pre[class*="language-diff-"] {
 <span class="token key atrule">tts</span><span class="token punctuation">:</span> <span class="token tag">!include</span> config/tts.yaml
 <span class="token key atrule">mqtt</span><span class="token punctuation">:</span> <span class="token tag">!include</span> config/mqtt.yaml
 <span class="token key atrule">group</span><span class="token punctuation">:</span> <span class="token tag">!include</span> config/groups.yaml</code></pre>
-<p>At the end of the process your configuration file will just be a list of includes :)</p>
+<p>At the end of the process your configuration file will just be a list of includes</p>
+
 <h2 id="breaking-up-groups-yaml">Breaking up groups.yaml</h2>
 <p>With all the devices taking part in my home automation deployment my groups.yaml file was looking pretty scary and was a mission to manage. I decided that I would take a similar approach to the rest of my configuration and break out the groups into smaller more manageable files (in a config/groups folder) and include the definitions in a similar manner to the sensors and lights covered above.</p>
 <p>Initially I tried using the !include_dir_list command, this passed the configuration validation on Home Assistant but ended up missing out on all of my groups. After some testing I found that the !include_dir_merge_named command did the trick and I was able to break up my configuration as shown below:</p>
-<picture><source type="image/avif" srcset="/blog/2018/2018-12-06/post/sfESbPPIZ0-723.avif 723w"><source type="image/webp" srcset="/blog/2018/2018-12-06/post/sfESbPPIZ0-723.webp 723w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-06/post/sfESbPPIZ0-723.png" alt="" width="723" height="185"></picture>
-<p>This allows me to keep my group definitions smaller, keep similar entities grouped together and gives me the ability to quickly disable a collection of groups by just simply appending an _ to the end of a group file's name.</p>
+<picture><source type="image/avif" srcset="/blog/2018/2018-12-06/sfESbPPIZ0-723.avif 723w"><source type="image/webp" srcset="/blog/2018/2018-12-06/sfESbPPIZ0-723.webp 723w"><img loading="lazy" decoding="async" src="/blog/2018/2018-12-06/sfESbPPIZ0-723.png" alt="" width="723" height="185"></picture>
+<p>This allows me to keep my group definitions smaller, keep similar entities grouped together and gives me the ability to quickly disable a collection of groups by just simply appending an _ to the end of a group file&#39;s name.</p>
 <blockquote>
 <p><strong>Note</strong> I strongly recommend keeping all your view definitions in the same file, this allows you to control the order that they appear in as the files are loaded alphabetically from the configuration directory when using !includedirmerge_named</p>
 </blockquote>
+
 <h2 id="tips">Tips</h2>
 <p>Here are some useful tips to consider when breaking up your Home Assistant configuration:</p>
 <ul>
@@ -418,6 +429,7 @@ pre[class*="language-diff-"] {
 <li>You can use a program like <a href="https://www.baremetalsoft.com/baretail/">BareTail</a> to tail the Home Assistant log file (or <code>tail -f /config/home-assistant.log</code> on *nix) to get some additional insight into any errors you may encounter</li>
 <li>When breaking up groups be sure to keep all your views in the same file to ensure that they appear in the order that you want.</li>
 </ul>
+
 <h2 id="conclusion">Conclusion</h2>
 <p>Hopefully this post will help others out when it comes to making your Home Assistant deployment easier to manage. I am by no means an expert when it comes to this, but the approach listed above works well for me.</p>
 <p>You can always visit the official Home Assistant site for a <a href="https://www.home-assistant.io/examples#example-configurationyaml">big list of public configuration examples</a> should you need some more inspiration with your deployment.</p>
@@ -425,10 +437,10 @@ pre[class*="language-diff-"] {
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="/blog/2018/2018-10-17/post/">Install MySQL on DietPi (Debian)</a></span>
+	<span class="text-start">Previous<br><a href="/blog/2018/2018-10-17/">Install MySQL on DietPi (Debian)</a></span>
 	
 	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="text-end">Next<br><a href="/blog/2018/2018-12-11/post/">Automating .Net Core 2.x App NuGet Deployment with AppVeyor</a></span>
+	<span class="text-end">Next<br><a href="/blog/2018/2018-12-11/">Automating .Net Core 2.x App NuGet Deployment with AppVeyor</a></span>
 	<i class="bi bi-arrow-right-short"></i>
 	
 </div>
@@ -445,7 +457,7 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2018/2018-12-06/post/` was built on 2025-07-30T17:53:20.343Z -->
+		<!-- This page `/blog/2018/2018-12-06/` was built on 2025-08-06T18:22:56.710Z -->
 		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
