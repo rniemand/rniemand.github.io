@@ -1,147 +1,214 @@
 ---
 title: Running InfluxDB 3 Core On Unraid
 date: 2026-02-09
-tags: [unraid, influxdb]
+tags: [unraid, influxdb, grafana]
 logo: influxdb.png
 ---
 
-<h2>Overview</h2>
+<h2 id="overview">Overview</h2>
+<p>In this post I will cover the basics to get <a href="http://docs.influxdata.com/influxdb3/core/reference/" target="_blank">InfluxDB 3 Core</a> up and running on Unraid, as I was unable to find a community application for this.</p>
 
-<p>Holder</p>
+<h2 id="container-deploy">Container Deployment</h2>
+<h3 id="container-deploy-core">InfluxDB 3 Core</h3>
+<p>Create a new Docker container in Unraid and configure it as shown below:</p>
+<table class="table table-sm table-striped table-hover">
+	<tbody>
+		<tr>
+			<td><strong>Core</strong></td>
+			<td>Name</td>
+			<td>influxdb3</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Repository</td>
+			<td>influxdb:3-core</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Mounts</strong></td>
+			<td><code>/var/lib/influxdb3/data/</code></td>
+			<td><code>/mnt/user/appdata/influxdb/data/</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>/var/lib/influxdb3/plugins/</code></td>
+			<td><code>/mnt/user/appdata/influxdb/plugins/</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Ports</strong></td>
+			<td><code>8181</code></td>
+			<td><code>8181</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Variables</strong></td>
+			<td><code>INFLUXDB3_DB_DIR</code></td>
+			<td><code>/var/lib/influxdb3/data/</code></td>
+			<td>Must match the defined mount</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>INFLUXDB3_OBJECT_STORE</code></td>
+			<td>file</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>INFLUXDB3_DATABASE_NAME</code></td>
+			<td>rn</td>
+			<td>I am using <code>rn</code> as my database</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>INFLUXDB3_PLUGIN_DIR</code></td>
+			<td><code>/var/lib/influxdb3/plugins/</code></td>
+			<td>Must match the defined mount</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>INFLUXDB3_NODE_IDENTIFIER_PREFIX</code></td>
+			<td>0</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Advanced</strong></td>
+			<td>Extra Parameters</td>
+			<td><code>--entrypoint influxdb3</code></td>
+			<td>Needed to start InfluxDB</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Icon URL</td>
+			<td><code>https://i.imgur.com/bZBIw8Q.png</code></td>
+			<td>(Optional) icon to display in Unraid</td>
+		</tr>
+	</tbody>
+</table>
+<p>To configure the advanced options you will need to toggle the <strong>Advanced View</strong> toggle in the UI:</p>
+<img src="./images/02/2026-02-09-007.png" alt="">
+<p>Create and start the container.</p>
 
-<h3>InfluxDB 3 Core</h3>
-
-Container settings:
-
-<ul>
-	<li>
-		basic
-		<ul>
-			<li>name: influxdb3</li>
-			<li>Repository: influxdb:3-core</li>
-		</ul>
-	</li>
-	<li>
-		mounts
-		<ul>
-			<li>/var/lib/influxdb3/data/ - /mnt/user/appdata/influxdb/data/</li>
-			<li>/var/lib/influxdb3/plugins/ - /mnt/user/appdata/influxdb/plugins/</li>
-		</ul>
-	</li>
-	<li>
-		ports
-		<ul>
-			<li>8181 - 8181</li>
-		</ul>
-	</li>
-	<li>
-		Variables
-		<ul>
-			<li>INFLUXDB3_DB_DIR - /var/lib/influxdb3/data/</li>
-			<li>INFLUXDB3_OBJECT_STORE - file</li>
-			<li>INFLUXDB3_DATABASE_NAME - rn</li>
-			<li>INFLUXDB3_PLUGIN_DIR - /var/lib/influxdb3/plugins/</li>
-			<li>INFLUXDB3_NODE_IDENTIFIER_PREFIX - 0</li>
-		</ul>
-	</li>
-	<li>
-		advanced
-		<ul>
-			<li>Extra Parameters: --entrypoint influxdb3</li>
-			<li>Icon URL: https://i.imgur.com/bZBIw8Q.png</li>
-		</ul>
-	</li>
-</ul>
-
-<p>will need to generate an admin token</p>
-
+<h3 id="container-deploy-token">Generating an Admin Token</h3>
+<p>Before we can deploy the UI, we will need to generate an <strong>admin</strong> token to use.</p>
+<p>To do this, launch an interactive console on your <code>influxdb3</code> conatiner:</p>
 <img src="./images/02/2026-02-09-002.png" alt="">
-
+<p>Issue the command below and take note of the token generated:</p>
 {% highlight "shell" %}
 influxdb3 create token --admin
 {% endhighlight %}
+<p>Ensure that you save this somewhere safe.</p>
 
-<p>Copy and save that token somewhere safe</p>
+<h3 id="container-deploy-ui">InfluxDB 3 UI</h3>
+<p>To deploy the <strong>UI</strong>, create a new container using the following configuration.</p>
+<table class="table table-sm table-striped table-hover">
+	<tbody>
+		<tr>
+			<td><strong>Core</strong></td>
+			<td>Name</td>
+			<td>influxdb3-ui</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Repository</td>
+			<td>influxdata/influxdb3-ui</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Mounts</strong></td>
+			<td><code>/db/</code></td>
+			<td><code>/mnt/user/appdata/influxdb/ui/</code></td>
+			<td>Used to persist your configuration between container restarts</td>
+		</tr>
+		<tr>
+			<td><strong>Ports</strong></td>
+			<td><code>80</code></td>
+			<td><code>8888</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>8888</code></td>
+			<td><code>8889</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Variables</strong></td>
+			<td><code>DEFAULT_INFLUX_SERVER</code></td>
+			<td><code>http://192.168.0.60:8181</code></td>
+			<td>The address and port defined for your <code>influxdb3</code> container.</td>
+		</tr>
+		<tr>
+			<td><strong>Variables</strong></td>
+			<td><code>DEFAULT_API_TOKEN</code></td>
+			<td><code>xxx</code></td>
+			<td>The token you just <a href="#container-deploy-token">generated</a>.</td>
+		</tr>
+		<tr>
+			<td><strong>Variables</strong></td>
+			<td><code>DEFAULT_SERVER_NAME</code></td>
+			<td><code>NAS</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Advanced</strong></td>
+			<td>Post Arguments</td>
+			<td><code>--mode=admin</code></td>
+			<td>Needed to start in <strong>admin</strong> mode</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Icon URL</td>
+			<td><code>https://i.imgur.com/q9l1oct.png</code></td>
+			<td>(Optional) icon to display in Unraid</td>
+		</tr>
+	</tbody>
+</table>
+<p>Deploy and start the container.</p>
 
-<h3>influxdb3-ui</h3>
-
-<ul>
-	<li>
-		basic
-		<ul>
-			<li>name: influxdb3-ui</li>
-			<li>repo: influxdata/influxdb3-ui</li>
-		</ul>
-	</li>
-	<li>
-		ports
-		<ul>
-			<li>80 - 8888</li>
-			<li>8888 - 8889</li>
-		</ul>
-	</li>
-	<li>
-		paths
-		<ul>
-			<li>/db/ - /mnt/user/appdata/influxdb/ui/</li>
-		</ul>
-	</li>
-	<ul>
-		Variables
-		<ul>
-			<li>DEFAULT_INFLUX_SERVER - http://192.168.0.60:8181</li>
-			<li>DEFAULT_API_TOKEN - xxx</li>
-			<li>DEFAULT_SERVER_NAME - NAS</li>
-		</ul>
-	</ul>
-	<li>
-		advanced
-		<ul>
-			<li>post arguments: --mode=admin</li>
-			<li>icon url: https://i.imgur.com/q9l1oct.png</li>
-		</ul>
-	</li>
-</ul>
-
-<p>When done should have something like this</p>
-
+<h3 id="container-deploy-overview">Deployment Overview</h3>
+<p>Once deployed your Unraid server should look something like this.</p>
 <img src="./images/02/2026-02-09-001.png" alt="">
-
-<p>with the following directory structure</p>
-
+<p>I personally store all my Docker container data in the <code>appdata</code> folder, like shown below:</p>
 <img src="./images/02/2026-02-09-004.png" alt="">
+<p>At this point you should be able to navigate to <code>http://&lt;server&gt;:&lt;port&gt;</code> (e.g. <code>http://192.168.0.60:8888</code>) and see the UI.</p>
 
-<p>now you can launch it: http://192.168.0.60:8888/system-overview</p>
-
-<h3>Install a Plugin</h3>
-
-<p>for testing install the monitoring plugin</p>
-
+<h2 id="configuration">Configuration</h2>
+<h3 id="configuration-monitoring">System Metrics</h3>
+<p>To ensure that everything is running as expected, and to get an idea of how your deployment is preforming, I would suggest installing the <a href="https://docs.influxdata.com/influxdb3/core/plugins/library/official/system-metrics/" target="_blank">system metrics plugin</a>.</p>
+<p>Installation is as simple as enabling the plugin in the <a href="#container-deploy-ui">UI</a> and following the prompts.</p>
 <img src="./images/02/2026-02-09-003.png" alt="">
+<p>This will give you a good overview of your deployment, and also provide some data for us to query in the next step.</p>
 
-<p>ensure you call the bucket: <code>system-metrics</code></p>
-
-<h3>Connecting to Grafana</h3>
-
-<p>generate token</p>
-
-<p>add data source</p>
-
+<h3 id="configuration-grafana">Grafana Data Source</h3>
+<p>Adding your InfluxDB server to Grafana is as simple as:</p>
 <ul>
-	<li>name: x</li>
-	<li>Query language: sql</li>
-	<li>url: http://192.168.0.60:8181</li>
-	<li>database: system-metrics</li>
-	<li>token: xx</li>
+	<li>Generating an access toke in the UI</li>
+	<li>Configuring a new data source in Grafana using the below configuration</li>
 </ul>
-
+{% highlight "text" %}
+Name           : my-datasource
+Query Language : SQL
+URL            : http://192.168.0.60:8181
+Database       : system-metrics
+Token          : xxx
+{% endhighlight %}
+<div class="alert alert-warning">
+	<strong>Note</strong>: you may need to check the <code>Insecure Connection</code> option if you do not have SSL configured
+</div>
 <img src="./images/02/2026-02-09-005.png" alt="">
-
+<p>To ensure everything is working we can use the following test query...</p>
 {% highlight "sql" %}
 SELECT time, load1, load5, load15
 FROM system_cpu
 WHERE time >= now() - interval '60 minutes'
 {% endhighlight %}
-
-
+<p>... which should result in a graph similar to this.</p>
 <img src="./images/02/2026-02-09-006.png" alt="">
+
+<h2 id="closing">In Closing</h2>
+<p>Hopefully you found this post useful, and I welcome all feedback!</p>
+<p>Happy graphing!</p>
