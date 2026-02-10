@@ -1,0 +1,147 @@
+---
+title: Running InfluxDB 3 Core On Unraid
+date: 2026-02-09
+tags: [unraid, influxdb]
+logo: influxdb.png
+---
+
+<h2>Overview</h2>
+
+<p>Holder</p>
+
+<h3>InfluxDB 3 Core</h3>
+
+Container settings:
+
+<ul>
+	<li>
+		basic
+		<ul>
+			<li>name: influxdb3</li>
+			<li>Repository: influxdb:3-core</li>
+		</ul>
+	</li>
+	<li>
+		mounts
+		<ul>
+			<li>/var/lib/influxdb3/data/ - /mnt/user/appdata/influxdb/data/</li>
+			<li>/var/lib/influxdb3/plugins/ - /mnt/user/appdata/influxdb/plugins/</li>
+		</ul>
+	</li>
+	<li>
+		ports
+		<ul>
+			<li>8181 - 8181</li>
+		</ul>
+	</li>
+	<li>
+		Variables
+		<ul>
+			<li>INFLUXDB3_DB_DIR - /var/lib/influxdb3/data/</li>
+			<li>INFLUXDB3_OBJECT_STORE - file</li>
+			<li>INFLUXDB3_DATABASE_NAME - rn</li>
+			<li>INFLUXDB3_PLUGIN_DIR - /var/lib/influxdb3/plugins/</li>
+			<li>INFLUXDB3_NODE_IDENTIFIER_PREFIX - 0</li>
+		</ul>
+	</li>
+	<li>
+		advanced
+		<ul>
+			<li>Extra Parameters: --entrypoint influxdb3</li>
+			<li>Icon URL: https://i.imgur.com/bZBIw8Q.png</li>
+		</ul>
+	</li>
+</ul>
+
+<p>will need to generate an admin token</p>
+
+<img src="./images/02/2026-02-09-002.png" alt="">
+
+{% highlight "shell" %}
+influxdb3 create token --admin
+{% endhighlight %}
+
+<p>Copy and save that token somewhere safe</p>
+
+<h3>influxdb3-ui</h3>
+
+<ul>
+	<li>
+		basic
+		<ul>
+			<li>name: influxdb3-ui</li>
+			<li>repo: influxdata/influxdb3-ui</li>
+		</ul>
+	</li>
+	<li>
+		ports
+		<ul>
+			<li>80 - 8888</li>
+			<li>8888 - 8889</li>
+		</ul>
+	</li>
+	<li>
+		paths
+		<ul>
+			<li>/db/ - /mnt/user/appdata/influxdb/ui/</li>
+		</ul>
+	</li>
+	<ul>
+		Variables
+		<ul>
+			<li>DEFAULT_INFLUX_SERVER - http://192.168.0.60:8181</li>
+			<li>DEFAULT_API_TOKEN - xxx</li>
+			<li>DEFAULT_SERVER_NAME - NAS</li>
+		</ul>
+	</ul>
+	<li>
+		advanced
+		<ul>
+			<li>post arguments: --mode=admin</li>
+			<li>icon url: https://i.imgur.com/q9l1oct.png</li>
+		</ul>
+	</li>
+</ul>
+
+<p>When done should have something like this</p>
+
+<img src="./images/02/2026-02-09-001.png" alt="">
+
+<p>with the following directory structure</p>
+
+<img src="./images/02/2026-02-09-004.png" alt="">
+
+<p>now you can launch it: http://192.168.0.60:8888/system-overview</p>
+
+<h3>Install a Plugin</h3>
+
+<p>for testing install the monitoring plugin</p>
+
+<img src="./images/02/2026-02-09-003.png" alt="">
+
+<p>ensure you call the bucket: <code>system-metrics</code></p>
+
+<h3>Connecting to Grafana</h3>
+
+<p>generate token</p>
+
+<p>add data source</p>
+
+<ul>
+	<li>name: x</li>
+	<li>Query language: sql</li>
+	<li>url: http://192.168.0.60:8181</li>
+	<li>database: system-metrics</li>
+	<li>token: xx</li>
+</ul>
+
+<img src="./images/02/2026-02-09-005.png" alt="">
+
+{% highlight "sql" %}
+SELECT time, load1, load5, load15
+FROM system_cpu
+WHERE time >= now() - interval '60 minutes'
+{% endhighlight %}
+
+
+<img src="./images/02/2026-02-09-006.png" alt="">
