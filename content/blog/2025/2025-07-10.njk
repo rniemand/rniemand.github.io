@@ -89,7 +89,14 @@ logo: unraid.png
 
 <p>In Grafana, create a new dashboard, add a new <strong>guage</strong> backed by your InfluxDB datasource with the following query.</p>
 
-{% highlight "shell" %} from(bucket: "telegraf") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r["_measurement"] == "mem") |> filter(fn: (r) => r["_field"] == "used_percent") |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false) |> yield(name: "last") {% endhighlight %}
+{% highlight "shell" %}
+from(bucket: "telegraf")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "mem")
+|> filter(fn: (r) => r["_field"] == "used_percent")
+|> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)
+|> yield(name: "last")
+{% endhighlight %}
 
 <p>Under the standard options section, set the unit to percentage, and use <code>${__field.labels.host}</code> for the display name.</p>
 
