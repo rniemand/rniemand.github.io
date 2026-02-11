@@ -4,9 +4,9 @@
 let globalInstanceIndex = 0;
 
 class HeadingAnchors extends HTMLElement {
-	static register(tagName) {
-		if ("customElements" in window) {
-			customElements.define(tagName || "heading-anchors", HeadingAnchors);
+	static register(tagName = "heading-anchors", registry = window.customElements) {
+		if(registry && !registry.get(tagName)) {
+			registry.define(tagName, this);
 		}
 	}
 
@@ -152,8 +152,12 @@ class HeadingAnchors extends HTMLElement {
 		if(placeholder) {
 			let style = getComputedStyle(placeholder);
 			let props = ["font-weight", "font-size", "line-height", "font-family"];
-			let font = props.map(name => style.getPropertyValue(name));
-			anchor.style.setProperty("font", `${font[0]} ${font[1]}/${font[2]} ${font[3]}`);
+			let [weight, size, lh, family] = props.map(name => style.getPropertyValue(name));
+			anchor.style.setProperty("font", `${weight} ${size}/${lh} ${family}`);
+			let vars = style.getPropertyValue("font-variation-settings");
+			if(vars) {
+				anchor.style.setProperty("font-variation-settings", vars);
+			}
 		}
 	}
 
@@ -229,24 +233,3 @@ window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments);}
 		gtag('js', new Date());
 		gtag('config', 'G-HRDC8SXRVG');
-const styleTables = () => {
-    let tables = document.querySelectorAll('.main-content table:not(.skip-auto-class)');
-    tables.forEach(t => {
-        t.classList.add('table');
-        t.classList.add('table-sm');
-        t.classList.add('table-striped');
-        t.classList.add('table-hover');
-    });
-}
-
-const styleBlockquotes = () => {
-    let tables = document.querySelectorAll('div.main-content blockquote');
-    tables.forEach(t => {
-        t.classList.add('blockquote');
-        t.classList.add('alert');
-        t.classList.add('alert-secondary');
-    });
-}
-
-styleTables();
-styleBlockquotes();

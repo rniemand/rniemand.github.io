@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en" class="h-100" data-bs-theme="dark">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Running InfluxDB 3 Core On Unraid</title>
+		<meta name="description" content="Coding and more">
+		
+		<link rel="stylesheet" href="	//cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+		<meta name="generator" content="Eleventy v3.1.2">
+		
+		<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+body {
+	font-family: "Open Sans", sans-serif;
+	font-optical-sizing: auto;
+}
+
+.navbar .navbar-brand.active,
+.navbar-nav .nav-item .nav-link.active {
+	border-bottom: 1px solid #e0e9f2;
+}
+
+div.main-content {
+	margin-top: 4rem;
+	font-size: 1.1rem;
+}
+
+.blog-list a {
+	text-decoration: none;
+}
+
+.post-meta .post-date time {
+	color: #f3fe90;
+}
+
+div.main-content > h1 {
+	color: #c3e6ff;
+	margin-bottom: 1rem;
+}
+
+div.main-content > h2 {
+	color: #ffd97f;
+	margin-bottom: 1rem;
+}
+
+div.main-content h2.quick-access {
+	color: #7cbbe6;
+}
+
+div.main-content > h3 {
+	color: #f0ff7f;
+	margin-bottom: 1rem;
+}
+
+div.main-content pre {
+	font-size: 1.1rem;
+	background-color: #31363b;
+	border: 1px solid #3f4851;
+	padding: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+div.main-content picture img:not(.no-borders) {
+	border: 1px solid #454d55;
+	max-width: 100%;
+	height: auto;
+	border-radius: 0.5rem;
+}
+
+div.main-content picture {
+	display: block;
+}
+div.main-content picture:has(img.text-center) {
+	text-align: center;
+}
+
+div.main-content picture img {
+	margin-bottom: 1rem;
+	box-shadow: 5px 5px 10px 0px #2b3137;
+}
+
+div.main-content div.prev-next {
+	background-color: #293037;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+}
+
+div.main-content table {
+	border: 1px solid #363c43;
+	font-size: 1rem;
+}
+
+div.main-content .list-group-item:hover {
+	background-color: #2b3137;
+}
+
+div.main-content .accordion {
+	margin-bottom: 1rem;
+}
+
+div.main-content .accordion .accordion-item .accordion-body {
+	background-color: #2a2f35;
+}
+/**
+ * okaidia theme for JavaScript, CSS and HTML
+ * Loosely based on Monokai textmate theme by http://www.monokai.nl/
+ * @author ocodia
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #f8f8f2;
+	background: none;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+	font-size: 1em;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+	border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #272822;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+	white-space: normal;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+	color: #8292a2;
+}
+
+.token.punctuation {
+	color: #f8f8f2;
+}
+
+.token.namespace {
+	opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.constant,
+.token.symbol,
+.token.deleted {
+	color: #f92672;
+}
+
+.token.boolean,
+.token.number {
+	color: #ae81ff;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+	color: #a6e22e;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string,
+.token.variable {
+	color: #f8f8f2;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.function,
+.token.class-name {
+	color: #e6db74;
+}
+
+.token.keyword {
+	color: #66d9ef;
+}
+
+.token.regex,
+.token.important {
+	color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+	font-weight: bold;
+}
+.token.italic {
+	font-style: italic;
+}
+
+.token.entity {
+	cursor: help;
+}
+/*
+ * New diff- syntax
+ */
+
+pre[class*="language-diff-"] {
+	--eleventy-code-padding: 1.25em;
+	padding-left: var(--eleventy-code-padding);
+	padding-right: var(--eleventy-code-padding);
+}
+.token.deleted {
+	background-color: hsl(0, 51%, 37%);
+	color: inherit;
+}
+.token.inserted {
+	background-color: hsl(126, 31%, 39%);
+	color: inherit;
+}
+
+/* Make the + and - characters unselectable for copy/paste */
+.token.prefix.unchanged,
+.token.prefix.inserted,
+.token.prefix.deleted {
+	-webkit-user-select: none;
+	user-select: none;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+.token.prefix.inserted,
+.token.prefix.deleted {
+	width: var(--eleventy-code-padding);
+	background-color: rgba(0,0,0,.2);
+}
+
+/* Optional: full-width background color */
+.token.inserted:not(.prefix),
+.token.deleted:not(.prefix) {
+	display: block;
+	margin-left: calc(-1 * var(--eleventy-code-padding));
+	margin-right: calc(-1 * var(--eleventy-code-padding));
+	text-decoration: none; /* override del, ins, mark defaults */
+	color: inherit; /* override del, ins, mark defaults */
+}</style>
+		
+		<script async="" src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1689302880129363" crossorigin="anonymous"></script>
+	</head>
+	<!-- Google tag (gtag.js) -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HRDC8SXRVG"></script>
+	
+	<body class="d-flex flex-column h-100">
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color:rgb(53, 76, 92);">
+				<div class="container-fluid">
+					<a class="navbar-brand " href="/">RichardN</a>
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarCollapse">
+						<ul class="navbar-nav me-auto mb-2 mb-md-0">
+							<li class="nav-item">
+								<a class="nav-link " href="/projects/">Projects</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/tags/">Tags</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link " href="/blog/">Archive</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
+		<main class="flex-shrink-0">
+			<div class="container main-content">
+				
+
+
+<h1 id="running-influxdb-3-core-on-unraid">Running InfluxDB 3 Core On Unraid</h1>
+
+<div class="p-1 mb-1 d-flex post-meta">
+		<span>
+			<i class="bi bi-bookmarks-fill"></i>
+				<a href="/tags/unraid/" class="post-tag">unraid</a>, 
+				<a href="/tags/influxdb/" class="post-tag">influxdb</a>, 
+				<a href="/tags/grafana/" class="post-tag">grafana</a>
+		</span>
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+	<span class="post-date">
+		<i class="bi bi-calendar-plus-fill"></i>
+		<time datetime="2026-02-09">09 February 2026</time>
+	</span>
+</div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#overview">Overview</a></li><li><a href="#container-deploy">Container Deployment</a><ol><li><a href="#container-deploy-core">InfluxDB 3 Core</a></li><li><a href="#container-deploy-token">Generating an Admin Token</a></li><li><a href="#container-deploy-ui">InfluxDB 3 UI</a></li><li><a href="#container-deploy-overview">Deployment Overview</a></li></ol></li><li><a href="#configuration">Configuration</a><ol><li><a href="#configuration-monitoring">System Metrics</a></li><li><a href="#configuration-grafana">Grafana Data Source</a></li></ol></li><li><a href="#closing">In Closing</a></li></ol>
+      </div>
+
+
+<h2 id="overview">Overview</h2>
+<p>In this post I will cover the basics to get <a href="http://docs.influxdata.com/influxdb3/core/reference/" target="_blank">InfluxDB 3 Core</a> up and running on Unraid, as I was unable to find a community application for this.</p>
+
+<h2 id="container-deploy">Container Deployment</h2>
+<h3 id="container-deploy-core">InfluxDB 3 Core</h3>
+<p>Create a new Docker container in Unraid and configure it as shown below:</p>
+<table class="table table-sm table-striped table-hover">
+	<tbody>
+		<tr>
+			<td><strong>Core</strong></td>
+			<td>Name</td>
+			<td>influxdb3</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Repository</td>
+			<td>influxdb:3-core</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Mounts</strong></td>
+			<td><code>/var/lib/influxdb3/data/</code></td>
+			<td><code>/mnt/user/appdata/influxdb/data/</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>/var/lib/influxdb3/plugins/</code></td>
+			<td><code>/mnt/user/appdata/influxdb/plugins/</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Ports</strong></td>
+			<td><code>8181</code></td>
+			<td><code>8181</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Variables</strong></td>
+			<td><code>INFLUXDB3_DB_DIR</code></td>
+			<td><code>/var/lib/influxdb3/data/</code></td>
+			<td>Must match the defined mount</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>INFLUXDB3_OBJECT_STORE</code></td>
+			<td>file</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>INFLUXDB3_DATABASE_NAME</code></td>
+			<td>rn</td>
+			<td>I am using <code>rn</code> as my database</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>INFLUXDB3_PLUGIN_DIR</code></td>
+			<td><code>/var/lib/influxdb3/plugins/</code></td>
+			<td>Must match the defined mount</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>INFLUXDB3_NODE_IDENTIFIER_PREFIX</code></td>
+			<td>0</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Advanced</strong></td>
+			<td>Extra Parameters</td>
+			<td><code>--entrypoint influxdb3</code></td>
+			<td>Needed to start InfluxDB</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Icon URL</td>
+			<td><code>https://i.imgur.com/bZBIw8Q.png</code></td>
+			<td>(Optional) icon to display in Unraid</td>
+		</tr>
+	</tbody>
+</table>
+<p>To configure the advanced options you will need to toggle the <strong>Advanced View</strong> toggle in the UI:</p>
+<picture><source type="image/avif" srcset="/blog/2026/2026-02-09/OWXJNc6Ijk-558.avif 558w"><source type="image/webp" srcset="/blog/2026/2026-02-09/OWXJNc6Ijk-558.webp 558w"><img loading="lazy" decoding="async" src="/blog/2026/2026-02-09/OWXJNc6Ijk-558.png" alt="" width="558" height="156"></picture>
+<p>Create and start the container.</p>
+
+<h3 id="container-deploy-token">Generating an Admin Token</h3>
+<p>Before we can deploy the UI, we will need to generate an <strong>admin</strong> token to use.</p>
+<p>To do this, launch an interactive console on your <code>influxdb3</code> conatiner:</p>
+<picture><source type="image/avif" srcset="/blog/2026/2026-02-09/cN4T15Dy5R-342.avif 342w"><source type="image/webp" srcset="/blog/2026/2026-02-09/cN4T15Dy5R-342.webp 342w"><img loading="lazy" decoding="async" src="/blog/2026/2026-02-09/cN4T15Dy5R-342.png" alt="" width="342" height="107"></picture>
+<p>Issue the command below and take note of the token generated:</p>
+<pre class="language-shell" tabindex="0"><code class="language-shell">influxdb3 create token <span class="token parameter variable">--admin</span></code></pre>
+<p>Ensure that you save this somewhere safe.</p>
+
+<h3 id="container-deploy-ui">InfluxDB 3 UI</h3>
+<p>To deploy the <strong>UI</strong>, create a new container using the following configuration.</p>
+<table class="table table-sm table-striped table-hover">
+	<tbody>
+		<tr>
+			<td><strong>Core</strong></td>
+			<td>Name</td>
+			<td>influxdb3-ui</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Repository</td>
+			<td>influxdata/influxdb3-ui</td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Mounts</strong></td>
+			<td><code>/db/</code></td>
+			<td><code>/mnt/user/appdata/influxdb/ui/</code></td>
+			<td>Used to persist your configuration between container restarts</td>
+		</tr>
+		<tr>
+			<td><strong>Ports</strong></td>
+			<td><code>80</code></td>
+			<td><code>8888</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td><code>8888</code></td>
+			<td><code>8889</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Variables</strong></td>
+			<td><code>DEFAULT_INFLUX_SERVER</code></td>
+			<td><code>http://192.168.0.60:8181</code></td>
+			<td>The address and port defined for your <code>influxdb3</code> container.</td>
+		</tr>
+		<tr>
+			<td><strong>Variables</strong></td>
+			<td><code>DEFAULT_API_TOKEN</code></td>
+			<td><code>xxx</code></td>
+			<td>The token you just <a href="#container-deploy-token">generated</a>.</td>
+		</tr>
+		<tr>
+			<td><strong>Variables</strong></td>
+			<td><code>DEFAULT_SERVER_NAME</code></td>
+			<td><code>NAS</code></td>
+			<td>&nbsp;</td>
+		</tr>
+		<tr>
+			<td><strong>Advanced</strong></td>
+			<td>Post Arguments</td>
+			<td><code>--mode=admin</code></td>
+			<td>Needed to start in <strong>admin</strong> mode</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td>Icon URL</td>
+			<td><code>https://i.imgur.com/q9l1oct.png</code></td>
+			<td>(Optional) icon to display in Unraid</td>
+		</tr>
+	</tbody>
+</table>
+<p>Deploy and start the container.</p>
+
+<h3 id="container-deploy-overview">Deployment Overview</h3>
+<p>Once deployed your Unraid server should look something like this.</p>
+<picture><source type="image/avif" srcset="/blog/2026/2026-02-09/2qnQ5PIg6x-1382.avif 1382w"><source type="image/webp" srcset="/blog/2026/2026-02-09/2qnQ5PIg6x-1382.webp 1382w"><img loading="lazy" decoding="async" src="/blog/2026/2026-02-09/2qnQ5PIg6x-1382.png" alt="" width="1382" height="143"></picture>
+<p>I personally store all my Docker container data in the <code>appdata</code> folder, like shown below:</p>
+<picture><source type="image/avif" srcset="/blog/2026/2026-02-09/SdPxde-mov-669.avif 669w"><source type="image/webp" srcset="/blog/2026/2026-02-09/SdPxde-mov-669.webp 669w"><img loading="lazy" decoding="async" src="/blog/2026/2026-02-09/SdPxde-mov-669.png" alt="" width="669" height="286"></picture>
+<p>At this point you should be able to navigate to <code>http://&lt;server&gt;:&lt;port&gt;</code> (e.g. <code>http://192.168.0.60:8888</code>) and see the UI.</p>
+
+<h2 id="configuration">Configuration</h2>
+<h3 id="configuration-monitoring">System Metrics</h3>
+<p>To ensure that everything is running as expected, and to get an idea of how your deployment is preforming, I would suggest installing the <a href="https://docs.influxdata.com/influxdb3/core/plugins/library/official/system-metrics/" target="_blank">system metrics plugin</a>.</p>
+<p>Installation is as simple as enabling the plugin in the <a href="#container-deploy-ui">UI</a> and following the prompts.</p>
+<picture><source type="image/avif" srcset="/blog/2026/2026-02-09/qO8xE7Jhf9-1556.avif 1556w"><source type="image/webp" srcset="/blog/2026/2026-02-09/qO8xE7Jhf9-1556.webp 1556w"><img loading="lazy" decoding="async" src="/blog/2026/2026-02-09/qO8xE7Jhf9-1556.png" alt="" width="1556" height="769"></picture>
+<p>This will give you a good overview of your deployment, and also provide some data for us to query in the next step.</p>
+
+<h3 id="configuration-grafana">Grafana Data Source</h3>
+<p>Adding your InfluxDB server to Grafana is as simple as:</p>
+<ul>
+	<li>Generating an access toke in the UI</li>
+	<li>Configuring a new data source in Grafana using the below configuration</li>
+</ul>
+<pre class="language-text" tabindex="0"><code class="language-text">Name           : my-datasource
+Query Language : SQL
+URL            : http://192.168.0.60:8181
+Database       : system-metrics
+Token          : xxx</code></pre>
+<div class="alert alert-warning">
+	<strong>Note</strong>: you may need to check the <code>Insecure Connection</code> option if you do not have SSL configured
+</div>
+<picture><source type="image/avif" srcset="/blog/2026/2026-02-09/f9t68a79Lg-426.avif 426w"><source type="image/webp" srcset="/blog/2026/2026-02-09/f9t68a79Lg-426.webp 426w"><img loading="lazy" decoding="async" src="/blog/2026/2026-02-09/f9t68a79Lg-426.png" alt="" width="426" height="110"></picture>
+<p>To ensure everything is working we can use the following test query...</p>
+<pre class="language-sql" tabindex="0"><code class="language-sql"><span class="token keyword">SELECT</span> <span class="token keyword">time</span><span class="token punctuation">,</span> load1<span class="token punctuation">,</span> load5<span class="token punctuation">,</span> load15
+<span class="token keyword">FROM</span> system_cpu
+<span class="token keyword">WHERE</span> <span class="token keyword">time</span> <span class="token operator">>=</span> <span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token keyword">interval</span> <span class="token string">'60 minutes'</span></code></pre>
+<p>... which should result in a graph similar to this.</p>
+<picture><source type="image/avif" srcset="/blog/2026/2026-02-09/lPpd89uTGr-1281.avif 1281w"><source type="image/webp" srcset="/blog/2026/2026-02-09/lPpd89uTGr-1281.webp 1281w"><img loading="lazy" decoding="async" src="/blog/2026/2026-02-09/lPpd89uTGr-1281.png" alt="" width="1281" height="509"></picture>
+
+<h2 id="closing">In Closing</h2>
+<p>Hopefully you found this post useful, and I welcome all feedback!</p>
+<p>Happy graphing!</p>
+
+<div class="d-flex mb-3 prev-next">
+	<i class="bi bi-arrow-left-short"></i>
+	<span class="text-start">Previous<br><a href="/blog/2025/2025-07-11/">Collecting Unraid CPU Temperature in Home Assistant</a></span>
+	
+	<div class="p-2 flex-grow-1">&nbsp;</div>
+</div>
+
+
+
+
+			</div>
+		</main>
+		<footer class="footer mt-auto py-3 bg-body-tertiary">
+			<div class="container text-end">
+				<span class="text-body-secondary">
+					View me on <a href="https://github.com/rniemand" target="_blank">GitHub</a>.
+				</span>
+			</div>
+		</footer>
+		<!-- This page `/blog/2026/2026-02-09/` was built on 2026-02-11T14:49:52.639Z -->
+		<script type="module" src="/dist/rIqK2Tfax_.js"></script>
+		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
+	</body>
+</html>

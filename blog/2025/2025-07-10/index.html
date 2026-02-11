@@ -6,9 +6,9 @@
 		<title>Monitoring your Unraid server with Telegraf and Grafana</title>
 		<meta name="description" content="Coding and more">
 		
-		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="	//cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-		<meta name="generator" content="Eleventy v3.1.1">
+		<meta name="generator" content="Eleventy v3.1.2">
 		
 		<style>@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
@@ -409,7 +409,12 @@ pre[class*="language-diff-"] {
 
 <p>In Grafana, create a new dashboard, add a new <strong>guage</strong> backed by your InfluxDB datasource with the following query.</p>
 
-<pre class="language-shell" tabindex="0"><code class="language-shell">from<span class="token punctuation">(</span>bucket: <span class="token string">"telegraf"</span><span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> range<span class="token punctuation">(</span>start: v.timeRangeStart, stop: v.timeRangeStop<span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> filter<span class="token punctuation">(</span>fn: <span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> r<span class="token punctuation">[</span><span class="token string">"_measurement"</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"mem"</span><span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> filter<span class="token punctuation">(</span>fn: <span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> r<span class="token punctuation">[</span><span class="token string">"_field"</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"used_percent"</span><span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> aggregateWindow<span class="token punctuation">(</span>every: v.windowPeriod, fn: last, createEmpty: <span class="token boolean">false</span><span class="token punctuation">)</span> <span class="token operator">|</span><span class="token operator">></span> yield<span class="token punctuation">(</span>name: <span class="token string">"last"</span><span class="token punctuation">)</span></code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell">from<span class="token punctuation">(</span>bucket: <span class="token string">"telegraf"</span><span class="token punctuation">)</span>
+<span class="token operator">|</span><span class="token operator">></span> range<span class="token punctuation">(</span>start: v.timeRangeStart, stop: v.timeRangeStop<span class="token punctuation">)</span>
+<span class="token operator">|</span><span class="token operator">></span> filter<span class="token punctuation">(</span>fn: <span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> r<span class="token punctuation">[</span><span class="token string">"_measurement"</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"mem"</span><span class="token punctuation">)</span>
+<span class="token operator">|</span><span class="token operator">></span> filter<span class="token punctuation">(</span>fn: <span class="token punctuation">(</span>r<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> r<span class="token punctuation">[</span><span class="token string">"_field"</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"used_percent"</span><span class="token punctuation">)</span>
+<span class="token operator">|</span><span class="token operator">></span> aggregateWindow<span class="token punctuation">(</span>every: v.windowPeriod, fn: last, createEmpty: <span class="token boolean">false</span><span class="token punctuation">)</span>
+<span class="token operator">|</span><span class="token operator">></span> yield<span class="token punctuation">(</span>name: <span class="token string">"last"</span><span class="token punctuation">)</span></code></pre>
 
 <p>Under the standard options section, set the unit to percentage, and use <code>${__field.labels.host}</code> for the display name.</p>
 
@@ -443,8 +448,8 @@ pre[class*="language-diff-"] {
 				</span>
 			</div>
 		</footer>
-		<!-- This page `/blog/2025/2025-07-10/` was built on 2025-08-06T18:22:56.720Z -->
-		<script type="module" src="/dist/FtW8cD1Sur.js"></script>
+		<!-- This page `/blog/2025/2025-07-10/` was built on 2026-02-11T14:49:52.639Z -->
+		<script type="module" src="/dist/rIqK2Tfax_.js"></script>
 		<script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 		<script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
 	</body>
