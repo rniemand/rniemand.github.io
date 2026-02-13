@@ -70,7 +70,7 @@ div.main-content picture img {
 }
 
 div.main-content div.prev-next {
-	background-color: #293037;
+	background-color: #29303729;
 	border-radius: 0.5rem;
 	padding: 0.5rem;
 }
@@ -81,7 +81,8 @@ div.main-content table {
 }
 
 div.main-content .list-group-item:hover {
-	background-color: #2b3137;
+	background-color: #2b313715;
+	cursor: pointer;
 }
 
 div.main-content .accordion {
@@ -90,4 +91,18 @@ div.main-content .accordion {
 
 div.main-content .accordion .accordion-item .accordion-body {
 	background-color: #2a2f35;
+}
+
+
+a.postlist-link {
+	color: #f0ff7f;
+}
+.table code, code {
+	color: #e0e832;
+}
+a {
+	color: #b2fde7;
+}
+.table>:not(caption)>*>* {
+	background-color: #363c4339;
 }
