@@ -230,27 +230,8 @@ HeadingAnchors.register();
 
 export { HeadingAnchors }
 window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-HRDC8SXRVG');
-const styleTables = () => {
-    let tables = document.querySelectorAll('.main-content table:not(.skip-auto-class)');
-    tables.forEach(t => {
-        t.classList.add('table');
-        t.classList.add('table-sm');
-        t.classList.add('table-striped');
-        t.classList.add('table-hover');
-    });
-}
-
-const styleBlockquotes = () => {
-    let tables = document.querySelectorAll('div.main-content blockquote');
-    tables.forEach(t => {
-        t.classList.add('blockquote');
-        t.classList.add('alert');
-        t.classList.add('alert-secondary');
-    });
-}
-
-styleTables();
-styleBlockquotes();
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-HRDC8SXRVG');
