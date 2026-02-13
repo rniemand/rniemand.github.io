@@ -1,6 +1,6 @@
-<ol class="list-group blog-list mt-3 mb-4">
+<ol class="list-group blog-list mb-2">
 	{%- for post in postslist | reverse %}
-	<li class="list-group-item justify-content-between align-items-start">
+	<li class="list-group-item justify-content-between align-items-start" onclick="javascript:location.href='{{ post.url }}'">
 		<div class="ms-2">
 			<div class="fw-bold d-flex">
 				<div>
