@@ -349,7 +349,7 @@ pre[class*="language-diff-"] {
 </div>
 <h2 class="quick-access" id="quick-access">Quick Access</h2>
 <div class="toc">
-        <ol><li><a href="#what-it-mqtt">What it MQTT</a></li><li><a href="#adding-mqtt">Adding MQTT</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#in-closing">In Closing</a></li></ol>
+        <ol><li><a href="#what-is-mqtt">What is MQTT</a></li><li><a href="#adding-mqtt">Adding MQTT</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#in-closing">In Closing</a></li></ol>
       </div>
 
 
@@ -359,7 +359,7 @@ pre[class*="language-diff-"] {
 
 <p>In this post we will be covering getting up and running with MQTT on Home Assistant - for the purposes of this post I will be working on the assumption that you have a local MQTT broker running on your home network. If you do not, you could always follow this post, or Google to find a tutorial for your OS.</p>
 
-<h2 id="what-it-mqtt">What it MQTT</h2>
+<h2 id="what-is-mqtt">What is MQTT</h2>
 <p>MQTT stands for Message Queuing Telemetry Transport and was originally developed by IBM roughly in 1999 as a light-weight, light-overhead messaging protocol. Since its inception the protocol has been adopted and standardised into the MQTT we know it as now - (more here <a href="https://mqtt.org/faq/">http://mqtt.org/faq</a>).</p>
 <p>MQTT is basically a means of passing on messages from one device to another (or many) through a <a href="https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern">Pub Sub pattern</a> allowing connected clients to pick and choose the messages that they are interested in hearing about. All messages flow through a broker of some sort which is responsible for maintaining the state of all connected clients and ensuring delivery of messages between them. With the broker doing all the heavy lifting the client-side code is extremely lightweight making it an ideal candidate for connected devices (IoT).</p>
 <p>MQTT supports secure communication through SSL, but in most home setups the non-secure method is preferred (unless you are exposing your broker to the internet) as it uses a bit more memory \ processing power to encrypt and decrypt the messages.</p>
@@ -425,7 +425,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2018/2018-07-16/` was built on 2026-03-17T14:06:19.712Z -->
+    <!-- This page `/blog/2018/2018-07-16/` was built on 2026-03-17T17:30:00.181Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

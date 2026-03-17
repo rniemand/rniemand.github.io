@@ -368,7 +368,7 @@ pre[class*="language-diff-"] {
 <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token parameter variable">-y</span> <span class="token function">install</span> mosquitto</code></pre>
 
 <h2 id="configuring-mosquitto">Configuring Mosquitto</h2>
-<p>Once installed you will need to crate a <code>mosquitto.conf</code> configuration file:</p>
+<p>Once installed you will need to create a <code>mosquitto.conf</code> configuration file:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mosquitto/conf.d/mosquitto.conf</code></pre>
 <p>Add the following lines to your file, note I am going to be locking down my instance with a username / password, if you do not want this functionality be sure to comment out the <code>password_file</code> line and to set <code>allow_anonymous</code> to true.</p>
 <pre class="language-conf" tabindex="0"><code class="language-conf"># Config file for mosquitto
@@ -415,7 +415,7 @@ WantedBy=multi-user.target</code></pre>
 
 <h2 id="create-mosquitto-users">Create Mosquitto users</h2>
 <p>Adding a new user to Mosquitto is as simple as running ...</p>
-<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> mosquitto_passwd <span class="token parameter variable">-c</span> /etc/mosquitto/conf.d/passwd <span class="token operator">&lt;</span>username<span class="token operator">></span><span class="token operator">&lt;</span>/username<span class="token operator">></span></code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> mosquitto_passwd <span class="token parameter variable">-c</span> /etc/mosquitto/conf.d/passwd <span class="token operator">&lt;</span>username<span class="token operator">></span></code></pre>
 <p>... making sure to replace <code>&lt;username&gt;</code> with your desired username.</p>
 <p>This will prompt you for the password for the user and update the targeted passwd file (in my case <code>/etc/mosquitto/conf.d/passwd</code>) with the user / password.</p>
 
@@ -429,7 +429,7 @@ WantedBy=multi-user.target</code></pre>
 
 <h2 id="adding-more-users">Adding more users</h2>
 <p>To add additional users to your Mosquitto broker you will need to run the following command:</p>
-<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> mosquitto_passwd /etc/mosquitto/conf.d/passwd <span class="token operator">&lt;</span>username<span class="token operator">></span><span class="token operator">&lt;</span>/username<span class="token operator">></span></code></pre>
+<pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> mosquitto_passwd /etc/mosquitto/conf.d/passwd <span class="token operator">&lt;</span>username<span class="token operator">></span></code></pre>
 <blockquote>
 <p><strong>NOTE</strong>: I omitted the -c used earlier, if you fail to do this you are going to override your password file!</p>
 </blockquote>
@@ -468,7 +468,7 @@ WantedBy=multi-user.target</code></pre>
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2018/2018-01-08/` was built on 2026-03-17T14:06:19.711Z -->
+    <!-- This page `/blog/2018/2018-01-08/` was built on 2026-03-17T17:30:00.179Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
