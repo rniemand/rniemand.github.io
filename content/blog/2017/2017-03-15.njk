@@ -97,7 +97,7 @@ https://raw.githubusercontent.com/damellis/attiny/ide-1.6.x-boards-manager/packa
 <h3 id="configuring-arduino-ide">Configuring Arduino IDE</h3>
 <p>The first thing we need to do is ensure that we have our Arduino IDE configured correctly before continuing.</p>
 <img src="./images/03/15-03.png" alt="">
-<p>Ensure that you have the correct Board, Processor, Clock Speed and Portselected. You do not want to target your UNO at this point!</p>
+<p>Ensure that you have the correct Board, Processor, Clock Speed and Port selected. You do not want to target your UNO at this point!</p>
 
 <h3 id="burning-the-bootloader">Burning the bootloader</h3>
 <p>To burn the bootloader to your ATTiny, please ensure that you have the correct Board, Processor, Clock Speed and Port selected before doing anything else!</p>
@@ -143,13 +143,13 @@ void loop() {
 <p>We have successfully flashed our sample code to the ATTiny. Let&#39;s disconnect all unneeded jump wires from the breadboard.</p>
 <ul>
 <li>You can remove D10, D11, D12, D13</li>
-<li>If you would like to use the arduino to power the ATTiny leave GND and 5vconnected, otherwise remove them too.</li>
+<li>If you would like to use the arduino to power the ATTiny leave GND and 5v connected, otherwise remove them too.</li>
 </ul>
 
 <h2 id="running-without-arduino">Running without Arduino</h2>
 <p>The last thing we need to do is get rid of that bulky Arduino UNO board and power our project through some other mechanism. Looking at the <a href="https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2586-AVR-8-bit-Microcontroller-ATtiny25-ATtiny45-ATtiny85_Datasheet.pdf">data sheet</a> it would seem that the ATTiny85 can be powered with anything from 1.8v - 5.5v.</p>
 <img src="./images/03/15-10.png" alt="">
-<p>From the cheat sheet above we know that the ATTiny draws power on pins 4and 8.</p>
+<p>From the cheat sheet above we know that the ATTiny draws power on pins 4 and 8.</p>
 {% highlight "cpp" %}
 4 ............ GND
 8 ............ VCC (5v)

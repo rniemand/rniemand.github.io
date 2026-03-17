@@ -42,7 +42,7 @@ logo: hass.png
 <img src="./images/09/16-002.png" alt="" />
 
 <h2 id="grouping-entities">Grouping entities</h2>
-<p>I much prefer the cards display (called groups) over the default icons as it allows me to control the grouping and ordering of these objects. In order to create a group we will need to know the entity_id&#39;s for the targeted objects, we can get these from the state view <a href="https://:8123/dev-state">https://:8123/dev-state</a> my new objects are:</p>
+<p>I much prefer the cards display (called groups) over the default icons as it allows me to control the grouping and ordering of these objects. In order to create a group we will need to know the entity_id&#39;s for the targeted objects, we can get these from the state view <a href="http://localhost:8123/dev-state">http://localhost:8123/dev-state</a> my new objects are:</p>
 <ul>
 <li>sensor.cpu_use</li>
 <li>sensor.diskusec</li>
@@ -84,7 +84,7 @@ host_network_overview:
     - sensor.packets_received_ethernet
 {% endhighlight %}
 <img src="./images/09/16-004.png" alt="" />
-<p>And finally one more last time to create my NAS Performance group:</p>
+<p>And lastly, to create my NAS Performance group:</p>
 {% highlight "yaml" %}
 host_performance_group:
   name: NAS Performance
@@ -114,7 +114,7 @@ host_overview_view:
     - group.host_drives_group
     - group.host_performance_group
 {% endhighlight %}
-<p>Restart Home Assistance and my new view appears!</p>
+<p>Restart Home Assistant and my new view appears!</p>
 <img src="./images/09/16-006.png" alt="" />
 
 <h2 id="customising-icons">Customising icons</h2>

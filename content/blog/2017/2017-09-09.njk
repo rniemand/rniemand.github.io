@@ -29,7 +29,7 @@ nssm.exe install
 <p>On the Application tab populate the following fields:</p>
 <ul>
 <li><strong>Path</strong>: <code>C:\Users\&lt;user&gt;\AppData\Local\Programs\Python\Python36-32\Scripts\hass.exe</code></li>
-<li><strong>Startup directory</strong>: C:\Users\&lt;user&gt;\AppData\Roaming.homeassistant</li>
+<li><strong>Startup directory</strong>: C:\Users\&lt;user&gt;\AppData\Roaming\.homeassistant</li>
 <li><strong>Service name</strong>: HomeAssistant</li>
 </ul>
 <img src="./images/09/11-006.png" alt="" />
@@ -45,7 +45,7 @@ nssm.exe install
 {% highlight "shell" %}
 nssm edit HomeAssistant
 {% endhighlight %}
-<p>You will be presented with a slightly modified install screen where you can make changes to the service, more specifically the following changes on the I/Otab:</p>
+<p>You will be presented with a slightly modified install screen where you can make changes to the service, more specifically the following changes on the I/O tab:</p>
 <ul>
 <li><strong>Output</strong>: <code>C:\Users\&lt;user&gt;\Desktop\output.log</code></li>
 <li><strong>Error</strong>: <code>C:\Users\&lt;user&gt;\Desktop\error.log</code></li>

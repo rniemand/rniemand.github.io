@@ -5,7 +5,7 @@ tags: [iot]
 logo: node-red.png
 ---
 
-<p>In this post I am going to cover installing, configuring and running Node-REDas a Windows service. <a href="https://nodered.org/">Node-RED</a> is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways, and is especially useful for home automation through IoT. There is a lot to cover, so let&#39;s dive right in.</p>
+<p>In this post I am going to cover installing, configuring and running Node-RED as a Windows service. <a href="https://nodered.org/">Node-RED</a> is a programming tool for wiring together hardware devices, APIs and online services in new and interesting ways, and is especially useful for home automation through IoT. There is a lot to cover, so let&#39;s dive right in.</p>
 
 <h2 id="installing-node-red">Installing Node-RED</h2>
 <p>Installation is pretty straight forward and requires only 2 simple steps, more <a href="https://nodered.org/docs/getting-started/local">detailed installation notes</a> are available on the official Node-RED site should you need them.</p>
@@ -45,8 +45,8 @@ nssm install
 <p>On the Application tab enter in the below values, making sure that you adjust the paths where necessary.</p>
 <ul>
 <li><strong>Path</strong>: C:\Users\Administrator\AppData\Roaming\npm\node-red.cmd</li>
-<li><strong>Startup Dir</strong>: C:\Users\Administrator.node-red\</li>
-<li><strong>Arguments</strong>: --settings &quot;C:\Users\Administrator.node-red\settings.js&quot;</li>
+<li><strong>Startup Dir</strong>: C:\Users\Administrator\.node-red\</li>
+<li><strong>Arguments</strong>: --settings &quot;C:\Users\Administrator\.node-red\settings.js&quot;</li>
 <li><strong>Name</strong>: node-red</li>
 </ul>
 <p>On the Details tab, give the service a name and set its startup type to <code>Automatic (Delayed Start)</code> - this will ensure that Node-RED starts with Windows, but only once your computer has had some time to settle.</p>
