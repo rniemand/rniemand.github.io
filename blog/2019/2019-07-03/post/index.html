@@ -347,19 +347,27 @@ pre[class*="language-diff-"] {
 		<time datetime="2019-07-03">03 July 2019</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#installing-nodejs">Installing Node.js</a></li><li><a href="#installing-node-red">Installing Node-RED</a></li><li><a href="#securing-node-red">Securing Node-RED</a></li><li><a href="#create-a-node-red-service">Create a Node-RED Service</a><ol><li><a href="#installing-pm2">Installing pm2</a></li><li><a href="#starting-node-red-on-boot">Starting Node-RED on boot</a></li></ol></li><li><a href="#fixing-node-red-permissions">Fixing Node-RED permissions</a></li><li><a href="#installing-palettes">Installing Palettes</a></li><li><a href="#automated-backups">Automated Backups</a><ol><li><a href="#the-zip-command">The zip command</a></li><li><a href="#creating-the-cron">Creating the CRON</a></li></ol></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
 </blockquote>
 <p>Today I will be covering getting up and running with <a href="https://nodered.org/">Node-RED</a> on your server. This process is slightly more involved compared to all the previous installs we have done so far, however this post aims to make it as simple as possible!</p>
-<h2 id="installing-node-js">Installing Node.js</h2>
+<h2 id="installing-nodejs">Installing Node.js</h2>
 <p>In order to run Node-RED you will need to have <a href="https://nodejs.org/en/">Node.js</a> installed, these steps are a condensed version of the <a href="https://github.com/nodesource/distributions/blob/master/README.md#debinstall">official installation guide</a> for Ubuntu.</p>
 <p>To install Node.js 12.x simply run the below command on your server:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">curl</span> <span class="token parameter variable">-sL</span> https://deb.nodesource.com/setup_12.x <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token parameter variable">-E</span> <span class="token function">bash</span> -</code></pre>
+
 <p>Once complete you can install Node.js using the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> nodejs</code></pre>
+
 <p>You can run the below command to verify that the installation succeeded:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">npm</span> <span class="token parameter variable">--version</span> <span class="token operator">&amp;&amp;</span> <span class="token function">node</span> <span class="token parameter variable">--version</span></code></pre>
+
 <p>You should see output similar to the below:</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-07-03/post/iqLTP6ZmOs-430.avif 430w"><source type="image/webp" srcset="/blog/2019/2019-07-03/post/iqLTP6ZmOs-430.webp 430w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-03/post/iqLTP6ZmOs-430.png" alt="" width="430" height="67"></picture>
 <h2 id="installing-node-red">Installing Node-RED</h2>
@@ -369,18 +377,23 @@ pre[class*="language-diff-"] {
 </blockquote>
 <p>You can install Node-RED with the below command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> --unsafe-perm node-red</code></pre>
+
 <p>Once installed, you can test that everything is working by launching Node-RED with it's default settings:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">node-red</code></pre>
+
 <p>Once Node-RED has started you should be able to access it on your server's IP Address on port 1880 in my case that would be http://10.0.0.53:1880.</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-07-03/post/kco7jeYhDA-656.avif 656w"><source type="image/webp" srcset="/blog/2019/2019-07-03/post/kco7jeYhDA-656.webp 656w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-03/post/kco7jeYhDA-656.png" alt="" width="656" height="290"></picture>
 <h2 id="securing-node-red">Securing Node-RED</h2>
 <p>If you are planning on making your Node-RED installation accessible on your home network (or the web) it is a good idea to secure it with a password, follow the steps below to add the default admin user and custom password to your instance.</p>
 <p>First you will need to install the <code>node-red-admin</code> package.</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> node-red-admin</code></pre>
+
 <p>Once installed run the below command making sure to follow the prompts to generate your password hash:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">node-red-admin hash-pw</code></pre>
+
 <p>Once you have the hashed password we will need to edit Node-RED's <code>settings.js</code> file and enable the admin user account, you can edit the file with the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /home/niemandr/.node-red/settings.js</code></pre>
+
 <p>Find the <code>Securing Node-RED</code> section (shown below) and un-comment the <code>adminAuth</code> section making sure that you replace the default password with the hash generated above.</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-07-03/post/2XzK75tnvA-692.avif 692w"><source type="image/webp" srcset="/blog/2019/2019-07-03/post/2XzK75tnvA-692.webp 692w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-03/post/2XzK75tnvA-692.png" alt="" width="692" height="205"></picture>
 <p>Next, save and close the configuration file and restart Node-RED (for now you can just run it from the terminal via the node-red command). Once started head over to the Web UI and you should be presented with a login dialog similar to this:</p>
@@ -391,20 +404,26 @@ pre[class*="language-diff-"] {
 <h3 id="installing-pm2">Installing pm2</h3>
 <p>You can install pm2 using the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">npm</span> <span class="token function">install</span> <span class="token parameter variable">-g</span> pm2</code></pre>
+
 <p>Once installed you will need to get the path to the node-red executable using the which command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">which</span> node-red</code></pre>
+
 <p>In my case I am using the default Node-RED binary (<code>/usr/bin/node-red</code>).</p>
 <p>You can test that everything is working as expected by running the below command (making sure to use the path to your node-red binary):</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">pm2 start /usr/bin/node-red -- <span class="token parameter variable">-v</span></code></pre>
+
 <p>This should start Node-RED in the background, you can view information about the process and access the log output using the commands:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">pm2 info node-red
 pm2 logs node-red</code></pre>
+
 <h3 id="starting-node-red-on-boot">Starting Node-RED on boot</h3>
 <p>You can configure Node-RED to start on boot by running the below commands, you will need to have pm2 installed (covered above):</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">pm2 save
 pm2 startup systemd</code></pre>
+
 <p>The last command will output another command that you will need to run in order to configure Node-RED to start up on server reboot, in my case the following output was generated (Note the output may vary for your setup).</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">env</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span>:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd <span class="token parameter variable">-u</span> niemandr <span class="token parameter variable">--hp</span> /home/niemandr</code></pre>
+
 <p>After running the generated command on my server I got confirmation that Node-RED was configured to start on boot:</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-07-03/post/dxGxXhewfD-644.avif 644w"><source type="image/webp" srcset="/blog/2019/2019-07-03/post/dxGxXhewfD-644.webp 644w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-03/post/dxGxXhewfD-644.png" alt="" width="644" height="272"></picture>
 <p>The only thing left to do now, is to restart the server and see if Node-RED starts by itself, and in my case it did!</p>
@@ -414,6 +433,7 @@ pm2 startup systemd</code></pre>
 <p>After some digging on Google I came across this post which had an all-in-one command that fixed my permissions perfectly, maybe this will save you some time!</p>
 <p>Navigate to your Node-RED folder (in my case it was <code>/home/niemandr/.node-red</code>) and run this command to fix permissions:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">find</span> ~ <span class="token parameter variable">-type</span> d <span class="token parameter variable">-user</span> root <span class="token parameter variable">-exec</span> <span class="token function">sudo</span> <span class="token function">chown</span> <span class="token parameter variable">-R</span> <span class="token environment constant">$USER</span><span class="token builtin class-name">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> +</code></pre>
+
 <blockquote>
 <p><strong>NOTE</strong>: you need to be in your Node-RED directory before running this command!</p>
 </blockquote>
@@ -427,19 +447,23 @@ pm2 startup systemd</code></pre>
 <h3 id="the-zip-command">The zip command</h3>
 <p>Node-RED stores all your flows in a file with the flows_<HOST>.json naming convention, in my case that was:</HOST></p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">/home/niemandr/.node-red/flows_<span class="token operator">&lt;</span>HOST<span class="token operator">></span>.json</code></pre>
+
 <p>I would like to backup this file along with the settings.js file daily. The easiest way I could think of doing this was to make use of the zip command which we will need to first install using:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">zip</span></code></pre>
+
 <p>We can simply zip any files matching the <code>*.json</code> pattern in your Node-RED configuration folder (in my case that was <code>/home/niemandr/.node-red</code>) using the below command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">zip</span> <span class="token string">"/home/niemandr/Node-RED-<span class="token variable"><span class="token variable">$(</span><span class="token function">date</span> <span class="token string">'+%F'</span><span class="token variable">)</span></span>.zip"</span> /home/niemandr/.node-red/*.json</code></pre>
+
 <p>This will create a zip file with the following naming convention: <code>Node-RED-&lt;DATE&gt;.zip</code>:</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-07-03/post/NcSVEOSlW4-456.avif 456w"><source type="image/webp" srcset="/blog/2019/2019-07-03/post/NcSVEOSlW4-456.webp 456w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-03/post/NcSVEOSlW4-456.png" alt="" width="456" height="90"></picture>
 <h3 id="creating-the-cron">Creating the CRON</h3>
 <p>You can manage your CRON jobs using the below command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">crontab</span> <span class="token parameter variable">-e</span></code></pre>
+
 <p>If this is the first time working with users' CRON jobs you will be prompted to create a new file, if this is the case just use the suggested defaults.</p>
 <p>Add the below line to your CRON file (making changes where required):</p>
-<pre><code>50 20 * * * zip &quot;/home/niemandr/Node-RED-$(date '+\%F').zip&quot; /home/niemandr/.node-red/*.json
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">50 20 * * * zip "/home/niemandr/Node-RED-$(date '+\%F').zip" /home/niemandr/.node-red/*.json</code></pre>
+
 <p>You can use <a href="https://crontab.guru/">this site</a> to help generate a suitable CRON schedule expression, as you can see I have configured mine to run every day at 8:50 pm:</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-07-03/post/OC0f1UReB3-885.avif 885w"><source type="image/webp" srcset="/blog/2019/2019-07-03/post/OC0f1UReB3-885.webp 885w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-03/post/OC0f1UReB3-885.png" alt="" width="885" height="209"></picture>
 <p>Once done, save and close the CRON file.</p>
@@ -471,7 +495,7 @@ pm2 startup systemd</code></pre>
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2019/2019-07-03/post/` was built on 2026-03-17T17:35:02.091Z -->
+    <!-- This page `/blog/2019/2019-07-03/post/` was built on 2026-03-17T17:49:29.677Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

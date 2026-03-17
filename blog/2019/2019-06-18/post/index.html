@@ -346,6 +346,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2019-06-18">18 June 2019</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#installation">Installation</a></li><li><a href="#creating-a-service">Creating a &quot;Service&quot;</a></li><li><a href="#testing-and-configuration">Testing and Configuration</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
@@ -355,15 +360,19 @@ pre[class*="language-diff-"] {
 <p><strong>Note</strong>: You will need to have a working <a href="/blog/2019/2019-06-14/post1/">InfluxDB 1.x</a> instance deployed to follow along!</p>
 <p>First you will need to pick the latest version of Chronograf for your system from this list and download it on the target machine (at the time of writing that was chronograf_1.7.11_amd64.deb).</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">wget</span> https://dl.influxdata.com/chronograf/releases/chronograf_1.7.11_amd64.deb</code></pre>
+
 <p>Once downloaded, run the below command to install:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> dpkg <span class="token parameter variable">-i</span> chronograf_1.7.11_amd64.deb</code></pre>
+
 <p>Once installed, you can remove the downloaded package with the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">rm</span> <span class="token parameter variable">-f</span> chronograf_1.7.11_amd64.deb</code></pre>
+
 <h2 id="creating-a-service">Creating a &quot;Service&quot;</h2>
 <p>You can configure Chronograf to run as a service by running the below commands:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> chronograf.service
 <span class="token function">sudo</span> systemctl <span class="token parameter variable">--system</span> daemon-reload
 <span class="token function">sudo</span> systemctl start chronograf.service</code></pre>
+
 <h2 id="testing-and-configuration">Testing and Configuration</h2>
 <p>Once running you should be able to navigate to your servers IP Address on port <code>8888</code> to see the Chronograf UI - in my case the URL would be: <code>http://10.0.0.51:8888/</code></p>
 <p>If all went well you should be greeted with the configuration screen as shown below, simply follow the steps in the wizard to complete the installation.</p>
@@ -393,7 +402,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2019/2019-06-18/post/` was built on 2026-03-17T17:35:02.091Z -->
+    <!-- This page `/blog/2019/2019-06-18/post/` was built on 2026-03-17T17:49:29.676Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

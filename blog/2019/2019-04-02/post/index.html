@@ -348,6 +348,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2019-04-02">02 April 2019</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#requirements">Requirements</a></li><li><a href="#setting-the-correct-time">Setting the correct time</a><ol><li><a href="#manual">Manual</a></li><li><a href="#ntp">NTP</a></li></ol></li><li><a href="#configure-telemetry">Configure Telemetry</a></li><li><a href="#configuring-mqtt">Configuring MQTT</a></li><li><a href="#mqtt-payload">MQTT Payload</a></li><li><a href="#home-assistant">Home Assistant</a></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <p>This post covers the process of collecting performance data from most Sonoff devices, in this instance I will be working with my Sonoff Pow R2.</p>
 <h2 id="requirements">Requirements</h2>
@@ -361,6 +366,7 @@ pre[class*="language-diff-"] {
 <h3 id="manual">Manual</h3>
 <p>You can set the time manually with any of the following commands (Timezone, TimeSTD, TimeDST), for example if I wish to manually set it for myself I could issue the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">Timezone <span class="token parameter variable">-6</span></code></pre>
+
 <h3 id="ntp">NTP</h3>
 <p>The simplest way to set the time by far is through the use of a NTP Server - just google for one closest to you, my search returned the following server (2.ca.pool.ntp.org). To set the time using an NTP server you would use the NtpServer command followed by the servers address:</p>
 <ul>
@@ -370,6 +376,7 @@ pre[class*="language-diff-"] {
 <p>Next we will need to configure how often Tasmota publishes the telemetry data (statistics) that we want to collect. This is set in seconds and can range from 10 seconds all the way up to 300 seconds (5 min).</p>
 <p>Again this can be set through the Web Console with the TelePeriod command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">TelePeriod <span class="token number">10</span></code></pre>
+
 <h2 id="configuring-mqtt">Configuring MQTT</h2>
 <p>By far the easiest way to send data between your Sonoff device and Home Assistant is through MQTT.</p>
 <p>Configuration is done via the <code>Configuration</code> -&gt; <code>Configure MQTT</code> links:</p>
@@ -393,6 +400,7 @@ pre[class*="language-diff-"] {
 		<span class="token property">"Current"</span><span class="token operator">:</span> <span class="token number">0.0</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span></code></pre>
+
 <p>As you can see there is a lot of useful data in the payload and it's pretty easy to work out what each value relates to on your Sonoff device.</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-04-02/post/7_czuLwBeX-334.avif 334w"><source type="image/webp" srcset="/blog/2019/2019-04-02/post/7_czuLwBeX-334.webp 334w"><img loading="lazy" decoding="async" src="/blog/2019/2019-04-02/post/7_czuLwBeX-334.png" alt="" width="334" height="403"></picture>
 <h2 id="home-assistant">Home Assistant</h2>
@@ -407,6 +415,7 @@ pre[class*="language-diff-"] {
     <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"Reactive Power (Anet A8)"</span>
     <span class="token key atrule">unit_of_measurement</span><span class="token punctuation">:</span> <span class="token string">"VA"</span>
     <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token string">""</span></code></pre>
+
 <p>Repeat this step for each counter you wish to collect.</p>
 <p>Once done be sure to check your configuration before restarting Home Assistant, and if all goes well you should end up with your new counters:</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-04-02/post/vnJmByub9d-401.avif 401w"><source type="image/webp" srcset="/blog/2019/2019-04-02/post/vnJmByub9d-401.webp 401w"><img loading="lazy" decoding="async" src="/blog/2019/2019-04-02/post/vnJmByub9d-401.png" alt="" width="401" height="521"></picture>
@@ -440,7 +449,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2019/2019-04-02/post/` was built on 2026-03-17T17:35:02.090Z -->
+    <!-- This page `/blog/2019/2019-04-02/post/` was built on 2026-03-17T17:49:29.675Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

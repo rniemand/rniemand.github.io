@@ -347,24 +347,29 @@ pre[class*="language-diff-"] {
 		<time datetime="2019-01-17">17 January 2019</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#generating-the-certificates">Generating the certificates</a></li><li><a href="#configure-grafana">Configure Grafana</a><ol><li><a href="#trusting-the-certificate">Trusting the certificate</a></li></ol></li><li><a href="#testing-it-all-out">Testing it all out</a></li></ol>
+      </div>
+
 
 <p>I am currently developing a custom data-source for <a href="https://grafana.com/">Grafana</a> and needed to run the server in HTTPS mode in order to test out a rather odd use-case, this is just a quick post on how I did it - hopefully this saves you some time in the future.</p>
 <h2 id="generating-the-certificates">Generating the certificates</h2>
 <p>Following the <a href="https://letsencrypt.org/docs/certificates-for-localhost/">steps outlined here</a>, I decided to spin up an Ubuntu <a href="https://www.docker.com/">Docker</a> container for this, making sure to map the /home directory to a folder on my PC for easy access.</p>
-<pre><code>docker run -it --rm -v C:\docker-data\ubuntu:/home ubuntu
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">docker run -it --rm -v C:\docker-data\ubuntu:/home ubuntu</code></pre>
+
 <p>Once booted I installed openssh with the following command:</p>
-<pre><code>apt-get update &amp;&amp; apt-get upgrade -y &amp;&amp; apt-get install -y openssl
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">apt-get update && apt-get upgrade -y && apt-get install -y openssl</code></pre>
+
 <p>Once installed be sure to change to your home directory:</p>
-<pre><code>cd /home
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">cd /home</code></pre>
+
 <p>Then run the below to generate a certificate for localhost:</p>
-<pre><code>openssl req -x509 -out localhost.crt -keyout localhost.key \
+<pre class="language-text" tabindex="0"><code class="language-text">openssl req -x509 -out localhost.crt -keyout localhost.key \
   -newkey rsa:2048 -nodes -sha256 \
-  -subj '/CN=localhost' -extensions EXT -config &lt;( \
-   printf &quot;[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth&quot;)
-</code></pre>
+  -subj '/CN=localhost' -extensions EXT -config <( \
+   printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")</code></pre>
+
 <p>This should generate the following files in your mapped /home folder:</p>
 <ul>
 <li>localhost.crt</li>
@@ -377,6 +382,7 @@ pre[class*="language-diff-"] {
 <span class="token key attr-name">protocol</span> <span class="token punctuation">=</span> <span class="token value attr-value">https</span>
 <span class="token key attr-name">cert_file</span> <span class="token punctuation">=</span> <span class="token value attr-value">D:\WRK\grafana-5.4.2\localhost.crt</span>
 <span class="token key attr-name">cert_key</span> <span class="token punctuation">=</span> <span class="token value attr-value">D:\WRK\grafana-5.4.2\localhost.key</span></code></pre>
+
 <p>Save and close the file - that's it from the Grafana side.</p>
 <h3 id="trusting-the-certificate">Trusting the certificate</h3>
 <p>If you were to browse to your server on https now - your browser would throw up an error page saying that the certificate is not valid \ trusted. We can solve this by importing the localhost.crt file into the computer's trusted Root Certification Authorities.</p>
@@ -430,7 +436,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2019/2019-01-17/post/` was built on 2026-03-17T17:35:02.090Z -->
+    <!-- This page `/blog/2019/2019-01-17/post/` was built on 2026-03-17T17:49:29.675Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

@@ -346,6 +346,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2019-07-24">24 July 2019</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#installation">Installation</a></li><li><a href="#connecting-to-webmin">Connecting to Webmin</a></li><li><a href="#modules">Modules</a><ol><li><a href="#smart-drive-status">SMART Drive Status</a></li></ol></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
@@ -356,21 +361,26 @@ pre[class*="language-diff-"] {
 <h2 id="installation">Installation</h2>
 <p>First you will need to download the latest version of the Webmin installer on your server. You can get this link from their deployment guide, at the time of writing this post <code>webmin_1.920_all.deb</code> was the latest version. Once you are connected to your server you can simply download it using the following command (making sure that you reference the current version.</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">wget</span> http://prdownloads.sourceforge.net/webadmin/webmin_1.920_all.deb</code></pre>
+
 <p>Once the download has completed you can install the package using dpkg as an elevated user.</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> dpkg <span class="token parameter variable">--install</span> webmin_1.920_all.deb</code></pre>
+
 <p>I initially ran into some issues with the installation due to missing packages.</p>
-<pre><code>dpkg: error processing package webmin (--install):
+<pre class="language-text" tabindex="0"><code class="language-text">dpkg: error processing package webmin (--install):
  dependency problems - leaving unconfigured
 Processing triggers for systemd (240-6ubuntu5) ...
 Errors were encountered while processing:
- webmin
-</code></pre>
+ webmin</code></pre>
+
 <p>Thankfully this was easily resolved using <code>apt</code>:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> --fix-broken <span class="token function">install</span></code></pre>
+
 <p>After that, I was able to re-run the installation with no errors.</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> dpkg <span class="token parameter variable">--install</span> webmin_1.920_all.deb</code></pre>
+
 <p>Don't forget to remove the installer once completed!</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">rm</span> webmin_1.920_all.deb</code></pre>
+
 <h2 id="connecting-to-webmin">Connecting to Webmin</h2>
 <p>By default, the Webmin UI is exposed on port 10000 on your server's IP Address, connecting to it is as simple as navigating to <code>https://&lt;SERVER-IP&gt;:10000</code> in your favourite browser.</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-07-24/post/xS-dx1JhyU-330.avif 330w"><source type="image/webp" srcset="/blog/2019/2019-07-24/post/xS-dx1JhyU-330.webp 330w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-24/post/xS-dx1JhyU-330.png" alt="" width="330" height="352"></picture>
@@ -386,6 +396,7 @@ The next section will walk you through installing the required services to get u
 <h3 id="smart-drive-status">SMART Drive Status</h3>
 <p>The SMART Drive Status module requires Smartmontools to be installed, you can install smartmontools with the below command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> smartmontools</code></pre>
+
 <p>During the installation process you will be prompted to enter in some information, from my experience the default (suggested) value worked perfectly.</p>
 <p>After the installation has completed you can click Refresh Modules to allow Webmin to discover the newly installed smartmontools package.</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-07-24/post/gGRJev-PYs-255.avif 255w"><source type="image/webp" srcset="/blog/2019/2019-07-24/post/gGRJev-PYs-255.webp 255w"><img loading="lazy" decoding="async" src="/blog/2019/2019-07-24/post/gGRJev-PYs-255.png" alt="" width="255" height="206"></picture>
@@ -422,7 +433,7 @@ The next section will walk you through installing the required services to get u
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2019/2019-07-24/post/` was built on 2026-03-17T17:35:02.092Z -->
+    <!-- This page `/blog/2019/2019-07-24/post/` was built on 2026-03-17T17:49:29.677Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

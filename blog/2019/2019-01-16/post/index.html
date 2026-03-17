@@ -347,6 +347,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2019-01-16">16 January 2019</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#the-hardware">The Hardware</a></li><li><a href="#node-red-flow">Node-RED Flow</a><ol><li><a href="#schedule-reset-message">Schedule Reset Message</a></li><li><a href="#send-reset-message">Send Reset Message</a></li><li><a href="#flows-side-by-side">Flows Side by Side</a></li></ol></li><li><a href="#home-assistant-binary-sensor">Home Assistant Binary Sensor</a></li><li><a href="#alerting-rule">Alerting Rule</a></li><li><a href="#testing-it-out">Testing it out</a></li><li><a href="#in-closing">In closing</a></li></ol>
+      </div>
+
 
 <p>I work out of the basement at home and often don't hear when my wife gets back from work or my daughter gets back from school. I wanted a way to be notified when either the front door (or back door in this case) gets opened so I can head upstairs and greet them.</p>
 <p>I happened to have some <a href="https://www.aliexpress.com/item/32862123837.html">433 Mhz RF door sensors</a> lying around and decided to try setting up an audible alert on the basement Google Home when the door opens, this post is just a quick explanation of the flow I ended up using.</p>
@@ -383,6 +388,7 @@ pre[class*="language-diff-"] {
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">let</span> offTime <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Date</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1000</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"door_back_offAt"</span><span class="token punctuation">,</span> offTime<span class="token punctuation">)</span><span class="token punctuation">;</span>
 flow<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span><span class="token string">"door_back_state"</span><span class="token punctuation">,</span> <span class="token string">"OPEN"</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
 <h3 id="send-reset-message">Send Reset Message</h3>
 <p>The flow to send the reset message looks like this:</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.avif 1249w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.webp 1249w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/SkARDsDHSM-1249.png" alt="" width="1249" height="231"></picture>
@@ -401,12 +407,14 @@ flow<span class="token punctuation">.</span><span class="token function">set</sp
 <span class="token punctuation">}</span>
 msg<span class="token punctuation">.</span>payload <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token literal-property property">state</span><span class="token operator">:</span> newState<span class="token punctuation">}</span><span class="token punctuation">;</span>
 <span class="token keyword">return</span> msg<span class="token punctuation">;</span></code></pre>
+
 <ul>
 <li>Filter to check for the CLOSED state</li>
 </ul>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-16/post/y66bVq0zvw-599.avif 599w"><source type="image/webp" srcset="/blog/2019/2019-01-16/post/y66bVq0zvw-599.webp 599w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-16/post/y66bVq0zvw-599.png" alt="" width="599" height="205"></picture>
 <p>Template to generate the reset message:</p>
 <pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span><span class="token property">"RfReceived"</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token property">"Data"</span><span class="token operator">:</span> <span class="token string">"B82346OFF"</span><span class="token punctuation">}</span><span class="token punctuation">}</span></code></pre>
+
 <p>Publish the reset message via MQTT on the <code>tele/RF_Bridge/RESULT</code> topic - mocking the required structure of a decoded Sonoff RF message.</p>
 <h3 id="flows-side-by-side">Flows Side by Side</h3>
 <p>Schedule reset message flow:</p>
@@ -423,6 +431,7 @@ msg<span class="token punctuation">.</span>payload <span class="token operator">
     <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"1E3B46OFF"</span>
     <span class="token key atrule">device_class</span><span class="token punctuation">:</span> door
     <span class="token key atrule">value_template</span><span class="token punctuation">:</span> <span class="token string">""</span></code></pre>
+
 <blockquote>
 <p><strong>Note</strong> the <code>1E3B46OFF</code> payload is the actual reset message sent from Node-RED</p>
 </blockquote>
@@ -448,6 +457,7 @@ msg<span class="token punctuation">.</span>payload <span class="token operator">
     <span class="token key atrule">data</span><span class="token punctuation">:</span>
       <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> media_player.gym_speaker
       <span class="token key atrule">message</span><span class="token punctuation">:</span> Back door open</code></pre>
+
 <p>Broken up it's easy enough to follow:</p>
 <ul>
 <li><code>alias</code> - what you want to call the Automation in Home Assistant</li>
@@ -491,7 +501,7 @@ msg<span class="token punctuation">.</span>payload <span class="token operator">
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2019/2019-01-16/post/` was built on 2026-03-17T17:35:02.089Z -->
+    <!-- This page `/blog/2019/2019-01-16/post/` was built on 2026-03-17T17:49:29.674Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

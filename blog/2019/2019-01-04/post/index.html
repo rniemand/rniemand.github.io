@@ -346,6 +346,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2019-01-04">04 January 2019</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#download-and-first-run">Download and first run</a><ol><li><a href="#extract-the-zip-file">Extract the ZIP file</a></li><li><a href="#configuring-influxdb">Configuring InfluxDB</a></li><li><a href="#first-time-run">First Time Run</a></li></ol></li><li><a href="#running-as-a-service">Running as a service</a></li><li><a href="#windows-firewall">Windows Firewall</a></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <p>Today I would like to cover installing <a href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a> on a Windows computer. In case you didn't know &quot;InfluxDB is a high-performance data store written specifically for time series data&quot;, and this is extremely useful when working with <code>Home Automation</code> data like system up-time, temperature, etc.</p>
 <p>All the downloads for the <a href="https://www.influxdata.com/time-series-platform/">TICK Stack</a> (the InfluxData platform) can be found <a href="https://portal.influxdata.com/downloads/">here</a>, but today we will only be covering getting up and running with <a href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a>.</p>
@@ -365,6 +370,7 @@ pre[class*="language-diff-"] {
 <pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">meta</span><span class="token punctuation">]</span></span>
   <span class="token comment"># Where the metadata/raft database is stored</span>
   <span class="token key attr-name">dir</span> <span class="token punctuation">=</span> <span class="token value attr-value">"<span class="token inner-value">D:/Program Files/InfluxData/influxdb-data/meta</span>"</span></code></pre>
+
 <h4 id="change-the-data-wal-dir">Change the DATA + WAL dir</h4>
 <p>Locate and change the data directory as shown below:</p>
 <pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">data</span><span class="token punctuation">]</span></span>
@@ -372,16 +378,19 @@ pre[class*="language-diff-"] {
   <span class="token key attr-name">dir</span> <span class="token punctuation">=</span> <span class="token value attr-value">"<span class="token inner-value">D:/Program Files/InfluxData/influxdb-data/data</span>"</span>
   ...
   <span class="token key attr-name">wal-dir</span> <span class="token punctuation">=</span> <span class="token value attr-value">"<span class="token inner-value">D:/Program Files/InfluxData/influxdb-data/wal</span>"</span></code></pre>
+
 <h4 id="configure-logging-if-you-want-it">Configure logging (if you want it)</h4>
 <p>If you would like to enable \ configure logging below are some of the most common settings you will need to modify.</p>
 <pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token key attr-name">logging-enabled</span> <span class="token punctuation">=</span> <span class="token value attr-value">true</span>
 <span class="token key attr-name">trace-logging-enabled</span> <span class="token punctuation">=</span> <span class="token value attr-value">false</span>
 <span class="token key attr-name">query-log-enabled</span> <span class="token punctuation">=</span> <span class="token value attr-value">true</span></code></pre>
+
 <h4 id="enable-the-http-endpoint">Enable the HTTP endpoint</h4>
 <p>If you would like to make use of the HTTP endpoint (in most cases you do), you can enable it via the below configuration key:</p>
 <pre class="language-ini" tabindex="0"><code class="language-ini"><span class="token section"><span class="token punctuation">[</span><span class="token section-name selector">http</span><span class="token punctuation">]</span></span>
   <span class="token comment"># Determines whether HTTP endpoint is enabled.</span>
   <span class="token key attr-name">enabled</span> <span class="token punctuation">=</span> <span class="token value attr-value">true</span></code></pre>
+
 <h3 id="first-time-run">First Time Run</h3>
 <p>Provided that the HTTP Endpoint was enabled above, you can test to see if everything is configured correctly by simply running the influxd.exe from your installation directory.</p>
 <p>Watch the launched console for any errors relating to the configuration properties you have changed, once everything is happy you can navigate to 'http://localhost:8086/query/' in your browser and should be greeted with some form of response from InfluxDB.</p>
@@ -389,8 +398,8 @@ pre[class*="language-diff-"] {
 <h2 id="running-as-a-service">Running as a service</h2>
 <p>To run InfluxDB as a Windows service I find it easiest to use <a href="https://nssm.cc/download">nssm</a> (<code>the Non-Sucking Service Manager</code>) with the configuration detailed below.</p>
 <p>To install the service you will need to copy nssm.exe to a location on your PC (I suggest placing it in the root InfluxData directory we created earlier c:\Program Files\InfluxData\nssm.exe) and launching the installer through an elevated command prompt window using this command:</p>
-<pre><code>nssm install
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">nssm install</code></pre>
+
 <p>On the Application tab enter in the following:</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-04/post/fa8vNhI6ZS-437.avif 437w"><source type="image/webp" srcset="/blog/2019/2019-01-04/post/fa8vNhI6ZS-437.webp 437w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-04/post/fa8vNhI6ZS-437.png" alt="" width="437" height="236"></picture>
 <ul>
@@ -450,7 +459,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2019/2019-01-04/post/` was built on 2026-03-17T17:35:02.089Z -->
+    <!-- This page `/blog/2019/2019-01-04/post/` was built on 2026-03-17T17:49:29.674Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

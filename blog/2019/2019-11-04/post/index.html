@@ -347,6 +347,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2019-11-04">04 November 2019</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#installation">Installation</a></li><li><a href="#general-configuration">General Configuration</a></li><li><a href="#adding-our-first-user">Adding our FIRST user</a></li><li><a href="#adding-additional-users">Adding additional users</a></li><li><a href="#useful-links">Useful Links</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
@@ -355,31 +360,39 @@ pre[class*="language-diff-"] {
 <h2 id="installation">Installation</h2>
 <p>If you haven't already you will need to add the mosquitto ppa to apt using the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> apt-add-repository ppa:mosquitto-dev/mosquitto-ppa</code></pre>
+
 <p>Once added you can install mosquitto using the following:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> mosquitto</code></pre>
+
 <p>Once installed you can verify if mosquitto is running through the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">systemctl status mosquitto.service</code></pre>
+
 <h2 id="general-configuration">General Configuration</h2>
 <p>If you want to add custom configuration to mosquitto you will need to create a configuration file called <code>/etc/mosquitto/conf.d/mosquitto.conf</code> (as it does not exist by default), we can create or edit this file using the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/mosquitto/conf.d/mosquitto.conf</code></pre>
+
 <p>Generally the only configuration I use for mosquitto is disabling anonymous logins and specifying a path to the services' password file. The entirety of my configuration file looks like this:</p>
-<pre><code>allow_anonymous false
-password_file /etc/mosquitto/conf.d/passwd
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">allow_anonymous false
+password_file /etc/mosquitto/conf.d/passwd</code></pre>
+
 <h2 id="adding-our-first-user">Adding our FIRST user</h2>
 <blockquote>
 <p><strong>Note</strong>: if you are wanting to add an additional user to mosquitto please refer to the next section, this section is for creating the initial password file and user. Running this command again will overwrite all existing users!</p>
 </blockquote>
 <p>To add our first user to mosquitto we will need to create our password file (specified by the <code>password_file</code> configuration value above). We can create a new password file and add our first user at the same time by using the following command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> mosquitto_passwd <span class="token parameter variable">-c</span> /etc/mosquitto/conf.d/passwd <span class="token operator">&lt;</span>username<span class="token operator">></span></code></pre>
+
 <p>Once done, simply restart mosquitto to enable the new account.</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> systemctl restart mosquitto</code></pre>
+
 <h2 id="adding-additional-users">Adding additional users</h2>
 <p>To add additional users to mosquitto we can run the below command (note that we omit the -c switch this time as we are not wanting to create a password file).</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> mosquitto_passwd /etc/mosquitto/conf.d/passwd <span class="token operator">&lt;</span>username<span class="token operator">></span></code></pre>
+
 <p>You can run this command as many times as you need, and it will keep appending the users to the end of your password file.</p>
 <p>To enable any added user account we will need to restart mosquitto:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> systemctl restart mosquitto</code></pre>
+
 <h2 id="useful-links">Useful Links</h2>
 <p>That's pretty much all there is to installing mosquitto on Ubuntu, hopefully this saved you some time.</p>
 <p>Below are some helpful links to make working with MQTT a lot easier:</p>
@@ -413,7 +426,7 @@ password_file /etc/mosquitto/conf.d/passwd
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2019/2019-11-04/post/` was built on 2026-03-17T17:35:02.092Z -->
+    <!-- This page `/blog/2019/2019-11-04/post/` was built on 2026-03-17T17:49:29.677Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

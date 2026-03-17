@@ -346,6 +346,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2019-01-15">15 January 2019</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#find-a-base-container">Find a base container</a></li><li><a href="#select-a-container-version">Select a container version</a></li><li><a href="#creating-a-dockerfile">Creating a Dockerfile</a></li><li><a href="#building-and-running">Building and Running</a></li><li><a href="#using-volumes">Using Volumes</a></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <p>Today I am going to quickly cover getting a php script up and running in Docker. In case you are unfamiliar with Docker:</p>
 <blockquote>
@@ -376,6 +381,7 @@ pre[class*="language-diff-"] {
 <pre class="language-dockerfile" tabindex="0"><code class="language-dockerfile"><span class="token instruction"><span class="token keyword">FROM</span> php:7.3.0-apache</span>
 <span class="token instruction"><span class="token keyword">COPY</span> src/ /var/www/html</span>
 <span class="token instruction"><span class="token keyword">EXPOSE</span> 80</span></code></pre>
+
 <p>This file will be used to describe the application to Docker:</p>
 <ul>
 <li><strong>FROM</strong> - tells Docker that we are going to be using the php:7.3.0-apache base container.</li>
@@ -384,20 +390,20 @@ pre[class*="language-diff-"] {
 </ul>
 <p>That's pretty much it for the Dockerfile, lastly let's add some content to the PHP file we are going to be running (<code>src/index.php</code>):</p>
 <pre class="language-php" tabindex="0"><code class="language-php"><span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
-<span class="token keyword">echo</span> <span class="token string single-quoted-string">'Hello World'</span><span class="token punctuation">;</span>
-</span></code></pre>
+<span class="token keyword">echo</span> <span class="token string single-quoted-string">'Hello World'</span><span class="token punctuation">;</span></span></code></pre>
+
 <h2 id="building-and-running">Building and Running</h2>
 <p>You need to build your Dockerfile in order to run it - in our case it is as simple as running the following command:</p>
-<pre><code>docker build -t hello-world .
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">docker build -t hello-world .</code></pre>
+
 <blockquote>
 <p><strong>Note</strong> I use <code>.</code> here as I am already in the folder containing the Dockerfile</p>
 </blockquote>
 <p>This will interrogate your Dockerfile and pull down all the required images to build your container (this may take a while the first time you do this).</p>
 <picture><source type="image/avif" srcset="/blog/2019/2019-01-15/post/4yeH8ddKZ8-805.avif 805w"><source type="image/webp" srcset="/blog/2019/2019-01-15/post/4yeH8ddKZ8-805.webp 805w"><img loading="lazy" decoding="async" src="/blog/2019/2019-01-15/post/4yeH8ddKZ8-805.png" alt="" width="805" height="466"></picture>
 <p>Once completed you can run your container using:</p>
-<pre><code>docker run -p 5001:80 hello-world
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">docker run -p 5001:80 hello-world</code></pre>
+
 <ul>
 <li><code>-p</code> allows us to map a port from the host computer to the container, in my case localhost:5001 -&gt; container:80.</li>
 <li><code>CTRL + C</code> will kill the apache process and shut down the container.</li>
@@ -407,8 +413,8 @@ pre[class*="language-diff-"] {
 <h2 id="using-volumes">Using Volumes</h2>
 <p>One thing to note here is that no matter what changes we make to the index.php file after we build, they do not reflect in our application. This is due to the fact that when we built our application using the Dockerfile, Docker made a copy of index.php at that point in time and persisted it to our container. Although this is excellent for production, it will not do for development cases as we will want to make changes to the file as we go.</p>
 <p>This is where volumes come in as they allow the linking of folders from the host system to the container. Also any changes made to these mounted folders are synchronised between the host and container. We can override /var/www/html as shown below:</p>
-<pre><code>docker run -p 5001:80 -v C:\Users\niema\Desktop\docker\src\:/var/www/html hello-world
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">docker run -p 5001:80 -v C:\Users\niema\Desktop\docker\src\:/var/www/html hello-world</code></pre>
+
 <blockquote>
 <p><strong>Note</strong> you will need to replace C:\Users\niema\Desktop\docker\src\ with your desired source directory.</p>
 </blockquote>
@@ -442,7 +448,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2019/2019-01-15/post/` was built on 2026-03-17T17:35:02.089Z -->
+    <!-- This page `/blog/2019/2019-01-15/post/` was built on 2026-03-17T17:49:29.674Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
