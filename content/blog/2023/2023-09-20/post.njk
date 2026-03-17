@@ -1,0 +1,157 @@
+---
+title: SonarQube in Docker
+date: 2023-09-20
+tags: [docker, ci-cd]
+logo: sonarqube.png
+---
+
+<p>In this post I will cover the basics of getting SonarQube running in a Docker container and walk you through setting up a simple ci-cd script to build and analyse a .net core project.</p>
+<h2 id="requirements">Requirements</h2>
+<h3 id="jdk">JDK</h3>
+<p>You will need java installed on your system in order to run SonarQube, you can download the latest version of Java from <a href="https://www.oracle.com/ca-en/java/technologies/downloads/">here</a>.</p>
+<p>Install or extract the Java package to a known location on your system, in my case I went with installing the JDK which ended up unpacking it’s contents to <code>C:\Program Files\Java\jdk-21</code>.</p>
+<p>Add a new System Environment variable called <strong>JAVA_HOME</strong> with the following path: <code>C:\Program Files\Java\jdk-21</code>.</p>
+<img src="./001.png" alt="" />
+<p>Add the following path to the systems <strong>PATH</strong> environment variable: <code>C:\Program Files\Java\jdk-21\bin</code>.</p>
+<p>Open up a console and type <code>java -version</code> to ensure that everything is working as expected.</p>
+<img src="./002.png" alt="" />
+<h3 id="docker-desktop">Docker Desktop</h3>
+<p>Download and install Docker Desktop from the <a href="https://www.docker.com/products/docker-desktop/">following link</a>.</p>
+<p>Ensure that you have WSL enabled and all the other guff needed for Docker to run.</p>
+<p>You will most likely need to restart your computer.</p>
+<h3 id="ssms-or-equivalent">SSMS or Equivalent</h3>
+<p>You will need SSMS or something similar to connect to the created Docker SQL instance and create the initial SonarQube database, if you would like to you can download SSMS at the <a href="https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16">following link</a>.</p>
+<h3 id="net-sdk">.NET SDK</h3>
+<p>You will need the .net SDK along with any targeted frameworks installed, you can download the .net SDK if you need it from <a href="https://dotnet.microsoft.com/en-us/download/visual-studio-sdks">here</a>.</p>
+<h2 id="docker-environment-setup">Docker Environment Setup</h2>
+<h3 id="docker-compose-file">Docker Compose File</h3>
+<p>The complete Docker compose file is shown below, to follow along copy the below to a file on your system called <code>docker-compose.yaml</code>.</p>
+{% highlight "yaml" %}
+version: "3.6"
+
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: always
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "saP@ssw0rd"
+      MSSQL_PID: "Developer"
+    volumes:
+      - ./mssql/data:/var/opt/mssql/data
+      - ./mssql/log:/var/opt/mssql/log
+      - ./mssql/secrets:/var/opt/mssql/secrets
+    ports:
+      - 1433:1433
+
+  sonarqube:
+    image: sonarqube
+    restart: always
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: true
+      SONAR_JDBC_URL: jdbc:sqlserver://db;databaseName=SonarQube;trustServerCertificate=true;
+      SONAR_JDBC_USERNAME: sa
+      SONAR_JDBC_PASSWORD: "saP@ssw0rd"
+    volumes:
+      - ./sonarqube/data:/opt/sonarqube/data
+      - ./sonarqube/logs:/opt/sonarqube/logs
+      - ./sonarqube/extensions:/opt/sonarqube/extensions
+    ports:
+      - 9000:9000
+    depends_on:
+      - "db"
+{% endhighlight %}
+
+<h3 id="initial-container-configuration">Initial Container Configuration</h3>
+<p>Open a terminal window and navigate to the folder where you saved your <code>docker-compose.yaml</code> file, to start the container run the below command.</p>
+{% highlight "shell" %}
+docker-compose up
+{% endhighlight %}
+
+<p>This will take some time for the initial start (subsequent starts will be a lot quicker), also note that the initial start of the container will result in a lot of errors being logged to the console - mainly due to the fact that SonarQube is unable to find the configures SQL database (we are about to resolve that issue now).</p>
+<p>Using SSMS or something similar connect to your containers SQL instance using the <code>sa</code> password of <code>saP@ssw0rd</code>.</p>
+<img src="./003.png" alt="" />
+<p>Once connected run the below query to create the expected SonarQube database:</p>
+{% highlight "sql" %}
+USE [master]
+GO
+CREATE DATABASE [SonarQube]
+ COLLATE SQL_Latin1_General_CP1_CS_AS
+GO
+ALTER DATABASE [SonarQube] SET RECOVERY SIMPLE
+GO
+{% endhighlight %}
+
+<p>You should now have a SonarQube database in the <strong>SQL_Latin1_General_CP1_CS_AS</strong> coalition and a recovery mode of simple.</p>
+<img src="./004.png" alt="" />
+<p>After a while SonarQube should start to run its initial seeding of the DB, this is due to the fact that the SonarQube docker service is configured to always restart. If SonarQube does not seed the database you can try restarting the container to see if that helps.</p>
+<p>You should now be able to navigate to SonarQube on <code>http://localhost:9000/</code> and log in with the default user <code>admin</code> and password <code>admin</code> - make sure that you change your password to something that you can remember.</p>
+<h3 id="subsequent-starting-and-stopping">Subsequent Starting and Stopping</h3>
+<p>Once you have completed the initial setup as instructed above subsequent starting and stopping of the container can be done using the following commands.</p>
+<blockquote>
+<p>These commands need to be run from the folder that you saved your <code>docker-compose.yaml</code> file in.</p>
+</blockquote>
+<p>To start the container:</p>
+{% highlight "shell" %}
+docker-compose up -d
+{% endhighlight %}
+
+<p>To stop the container:</p>
+{% highlight "shell" %}
+docker-compose down
+{% endhighlight %}
+
+<h2 id="sonarqube-setup">SonarQube Setup</h2>
+<h3 id="create-project">Create Project</h3>
+<p>To create a new project navigate to: <code>http://localhost:9000/projects/create?mode=manual</code>.</p>
+<p>Enter in the details for your project and click next, choose your preferred settings when prompted on the next screen - generally I just use the global settings.</p>
+<img src="./005.png" alt="" />
+<p>You should now have a test project to work with.</p>
+<img src="./006.png" alt="" />
+<h3 id="token-generation">Token Generation</h3>
+<p>To generate tokens head over to your accounts security page: <code>http://localhost:9000/account/security</code>.</p>
+<p>Complete the form to generate a token - feel free to select a different token type when prompted (I am just using a global analysis token for brevity).</p>
+<img src="./007.png" alt="" />
+<p>Be sure to save the token returned as you won't be able to see it again!</p>
+<img src="./008.png" alt="" />
+<p>In my case the generated token is: <code>sqa_6ac0644c998766a46a0f11ee0205cad162e5318d</code>.</p>
+<h2 id="build-process-setup">Build Process Setup</h2>
+<h3 id="once-off-setup">Once Off Setup</h3>
+<p>You will need to have the <strong>sonarscanner</strong> <code>dotnet tool</code> installed globally, if you do not have it installed you can use the following command to rectify that:</p>
+{% highlight "shell" %}
+dotnet tool install --global dotnet-sonarscanner
+{% endhighlight %}
+
+<h3 id="build-scripts">Build Scripts</h3>
+<h4 id="sonarqubeps1">sonarqube.ps1</h4>
+<p>To make the build process a lot simpler I tend to use a helper script aptly named <code>sonarqube.ps1</code> with the following body:</p>
+{% highlight "powershell" %}
+param (
+  [Parameter(Mandatory=$false)]
+  [string] $project = "test",
+  [Parameter(Mandatory=$false)]
+  [string] $sqUrl = "http://localhost:9000",
+  [Parameter(Mandatory=$true)]
+  [string] $sqToken
+)
+$rootDir        = $PSScriptRoot;
+$artifactsDir   = [IO.Path]::GetFullPath((Join-Path $rootDir "../artifacts/"));
+$coverageDir    = [IO.Path]::GetFullPath((Join-Path $artifactsDir "test-coverage/"));
+$sqReportPaths  = ($coverageDir + "**/coverage.opencover.xml");
+dotnet sonarscanner begin /k:$project /d:sonar.host.url=$sqUrl  /d:sonar.login=$sqToken /d:sonar.cs.opencover.reportsPaths=$sqReportPaths
+./ci-test.ps1
+dotnet sonarscanner end /d:sonar.login=$sqToken
+{% endhighlight %}
+
+<h4 id="ci-testps1">ci-test.ps1</h4>
+<p>I generally make use of a <code>ci-test.ps1</code> file to orchestrate the build and test pipeline (it is a bit long winded and may not work for everyone), an example of the build script can be seen <a href="https://github.com/rniemand/RnCore.Abstractions/blob/master/.github/ci-test.ps1">here</a>.</p>
+<p>In all honesty, a simple <code>dotnet build</code> should suffice in place of the call to <code>ci-test.ps1</code> in the <code>sonarqube.ps1</code> file - you will lose the coverage reports etc. though, but with some determination you should be able to create a custom build script that works for you.</p>
+<h3 id="running-build-process">Running Build Process</h3>
+<p>Armed with your build script and now running SonarQube instance you can kick off your first build and analyse using the sonarqube.ps1 file and your generated token.</p>
+{% highlight "shell" %}
+.\sonarqube.ps1 -sqToken "sqa_6ac0644c998766a46a0f11ee0205cad162e5318d"
+{% endhighlight %}
+
+<p>Once the process has completed your test project should now be updated with the results of the code analysis run.</p>
+<img src="./009.png" alt="" />
+<img src="./010.png" alt="" />

@@ -1,0 +1,242 @@
+---
+title: "Lounge Clock (v 1.0)"
+date: 2022-06-07
+tags: [home assistant, 3d printing, iot]
+logo: esphome.png
+---
+
+<p>In this post I will cover how I built my lounge clock using <a href="https://esphome.io/">ESPHome</a>, <a href="https://www.home-assistant.io/">Home Assistant</a>, <a href="/blog/2019/2019-11-04/post/">MQTT</a> and a whole lot of other technologies, I think that the end result looks pretty good for my first attempt:</p>
+<img src="./001.jpg" alt="" />
+<h2 id="bill-of-material">Bill of Material</h2>
+<p>The following tools \ materials are required should you want to make your own:</p>
+<ul>
+<li>3D Printer - or a 3D printing service near you</li>
+<li>4x <a href="https://github.com/rniemand/code-samples/tree/main/projects/lounge-clock">7-Segment display PCB's</a> - more information below</li>
+<li>Piece of wood to mount the clock on</li>
+<li>ESP8266 - preferably the Wemos D1 Mini</li>
+<li>Some wires to connect everything together</li>
+<li>2 Part Epoxy - I find it works best with PLA</li>
+<li>Hot glue gun (and glue)</li>
+<li>DHT11</li>
+<li>2x 10K resistors</li>
+<li>1x LDR</li>
+</ul>
+<h2 id="custom-pcb">Custom PCB</h2>
+<p>Using <a href="https://easyeda.com/editor">Easy EDA</a> I was able to come up with the following circuit board:</p>
+<p>&lt;img src=&quot;./002.jpg){: w=&quot;350&quot; &quot; alt=&quot;&quot; /&gt;</p>
+<p>It's a pretty simple board that makes use of some <a href="https://www.aliexpress.com/wholesale?catId=0&amp;initiative_id=SB_20220607051521&amp;SearchText=ws2812b&amp;spm=a2g0o.home.1000002.0">WS2812b</a> SMD LEDS wired in the traditional 7-segment pattern:</p>
+<img src="./003.png" alt="" />
+<p>For fabrication I made use of <a href="https://jlcpcb.com/">JLCPCB</a> and their <a href="https://jlcpcb.com/capabilities/Capabilities">pick and place</a> service, all in 10 boards assembled cost me <code>$27.00</code> (not too bad!).</p>
+<img src="./004.png" alt="" />
+<p>I have made the Gerber files available <a href="https://github.com/rniemand/code-samples/tree/main/projects/lounge-clock/1.0">here</a> if you would like to make your own.</p>
+<h2 id="3d-printing">3D Printing</h2>
+<p>There is a <strong>LOT</strong> of 3D printing required for this project, namely:</p>
+<ul>
+<li>2x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/01%20-%202x%20-%20Double%20Segment%20Holder.stl">Double 7-Segment risers</a> - used to group 2 segments together</li>
+<li>(Optional) 1x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/02%20-%201x%20-%20Doublle%20Segment%20Hole%20Stencil.stl">Double 7-Segment risers template</a> - used for drilling holes</li>
+<li>4x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/03%20-%204x%20-%20Segment%20Cover.stl">7-Segment covers</a> - in black if possible for the best results</li>
+<li>28x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/04%20-%2028x%20-%20Segment%20Diffuser.stl">Segments</a> - I would print more as they break easily</li>
+<li>1x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/05%20-%201x%20-%20Dots%20Holder.stl">Dots holder</a> - used to hold 2 additional <code>WS2812 LEDs</code></li>
+<li>1x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/06%20-%201x%20-%20Dots%20Cover.stl">Dots cover</a> - in black if possible for the best results</li>
+<li>2x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/07%20-%202x%20-%20Dots%20Diffuser.stl">Dots segments</a> - plus a couple of spares</li>
+<li>2x <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/3d-models/08%20-%202x%20-%20Double%20Segment%20Cover.stl">Double 7-Segment covers</a> - my attempt at cleaning up the mess at the end :)</li>
+</ul>
+<p>The assembly is pretty straight forward (like Lego for adults) and I left enough space to route all the required wires through the risers to give the clock a neater look - although I do not know what happened to mine!</p>
+<img src="./005.jpg" alt="" />
+<p>I would put aside ~18 hours for all the printing to be completed (depending on your printing profile).</p>
+<h2 id="assembly">Assembly</h2>
+<p>Unfortunately I did not take any pictures of the assembly process, however it is pretty easy.</p>
+<p>Each 7-Segment board has a <code>DIN</code> (Digital In) and <code>DOUT</code> (Digital Out) solder point, which need to be daisy chained from one board to another.</p>
+<p>On the PCB all the <code>GND</code> points are all connected together, along with the <code>VCC</code> points to make routing power a lot easier. When connecting the boards you just need to follow this pattern if you are using the <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/1.0/clock-code.yaml">source code</a> I provide.</p>
+{% highlight "text" %}
+DIN -> [7-Seg] -> [7-Seg] -> [7-Seg] -> [7-Seg] -> [.] -> [.]
+{% endhighlight %}
+
+<p>Where the following is true:</p>
+<ul>
+<li><code>7-Seg</code> - represents a 7-Segment PCB</li>
+<li><code>[.]</code> - represents a single <strong>WS2812x</strong> LED</li>
+</ul>
+<p>The entire assemby should be mounted onto a backing board (using the stencil to make the appropriate holes), and the additional components should be connected to the <code>ESP8266</code> similar to the diagram below:</p>
+<img src="./006.png" alt="" />
+_**NOTE** the single LED represents all the PCBs_
+{% highlight "text" %}
+D3       WS2812B        Lights
+D1       DHT11          Temperature
+A0       ADC - LDR      Brightness
+{% endhighlight %}
+
+<img src="./012.jpg" alt="" />
+<img src="./013.jpg" alt="" />
+<p>Like most <code>DIY</code> projects it may not be pretty, but it works!</p>
+<blockquote>
+<p><strong>FYI</strong>: the yellow tape on the spacers are to stop the plastic rubbing on my walls</p>
+</blockquote>
+<h2 id="source-code">Source Code</h2>
+<p>The source code use for my clock is an adaptation of the code <a href="https://3dmixers.com/m/250988-led-clock-7-segments-">found here</a> and I take no credit for the original code, only the modifications to it - <a href="https://3dmixers.com/user/thestovedoc/portfolio">thestovedoc</a> deserves the credit!</p>
+<p>The modified code can be <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/1.0/clock-code.yaml">found here</a> and requires that you either replace the <code>!secret ...</code> placeholders, or inline them into the code before uploading it to the <code>ESP8266</code>.</p>
+<h3 id="segment-values">Segment Values</h3>
+<p>As mentioned above the <strong>7-Segment</strong> PCB's follow the standard layout (<code>A, B, C, D, E, F, G</code>) to make defining numbers a lot easier.</p>
+<img src="./003.png" alt="" />
+<p>Below is the number range used in this project as an example:</p>
+{% highlight "text" %}
+int digitsLeds[11][ledsInDigitCount] = {
+// A B C D E F G
+  {1,1,1,1,1,1,0}, // 0
+  {0,1,1,0,0,0,0}, // 1
+  {1,1,0,1,1,0,1}, // 2
+  {1,1,1,1,0,0,1}, // 3
+  {0,1,1,0,0,1,1}, // 4
+  {1,0,1,1,0,1,1}, // 5
+  {1,0,1,1,1,1,1}, // 6
+  {1,1,1,0,0,0,0}, // 7
+  {1,1,1,1,1,1,1}, // 8
+  {1,1,1,1,0,1,1}, // 9
+  {0,0,0,0,0,0,0}, // 10 -> ALL_OFF!
+};
+{% endhighlight %}
+
+<h2 id="home-assistant-setup">Home Assistant Setup</h2>
+<p>Setting everything up in Home Assistant is pretty simple once you have flashed the firmware to your <code>ESP8266</code> using the <a href="https://esphome.io/">ESPHome</a>:</p>
+<img src="./008.png" alt="" />
+<img src="./009.png" alt="" />
+<img src="./007.png" alt="" />
+<h3 id="card-control">Card Control</h3>
+<p>To allow for easier control of the clock I added the following card to my dashboard:</p>
+<img src="./010.png" alt="" />
+_It's not that pretty, but it gets the job done!_
+<p>Working left to right:</p>
+<ul>
+<li><code>Clock Control</code> - allows for quick control of the clocks brightness</li>
+<li><code>H</code> - (hours) short press to toggle, long press to adjust</li>
+<li><code>:</code> - (dots) short press to toggle, long press to adjust</li>
+<li><code>M</code> - (minutes) short press to toggle, long press to adjust</li>
+<li><code>Leading 0</code> - used to toggle the leading <code>0</code> (24 hour \ 12 hour format)</li>
+<li><code>Blinking</code> - used to toggle the blinking of the <code>:</code> as it can be annoying when watching TV</li>
+<li><code>12\24</code> - toggles between 12 and 24 hour time format</li>
+<li><code>Clock Mode</code> - quickly enables the clock mode - there are other effects on the clock</li>
+<li><code>Lights</code> - group of all the lights making up the lounge clock</li>
+</ul>
+<p>The backing code is shown below:</p>
+{% highlight "yaml" %}
+type: horizontal-stack
+cards:
+  - type: light
+    entity: light.lounge_clock
+  - square: true
+    columns: 3
+    type: grid
+    cards:
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: light.lounge_hours_lights
+        hold_action:
+          action: more-info
+        name: HH
+        icon: mdi:alpha-h
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: light.lounge_dots_lights
+        hold_action:
+          action: more-info
+        name: ":"
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: light.lounge_minutes_lights
+        hold_action:
+          action: more-info
+        name: MM
+        icon: mdi:alpha-m
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: switch.lounge_leading_zero
+        name: Zero
+        icon: ""
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: switch.lounge_dots_blink
+        name: Blink
+        icon: mdi:car-light-dimmed
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: switch.lounge_24_hour_format
+        name: "24"
+        icon: mdi:hours-24
+        show_state: false
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: call-service
+          service: light.turn_on
+          service_data:
+            effect: Time Effect
+          target:
+            entity_id: light.lounge_clock
+        entity: ""
+        icon: mdi:clock-digital
+        hold_action:
+          action: none
+      - show_name: false
+        show_icon: true
+        type: button
+        tap_action:
+          action: more-info
+        entity: light.lounge_clock_all_lights
+        hold_action:
+          action: none
+{% endhighlight %}
+
+<h3 id="collected-data">Collected Data</h3>
+<p>In addition to displaying the time, the clock also collects and submits the following data:</p>
+<img src="./011.png" alt="" />
+<ul>
+<li><code>Brightness</code> - handled by the <strong>LDR</strong> - measured in voltage (<code>HIGHER</code> = brighter)</li>
+<li><code>Humidity</code> - measured by the <strong>DHT11</strong></li>
+<li><code>Temperature</code> - measured by the <strong>DHT11</strong></li>
+<li><code>WiFi Signal</code> - built in measure with ESPHome</li>
+</ul>
+<p>This data can be used in your home automations, some examples that spring to mind:</p>
+<ul>
+<li>Use the collected temperature data to control your thermostat</li>
+<li>Change the brightness of the clock based on ambient lighting</li>
+<li>Climate control using the <code>Temperature</code> and <code>Humidity</code> values</li>
+<li>Use the collected <code>WiFi Signal</code> to guage on how a repeater is working in your home</li>
+<li>etc.</li>
+</ul>
+<h2 id="in-closing">In Closing</h2>
+<p>This was a fun project to work on, and allowed me to mess around with things like:</p>
+<ul>
+<li>PCB design and fabrication</li>
+<li>3D modeling (using Fusion 360)</li>
+<li>Coding (C++ lambdas)</li>
+<li>ESPHome + Home Assistant</li>
+<li>MQTT (using mosquitto)</li>
+<li>3D Printing and fabrication</li>
+</ul>
+<p>I found this to be a good starter project for taking my Home Assistant &amp; fabrication to the next level.</p>
+<p>As always, please feel free to leave any comments \ suggestions below.</p>
+<p>Happy Hacking.</p>

@@ -1,0 +1,51 @@
+---
+title: "HASS On Unraid: Installation"
+date: 2022-05-27
+tags: [home assistant, unraid]
+logo: hass.png
+---
+
+<blockquote>
+<p>This post is <a href="/series/">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.</p>
+</blockquote>
+<h2 id="download-the-vm-image">Download the VM Image</h2>
+<p>First you will need to obtain the latest image from the Home Assistant website (<a href="https://www.home-assistant.io/installation/alternative">see this page</a>) - in my installation I am using the .qcow2 image as shown below:</p>
+<img src="./001.png" alt="" />
+<p>Once downloaded you can use a tool like <a href="https://www.7-zip.org/">7-Zip</a> to extract the contents to a working folder, you should now have the following files:</p>
+<img src="./002.png" alt="" />
+_This is the extracted contents of the zip file_
+<h2 id="create-the-home-assistant-vm">Create the Home Assistant VM</h2>
+<p>Next, you will need to create a new VM in Unraid making use of the Linux template and apply the appropriate configuration for your VM, in my case I used the following.</p>
+<img src="./003.png" alt="" />
+<ul>
+<li><strong>VM Name</strong>: HomeAssistant</li>
+<li><strong>CPU Assignment</strong>: decided to go with 4 CPU's to start (can always add more later on)</li>
+<li><strong>Memory</strong>: Started with 8 GB - however you can get away with as little a 1 GB in a pinch</li>
+</ul>
+<img src="./004.png" alt="" />
+<p>Ensure that you set the Primary vDisk Location to point to the <code>.qcow2</code> image you downloaded - I would suggest placing the image in your <code>/mnt/user/domains/...</code> directory as this is the assumed location by Unraid when working with virtual machines.</p>
+<img src="./005.png" alt="" />
+<p>Ensure that you assign the network as bridged as some of the functionality of Home Assistant will break without this - assign a MAC Address for the VM (you can use this to enforce static IPs on your router) and select the appropriate network driver.</p>
+<h3 id="adding-an-icon">Adding an Icon</h3>
+<p>You can edit the XML file for your VM as shown below to add in a custom image for Home Assistant to make your VM stand out (if you have a number of them).</p>
+{% highlight "xml" %}
+<?xml version="1.0" encoding="UTF-8"?>
+<domain type="kvm">
+  <name>HomeAssistant</name>
+  <uuid>054a17e7-fdc0-3238-bf05-6d00ad80b7b3</uuid>
+  <metadata>
+    <vmtemplate xmlns="unraid" name="Linux" icon="/mnt/user/domains/home_assistant_2021/logo.png" os="linux"/>
+  </metadata>
+{% endhighlight %}
+
+<h2 id="first-time-setup">First Time Setup</h2>
+<p>Once your VM is created and you are happy with the configuration you can start it:</p>
+<img src="./006.png" alt="" />
+_Showing off the custom logo assigned above_
+<p>It may take some time for the initial startup to complete, you can connect to the VM using the built in VNC browser and should see the following splash screen when Home Assistant has successfully started up:</p>
+<img src="./007.png" alt="" />
+<p>You can now connect to Home Assistant using one of the URLs provided:</p>
+<img src="./008.png" alt="" />
+<p>You will need to wait for the onboarding process to complete (it can take some time). Follow the instructions and prompts to finish the installation.</p>
+<img src="./009.png" alt="" />
+<p>You are done!</p>

@@ -1,0 +1,412 @@
+---
+title: "Ceiling Fan Remote Hacking"
+date: 2022-06-15
+tags: [arduino, home assistant]
+logo: esphome.png
+---
+
+<p>In this post I will be covering how I modified the &quot;<a href="https://github.com/owenb321/hampton-bay-fan-mqtt">owenb321/hampton-bay-fan-mqtt</a>&quot; to work with some &quot;<strong>Home Decorations #1001 415 438</strong>&quot; fans I had installed a while back. The fans make use of a pretty standard remote control &quot;model number: <strong>TX028C-S</strong>&quot;, however the only repository I found did not produce compatible codes for the fans prompting me to create this offshoot of the repo.</p>
+<p>I will cover the basics. I went through reverse engineering the commands sent to \ from the fans along with how I was able to recreate them and send it back to the fans successfully. This was a fun journey where I needed to do a lot of binary maths \ manipulation to get everything working.</p>
+<p>You can skip all of this and just get the <strong><a href="https://github.com/rniemand/hampton-bay-fan-mqtt">source code here</a></strong> if you would like.</p>
+<h2 id="required-hardware-and-setup">Required Hardware and Setup</h2>
+<p>In order to follow along you will need to have access to the following hardware:</p>
+<ul>
+<li>ESP8266 (or compatible chipset) - I am using a Wemos D1 Mini</li>
+<li>CC1101 Wireless Transceiver - I am using <a href="https://www.aliexpress.com/item/1005002848107792.html">this one</a>.</li>
+<li>Some wire to make the connections between the <code>ESPxxx</code> and <code>CC1101</code></li>
+<li><a href="https://www.arduino.cc/en/software">Arduino IDE</a> - used to build and upload the code</li>
+</ul>
+<h3 id="module-wiring">Module Wiring</h3>
+<p>Depending on your CC1101 module, your wiring may be different, please ensure that you check your modules specific wiring before continuing.</p>
+<p>The module that I selected has the following pinout:</p>
+<img src="./001.png" alt="" />
+<p>Corresponding to the physical PCB board layout:</p>
+<img src="./002.png" alt="" />
+<p>Based on the <a href="https://github.com/LSatan/SmartRC-CC1101-Driver-Lib#wiring">wiring diagram here</a> I would need to make the following connections.</p>
+<img src="./003.png" alt="" />
+<table>
+<thead>
+<tr>
+<th>CP1101</th>
+<th>ESP8266</th>
+<th>Mode</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GD00</td>
+<td>D1</td>
+<td>Output</td>
+<td>Module Info output pin</td>
+</tr>
+<tr>
+<td>GD02</td>
+<td>D2</td>
+<td>Output</td>
+<td>Module information output pin</td>
+</tr>
+<tr>
+<td>SCK</td>
+<td>D5</td>
+<td>Input</td>
+<td>SPI bus clock</td>
+</tr>
+<tr>
+<td>VCC</td>
+<td>3V3</td>
+<td>-</td>
+<td>Power supply must be between <code>1.8-3.6v</code></td>
+</tr>
+<tr>
+<td>MOSI</td>
+<td>D7</td>
+<td>Input</td>
+<td>SPI data input pin</td>
+</tr>
+<tr>
+<td>MISO</td>
+<td>D6</td>
+<td>Output</td>
+<td>SPI data output pin</td>
+</tr>
+<tr>
+<td>CSN</td>
+<td>D8</td>
+<td>Input</td>
+<td>Chip select pin</td>
+</tr>
+<tr>
+<td>GND</td>
+<td>GND</td>
+<td>-</td>
+<td>Ground wire</td>
+</tr>
+</tbody>
+</table>
+<h3 id="arduino-libraries">Arduino Libraries</h3>
+<p>The following libraries are required to compile the project:</p>
+<ul>
+<li><a href="https://github.com/LSatan/SmartRC-CC1101-Driver-Lib">SmartRC-CC1101-Driver-Lib</a></li>
+<li><a href="https://github.com/sui77/rc-switch">rc-switch</a></li>
+<li><a href="https://pubsubclient.knolleary.net/">PubSubClient</a></li>
+</ul>
+<p>For simplicity and to ensure that your build works these have been included in my repository under the <code>libs</code> directory (<a href="https://github.com/rniemand/hampton-bay-fan-mqtt/tree/main/libs">here</a>).</p>
+<h2 id="project-usage">Project Usage</h2>
+<p>Usage is pretty straight forward, and can be done by following these steps:</p>
+<ul>
+<li>Clone the <a href="https://github.com/rniemand/hampton-bay-fan-mqtt">repository</a> locally</li>
+<li>Open <code>./homefans/homefans.ino</code></li>
+<li>Make any required changes to <code>./homefans/config.h</code>
+<ul>
+<li><code>WIFI_*</code> to configure the WiFi connection</li>
+<li><code>MQTT_*</code> to configure your MQTT connection</li>
+<li><code>RF_*</code> to change any required RF related settings</li>
+</ul>
+</li>
+<li>Ensure your device is connected and available via a COM port</li>
+<li>Compile and upload the sketch</li>
+</ul>
+<h2 id="reverse-engineering">Reverse Engineering</h2>
+<p>This section covers (at a high-level) how I was able to reverse engineer the remote codes and modify the existing project to meet my needs.</p>
+<h3 id="capturing-codes">Capturing Codes</h3>
+<p>The first thing I needed to do was to capture any codes being sent by the remotes, this was as simple as modifying the sketch to log out the values captured by RCSwitch:</p>
+{% highlight "cpp" %}
+value = mySwitch.getReceivedValue();
+prot = mySwitch.getReceivedProtocol();
+bits = mySwitch.getReceivedBitlength();
+{% endhighlight %}
+
+<p>Resulting in values like the table below:</p>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>Bits</th>
+<th>Value</th>
+<th>Dip Pos</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11</td>
+<td>24</td>
+<td>16543350</td>
+<td>0001</td>
+<td>Fan Speed 1</td>
+</tr>
+<tr>
+<td>11</td>
+<td>24</td>
+<td>16542838</td>
+<td>0011</td>
+<td>Fan Speed 1</td>
+</tr>
+<tr>
+<td>11</td>
+<td>24</td>
+<td>16541814</td>
+<td>0111</td>
+<td>Fan Speed 1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="decoding-the-bits">Decoding the bits</h3>
+<p>At first glance this may all seem like nonsense - how does “16543350” turn on a specific fan to a specific speed? To answer that we first need to convert these values to their binary representation, this resulted in the following 24 bits:</p>
+<p>| Int | A | B | C | D | E | F |
+| 16543350 | 1111 | 1100 | 0110 | 1110 | 0111 | 0110 |
+| 16542838 | 1111 | 1100 | 0110 | 1100 | 0111 | 0110 |
+| 16542838 | 1111 | 1100 | 0110 | 1000 | 0111 | 0110 |</p>
+<blockquote>
+<p><strong>Note</strong>: This table is referenced a LOT below</p>
+</blockquote>
+<p>This process was repeated for each possible command on the remote and compared once done, during my comparison the following stood out:</p>
+<ul>
+<li>Columns <code>A</code>, <code>B</code>, and <code>C</code> are static regardless of the <code>DIP switch</code> positions
+<ul>
+<li>Perhaps this is a carrier code \ id \ etc</li>
+</ul>
+</li>
+<li>Column <code>D</code> is the positions of the <code>DIP switches</code> (only inverted - 0001 -&gt; 1110)</li>
+<li>Column <code>E</code> is generally <code>0111</code> unless using light effect commands, in that case it is <code>0110</code></li>
+<li>Column <code>F</code> is the actual command to execute (i.e. fan speed, light on, etc.)</li>
+</ul>
+<p>With this information I was able to piece together the following truth table:</p>
+<img src="./004.png" alt="" />
+<h3 id="encoding-codes">Encoding Codes</h3>
+<p>The process of re-encoding the remote codes is as simple as reversing this process (covered later on), at least this is some good news - we can work with this.</p>
+<h2 id="arduino-sketch">Arduino Sketch</h2>
+<p>Implementing this in the original Arduino sketch was a bit of a hack on my end, however with some persistence I was able to do it.</p>
+<h3 id="decoding-rf-input">Decoding RF Input</h3>
+<p>When a RF code is detected we need to decode it, this process begins with reading the received value:</p>
+{% highlight "cpp" %}
+value = mySwitch.getReceivedValue();
+{% endhighlight %}
+
+<p>Followed by manipulating the value into somethin we can work with:</p>
+{% highlight "cpp" %}
+int subtractedValue = value - 0b111111000110000000000000;
+int truncatedValue  = subtractedValue >> 8;
+int id              = truncatedValue ^0b1111;
+{% endhighlight %}
+
+<ul>
+<li>First we can remove the common <code>1111 1100 0110</code> using a subtraction</li>
+<li>We can bit-shift right by 8 places to remove the mode (column <code>E</code>) and command (column <code>F</code>) to be left with the inverted DIP switch values</li>
+<li>We can then invert the bits using an XOR command to get the actual DIP switch positions</li>
+</ul>
+<p>Once done we need to check that the RF protocol and bits are what we are expecting before we can continue.</p>
+{% highlight "cpp" %}
+if( prot == 11 && bits == 24 ) { }
+{% endhighlight %}
+
+<p>Once confirmed we can start unpacking the Mode from the received value using the subtraction result.</p>
+{% highlight "cpp" %}
+int cmdMode = ((subtractedValue & 0b000011110000) >> 4) % 6;
+{% endhighlight %}
+
+<ul>
+<li>I decided to use an AND operation to zero out all useless bits - effectively performing a soft-truncation of the left most bits</li>
+<li>We binary-shift right 4 bits to get the command as the left most bits are now <code>0000</code></li>
+<li>This results in either an int value of 6 or 7</li>
+<li>Using modulus we can convert that to a 1 or 0
+<ul>
+<li><code>1</code> = normal commands</li>
+<li><code>0</code> = light temperature related commands</li>
+</ul>
+</li>
+</ul>
+<p>We can finally turn our attention to extracting the actual command from the received code, this is done like so:</p>
+{% highlight "cpp" %}
+int command = subtractedValue & 0b000000001111;
+{% endhighlight %}
+
+<ul>
+<li>Using an AND operation we can zero out columns <code>D</code> and <code>E</code></li>
+<li>The remaining value is the command to execute
+<ul>
+<li>You can see an example of commands in the reverse engineering section above</li>
+</ul>
+</li>
+</ul>
+<p>All that is left to do is respond to the received code.</p>
+<h3 id="encoding-codes">Encoding Codes</h3>
+<p>Encoding outgoing RF codes is basically reversing the process used to decode them, and looks like this:</p>
+{% highlight "cpp" %}
+int baseCommand = 0b111111000110000000000000;
+int fanIdDips   = (fanId ^ 0b1111) << 8;
+int commandInt  = 0b01110000;
+int command     = 0b0000;
+{% endhighlight %}
+
+<ul>
+<li>Start with defining the static parts of the remote code (columns <code>A</code>, <code>B</code>, and <code>C</code>)
+<ul>
+<li>i.e. <code>0b111111000110000000000000</code></li>
+</ul>
+</li>
+<li>Invert the fanID to recreate (column <code>D</code>)
+<ul>
+<li>Bit shift this left by 8 to allow for insertion of column <code>E</code>, and <code>F</code></li>
+</ul>
+</li>
+<li>Define the static commandInt value
+<ul>
+<li>In the future this would change if I add support for the light mode</li>
+</ul>
+</li>
+<li>Finally I define a placeholder commandInt to populate with the outgoing command</li>
+</ul>
+<p>Next I switch based on the received MQTT attribute (<code>attr</code>) and command (<code>payload</code>).</p>
+<p>Once set, the final command is generated by combining all the parts (basically adding the int values together) to create the expected int of <code>16543350</code>.</p>
+{% highlight "cpp" %}
+int finalCommand = baseCommand + fanIdDips + commandInt + command;
+{% endhighlight %}
+
+<p>This value is then transmitted using the same protocol and bit length used to receive it, this results in the fan thinking the command came from the remote.</p>
+<blockquote>
+<p>If your fans do not respond to the command you should try changing the frequency value <code>RF_FREQUENCY</code> - I wasted a good 45 min with this one!</p>
+</blockquote>
+<h3 id="everything-else">Everything Else</h3>
+<p>The rest of the code is pretty much in line with the source repository.</p>
+<p>I have no doubtably introduced some new BUGS in the code-base and will need to tackle them when discovered!</p>
+<h2 id="home-assistant">Home Assistant</h2>
+<p>Once you have your ESP device deployed, adding it to Home Assistant is as simple as adding an MQTT fan and light entry per fan you wish to control.</p>
+<h3 id="mqtt-fan-configuration">MQTT Fan Configuration</h3>
+<p>In this case I am creating an entry for my remote with a DIP switch position of <code>0001</code>:</p>
+{% highlight "yaml" %}
+mqtt:
+  fan:
+    - name: "Master Bedroom Fan"
+      state_topic: "home/fans/0001/on/state"
+      command_topic: "home/fans/0001/on/set"
+      preset_mode_state_topic: "home/fans/0001/speed/state"
+      preset_mode_command_topic: "home/fans/0001/speed/set"
+      preset_modes:
+        - "off"
+        - "low"
+        - "medium"
+        - "high"
+      qos: 0
+      payload_on: "on"
+      payload_off: "off"
+{% endhighlight %}
+
+<h3 id="mqtt-light-configuration">MQTT Light Configuration</h3>
+<p>In this case I am creating an entry for my remote with a DIP switch position of <code>0001</code>:</p>
+{% highlight "yaml" %}
+mqtt:
+  light:
+    - name: "Master Bedroom Fan Light"
+      state_topic: "home/fans/0001/light/state"
+      command_topic: "home/fans/0001/light/set"
+      qos: 0
+      payload_on: "on"
+      payload_off: "off"
+      optimistic: false
+{% endhighlight %}
+
+<h3 id="entities">Entities</h3>
+<p>Once restarted you should see all your fan and light entities in Home Assistant.</p>
+<img src="./005.png" alt="" />
+<p>As expected the light entries work as per normal:</p>
+<img src="./006.png" alt="" />
+<p>Along with the fan entities:</p>
+<img src="./007.png" alt="" />
+<h3 id="dashboard-configuration">Dashboard Configuration</h3>
+<p>I am personally using the following configuration to control my fans in Home Assistant:</p>
+<img src="./008.png" alt="" />
+<p>Backed by the following configuration:</p>
+{% highlight "yaml" %}
+square: true
+columns: 5
+title: Master Bedroom Fan
+type: grid
+cards:
+  - show_name: false
+    show_icon: true
+    type: button
+    tap_action:
+      action: call-service
+      service: fan.toggle
+      data: {}
+      target:
+        entity_id: fan.master_bedroom_fan
+    entity: switch.master_bedroom
+    icon: mdi:ceiling-fan
+    show_state: true
+    hold_action:
+      action: none
+  - show_name: false
+    show_icon: true
+    type: button
+    tap_action:
+      action: call-service
+      service: light.toggle
+      data: {}
+      target:
+        entity_id: light.master_bedroom_fan_light
+    entity: light.master_bedroom_fan_light
+    icon: mdi:ceiling-fan-light
+    hold_action:
+      action: none
+    show_state: true
+  - show_name: true
+    show_icon: true
+    type: button
+    tap_action:
+      action: call-service
+      service: fan.set_preset_mode
+      data:
+        preset_mode: low
+      target:
+        entity_id: fan.master_bedroom_fan
+    entity: ""
+    icon: mdi:fan-speed-1
+    hold_action:
+      action: none
+  - show_name: true
+    show_icon: true
+    type: button
+    tap_action:
+      action: call-service
+      service: fan.set_preset_mode
+      data:
+        preset_mode: medium
+      target:
+        entity_id: fan.master_bedroom_fan
+    entity: ""
+    icon: mdi:fan-speed-2
+    hold_action:
+      action: none
+  - show_name: true
+    show_icon: true
+    type: button
+    tap_action:
+      action: call-service
+      service: fan.set_preset_mode
+      data:
+        preset_mode: high
+      target:
+        entity_id: fan.master_bedroom_fan
+    entity: ""
+    icon: mdi:fan-speed-3
+    hold_action:
+      action: none
+{% endhighlight %}
+
+<p>This can be repeated for each fan you wish to control.</p>
+<h2 id="proto-boarding">Proto-boarding</h2>
+<p>Finally I tried to neaten everything up by placing all the components on a proto-board, and I will soon be designing and printing a case for the final project.</p>
+<img src="./009.png" alt="" />
+_Looking good from the front_
+<img src="./010.png" alt="" />
+_The wiring at the back is not amazing_
+<img src="./011.png" alt="" />
+_don't forget the hot glue_
+<h2 id="in-closing">In Closing</h2>
+<p>This project was a good brain teaser and forced me to re-learn basic comp-sci principles like bitwise operations and binary maths.</p>
+<p>I would like to give a shout out to <strong><a href="https://github.com/owenb321">Ben Owen</a></strong> for the original work done here as it saved me a lot of time along with providing me with a good starting place.</p>
+<p>Please feel free to <a href="https://github.com/rniemand/hampton-bay-fan-mqtt">clone my repo</a>, make changes, submit pull requests as this is no way complete - yet!</p>
+<p>Happy hacking.</p>

@@ -1,0 +1,76 @@
+---
+title: Voxelab Aries 3D Printer with Cura
+date: 2022-08-25
+tags: [3d printing]
+logo: 3dprinter.png
+---
+
+<p>Recently I bought myself a new 3D Printer, more specifically a new shiny &quot;<a href="https://www.voxelab3dp.com/product/aries-high-end-fdm-3d-printer-for-beginners?cID=29">Voxelab Aries 3D Printer</a>&quot; which <code>imho</code> is a pretty good value printer for its price point (<em>paid ~ CAD$ 400</em> all in). My only complaints with the printer is the fact that the firmware is closed source and the provided slicer leaves a lot behind in terms of functionality when compared to <a href="https://ultimaker.com/software/ultimaker-cura">Cura</a> or similar slicing software.</p>
+<p>In this post I will cover getting the printer up and running in Cura along with providing a suggested Cura profile that you can use as a template.</p>
+<img src="./013.jpg" alt="" />
+<p>During my research I stumbled upon <a href="https://www.reddit.com/r/VoxelabAries/comments/tavi0i/cura_profile_for_the_aries/">this post</a> where <a href="https://www.reddit.com/user/deEvilUrge/">/u/deEvilUrge</a> provided some insight into his interaction with <a href="https://www.voxelab3dp.com/">Voxelab3dp</a> and the recommended settings to use with Cura, which i happily jotted down to test with my printer, and after some tweaking I have come up with a somewhat more refined version of those initial settings.</p>
+<h2 id="cura-configuration">Cura Configuration</h2>
+<h3 id="defining-your-printer">Defining your Printer</h3>
+<p>Once you have Cura installed you can add a new printer following these settings:</p>
+<p>Add a new printer to Cura (<code>Preferences</code> -&gt; <code>Configure Cura</code> -&gt; <code>Printers</code> -&gt; <code>Add New</code>):</p>
+<img src="./001.png" alt="" />
+<p>On the next screen:</p>
+<ol>
+<li>Select &quot;<strong>Add a non-networked printer</strong>&quot;</li>
+<li>Select Custom</li>
+<li>Ensure that “Custom FFF printer” is selected</li>
+<li>Enter in a name for your printer</li>
+<li>Click next</li>
+</ol>
+<img src="./002.png" alt="" />
+<p>Ensure that you enter in the following settings the <strong>Printer Settings</strong> section:</p>
+<ul>
+<li>X (Width): <code>200 mm</code></li>
+<li>Y (Depth): <code>200 mm</code></li>
+<li>Z (Height): <code>200 mm</code></li>
+<li>Build Plate Shape: <code>Rectangular</code></li>
+<li>Origin at Center: <code>Ticked</code></li>
+<li>Heated Bed: <code>Ticked</code></li>
+<li>G-Code flavour: <code>Marlin</code></li>
+</ul>
+<p>Ensure that the following setting are entered into the <strong>Printhead Settings</strong> section:</p>
+<ul>
+<li>X min: <code>-26 mm</code></li>
+<li>Y min: <code>-28 mm</code></li>
+<li>X max: <code>32 mm</code></li>
+<li>Y max: <code>40.5 mm</code></li>
+<li>Gantry Height: <code>30.1 mm</code></li>
+<li>Numbe of extruders: <code>1</code></li>
+<li>Apply Extruder offsets to G-Code: <code>Ticked</code></li>
+</ul>
+<img src="./003.png" alt="" />
+<p>Along with the following <strong>Extruder 1</strong> configuration:</p>
+<ul>
+<li>Nozzle size: <code>0.4 mm</code></li>
+<li>Compatabile material diameter: <code>1.75 mm</code></li>
+<li>Nozzle offset X: <code>0.0 mm</code></li>
+<li>Nozzle offset Y: <code>0.0 mm</code></li>
+<li>Cooling Fan Number: <code>0</code></li>
+</ul>
+<img src="./004.png" alt="" />
+<h3 id="importing-my-starter-profile">Importing my starter profile</h3>
+<p>Once you have your printer defined, navigate to (<code>Preferences</code> -&gt; <code>Configure Cura</code> -&gt; <code>Profiles</code> -&gt; <code>Import</code>):</p>
+<img src="./005.png" alt="" />
+<p>Download and import my <a href="https://github.com/rniemand/code-samples/tree/main/3d-printing/Voxelab-Aries">Voxelab-Aries-BaseProfile.curaprofile</a> profile, which looks a little something like this:</p>
+<img src="./006.png" alt="" />
+_Global Profile Settings_
+<img src="./007.png" alt="" />
+_Extruder Settings_
+<h3 id="using-the-profile">Using the Profile</h3>
+<p>Ensure that you have your printer selected in Cura along with the desired material. Select the <code>Aries Default Print Profile</code> profile and make any required changes to the slicer for your model.</p>
+<img src="./008.png" alt="" />
+<blockquote>
+<p>Below are some sample prints using the base profile - this should be a good starting point for most people.</p>
+</blockquote>
+<img src="./009.jpg" alt="" />
+<img src="./010.jpg" alt="" />
+<img src="./011.jpg" alt="" />
+<img src="./012.jpg" alt="" />
+<h2 id="in-closing">In Closing</h2>
+<p>Overall I am happy with the quality of the <strong>Voxelab Aries 3D Printer</strong>, and having the option to replace the default slicer with Cura is a no-brainer.</p>
+<p>I hope you found this post helpful and happy printing!</p>

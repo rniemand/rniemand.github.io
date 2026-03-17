@@ -1,0 +1,61 @@
+---
+title: Updating Chirpy
+date: 2022-11-25
+tags: [uncategorized]
+logo: git.png
+---
+
+<p>This is a simple post covering the steps required to update the <a href="https://github.com/cotes2020/jekyll-theme-chirpy">Chirpy Jekyll Theme</a> used by this blog, along with listing some useful pages and tools used for writing my blog posts.</p>
+<p>Let's dive in.</p>
+<h2 id="initial-setup">Initial Setup</h2>
+<blockquote>
+<p>Personally I use Windows as my daily driver so this section will cover Windows only.</p>
+</blockquote>
+<p>In order to build and run locally you will need to meet the following requirements:</p>
+<ul>
+<li>Install <a href="https://rubyinstaller.org/downloads/">Ruby</a></li>
+<li>Install <a href="https://git-scm.com/">Git</a></li>
+<li>Choose and appropriate text editor (I suggest <a href="https://code.visualstudio.com/">VS Code</a>)</li>
+</ul>
+<p>Follow the <a href="https://github.com/cotes2020/jekyll-theme-chirpy">setup guide</a> provided by the template author.</p>
+<p>Once setup, check out your repository locally and run the <code>bundle</code> command:</p>
+{% highlight "shell" %}
+cd <CHECKOUT DIR>
+bundle
+{% endhighlight %}
+
+<h2 id="writing-flow">Writing Flow</h2>
+<p>You can run either of the commands below to build and preview your site:</p>
+{% highlight "shell" %}
+bundle exec jekyll s
+ - OR -
+bundle exec jekyll s --incremental
+{% endhighlight %}
+
+<p>Once running you can view your site locally at <a href="http://localhost:4000">http://localhost:4000</a>.</p>
+<h2 id="updating-chirpy">Updating Chirpy</h2>
+<p>Full process is covered <a href="https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide">here</a>, this is more of a cheat sheet for the process:</p>
+<p>Determine the version that you are currently on (e.g. <code>v5.3.1</code>) and the latest version you are updating too - this can be found <a href="https://github.com/cotes2020/jekyll-theme-chirpy/tags">here</a> (let's say <code>v5.3.2</code>).</p>
+<p>Knowing this we can generate a GitHub compare URL that will list all changes between the provided tags (versions) using the following template:</p>
+{% highlight "text" %}
+https://github.com/cotes2020/chirpy-starter/compare/<from>...<to>
+{% endhighlight %}
+
+<p>In my sample case this would generate the following URL:</p>
+{% highlight "text" %}
+https://github.com/cotes2020/chirpy-starter/compare/v5.3.1...v5.3.2
+{% endhighlight %}
+
+<p>Visitng the URL will list out all the changes between the provided versions:</p>
+<img src="./001.png" alt="">
+<p>The update process is just replaying the changes made to the relevant files over your repository.</p>
+<h2 id="useful-links">Useful Links</h2>
+<p>Below is a curated list of useful links I have found and use when writing blog posts.</p>
+<ul>
+<li><a href="https://chirpy.cotes.page/posts/text-and-typography/#titles">Typography supported by Chirpy</a></li>
+<li><a href="https://chirpy.cotes.page/posts/write-a-new-post">Code snippets for writing posts</a></li>
+<li><a href="https://chirpy.cotes.page/posts/enable-google-pv/">Enabling Google Pages View</a> - was a breaking change a while back.</li>
+</ul>
+<h2 id="closing">Closing</h2>
+<p>That's all there is to it.</p>
+<p>Happy posting!</p>

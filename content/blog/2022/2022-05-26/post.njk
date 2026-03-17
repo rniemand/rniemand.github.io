@@ -1,0 +1,43 @@
+---
+title: Running RabbitMQ on Unraid
+date: 2022-05-26
+tags: [unraid]
+logo: rabbitmq.png
+---
+
+<blockquote>
+<p>This post is <a href="/series/">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.</p>
+</blockquote>
+<p>This is a quick post on getting <a href="https://www.rabbitmq.com/">RabbitMQ</a> up and running in a Docker container on <a href="https://unraid.net/">Unraid</a>, this post is based on the <a href="https://hub.docker.com/_/rabbitmq">official docker image</a>.</p>
+<h2 id="configuration">Configuration</h2>
+<h3 id="repository-tag">Repository Tag</h3>
+<p>Personally I prefer using the built-in management plugin, so I opt for this tag:</p>
+<ul>
+<li><strong>Repository</strong>: <code>rabbitmq:3-management</code></li>
+</ul>
+<h3 id="ports">Ports</h3>
+<p>You will need to expose the following ports:</p>
+<ul>
+<li>Port: <code>5672</code> used by RabbitMQ</li>
+<li>Port <code>15672</code> used by the admin UI</li>
+</ul>
+<h2 id="paths">Paths</h2>
+<p>You will need to have the following paths configured for your container:</p>
+<blockquote>
+<p><strong>Note</strong>: Make sure that <code>rabbitmq.conf</code> exists locally before you start the container.</p>
+</blockquote>
+<ul>
+<li><code>/etc/rabbitmq/rabbitmq.conf</code> -&gt; <code>/mnt/user/appdata/rabbitmq/config/rabbitmq.conf</code></li>
+<li><code>/var/lib/rabbitmq</code> -&gt; <code>/mnt/user/appdata/rabbitmq/data/</code></li>
+</ul>
+<p>You can refer to <a href="https://github.com/rabbitmq/rabbitmq-server/blob/v3.8.x/deps/rabbit/docs/rabbitmq.conf.example">this link</a> for an example configuration file.</p>
+<p>You can refer to the <a href="https://www.rabbitmq.com/configure.html#configuration-files">official documentation</a> for all available configuration options.</p>
+<h3 id="variables">Variables</h3>
+<ul>
+<li><code>RABBITMQ_DEFAULT_USER</code> = admin</li>
+<li><code>RABBITMQ_DEFAULT_PASS</code> = password</li>
+</ul>
+<h2 id="running">Running</h2>
+<p>That's all you need to get up and running, once the container has started you can head over to: http://192.168.0.60:15672/ and login with the credentials you set.</p>
+<img src="./001.png" alt="">
+<p>Enjoy!</p>

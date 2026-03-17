@@ -1,0 +1,43 @@
+---
+title: "HASS On Unraid: DNS"
+date: 2022-05-30
+tags: [home assistant, unraid]
+logo: hass.png
+---
+
+<blockquote>
+<p>This post is <a href="/series/">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.</p>
+</blockquote>
+<p>Today I will be covering setting up DNS and HTTPS on your local Home Assistance instance making use of <a href="https://www.duckdns.org/">Duck DNS</a> and <a href="https://letsencrypt.org/">Let's Encrypt</a>.</p>
+<p>The process is pretty simple and requires only a few steps to complete.</p>
+<h2 id="static-ip-address-and-port-forwarding">Static IP Address and port forwarding</h2>
+<p>First you will need to set a static IP Address for your Home Assistant server, generally you would do this at your router level reserving a static lease for the MAC Address of your server.</p>
+<p>Once you have a static IP Address you will need to forward all traffic on <code>TCP_443</code> (<code>HTTPS</code>) to your Home Assistant server's IP Address (again, usually done through your router).</p>
+<h2 id="create-a-duck-dns-domain">Create a Duck DNS Domain</h2>
+<p>Next you will need to head over to Duck DNS and create a domain to use with your Home Assistance instance.</p>
+<h2 id="configuring-home-assistant">Configuring Home Assistant</h2>
+<p>Next you will need to create a new file in your configuration folder called http.yaml to store the required configuration settings.</p>
+<p>Add the following contents to <code>http.yaml</code>:</p>
+{% highlight "yaml" %}
+ssl_certificate: /ssl/fullchain.pem
+ssl_key: /ssl/privkey.pem
+server_port: 443
+{% endhighlight %}
+
+<p>You can include this configuration in Home Assistant by adding the following line to your configuration.yaml file: <code>http: !include custom/http.yaml</code></p>
+<h3 id="install-duck-dns-addon">Install Duck DNS Addon</h3>
+<p>Under Home Assistant add ons, find and install the Duck DNS plugin:</p>
+<img src="./001.png" alt="" />
+<p>Once installed follow the prompts when setting up the Add-On making sure to substitute your token where necessary. In addition, please ensure that the rest of your configuration looks like this:</p>
+{% highlight "yaml" %}
+accept_terms: true
+algo: secp384r1
+certfile: fullchain.pem
+keyfile: privkey.pem
+{% endhighlight %}
+
+<p>It should now be safe to restart Home Assistant for the changes to take effect.</p>
+<blockquote>
+<p><strong>NOTE</strong>: you will no longer be able to access Home Assistant on HTTP</p>
+</blockquote>
+<p>You should now be able to access Home Assistant over HTTPS.</p>

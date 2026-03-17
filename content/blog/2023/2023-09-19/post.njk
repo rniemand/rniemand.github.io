@@ -1,0 +1,121 @@
+---
+title: Svelte Tips and Tricks
+date: 2023-09-19
+tags: [svelte]
+logo: svelte.png
+---
+
+<h2 id="vite-related-tips">Vite Related Tips</h2>
+<h3 id="host-port-binding">Host Port Binding</h3>
+<p>Every now and then I run into an odd issue where I am unable to launch a svelte project in my browser (due to the connection timing out).</p>
+<p>If you run into this issue where your application is compiling, but not accessible I found that the following configuration entry in my vite.config.ts file helps a lot.</p>
+{% highlight "ts" %}
+export default defineConfig({
+  server: {
+    host: "127.0.0.1",
+  },
+  // ...
+});
+{% endhighlight %}
+
+<p>Alternatively you can achieve the same result using sirv in your packages.json file.</p>
+{% highlight "text" %}
+sirv public --host 127.0.0.1 -p 5000
+{% endhighlight %}
+
+<h2 id="svelte-configuration">Svelte Configuration</h2>
+<h3 id="static-site-generation-spa">Static Site Generation (SPA)</h3>
+<p>Should you want to generate a static site from your svelte project you can simply swap out the default formatter in your <code>svelte.config.js</code> file with the more appropriate <code>@sveltejs/adapter-static</code> adapter.</p>
+{% highlight "ts" %}
+import adapter from "@sveltejs/adapter-static";
+import { vitePreprocess } from "@sveltejs/kit/vite";
+// ...
+export default config;
+{% endhighlight %}
+
+<h3 id="correcting-the-base-url">Correcting the Base URL</h3>
+<p>Should you want to set an explicit base URL instead of making use of the default relative one (and providing that you know the implications of doing so), you can do this by adding in the following lines in your <code>svelte.config.js</code> file.</p>
+{% highlight "js" %}
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+  kit: {
+    paths: {
+      base: "",
+      relative: false,
+    },
+  },
+};
+{% endhighlight %}
+
+<p>In the example above I am setting the path to “” and disabling relative pathing, this combined with my settings in +layout.js allow for me to land on any URL of my application with no additional URL rewrites on Nginx or IIS.</p>
+{% highlight "js" %}
+export const prerender = true;
+export const ssr = false;
+export const trailingSlash = "always";
+{% endhighlight %}
+
+<h2 id="svelte-components">Svelte Components</h2>
+<h3 id="accessing-class-in-your-component">Accessing “class” in your component</h3>
+<p>If you wish to use the “class” property on your custom component you can do so by using one of the following methods.</p>
+<p>The first method is by far the simplest and that is just using the <code>$$props.class</code> props:</p>
+{% highlight "html" %}
+<button type="button" class="{classes} {$$props.class}">
+  <slot />
+</button>
+{% endhighlight %}
+
+<p>Alternatively you can create a local variable and export it as “class”:</p>
+{% highlight "html" %}
+<script lang="ts">
+  let classes: string = "";
+  export { classes as class };
+</script>
+
+<button type="button" class="{classes}">
+  <slot />
+</button>
+{% endhighlight %}
+
+<h3 id="exporting-on-events-on-a-custom-component">Exporting &quot;on:&quot; events on a custom component</h3>
+<p>Should you want to export <code>on:</code> events on a custom svelte component you can do so by simply adding the event that you wish to export onto your component with no body attached to it - svelte will hoist this declaration up and expose it externally allowing you to bind to those events externally.</p>
+{% highlight "html" %}
+<div class="link {$$props.class}" class:active on:click>
+  <slot />
+</div>
+{% endhighlight %}
+
+<h3 id="styling-child-components">Styling child components</h3>
+<p>Svelte provides a mechanism for styling child components through the use of the <code>:global()</code> css selector, which allows you to define styling for child components (providing that the css selector is satisfied).</p>
+{% highlight "html" %}
+<style>
+  .links-container {
+  }
+  .links-container :global(.link) {
+  }
+  .links-container :global(.link:last-child) {
+  }
+  .links-container :global(.link:hover) {
+  }
+  .links-container :global(.link.active) {
+  }
+</style>
+
+<div class="mt-2">
+  <div class="links-container">
+    <slot />
+  </div>
+</div>
+{% endhighlight %}
+
+{% highlight "html" %}
+<div class="link {$$props.class}" on:click>
+  <slot />
+</div>
+{% endhighlight %}
+
+<h2 id="misc">Misc</h2>
+<p>One highly recommended plugin for VS Code is <a href="https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode">Svelte for VS Code</a> - it offers a lot of useful features like syntax highlighting, code completion and suggestions, and some additional debugging tools.</p>
+<p>One of the best features is the ability to show the compiled code for a svelte component - this is accessible through the <code>CTRL</code> + <code>SHIFT</code> + <code>P</code> key combination.</p>
+<img src="./001.png" alt="" />
+<p>When invoked, this will show you the generated code for the active component it was called on.</p>
+<img src="./002.png" alt="" />

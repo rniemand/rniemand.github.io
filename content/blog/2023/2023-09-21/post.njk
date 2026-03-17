@@ -1,0 +1,124 @@
+---
+title: Simple Toast Messages using SvelteStrap
+date: 2023-09-21
+tags: [svelte]
+#banner: blue.png
+logo: svelte.png
+---
+
+<p>In this post I will cover creating a simple toast message implementation for your next svelte application using <a href="https://sveltestrap.js.org/">SvelteStrap</a> and a simple toast manager service written in TypeScript.</p>
+<h2 id="components">Components</h2>
+<p>You will need to add the following components to your project.</p>
+<h3 id="toastmanagerts">ToastManager.ts</h3>
+<p>This file houses the <code>ToastManager</code> class which is used to manage toast notifications (<code>NlpToastMessage</code>) instances and displays them using the custom <code>&lt;TopNavigation /&gt;</code> component listed below.</p>
+<p>The manager is backed by a <a href="https://svelte.dev/docs/svelte-store">Writable Svelte Store</a> and internally tracks what toast messages should be displayed along with handling dismiss events on the individual messages.</p>
+<p>This class can be extended to add any additional functionality you may need for your specific implementation, for me this works perfectly.</p>
+{% highlight "typescript" %}
+import { writable, type Writable } from "svelte/store";
+export const toasts: Writable<NlpToastMessage[]> = writable([]);
+
+export class NlpToastMessage {
+  public id: number = -1;
+  constructor(
+    private _manager: ToastManager,
+    public title: string,
+    public body: string | undefined,
+    public color: string,
+    public autoHide: boolean = false
+  ) {}
+  setId = (id: number) => (this.id = id);
+  dismiss = () => this._manager.dismiss(this);
+}
+
+class ToastManager {
+  public toasts: NlpToastMessage[] = [];
+  private _toastId: number = 0;
+  constructor(private _toasts: Writable<NlpToastMessage[]>) {}
+  add = (toast: NlpToastMessage) => {
+    toast.setId(this._toastId++);
+    this.toasts.push(toast);
+    this._toasts.set(this.toasts);
+  };
+  dismiss = (toast: NlpToastMessage) => {
+    let idx = this.toasts.indexOf(toast);
+    this.toasts.splice(idx, 1);
+    this._toasts.set(this.toasts);
+  };
+}
+
+const manager = new ToastManager(toasts);
+
+export const toastSuccess = (
+  title: string,
+  body: string | undefined = undefined,
+  autoHide: boolean = true
+) =>
+  manager.add(new NlpToastMessage(manager, title, body, "success", autoHide));
+
+export const toastError = (
+  title: string,
+  body: string | undefined = undefined,
+  autoHide: boolean = true
+) => manager.add(new NlpToastMessage(manager, title, body, "danger", autoHide));
+{% endhighlight %}
+
+<h3 id="toastmanagersvelte">ToastManager.svelte</h3>
+<p>This is the custom component that wraps the <a href="https://sveltestrap.js.org/?path=/story/components-toast--toast">Toast SvelteStrap</a> component and places all added toast messages in the bottom corner of your application using the <code>position-fixed bottom-0 end-0 p-3</code> <a href="https://getbootstrap.com/">BootStrap</a> styles.</p>
+<p>When the component is mounted it subscribes to the toasts store exposed from <code>ToastManager.ts</code> (and unsubscribes when the component is unmounted). Each toast message added to the store is rendered in the <a href="https://svelte.dev/docs/logic-blocks">each loop</a>.</p>
+<p>By default all toasts will automatically close after 5 seconds (unless configured not to in the <code>NlpToastMessage</code> constructor), clicking the close icon on a toast will trigger the dismiss method on the manager and remove the toast notification immediately.</p>
+<p>{% raw %}</p>
+{% highlight "html" %}
+<script lang="ts">
+  import { onMount } from "svelte";
+  import { Toast, ToastBody, ToastHeader } from "sveltestrap";
+  import { NlpToastMessage, toasts } from "./ToastManager";
+  let toastMessages: NlpToastMessage[] = [];
+
+  onMount(() => {
+    return toasts.subscribe((_entries: NlpToastMessage[]) => {
+      toastMessages = _entries;
+    });
+  });
+</script>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  {#each toastMessages as entry}
+  <Toast autohide>
+    <ToastHeader icon="{entry.color}" toggle="{entry.dismiss}">
+      {entry.title}
+    </ToastHeader>
+    {#if entry.body}<ToastBody>{entry.body}</ToastBody>{/if}
+  </Toast>
+  {/each}
+</div>
+{% endhighlight %}
+
+<p>{% endraw %}</p>
+<h2 id="usage">Usage</h2>
+<p>Usage is pretty simple, all you need to do is add the <code>&lt;ToastManager /&gt;</code> component anywhere in your application (I would suggest adding this to your layout file).</p>
+{% highlight "html" %}
+<ToastManager />
+{% endhighlight %}
+
+<p>You can create a toast message by calling one of the exposed ToastManager.ts methods:</p>
+<ul>
+<li>toastSuccess(<code>title: string</code>[[, <code>body: string|undefined</code>], <code>autoHide: boolean</code>])</li>
+<li>toastError(<code>title: string</code>[[, <code>body: string|undefined</code>], <code>autoHide: boolean</code>])</li>
+</ul>
+<p>An example is shown below:</p>
+{% highlight "typescript" %}
+const addTask = async () => {
+  const response = await new UserTasksClient().addTask(userTask);
+  if (response.success) {
+    toastSuccess("Task Added", `${userTask.taskName} has been created`);
+    userTask = createNewTask();
+    onTaskAdded();
+    toggle();
+  } else {
+    toastError("Error Adding Task", response.error || "Unknown error");
+  }
+};
+{% endhighlight %}
+
+<p>It is that simple.</p>
+<img src="./001.png" alt="">
