@@ -60,7 +60,7 @@ hue_lights_group:
 
 <h3 id="customizing-our-lights">Customizing our lights</h3>
 <p>I am a visual person, and as such prefer to have the icons representing each light to differ from each-other for quick identification when scrolling through my Home Assistant devices. I would like each light to look different, and preferably to have an icon that more closely represents the shape of the light fixture.</p>
-<p>Luckily for us such customization is possible in Home Assistant through the cuztomize.yaml file. In this file you are able to customize <a href="https://www.home-assistant.io/docs/configuration/customizing-devices/">some basic characteristics</a> of devices in Home Assistant, and even hide ones that should you want to. The syntax is simple (and well documented) making it easy to get up and running quickly. In my case I used the following configuration for my lights:</p>
+<p>Luckily for us such customization is possible in Home Assistant through the customize.yaml file. In this file you are able to customize <a href="https://www.home-assistant.io/docs/configuration/customizing-devices/">some basic characteristics</a> of devices in Home Assistant, and even hide ones that should you want to. The syntax is simple (and well documented) making it easy to get up and running quickly. In my case I used the following configuration for my lights:</p>
 {% highlight "yaml" %}
 light.bedroom_light:
   friendly_name: Bedroom
@@ -79,7 +79,7 @@ light.workbench_light:
 <blockquote>
 <p><strong>Icons</strong>: You can use any icon from <a href="https://materialdesignicons.com">https://materialdesignicons.com</a> provided that you prefix the name with mdi: as shown above</p>
 </blockquote>
-<p>I would like to hide the rooms imported with the lights, so I added the following configuration to cuztomize.yaml:</p>
+<p>I would like to hide the rooms imported with the lights, so I added the following configuration to customize.yaml:</p>
 {% highlight "yaml" %}
 light.lounge:
   hidden: true
@@ -94,7 +94,7 @@ light.bedroom:
 
 <h3 id="committing-changes">Committing changes</h3>
 <p>The last thing left to do now is ignore any files that expose personal data, and commit our changes to GitHub.</p>
-<p>If you haven&#39;t done so already you will need to add .config_entries.json to your git.ignore file before pushing your changes to GutHub (or whatever source control you are using). As the name suggests this file contains configuration specific to the devices in your Home Automation setup, and could potentially contain sensitive information such as an API key, MAC Address and so on:</p>
+<p>If you haven&#39;t done so already you will need to add .config_entries.json to your .gitignore file before pushing your changes to GitHub (or whatever source control you are using). As the name suggests this file contains configuration specific to the devices in your Home Automation setup, and could potentially contain sensitive information such as an API key, MAC Address and so on:</p>
 <img src="./images/07/02-010.png" alt="" />
 <p>I strongly suggest ignoring these types of files and manually backing them up on a schedule.</p>
 

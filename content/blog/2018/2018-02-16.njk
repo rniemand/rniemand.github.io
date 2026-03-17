@@ -16,7 +16,7 @@ pip3 install mysqlclient
 <p>This resulted in a pretty confusing error:</p>
 <img src="./images/02/16-001.png" alt="" />
 <p>After doing some digging around, and referring to the <a href="https://www.home-assistant.io/integrations/recorder/">recorder documents for HASS</a> I finally caught on to my mistake, I was not running under the same user context that Home Assistant was installed under.</p>
-<p>running under the same user context that Home Assistant was installed under.</p>
+
 <img src="./images/02/16-002.png" alt="" />
 <blockquote>
 <p>After following their commands, I was able to successfully install the mysqlclient package.</p>
@@ -42,7 +42,7 @@ recorder:
 <img src="./images/02/16-007.png" alt="" />
 <p>After letting Home Assistant do its thing for a while I decided to run another check on the server performance, and was presently surprised to see that the efficiency increased dramatically over the course of the day.</p>
 <img src="./images/02/16-008.png" alt="" />
-<p>Any retrieving 2032 entries is still coming in under 0.95 seconds!</p>
+<p>And retrieving 2032 entries is still coming in under 0.95 seconds!</p>
 <img src="./images/02/16-009.png" alt="" />
 <p>The MySQL service on my host computer is also using &lt; 200 Mb when running and less than 0.04 % of my CPU overall.</p>
 <img src="./images/02/16-010.png" alt="" />

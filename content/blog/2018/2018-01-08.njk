@@ -23,7 +23,7 @@ sudo apt-get -y install mosquitto
 {% endhighlight %}
 
 <h2 id="configuring-mosquitto">Configuring Mosquitto</h2>
-<p>Once installed you will need to crate a <code>mosquitto.conf</code> configuration file:</p>
+<p>Once installed you will need to create a <code>mosquitto.conf</code> configuration file:</p>
 {% highlight "shell" %}
 sudo nano /etc/mosquitto/conf.d/mosquitto.conf
 {% endhighlight %}
@@ -81,7 +81,7 @@ WantedBy=multi-user.target
 <h2 id="create-mosquitto-users">Create Mosquitto users</h2>
 <p>Adding a new user to Mosquitto is as simple as running ...</p>
 {% highlight "shell" %}
-sudo mosquitto_passwd -c /etc/mosquitto/conf.d/passwd <username></username>
+sudo mosquitto_passwd -c /etc/mosquitto/conf.d/passwd <username>
 {% endhighlight %}
 <p>... making sure to replace <code>&lt;username&gt;</code> with your desired username.</p>
 <p>This will prompt you for the password for the user and update the targeted passwd file (in my case <code>/etc/mosquitto/conf.d/passwd</code>) with the user / password.</p>
@@ -99,7 +99,7 @@ sudo systemctl start mosquitto.service
 <h2 id="adding-more-users">Adding more users</h2>
 <p>To add additional users to your Mosquitto broker you will need to run the following command:</p>
 {% highlight "shell" %}
-sudo mosquitto_passwd /etc/mosquitto/conf.d/passwd <username></username>
+sudo mosquitto_passwd /etc/mosquitto/conf.d/passwd <username>
 {% endhighlight %}
 <blockquote>
 <p><strong>NOTE</strong>: I omitted the -c used earlier, if you fail to do this you are going to override your password file!</p>
