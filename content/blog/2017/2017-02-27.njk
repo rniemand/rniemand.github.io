@@ -69,7 +69,7 @@ logo: arduino.png
 			<td><code>int</code></td>
 			<td><code>64</code></td>
 			<td>2 byte (16 bit)</td>
-			<td>-2,147,483,648 to 2,147,483,647</td>
+			<td>-32,768 to 32,767</td>
 		</tr>
 		<tr>
 			<td><code>word</code></td>
@@ -81,7 +81,7 @@ logo: arduino.png
 			<td><code>long</code></td>
 			<td><code>186000L</code></td>
 			<td>4 bytes (32 bits)</td>
-			<td>2,147,483,648 to 2,147,483,647</td>
+			<td>-2,147,483,648 to 2,147,483,647</td>
 		</tr>
 		<tr>
 			<td><code>short</code></td>
@@ -157,7 +157,7 @@ int dData = digitalRead(pinBtn);
 	<li><strong>Analog</strong> - used to read a value between <code>0</code> and <code>1024</code></li>
 </ul>
 
-<h3 id="workingwithserial">Working with Serial.</h3>
+<h3 id="workingwithserial">Working with Serial</h3>
 
 {% highlight "cpp" %}
 // Start serial @ 9600 bps
