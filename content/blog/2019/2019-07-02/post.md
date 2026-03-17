@@ -47,7 +47,7 @@ sudo rm -f grafana_6.2.2_amd64.deb
 
 ## Configuration
 
-The main Grafana configuration file live in /etc/grafana/grafana.ini and you can edit it with your favourite bash editor:
+The main Grafana configuration file lives in /etc/grafana/grafana.ini and you can edit it with your favourite bash editor:
 
 ```shell
 sudo nano /etc/grafana/grafana.ini

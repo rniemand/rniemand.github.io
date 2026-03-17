@@ -58,7 +58,7 @@ Save and close the file - that's it from the Grafana side.
 
 ### Trusting the certificate
 
-If you were to browse to your server on https now - your browser would throw up an error page saying that the certificate is not valid \ trusted. We can solve this by importing the localhost.crt file into the computer's rusted Root Certification Authorities.
+If you were to browse to your server on https now - your browser would throw up an error page saying that the certificate is not valid \ trusted. We can solve this by importing the localhost.crt file into the computer's trusted Root Certification Authorities.
 
 Note this is not recommended for production environments - but is the path of least resistance for us developers :)
 

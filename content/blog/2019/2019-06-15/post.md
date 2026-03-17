@@ -120,7 +120,7 @@ sudo mysql -u root -p
 CREATE DATABASE `<DB_NAME>`;
 ```
 
-### Creating an User and assign a DB
+### Creating a User and assign a DB
 
 ```shell
 CREATE USER '<USER>' IDENTIFIED BY '<PASSWORD>';

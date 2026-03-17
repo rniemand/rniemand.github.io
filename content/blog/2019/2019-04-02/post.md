@@ -46,7 +46,7 @@ TelePeriod 10
 
 By far the easiest way to send data between your Sonoff device and Home Assistant is through MQTT.
 
-Configuration is done via the `Configuration` -> `Conffigure MQTT` links:
+Configuration is done via the `Configuration` -> `Configure MQTT` links:
 
 <img src="./001.png" alt="" />
 

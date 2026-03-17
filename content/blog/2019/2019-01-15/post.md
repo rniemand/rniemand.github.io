@@ -70,7 +70,7 @@ You need to build your Dockerfile in order to run it - in our case it is as simp
 docker build -t hello-world .
 ```
 
-> **Note** I use `.` here are is am already in the folder containing the Dockerfile
+> **Note** I use `.` here as I am already in the folder containing the Dockerfile
 
 This will interrogate your Dockerfile and pull down all the required images to build your container (this may take a while the first time you do this).
 

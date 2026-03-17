@@ -56,7 +56,7 @@ $ sudo systemctl restart influxd.service
 
 ### Testing Install
 
-To confirm InfluxDB is working (and the HTTP endpoint is enabled) you can try listing all databases using the following URL template (http://<server_ip>:8086/query?q=show databases), in my case that would be: `http://10.0.0.52:8086/query?q=show%20databases`
+To confirm InfluxDB is working (and the HTTP endpoint is enabled) you can try listing all databases using the following URL template (`http://<server_ip>:8086/query?q=show databases`), in my case that would be: `http://10.0.0.52:8086/query?q=show%20databases`
 
 You should see something like the below if all went well:
 

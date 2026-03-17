@@ -160,7 +160,7 @@ Broken up it's easy enough to follow:
 - `condition` - used to filter out the specific MQTT payload I wanted
 - `action` - response to the trigger and condition being met
 
-After reloading the automatons in Home Assistant my Back Door Opened entry was listed!
+After reloading the automations in Home Assistant my Back Door Opened entry was listed!
 
 <img src="./009.png" alt="" />
 

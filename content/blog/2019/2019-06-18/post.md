@@ -28,7 +28,7 @@ sudo dpkg -i chronograf_1.7.11_amd64.deb
 Once installed, you can remove the downloaded package with the following command:
 
 ```shell
-sudo rm -f hronograf_1.7.11_amd64.deb
+sudo rm -f chronograf_1.7.11_amd64.deb
 ```
 
 ## Creating a "Service"
