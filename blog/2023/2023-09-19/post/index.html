@@ -346,6 +346,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2023-09-19">19 September 2023</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#vite-related-tips">Vite Related Tips</a><ol><li><a href="#host-port-binding">Host Port Binding</a></li></ol></li><li><a href="#svelte-configuration">Svelte Configuration</a><ol><li><a href="#static-site-generation-spa">Static Site Generation (SPA)</a></li><li><a href="#correcting-the-base-url">Correcting the Base URL</a></li></ol></li><li><a href="#svelte-components">Svelte Components</a><ol><li><a href="#accessing-class-in-your-component">Accessing “class” in your component</a></li><li><a href="#exporting-on-events-on-a-custom-component">Exporting &quot;on:&quot; events on a custom component</a></li><li><a href="#styling-child-components">Styling child components</a></li></ol></li><li><a href="#misc">Misc</a></li></ol>
+      </div>
+
 
 <h2 id="vite-related-tips">Vite Related Tips</h2>
 <h3 id="host-port-binding">Host Port Binding</h3>
@@ -357,8 +362,10 @@ pre[class*="language-diff-"] {
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
 <p>Alternatively you can achieve the same result using sirv in your packages.json file.</p>
 <pre class="language-text" tabindex="0"><code class="language-text">sirv public --host 127.0.0.1 -p 5000</code></pre>
+
 <h2 id="svelte-configuration">Svelte Configuration</h2>
 <h3 id="static-site-generation-spa">Static Site Generation (SPA)</h3>
 <p>Should you want to generate a static site from your svelte project you can simply swap out the default formatter in your <code>svelte.config.js</code> file with the more appropriate <code>@sveltejs/adapter-static</code> adapter.</p>
@@ -366,6 +373,7 @@ pre[class*="language-diff-"] {
 <span class="token keyword">import</span> <span class="token punctuation">{</span> vitePreprocess <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"@sveltejs/kit/vite"</span><span class="token punctuation">;</span>
 <span class="token comment">// ...</span>
 <span class="token keyword">export</span> <span class="token keyword">default</span> config<span class="token punctuation">;</span></code></pre>
+
 <h3 id="correcting-the-base-url">Correcting the Base URL</h3>
 <p>Should you want to set an explicit base URL instead of making use of the default relative one (and providing that you know the implications of doing so), you can do this by adding in the following lines in your <code>svelte.config.js</code> file.</p>
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token comment">/** @type {import('@sveltejs/kit').Config} */</span>
@@ -377,10 +385,12 @@ pre[class*="language-diff-"] {
     <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+
 <p>In the example above I am setting the path to “” and disabling relative pathing, this combined with my settings in +layout.js allow for me to land on any URL of my application with no additional URL rewrites on Nginx or IIS.</p>
 <pre class="language-js" tabindex="0"><code class="language-js"><span class="token keyword">export</span> <span class="token keyword">const</span> prerender <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
 <span class="token keyword">export</span> <span class="token keyword">const</span> ssr <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
 <span class="token keyword">export</span> <span class="token keyword">const</span> trailingSlash <span class="token operator">=</span> <span class="token string">"always"</span><span class="token punctuation">;</span></code></pre>
+
 <h2 id="svelte-components">Svelte Components</h2>
 <h3 id="accessing-class-in-your-component">Accessing “class” in your component</h3>
 <p>If you wish to use the “class” property on your custom component you can do so by using one of the following methods.</p>
@@ -388,6 +398,7 @@ pre[class*="language-diff-"] {
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{classes} {$$props.class}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>slot</span> <span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span></code></pre>
+
 <p>Alternatively you can create a local variable and export it as “class”:</p>
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ts<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
   <span class="token keyword">let</span> <span class="token literal-property property">classes</span><span class="token operator">:</span> string <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
@@ -397,11 +408,13 @@ pre[class*="language-diff-"] {
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>button<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{classes}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>slot</span> <span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">></span></span></code></pre>
+
 <h3 id="exporting-on-events-on-a-custom-component">Exporting &quot;on:&quot; events on a custom component</h3>
 <p>Should you want to export <code>on:</code> events on a custom svelte component you can do so by simply adding the event that you wish to export onto your component with no body attached to it - svelte will hoist this declaration up and expose it externally allowing you to bind to those events externally.</p>
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>link {$$props.class}<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">class:</span>active</span> <span class="token attr-name"><span class="token namespace">on:</span>click</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>slot</span> <span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+
 <h3 id="styling-child-components">Styling child components</h3>
 <p>Svelte provides a mechanism for styling child components through the use of the <code>:global()</code> css selector, which allows you to define styling for child components (providing that the css selector is satisfied).</p>
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
@@ -422,9 +435,11 @@ pre[class*="language-diff-"] {
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>slot</span> <span class="token punctuation">/></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>link {$$props.class}<span class="token punctuation">"</span></span> <span class="token attr-name"><span class="token namespace">on:</span>click</span><span class="token punctuation">></span></span>
   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>slot</span> <span class="token punctuation">/></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+
 <h2 id="misc">Misc</h2>
 <p>One highly recommended plugin for VS Code is <a href="https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode">Svelte for VS Code</a> - it offers a lot of useful features like syntax highlighting, code completion and suggestions, and some additional debugging tools.</p>
 <p>One of the best features is the ability to show the compiled code for a svelte component - this is accessible through the <code>CTRL</code> + <code>SHIFT</code> + <code>P</code> key combination.</p>
@@ -455,7 +470,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2023/2023-09-19/post/` was built on 2026-03-17T17:49:29.679Z -->
+    <!-- This page `/blog/2023/2023-09-19/post/` was built on 2026-03-17T18:08:59.907Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

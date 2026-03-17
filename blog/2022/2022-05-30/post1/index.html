@@ -347,6 +347,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2022-05-30">30 May 2022</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#static-ip-address-and-port-forwarding">Static IP Address and port forwarding</a></li><li><a href="#create-a-duck-dns-domain">Create a Duck DNS Domain</a></li><li><a href="#configuring-home-assistant">Configuring Home Assistant</a><ol><li><a href="#install-duck-dns-addon">Install Duck DNS Addon</a></li></ol></li></ol>
+      </div>
+
 
 <blockquote>
 <p>This post is <a href="/series/">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.</p>
@@ -364,6 +369,7 @@ pre[class*="language-diff-"] {
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">ssl_certificate</span><span class="token punctuation">:</span> /ssl/fullchain.pem
 <span class="token key atrule">ssl_key</span><span class="token punctuation">:</span> /ssl/privkey.pem
 <span class="token key atrule">server_port</span><span class="token punctuation">:</span> <span class="token number">443</span></code></pre>
+
 <p>You can include this configuration in Home Assistant by adding the following line to your configuration.yaml file: <code>http: !include custom/http.yaml</code></p>
 <h3 id="install-duck-dns-addon">Install Duck DNS Addon</h3>
 <p>Under Home Assistant add ons, find and install the Duck DNS plugin:</p>
@@ -373,6 +379,7 @@ pre[class*="language-diff-"] {
 <span class="token key atrule">algo</span><span class="token punctuation">:</span> secp384r1
 <span class="token key atrule">certfile</span><span class="token punctuation">:</span> fullchain.pem
 <span class="token key atrule">keyfile</span><span class="token punctuation">:</span> privkey.pem</code></pre>
+
 <p>It should now be safe to restart Home Assistant for the changes to take effect.</p>
 <blockquote>
 <p><strong>NOTE</strong>: you will no longer be able to access Home Assistant on HTTP</p>
@@ -402,7 +409,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2022/2022-05-30/post1/` was built on 2026-03-17T17:49:29.678Z -->
+    <!-- This page `/blog/2022/2022-05-30/post1/` was built on 2026-03-17T18:08:59.906Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

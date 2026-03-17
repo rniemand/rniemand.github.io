@@ -346,6 +346,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2023-06-20">20 June 2023</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#step-1-setting-up-github-pages">Step 1: Setting up GitHub Pages</a></li><li><a href="#step-2-add-your-sites-contents">Step 2: Add your sites contents</a></li><li><a href="#step-3-setting-up-github-pages">Step 3: Setting up GitHub pages</a><ol><li><a href="#using-a-custom-domain">Using a custom domain</a></li><li><a href="#using-https">Using HTTPS</a></li></ol></li><li><a href="#step-4-analytics-and-advertising">Step 4: Analytics and Advertising</a><ol><li><a href="#adding-google-analytics">Adding Google Analytics</a></li><li><a href="#setting-up-google-adsense">Setting up Google Adsense</a></li></ol></li><li><a href="#step-5-keeping-up-to-date">Step 5: Keeping up to date</a><ol><li><a href="#updating-chirpy">Updating Chirpy</a></li><li><a href="#keep-headhtml-up-to-date">Keep head.html up to date</a></li><li><a href="#running-locally-windows">Running locally (Windows)</a></li></ol></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <p>In this post I will cover the process I used to get this blog (<a href="https://www.richardn.ca/">https://www.richardn.ca/</a>) running under a custom domain on <a href="https://pages.github.com/">GitHub Pages</a> along with getting Google Analytics and Adsense working with the <a href="https://github.com/cotes2020/chirpy-starter">chirpy-starter template</a>.</p>
 <h2 id="step-1-setting-up-github-pages">Step 1: Setting up GitHub Pages</h2>
@@ -393,6 +398,7 @@ pre[class*="language-diff-"] {
 <picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/Vs9t9RE8dX-1285.avif 1285w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/Vs9t9RE8dX-1285.webp 1285w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/Vs9t9RE8dX-1285.png" alt="" width="1285" height="606"></picture>
 <p>To pass the required verification from GitHub I needed to create a <strong>CNAME</strong> entry called <code>www.richardn.ca</code> and point it to <code>rniemand.github.io</code> - wait some time for the change to propagate (you can check the propagation status using a command like <code>dig</code> on linux):</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">dig</span> www.richardn.ca</code></pre>
+
 <picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/fVeY0M6G2t-613.avif 613w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/fVeY0M6G2t-613.webp 613w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/fVeY0M6G2t-613.png" alt="" width="613" height="53"></picture>
 <p>Once your changes are live you should be able to set your custom domain in GitHub as shown below:</p>
 <picture><source type="image/avif" srcset="/blog/2023/2023-06-21/post/vmW1pokhpI-670.avif 670w"><source type="image/webp" srcset="/blog/2023/2023-06-21/post/vmW1pokhpI-670.webp 670w"><img loading="lazy" decoding="async" src="/blog/2023/2023-06-21/post/vmW1pokhpI-670.png" alt="" width="670" height="164"></picture>
@@ -458,12 +464,13 @@ pre[class*="language-diff-"] {
 <li>Note the version you are on for the next comparison</li>
 </ul>
 <p>I cover this process in more detail in <a href="https://www.richardn.ca/posts/UpdatingChirpy/#updating-chirpy">this post</a> should you need more information.</p>
-<h3 id="keep-head-html-up-to-date">Keep head.html up to date</h3>
+<h3 id="keep-headhtml-up-to-date">Keep head.html up to date</h3>
 <p>Be sure from time to time to compare your local copy of <code>./_includes\head.html</code> with the maintained version <a href="https://github.com/cotes2020/jekyll-theme-chirpy/blob/master/_includes/head.html">here</a>.</p>
 <p>I would suggest doing this every time you update Chirpy to ensure that you do not drift too far from the source version.</p>
 <h3 id="running-locally-windows">Running locally (Windows)</h3>
 <p>With a more recent update of Chirpy they updated the localization dependency which has obliterated locally running on Windows using a custom timezone in your <code>_config.yml</code> file, specifically this line for me:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">timezone</span><span class="token punctuation">:</span> America/Edmonton</code></pre>
+
 <p>Thankfully the solution is just to remove your timezone from your local configuration file (ensure that you do not commit the removal of this back to your repository) and run the site using the normal <code>bundle exec jekyll s</code> command.</p>
 <p>This should resolve the issue.</p>
 <h2 id="in-closing">In Closing</h2>
@@ -492,7 +499,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2023/2023-06-21/post/` was built on 2026-03-17T17:49:29.680Z -->
+    <!-- This page `/blog/2023/2023-06-21/post/` was built on 2026-03-17T18:08:59.907Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

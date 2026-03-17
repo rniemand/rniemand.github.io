@@ -348,6 +348,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2022-06-06">06 June 2022</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#install-an-mqtt-broker">Install an MQTT Broker</a></li><li><a href="#configuring-home-assistant">Configuring Home Assistant</a><ol><li><a href="#custommqttyaml">custom/mqtt.yaml</a></li><li><a href="#configurationyaml">configuration.yaml</a></li></ol></li><li><a href="#all-done">All Done</a></li></ol>
+      </div>
+
 
 <blockquote>
 <p>This post is <a href="/series/">part of a series</a> covering running various containers on <a href="https://unraid.net/">Unraid</a>.</p>
@@ -365,7 +370,7 @@ pre[class*="language-diff-"] {
 </ul>
 <p>You can follow the instructions <a href="/blog/2019/2019-11-04/post/">here</a> to add \ manage user accounts.</p>
 <h2 id="configuring-home-assistant">Configuring Home Assistant</h2>
-<h3 id="custom-mqtt-yaml">custom/mqtt.yaml</h3>
+<h3 id="custommqttyaml">custom/mqtt.yaml</h3>
 <p>I tend to break my configuration up into component specific files (it just feels a lot cleaner to me, and makes excluding portions of configuration a lot simpler too), this is the contents of my <code>custom/mqtt.yaml</code> file:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token comment"># https://www.home-assistant.io/integrations/mqtt/</span>
 <span class="token key atrule">broker</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> mqtt_broker
@@ -373,12 +378,14 @@ pre[class*="language-diff-"] {
 <span class="token key atrule">password</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> mqtt_password
 <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token tag">!secret</span> mqtt_port
 <span class="token key atrule">discovery</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
+
 <blockquote>
 <p><strong>Note</strong>: the values used for <code>!secret ...</code> are located in <code>secrets.yaml</code></p>
 </blockquote>
-<h3 id="configuration-yaml">configuration.yaml</h3>
+<h3 id="configurationyaml">configuration.yaml</h3>
 <p>You can add the line below to your <code>configuration.yaml</code> file to add MQTT support:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">mqtt</span><span class="token punctuation">:</span> <span class="token tag">!include</span> custom/mqtt.yaml</code></pre>
+
 <p>After a quick restart of Home Assistant you should now see your MQTT integration.</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-06/post/ch5lQb9dnz-273.avif 273w"><source type="image/webp" srcset="/blog/2022/2022-06-06/post/ch5lQb9dnz-273.webp 273w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-06/post/ch5lQb9dnz-273.png" alt="" width="273" height="181"></picture>
 _MQTT is working_
@@ -408,7 +415,7 @@ _MQTT is working_
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2022/2022-06-06/post/` was built on 2026-03-17T17:49:29.679Z -->
+    <!-- This page `/blog/2022/2022-06-06/post/` was built on 2026-03-17T18:08:59.906Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

@@ -346,11 +346,16 @@ pre[class*="language-diff-"] {
 		<time datetime="2023-09-21">21 September 2023</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#components">Components</a><ol><li><a href="#toastmanagerts">ToastManager.ts</a></li><li><a href="#toastmanagersvelte">ToastManager.svelte</a></li></ol></li><li><a href="#usage">Usage</a></li></ol>
+      </div>
+
 
 <p>In this post I will cover creating a simple toast message implementation for your next svelte application using <a href="https://sveltestrap.js.org/">SvelteStrap</a> and a simple toast manager service written in TypeScript.</p>
 <h2 id="components">Components</h2>
 <p>You will need to add the following components to your project.</p>
-<h3 id="toastmanager-ts">ToastManager.ts</h3>
+<h3 id="toastmanagerts">ToastManager.ts</h3>
 <p>This file houses the <code>ToastManager</code> class which is used to manage toast notifications (<code>NlpToastMessage</code>) instances and displays them using the custom <code>&lt;TopNavigation /&gt;</code> component listed below.</p>
 <p>The manager is backed by a <a href="https://svelte.dev/docs/svelte-store">Writable Svelte Store</a> and internally tracks what toast messages should be displayed along with handling dismiss events on the individual messages.</p>
 <p>This class can be extended to add any additional functionality you may need for your specific implementation, for me this works perfectly.</p>
@@ -400,36 +405,32 @@ pre[class*="language-diff-"] {
   body<span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">|</span> <span class="token keyword">undefined</span> <span class="token operator">=</span> <span class="token keyword">undefined</span><span class="token punctuation">,</span>
   autoHide<span class="token operator">:</span> <span class="token builtin">boolean</span> <span class="token operator">=</span> <span class="token boolean">true</span>
 <span class="token punctuation">)</span> <span class="token operator">=></span> manager<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">NlpToastMessage</span><span class="token punctuation">(</span>manager<span class="token punctuation">,</span> title<span class="token punctuation">,</span> body<span class="token punctuation">,</span> <span class="token string">"danger"</span><span class="token punctuation">,</span> autoHide<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
-<h3 id="toastmanager-svelte">ToastManager.svelte</h3>
+
+<h3 id="toastmanagersvelte">ToastManager.svelte</h3>
 <p>This is the custom component that wraps the <a href="https://sveltestrap.js.org/?path=/story/components-toast--toast">Toast SvelteStrap</a> component and places all added toast messages in the bottom corner of your application using the <code>position-fixed bottom-0 end-0 p-3</code> <a href="https://getbootstrap.com/">BootStrap</a> styles.</p>
 <p>When the component is mounted it subscribes to the toasts store exposed from <code>ToastManager.ts</code> (and unsubscribes when the component is unmounted). Each toast message added to the store is rendered in the <a href="https://svelte.dev/docs/logic-blocks">each loop</a>.</p>
 <p>By default all toasts will automatically close after 5 seconds (unless configured not to in the <code>NlpToastMessage</code> constructor), clicking the close icon on a toast will trigger the dismiss method on the manager and remove the toast notification immediately.</p>
-<pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">lang</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ts<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
-  <span class="token keyword">import</span> <span class="token punctuation">{</span> onMount <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"svelte"</span><span class="token punctuation">;</span>
-  <span class="token keyword">import</span> <span class="token punctuation">{</span> Toast<span class="token punctuation">,</span> ToastBody<span class="token punctuation">,</span> ToastHeader <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"sveltestrap"</span><span class="token punctuation">;</span>
-  <span class="token keyword">import</span> <span class="token punctuation">{</span> NlpToastMessage<span class="token punctuation">,</span> toasts <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">"./ToastManager"</span><span class="token punctuation">;</span>
-  <span class="token keyword">let</span> <span class="token literal-property property">toastMessages</span><span class="token operator">:</span> NlpToastMessage<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<p></p>
+{% highlight "html" %}
 
-  <span class="token function">onMount</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> toasts<span class="token punctuation">.</span><span class="token function">subscribe</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter"><span class="token literal-property property">_entries</span><span class="token operator">:</span> NlpToastMessage<span class="token punctuation">[</span><span class="token punctuation">]</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
-      toastMessages <span class="token operator">=</span> _entries<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>toast-container position-fixed bottom-0 end-0 p-3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
   {#each toastMessages as entry}
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Toast</span> <span class="token attr-name">autohide</span><span class="token punctuation">></span></span>
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ToastHeader</span> <span class="token attr-name">icon</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{entry.color}<span class="token punctuation">"</span></span> <span class="token attr-name">toggle</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>{entry.dismiss}<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <Toast autohide="">
+    <ToastHeader icon="{entry.color}" toggle="{entry.dismiss}">
       {entry.title}
-    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ToastHeader</span><span class="token punctuation">></span></span>
-    {#if entry.body}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ToastBody</span><span class="token punctuation">></span></span>{entry.body}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ToastBody</span><span class="token punctuation">></span></span>{/if}
-  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>Toast</span><span class="token punctuation">></span></span>
+    </ToastHeader>
+    {#if entry.body}<ToastBody>{entry.body}</ToastBody>{/if}
+  </Toast>
   {/each}
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">></span></span></code></pre>
+</div>
+{% endhighlight %}
+
+<p></p>
 <h2 id="usage">Usage</h2>
 <p>Usage is pretty simple, all you need to do is add the <code>&lt;ToastManager /&gt;</code> component anywhere in your application (I would suggest adding this to your layout file).</p>
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ToastManager</span> <span class="token punctuation">/></span></span></code></pre>
+
 <p>You can create a toast message by calling one of the exposed ToastManager.ts methods:</p>
 <ul>
 <li>toastSuccess(<code>title: string</code>[[, <code>body: string|undefined</code>], <code>autoHide: boolean</code>])</li>
@@ -447,6 +448,7 @@ pre[class*="language-diff-"] {
     <span class="token function">toastError</span><span class="token punctuation">(</span><span class="token string">"Error Adding Task"</span><span class="token punctuation">,</span> response<span class="token punctuation">.</span>error <span class="token operator">||</span> <span class="token string">"Unknown error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+
 <p>It is that simple.</p>
 <picture><source type="image/avif" srcset="/blog/2023/2023-09-21/post/MgpQTSZBLg-364.avif 364w"><source type="image/webp" srcset="/blog/2023/2023-09-21/post/MgpQTSZBLg-364.webp 364w"><img loading="lazy" decoding="async" src="/blog/2023/2023-09-21/post/MgpQTSZBLg-364.png" alt="" width="364" height="99"></picture>
 
@@ -473,8 +475,8 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2023/2023-09-21/post/` was built on 2026-03-17T17:49:29.680Z -->
-    <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
+    <!-- This page `/blog/2023/2023-09-21/post/` was built on 2026-03-17T18:08:59.907Z -->
+    <script type="module" src="/dist/oUEw0FaRqr.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
   </body>

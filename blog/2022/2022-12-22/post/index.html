@@ -346,6 +346,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2022-12-22">22 December 2022</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#installing-docsify">Installing docsify</a></li><li><a href="#initializing-docsify">Initializing docsify</a></li><li><a href="#general-usage">General Usage</a></li><li><a href="#common-grammar-files">Common grammar files</a></li><li><a href="#copy-to-clipboard">Copy to Clipboard</a></li><li><a href="#tabs">Tabs</a></li></ol>
+      </div>
+
 
 <p>This post is a starter post for <code>docsify</code> and it's usage - this is a work in progress and will be updated periodically when I stumble upon anything that I find interesting.</p>
 <h1 id="the-docsify-flow">The docsify Flow</h1>
@@ -353,15 +358,18 @@ pre[class*="language-diff-"] {
 <p>This is based on the official <a href="https://docsify.js.org/#/quickstart">Quick Start Guide</a>, and the process is as simple as...</p>
 <p>Installing <code>docsify</code> globally if you do not already have it installed:</p>
 <pre class="language-bash" tabindex="0"><code class="language-bash"><span class="token function">npm</span> i docsify-cli <span class="token parameter variable">-g</span></code></pre>
+
 <blockquote>
 <p>If you decide to install <code>docsify</code> globally, you only need to run the above command once!</p>
 </blockquote>
 <h2 id="initializing-docsify">Initializing docsify</h2>
 <p>To add <code>docsify</code> to your project simply naviate to your projects root directory and issue the following command where <code>./docs</code> is the name of the directory you wish to save your documentation to:</p>
 <pre class="language-bash" tabindex="0"><code class="language-bash">docsify init ./docs</code></pre>
+
 <h2 id="general-usage">General Usage</h2>
 <p>To serve documentation using <code>docsify</code> simply navigate to the directory that contains your documentation and run the following command replacing <code>docs</code> with your documentation directory name:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">docsify serve docs</code></pre>
+
 <p>This will serve your documentation on <a href="http://localhost:3000">http://localhost:3000</a> by default.</p>
 <h1 id="configuring-docsify">Configuring docsify</h1>
 <p>All core configuration for <code>docsify</code> is done in the <code>index.html</code> file using the <code>window.$docsify</code> script object, I generally configure the following when starting documentation for a new project:</p>
@@ -373,6 +381,7 @@ pre[class*="language-diff-"] {
 	<span class="token literal-property property">subMaxLevel</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
 	<span class="token literal-property property">externalLinkRel</span><span class="token operator">:</span> <span class="token string">"_blank"</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+
 <p>You can see a full list of all configuration options <a href="https://docsify.js.org/#/configuration">here</a>.</p>
 <h1 id="themes">Themes</h1>
 <p>You can theme <code>docsify</code> by simply including a reference to the theme <code>css</code> file you would like to use:</p>
@@ -381,6 +390,7 @@ pre[class*="language-diff-"] {
 
 <span class="token comment">&lt;!-- with --></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>link</span> <span class="token attr-name">rel</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>stylesheet<span class="token punctuation">"</span></span> <span class="token attr-name">href</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span></code></pre>
+
 <p>You can see all possible theme configuration options <a href="https://docsify.js.org/#/themes">here</a>.</p>
 <blockquote>
 <p>Additional themes can be found on <a href="https://jhildenbiddle.github.io/docsify-themeable/#/">docsify-themeable</a>!</p>
@@ -393,10 +403,12 @@ pre[class*="language-diff-"] {
 	<span class="token literal-property property">maxLevel</span><span class="token operator">:</span> <span class="token number">4</span><span class="token punctuation">,</span>
 	<span class="token literal-property property">subMaxLevel</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+
 <h1 id="syntax-highlighting">Syntax Highlighting</h1>
 <p>Docsify makes use of <a href="https://prismjs.com/">prismjs</a> for it's syntax highlighting support and comes with a couple of pre-installed languages, you may find the need to add in additional <code>grammar</code> files to work for your project.</p>
 <p>You can browse all supported <a href="https://cdn.jsdelivr.net/npm/prismjs@1/components/">grammar files here</a> and can include them in your documentation using the following <code>HTML</code> snippet:</p>
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>//cdn.jsdelivr.net/npm/prismjs@1/components/prism-csharp.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+
 <h2 id="common-grammar-files">Common grammar files</h2>
 <p>These are my go-to grammar files for my projects:</p>
 <table>
@@ -441,6 +453,7 @@ pre[class*="language-diff-"] {
 <picture><source type="image/avif" srcset="/blog/2022/2022-12-22/post/H0Ym04ZluJ-759.avif 759w"><source type="image/webp" srcset="/blog/2022/2022-12-22/post/H0Ym04ZluJ-759.webp 759w"><img loading="lazy" decoding="async" src="/blog/2022/2022-12-22/post/H0Ym04ZluJ-759.png" alt="" width="759" height="86"></picture>
 <p>Installation:</p>
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+
 <p>Configuration:</p>
 <pre class="language-js" tabindex="0"><code class="language-js">window<span class="token punctuation">.</span>$docsify <span class="token operator">=</span> <span class="token punctuation">{</span>
 	<span class="token comment">// docsify-copy-code (defaults)</span>
@@ -450,11 +463,13 @@ pre[class*="language-diff-"] {
 		<span class="token literal-property property">successText</span><span class="token operator">:</span> <span class="token string">"Copied"</span><span class="token punctuation">,</span>
 	<span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+
 <h2 id="tabs">Tabs</h2>
 <p>The <a href="https://docsify.js.org/#/plugins?id=tabs">tabs</a> plugin allows you to define and use tabs in an effort to reduce the length of generated pages:</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-12-22/post/-CG_dwkU3J-808.avif 808w"><source type="image/webp" srcset="/blog/2022/2022-12-22/post/-CG_dwkU3J-808.webp 808w"><img loading="lazy" decoding="async" src="/blog/2022/2022-12-22/post/-CG_dwkU3J-808.png" alt="" width="808" height="225"></picture>
 <p>Installation:</p>
 <pre class="language-html" tabindex="0"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>https://cdn.jsdelivr.net/npm/docsify-tabs@1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+
 <p>Configuration:</p>
 <pre class="language-js" tabindex="0"><code class="language-js">window<span class="token punctuation">.</span>$docsify <span class="token operator">=</span> <span class="token punctuation">{</span>
 	<span class="token comment">// ...</span>
@@ -466,6 +481,7 @@ pre[class*="language-diff-"] {
 		<span class="token literal-property property">tabHeadings</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">// default</span>
 	<span class="token punctuation">}</span><span class="token punctuation">,</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+
 <h1 id="github-pages">GitHub Pages</h1>
 <p>There are multiple deployment options available when using <code>docsify</code>, however the mpst apt one for me is the built in <strong>pages</strong> support from GitHub.</p>
 <p>You can refer to the full <a href="https://docsify.js.org/#/deploy?id=github-pages">deployment guide here</a> if you require additional information - however the configuration is pretty straight forward:</p>
@@ -503,7 +519,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2022/2022-12-22/post/` was built on 2026-03-17T17:49:29.679Z -->
+    <!-- This page `/blog/2022/2022-12-22/post/` was built on 2026-03-17T18:08:59.907Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

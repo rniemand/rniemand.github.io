@@ -347,6 +347,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2024-07-31">31 July 2024</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#obtaining-the-certificate">Obtaining the certificate</a><ol><li><a href="#converting-your-certificate-to-pfx">Converting your certificate to *.pfx</a></li></ol></li><li><a href="#configuring-your-docker-container">Configuring your Docker container</a><ol><li><a href="#port-bindings">Port Bindings</a></li><li><a href="#container-paths">Container Paths</a></li><li><a href="#container-variables">Container Variables</a></li><li><a href="#sample-docker-run-command">Sample Docker Run Command</a></li></ol></li></ol>
+      </div>
+
 
 <p>This post serves as a quick reference guide to getting custom certificates working for a Docker based asp.net core application.</p>
 <h2 id="obtaining-the-certificate">Obtaining the certificate</h2>
@@ -354,6 +359,7 @@ pre[class*="language-diff-"] {
 <h3 id="converting-your-certificate-to-pfx">Converting your certificate to *.pfx</h3>
 <p>For my project I went with the paid path and bought one for my application which resulted in me receiving a <code>.crt</code> file along with a key file which was incompatible with asp.net as it requires a <code>.pfx</code> file. After some quick Googling I was able to convert my certificate to the required pfx format by running the following command on one of my Ubuntu servers.</p>
 <pre class="language-bash" tabindex="0"><code class="language-bash">openssl pkcs12 <span class="token parameter variable">-export</span> <span class="token parameter variable">-out</span> mycert.ca.pfx <span class="token parameter variable">-inkey</span> mycert.ca_key.txt <span class="token parameter variable">-in</span> mycert.ca.crt</code></pre>
+
 <p>Hopefully this saves you some time in the future.</p>
 <h2 id="configuring-your-docker-container">Configuring your Docker container</h2>
 <p>With some trial and error I managed to come up with the following Docker configuration that works with my application:</p>
@@ -430,6 +436,7 @@ pre[class*="language-diff-"] {
   <span class="token parameter variable">-v</span> <span class="token string">'/…/mysite.ca.pfx'</span><span class="token builtin class-name">:</span><span class="token string">'/https/aspnetapp.pfx'</span><span class="token builtin class-name">:</span><span class="token string">'rw'</span>
   <span class="token parameter variable">-v</span> <span class="token string">'/…/.aspnet/'</span><span class="token builtin class-name">:</span><span class="token string">'/root/.aspnet'</span><span class="token builtin class-name">:</span><span class="token string">'rw'</span>
 'dockeruser/container’</code></pre>
+
 <p>After deployment you should be able to browse to your application on HTTPS and get served a valid certificate.</p>
 
 <div class="d-flex mb-3 prev-next">
@@ -455,7 +462,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2024/2024-07-31/post/` was built on 2026-03-17T17:49:29.680Z -->
+    <!-- This page `/blog/2024/2024-07-31/post/` was built on 2026-03-17T18:08:59.907Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

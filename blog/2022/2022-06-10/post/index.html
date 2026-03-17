@@ -346,6 +346,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2022-06-10">10 June 2022</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#times-of-the-day">Times of the Day</a><ol><li><a href="#before-sunrise">Before Sunrise</a></li><li><a href="#night">Night</a></li></ol></li><li><a href="#workday">Workday</a><ol><li><a href="#is-school-night">Is School Night</a></li><li><a href="#is-workday">Is Workday</a></li></ol></li><li><a href="#including-the-sensors">Including the sensors</a></li><li><a href="#office-routine-workday-start">Office - Routine - Workday Start</a></li><li><a href="#sam-school-day-start-0645">Sam - School Day - Start (06:45)</a></li><li><a href="#school-related-automations">School Related Automations</a><ol><li><a href="#set-scene-sam-bedtime-weekends">Set Scene - Sam Bedtime - Weekends</a></li><li><a href="#set-scene-sam-bedtime-school-automation-on">Set Scene - Sam Bedtime - School Automation (On)</a></li><li><a href="#set-scene-sam-bedtime-school-automation-off">Set Scene - Sam Bedtime - School Automation (Off)</a></li><li><a href="#pulling-it-all-together">Pulling it all together</a></li></ol></li><li><a href="#light-automations">Light Automations</a><ol><li><a href="#external-lights-turn-off-mornings">External - Lights - Turn Off (Mornings)</a></li><li><a href="#external-lights-turn-on-evenings">External - Lights - Turn On (Evenings)</a></li><li><a href="#dining-area-lights-turn-off-display-cabinet-mornings">Dining Area - Lights - Turn Off - Display Cabinet (Mornings)</a></li></ol></li><li><a href="#changing-lounge-clock-scene">Changing Lounge Clock Scene</a></li></ol>
+      </div>
+
 
 <p>In this post I will explore the concepts of Helpers in Home Assistant and the potential that they can unlock with your automations.</p>
 <blockquote>
@@ -364,6 +369,7 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">name</span><span class="token punctuation">:</span> <span class="token string">"Is Daytime"</span>
   <span class="token key atrule">after</span><span class="token punctuation">:</span> sunrise
   <span class="token key atrule">before</span><span class="token punctuation">:</span> sunset</code></pre>
+
 <p>Simple binary sensor that is enabled between sunrise and sunset, there are no hard-coded times here to adjust as the length of the days changes during the year.</p>
 <h3 id="night">Night</h3>
 <p>Defined in <code>custom/binary_sensors/binary.is-evening.yaml</code></p>
@@ -372,6 +378,7 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">after</span><span class="token punctuation">:</span> sunset
   <span class="token key atrule">after_offset</span><span class="token punctuation">:</span> <span class="token string">"-00:10"</span>
   <span class="token key atrule">before</span><span class="token punctuation">:</span> sunrise</code></pre>
+
 <p>Similar to <strong>Before Sunrise</strong>, however I subtract 10 min from “sunset” to ensure that my lights are on just a little bit before.</p>
 <blockquote>
 <p>If you are using any of the before modifiers make sure that you take them into consideration for your automations.</p>
@@ -387,6 +394,7 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">province</span><span class="token punctuation">:</span> AB
   <span class="token key atrule">workdays</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>sun<span class="token punctuation">,</span> mon<span class="token punctuation">,</span> tue<span class="token punctuation">,</span> wed<span class="token punctuation">,</span> thu<span class="token punctuation">]</span>
   <span class="token key atrule">excludes</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>fri<span class="token punctuation">,</span> sat<span class="token punctuation">]</span></code></pre>
+
 <p>I ensure that my country and province is set along with the appropriate days to use for tracking school days. This works for 90% of my use-cases but things like the schools PD Days etc are not catered for here. Currently I am just manually toggling the relevant automations when required.</p>
 <h3 id="is-workday">Is Workday</h3>
 <p>Defined in <code>custom/binary_sensors/is-workday.yaml</code></p>
@@ -395,10 +403,12 @@ pre[class*="language-diff-"] {
   <span class="token key atrule">country</span><span class="token punctuation">:</span> CA
   <span class="token key atrule">province</span><span class="token punctuation">:</span> AB
   <span class="token key atrule">workdays</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>mon<span class="token punctuation">,</span> tue<span class="token punctuation">,</span> wed<span class="token punctuation">,</span> thu<span class="token punctuation">,</span> fri<span class="token punctuation">]</span></code></pre>
+
 <p>Pretty much a copy of the “Is School Day” sensor, I decided to separate them in the hopes that in the future I can adjust the school nights one to cater for various PD Days, snow days etc. this is to ensure that I don’t need to back track and redo any automations that share this logic in the future.</p>
 <h2 id="including-the-sensors">Including the sensors</h2>
 <p>To load these sensors into Home Assistant I include them in my main “configuration.yaml” file like so:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">binary_sensor</span><span class="token punctuation">:</span> <span class="token tag">!include_dir_merge_list</span> custom/binary_sensors</code></pre>
+
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-10/post/zkSpomrjrG-506.avif 506w"><source type="image/webp" srcset="/blog/2022/2022-06-10/post/zkSpomrjrG-506.webp 506w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-10/post/zkSpomrjrG-506.png" alt="" width="506" height="132"></picture>
 <p>Thats it - these sensors are good to go with any of your automations.</p>
 <h1 id="helpers">Helpers</h1>
@@ -439,8 +449,9 @@ pre[class*="language-diff-"] {
     <span class="token key atrule">target</span><span class="token punctuation">:</span>
       <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> light.nas
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-10/post/bkPXV_ytoY-506.avif 506w"><source type="image/webp" srcset="/blog/2022/2022-06-10/post/bkPXV_ytoY-506.webp 506w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-10/post/bkPXV_ytoY-506.png" alt="" width="506" height="197"></picture>
-<h2 id="sam-school-day-start-06-45">Sam - School Day - Start (06:45)</h2>
+<h2 id="sam-school-day-start-0645">Sam - School Day - Start (06:45)</h2>
 <p>On school days I use this automation to ensure that my daughter is up for 7:00 am, this makes use of the <strong>Is School Day</strong> sensor and basically just turns on her lights in the morning:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Sam <span class="token punctuation">-</span> School Day <span class="token punctuation">-</span> Start (06<span class="token punctuation">:</span>45)
 <span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
@@ -469,6 +480,7 @@ pre[class*="language-diff-"] {
     <span class="token key atrule">target</span><span class="token punctuation">:</span>
       <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> light.samsign
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <p>I make use of a boolean toggle to quickly enable \ disable the automation when needed.</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-10/post/gH8sCtMoDq-475.avif 475w"><source type="image/webp" srcset="/blog/2022/2022-06-10/post/gH8sCtMoDq-475.webp 475w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-10/post/gH8sCtMoDq-475.png" alt="" width="475" height="59"></picture>
 <p>In addition to this I have another automation that re-enabled this toggle at the start of the next day (~10:00 am) in case I forget to re-enable it manually.</p>
@@ -487,6 +499,7 @@ pre[class*="language-diff-"] {
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.sam_bedtime
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <h3 id="set-scene-sam-bedtime-school-automation-on">Set Scene - Sam Bedtime - School Automation (On)</h3>
 <p>Similar to the above this automation will turn off Sam's lights at the appropriate time in the evenings on a school night.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Set Scene <span class="token punctuation">-</span> Sam Bedtime <span class="token punctuation">-</span> School Automation (On)
@@ -506,6 +519,7 @@ pre[class*="language-diff-"] {
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.sam_bedtime
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <h3 id="set-scene-sam-bedtime-school-automation-off">Set Scene - Sam Bedtime - School Automation (Off)</h3>
 <p>Helper automation to cater for school specific off days when Sam can stay up a bit later in the evenings.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Set Scene <span class="token punctuation">-</span> Sam Bedtime <span class="token punctuation">-</span> School Automation (Off)
@@ -525,6 +539,7 @@ pre[class*="language-diff-"] {
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.sam_bedtime
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <h3 id="pulling-it-all-together">Pulling it all together</h3>
 <p>To allow for easier control of Sam’s automations i created the following view that allows me to quickly toggle \ tweak any values that I may need to:</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-10/post/15o3k7M0nn-497.avif 497w"><source type="image/webp" srcset="/blog/2022/2022-06-10/post/15o3k7M0nn-497.webp 497w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-10/post/15o3k7M0nn-497.png" alt="" width="497" height="259"></picture>
@@ -557,6 +572,7 @@ pre[class*="language-diff-"] {
         <span class="token punctuation">-</span> light.deck_light
     <span class="token key atrule">data</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <h3 id="external-lights-turn-on-evenings">External - Lights - Turn On (Evenings)</h3>
 <p>Dynamic automation used to turn on lights based on the sunset.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> External <span class="token punctuation">-</span> Lights <span class="token punctuation">-</span> Turn On (Evenings)
@@ -573,6 +589,7 @@ pre[class*="language-diff-"] {
       <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> switch.front_lights
     <span class="token key atrule">data</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <h3 id="dining-area-lights-turn-off-display-cabinet-mornings">Dining Area - Lights - Turn Off - Display Cabinet (Mornings)</h3>
 <p>Helper automation to ensure that specific lights are turned off regardless of sunrise \ sunset.</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Dining Area <span class="token punctuation">-</span> Lights <span class="token punctuation">-</span> Turn Off <span class="token punctuation">-</span> Display Cabinet (Mornings)
@@ -593,6 +610,7 @@ pre[class*="language-diff-"] {
       <span class="token key atrule">entity_id</span><span class="token punctuation">:</span> light.display_cabinet
     <span class="token key atrule">data</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <h2 id="changing-lounge-clock-scene">Changing Lounge Clock Scene</h2>
 <p>Another use for the Times of Day integration is to adjust the style of my <strong><a href="/blog/2022/2022-06-07/post2/">lounge clock</a></strong>, making it more visible during the day, and dimming it in the evenings. Below are a couple of the automations I use for that:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Lounge Clock <span class="token punctuation">-</span> Set Scene <span class="token punctuation">-</span> Early Evening
@@ -611,6 +629,7 @@ pre[class*="language-diff-"] {
       <span class="token key atrule">milliseconds</span><span class="token punctuation">:</span> <span class="token number">0</span>
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.lounge_clock_early_evening
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">alias</span><span class="token punctuation">:</span> Lounge Clock <span class="token punctuation">-</span> Set Scene <span class="token punctuation">-</span> Early Morning
 <span class="token key atrule">description</span><span class="token punctuation">:</span> <span class="token string">""</span>
 <span class="token key atrule">trigger</span><span class="token punctuation">:</span>
@@ -620,6 +639,7 @@ pre[class*="language-diff-"] {
 <span class="token key atrule">action</span><span class="token punctuation">:</span>
   <span class="token punctuation">-</span> <span class="token key atrule">scene</span><span class="token punctuation">:</span> scene.lounge_clock_early_morning
 <span class="token key atrule">mode</span><span class="token punctuation">:</span> single</code></pre>
+
 <h1 id="in-closing">In Closing</h1>
 <p>Undoubtedly you can see that the possibilities opened up by adding just these 2 sensors to Home Assistant are numerous, with the addition of being location aware and adjusting to the sunrise and sunset times for your area saves you from having to constantly update times to match dawn \ dusk is worth the effort.</p>
 <p>I hope that you found this post useful, and would love to see the automations that you can come up with.</p>
@@ -648,7 +668,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2022/2022-06-10/post/` was built on 2026-03-17T17:49:29.679Z -->
+    <!-- This page `/blog/2022/2022-06-10/post/` was built on 2026-03-17T18:08:59.906Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

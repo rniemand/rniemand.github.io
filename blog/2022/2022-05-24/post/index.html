@@ -346,14 +346,22 @@ pre[class*="language-diff-"] {
 		<time datetime="2022-05-24">24 May 2022</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#starting-the-container">Starting the container</a></li><li><a href="#stopping-the-container">Stopping the container</a></li><li><a href="#removing-the-container">Removing the container</a></li></ol>
+      </div>
+
 
 <p>Below is a quick cheat sheet for getting up and running with <a href="https://www.portainer.io/">Portainer</a>, generally I make use of <a href="https://unraid.net/">Unraid</a> for running my <a href="https://www.docker.com/products/docker-desktop/">Docker</a> containers however when it comes to running <a href="https://github.com/zwave-js">Z-Wave JS</a> I needed to run it on another computer that had a free USB port :)</p>
 <h2 id="starting-the-container">Starting the container</h2>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">-p</span> <span class="token number">8000</span>:8000 <span class="token parameter variable">-p</span> <span class="token number">9443</span>:9443 --force-create <span class="token parameter variable">--name</span> portainer <span class="token parameter variable">--restart</span><span class="token operator">=</span>always <span class="token parameter variable">-v</span> /var/run/docker.sock:/var/run/docker.sock <span class="token parameter variable">-v</span> portainer_data:/data portainer/portainer-ce</code></pre>
+
 <h2 id="stopping-the-container">Stopping the container</h2>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">docker</span> container stop portainer</code></pre>
+
 <h2 id="removing-the-container">Removing the container</h2>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token function">sudo</span> <span class="token function">docker</span> container <span class="token function">rm</span> portainer</code></pre>
+
 
 <div class="d-flex mb-3 prev-next">
 	<i class="bi bi-arrow-left-short"></i>
@@ -378,7 +386,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2022/2022-05-24/post/` was built on 2026-03-17T17:49:29.678Z -->
+    <!-- This page `/blog/2022/2022-05-24/post/` was built on 2026-03-17T18:08:59.905Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

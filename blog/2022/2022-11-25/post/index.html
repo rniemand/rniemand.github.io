@@ -333,7 +333,7 @@ pre[class*="language-diff-"] {
         
 
 
-<h1 id="updating-chirpy">Updating Chirpy</h1>
+<h1 id="updating-chirpy-2">Updating Chirpy</h1>
 
 <div class="p-1 mb-1 d-flex post-meta">
 		<span>
@@ -346,6 +346,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2022-11-25">25 November 2022</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#initial-setup">Initial Setup</a></li><li><a href="#writing-flow">Writing Flow</a></li><li><a href="#updating-chirpy">Updating Chirpy</a></li><li><a href="#useful-links">Useful Links</a></li><li><a href="#closing">Closing</a></li></ol>
+      </div>
+
 
 <p>This is a simple post covering the steps required to update the <a href="https://github.com/cotes2020/jekyll-theme-chirpy">Chirpy Jekyll Theme</a> used by this blog, along with listing some useful pages and tools used for writing my blog posts.</p>
 <p>Let's dive in.</p>
@@ -363,19 +368,23 @@ pre[class*="language-diff-"] {
 <p>Once setup, check out your repository locally and run the <code>bundle</code> command:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell"><span class="token builtin class-name">cd</span> <span class="token operator">&lt;</span>CHECKOUT DIR<span class="token operator">></span>
 bundle</code></pre>
+
 <h2 id="writing-flow">Writing Flow</h2>
 <p>You can run either of the commands below to build and preview your site:</p>
 <pre class="language-shell" tabindex="0"><code class="language-shell">bundle <span class="token builtin class-name">exec</span> jekyll s
  - OR -
 bundle <span class="token builtin class-name">exec</span> jekyll s <span class="token parameter variable">--incremental</span></code></pre>
+
 <p>Once running you can view your site locally at <a href="http://localhost:4000">http://localhost:4000</a>.</p>
-<h2 id="updating-chirpy-2">Updating Chirpy</h2>
+<h2 id="updating-chirpy">Updating Chirpy</h2>
 <p>Full process is covered <a href="https://github.com/cotes2020/jekyll-theme-chirpy/wiki/Upgrade-Guide">here</a>, this is more of a cheat sheet for the process:</p>
 <p>Determine the version that you are currently on (e.g. <code>v5.3.1</code>) and the latest version you are updating too - this can be found <a href="https://github.com/cotes2020/jekyll-theme-chirpy/tags">here</a> (let's say <code>v5.3.2</code>).</p>
 <p>Knowing this we can generate a GitHub compare URL that will list all changes between the provided tags (versions) using the following template:</p>
 <pre class="language-text" tabindex="0"><code class="language-text">https://github.com/cotes2020/chirpy-starter/compare/<from>...<to></to></from></code></pre>
+
 <p>In my sample case this would generate the following URL:</p>
 <pre class="language-text" tabindex="0"><code class="language-text">https://github.com/cotes2020/chirpy-starter/compare/v5.3.1...v5.3.2</code></pre>
+
 <p>Visitng the URL will list out all the changes between the provided versions:</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-11-25/post/NOAncZY3XX-1093.avif 1093w"><source type="image/webp" srcset="/blog/2022/2022-11-25/post/NOAncZY3XX-1093.webp 1093w"><img loading="lazy" decoding="async" src="/blog/2022/2022-11-25/post/NOAncZY3XX-1093.png" alt="" width="1093" height="337"></picture>
 <p>The update process is just replaying the changes made to the relevant files over your repository.</p>
@@ -413,7 +422,7 @@ bundle <span class="token builtin class-name">exec</span> jekyll s <span class="
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2022/2022-11-25/post/` was built on 2026-03-17T17:49:29.679Z -->
+    <!-- This page `/blog/2022/2022-11-25/post/` was built on 2026-03-17T18:08:59.906Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

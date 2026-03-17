@@ -347,6 +347,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2022-06-15">15 June 2022</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#required-hardware-and-setup">Required Hardware and Setup</a><ol><li><a href="#module-wiring">Module Wiring</a></li><li><a href="#arduino-libraries">Arduino Libraries</a></li></ol></li><li><a href="#project-usage">Project Usage</a></li><li><a href="#reverse-engineering">Reverse Engineering</a><ol><li><a href="#capturing-codes">Capturing Codes</a></li><li><a href="#decoding-the-bits">Decoding the bits</a></li><li><a href="#encoding-codes">Encoding Codes</a></li></ol></li><li><a href="#arduino-sketch">Arduino Sketch</a><ol><li><a href="#decoding-rf-input">Decoding RF Input</a></li><li><a href="#encoding-codes-output">Encoding Codes</a></li><li><a href="#everything-else">Everything Else</a></li></ol></li><li><a href="#home-assistant">Home Assistant</a><ol><li><a href="#mqtt-fan-configuration">MQTT Fan Configuration</a></li><li><a href="#mqtt-light-configuration">MQTT Light Configuration</a></li><li><a href="#entities">Entities</a></li><li><a href="#dashboard-configuration">Dashboard Configuration</a></li></ol></li><li><a href="#proto-boarding">Proto-boarding</a></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <p>In this post I will be covering how I modified the &quot;<a href="https://github.com/owenb321/hampton-bay-fan-mqtt">owenb321/hampton-bay-fan-mqtt</a>&quot; to work with some &quot;<strong>Home Decorations #1001 415 438</strong>&quot; fans I had installed a while back. The fans make use of a pretty standard remote control &quot;model number: <strong>TX028C-S</strong>&quot;, however the only repository I found did not produce compatible codes for the fans prompting me to create this offshoot of the repo.</p>
 <p>I will cover the basics. I went through reverse engineering the commands sent to \ from the fans along with how I was able to recreate them and send it back to the fans successfully. This was a fun journey where I needed to do a lot of binary maths \ manipulation to get everything working.</p>
@@ -457,6 +462,7 @@ pre[class*="language-diff-"] {
 <pre class="language-cpp" tabindex="0"><code class="language-cpp">value <span class="token operator">=</span> mySwitch<span class="token punctuation">.</span><span class="token function">getReceivedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 prot <span class="token operator">=</span> mySwitch<span class="token punctuation">.</span><span class="token function">getReceivedProtocol</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 bits <span class="token operator">=</span> mySwitch<span class="token punctuation">.</span><span class="token function">getReceivedBitlength</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
 <p>Resulting in values like the table below:</p>
 <table>
 <thead>
@@ -521,10 +527,12 @@ bits <span class="token operator">=</span> mySwitch<span class="token punctuatio
 <h3 id="decoding-rf-input">Decoding RF Input</h3>
 <p>When a RF code is detected we need to decode it, this process begins with reading the received value:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp">value <span class="token operator">=</span> mySwitch<span class="token punctuation">.</span><span class="token function">getReceivedValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
 <p>Followed by manipulating the value into somethin we can work with:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">int</span> subtractedValue <span class="token operator">=</span> value <span class="token operator">-</span> <span class="token number">0b111111000110000000000000</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> truncatedValue  <span class="token operator">=</span> subtractedValue <span class="token operator">>></span> <span class="token number">8</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> id              <span class="token operator">=</span> truncatedValue <span class="token operator">^</span><span class="token number">0b1111</span><span class="token punctuation">;</span></code></pre>
+
 <ul>
 <li>First we can remove the common <code>1111 1100 0110</code> using a subtraction</li>
 <li>We can bit-shift right by 8 places to remove the mode (column <code>E</code>) and command (column <code>F</code>) to be left with the inverted DIP switch values</li>
@@ -532,8 +540,10 @@ bits <span class="token operator">=</span> mySwitch<span class="token punctuatio
 </ul>
 <p>Once done we need to check that the RF protocol and bits are what we are expecting before we can continue.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">if</span><span class="token punctuation">(</span> prot <span class="token operator">==</span> <span class="token number">11</span> <span class="token operator">&amp;&amp;</span> bits <span class="token operator">==</span> <span class="token number">24</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span></code></pre>
+
 <p>Once confirmed we can start unpacking the Mode from the received value using the subtraction result.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">int</span> cmdMode <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>subtractedValue <span class="token operator">&amp;</span> <span class="token number">0b000011110000</span><span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">6</span><span class="token punctuation">;</span></code></pre>
+
 <ul>
 <li>I decided to use an AND operation to zero out all useless bits - effectively performing a soft-truncation of the left most bits</li>
 <li>We binary-shift right 4 bits to get the command as the left most bits are now <code>0000</code></li>
@@ -547,6 +557,7 @@ bits <span class="token operator">=</span> mySwitch<span class="token punctuatio
 </ul>
 <p>We can finally turn our attention to extracting the actual command from the received code, this is done like so:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">int</span> command <span class="token operator">=</span> subtractedValue <span class="token operator">&amp;</span> <span class="token number">0b000000001111</span><span class="token punctuation">;</span></code></pre>
+
 <ul>
 <li>Using an AND operation we can zero out columns <code>D</code> and <code>E</code></li>
 <li>The remaining value is the command to execute
@@ -556,12 +567,13 @@ bits <span class="token operator">=</span> mySwitch<span class="token punctuatio
 </li>
 </ul>
 <p>All that is left to do is respond to the received code.</p>
-<h3 id="encoding-codes-2">Encoding Codes</h3>
+<h3 id="encoding-codes-output">Encoding Codes</h3>
 <p>Encoding outgoing RF codes is basically reversing the process used to decode them, and looks like this:</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">int</span> baseCommand <span class="token operator">=</span> <span class="token number">0b111111000110000000000000</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> fanIdDips   <span class="token operator">=</span> <span class="token punctuation">(</span>fanId <span class="token operator">^</span> <span class="token number">0b1111</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> commandInt  <span class="token operator">=</span> <span class="token number">0b01110000</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> command     <span class="token operator">=</span> <span class="token number">0b0000</span><span class="token punctuation">;</span></code></pre>
+
 <ul>
 <li>Start with defining the static parts of the remote code (columns <code>A</code>, <code>B</code>, and <code>C</code>)
 <ul>
@@ -583,6 +595,7 @@ bits <span class="token operator">=</span> mySwitch<span class="token punctuatio
 <p>Next I switch based on the received MQTT attribute (<code>attr</code>) and command (<code>payload</code>).</p>
 <p>Once set, the final command is generated by combining all the parts (basically adding the int values together) to create the expected int of <code>16543350</code>.</p>
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token keyword">int</span> finalCommand <span class="token operator">=</span> baseCommand <span class="token operator">+</span> fanIdDips <span class="token operator">+</span> commandInt <span class="token operator">+</span> command<span class="token punctuation">;</span></code></pre>
+
 <p>This value is then transmitted using the same protocol and bit length used to receive it, this results in the fan thinking the command came from the remote.</p>
 <blockquote>
 <p>If your fans do not respond to the command you should try changing the frequency value <code>RF_FREQUENCY</code> - I wasted a good 45 min with this one!</p>
@@ -609,6 +622,7 @@ bits <span class="token operator">=</span> mySwitch<span class="token punctuatio
       <span class="token key atrule">qos</span><span class="token punctuation">:</span> <span class="token number">0</span>
       <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
       <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"off"</span></code></pre>
+
 <h3 id="mqtt-light-configuration">MQTT Light Configuration</h3>
 <p>In this case I am creating an entry for my remote with a DIP switch position of <code>0001</code>:</p>
 <pre class="language-yaml" tabindex="0"><code class="language-yaml"><span class="token key atrule">mqtt</span><span class="token punctuation">:</span>
@@ -620,6 +634,7 @@ bits <span class="token operator">=</span> mySwitch<span class="token punctuatio
       <span class="token key atrule">payload_on</span><span class="token punctuation">:</span> <span class="token string">"on"</span>
       <span class="token key atrule">payload_off</span><span class="token punctuation">:</span> <span class="token string">"off"</span>
       <span class="token key atrule">optimistic</span><span class="token punctuation">:</span> <span class="token boolean important">false</span></code></pre>
+
 <h3 id="entities">Entities</h3>
 <p>Once restarted you should see all your fan and light entities in Home Assistant.</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-15/post/Jf6O2ohJ8t-679.avif 679w"><source type="image/webp" srcset="/blog/2022/2022-06-15/post/Jf6O2ohJ8t-679.webp 679w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-15/post/Jf6O2ohJ8t-679.png" alt="" width="679" height="307"></picture>
@@ -706,15 +721,16 @@ bits <span class="token operator">=</span> mySwitch<span class="token punctuatio
     <span class="token key atrule">icon</span><span class="token punctuation">:</span> mdi<span class="token punctuation">:</span>fan<span class="token punctuation">-</span>speed<span class="token punctuation">-</span><span class="token number">3</span>
     <span class="token key atrule">hold_action</span><span class="token punctuation">:</span>
       <span class="token key atrule">action</span><span class="token punctuation">:</span> none</code></pre>
+
 <p>This can be repeated for each fan you wish to control.</p>
 <h2 id="proto-boarding">Proto-boarding</h2>
 <p>Finally I tried to neaten everything up by placing all the components on a proto-board, and I will soon be designing and printing a case for the final project.</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-15/post/egmWFa_ZKX-719.avif 719w"><source type="image/webp" srcset="/blog/2022/2022-06-15/post/egmWFa_ZKX-719.webp 719w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-15/post/egmWFa_ZKX-719.png" alt="" width="719" height="807"></picture>
-_Looking good from the front_
+<p><em>Looking good from the front</em></p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-15/post/qthnhDj1wI-896.avif 896w"><source type="image/webp" srcset="/blog/2022/2022-06-15/post/qthnhDj1wI-896.webp 896w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-15/post/qthnhDj1wI-896.png" alt="" width="896" height="727"></picture>
-_The wiring at the back is not amazing_
+<p><em>The wiring at the back is not amazing</em></p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-15/post/jjqo4BwVc1-880.avif 880w"><source type="image/webp" srcset="/blog/2022/2022-06-15/post/jjqo4BwVc1-880.webp 880w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-15/post/jjqo4BwVc1-880.png" alt="" width="880" height="562"></picture>
-_don't forget the hot glue_
+<p><em>don't forget the hot glue</em></p>
 <h2 id="in-closing">In Closing</h2>
 <p>This project was a good brain teaser and forced me to re-learn basic comp-sci principles like bitwise operations and binary maths.</p>
 <p>I would like to give a shout out to <strong><a href="https://github.com/owenb321">Ben Owen</a></strong> for the original work done here as it saved me a lot of time along with providing me with a good starting place.</p>
@@ -744,7 +760,7 @@ _don't forget the hot glue_
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2022/2022-06-15/post/` was built on 2026-03-17T17:49:29.679Z -->
+    <!-- This page `/blog/2022/2022-06-15/post/` was built on 2026-03-17T18:08:59.906Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

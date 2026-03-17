@@ -348,6 +348,11 @@ pre[class*="language-diff-"] {
 		<time datetime="2022-06-07">07 June 2022</time>
 	</span>
 </div>
+<h2 class="quick-access" id="quick-access">Quick Access</h2>
+<div class="toc">
+        <ol><li><a href="#bill-of-material">Bill of Material</a></li><li><a href="#custom-pcb">Custom PCB</a></li><li><a href="#3d-printing">3D Printing</a></li><li><a href="#assembly">Assembly</a></li><li><a href="#source-code">Source Code</a><ol><li><a href="#segment-values">Segment Values</a></li></ol></li><li><a href="#home-assistant-setup">Home Assistant Setup</a><ol><li><a href="#card-control">Card Control</a></li><li><a href="#collected-data">Collected Data</a></li></ol></li><li><a href="#in-closing">In Closing</a></li></ol>
+      </div>
+
 
 <p>In this post I will cover how I built my lounge clock using <a href="https://esphome.io/">ESPHome</a>, <a href="https://www.home-assistant.io/">Home Assistant</a>, <a href="/blog/2019/2019-11-04/post/">MQTT</a> and a whole lot of other technologies, I think that the end result looks pretty good for my first attempt:</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/fko1cPjAys-800.avif 800w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/fko1cPjAys-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/fko1cPjAys-800.jpeg" alt="" width="800" height="538"></picture>
@@ -392,8 +397,8 @@ pre[class*="language-diff-"] {
 <p>Unfortunately I did not take any pictures of the assembly process, however it is pretty easy.</p>
 <p>Each 7-Segment board has a <code>DIN</code> (Digital In) and <code>DOUT</code> (Digital Out) solder point, which need to be daisy chained from one board to another.</p>
 <p>On the PCB all the <code>GND</code> points are all connected together, along with the <code>VCC</code> points to make routing power a lot easier. When connecting the boards you just need to follow this pattern if you are using the <a href="https://github.com/rniemand/code-samples/blob/main/projects/lounge-clock/1.0/clock-code.yaml">source code</a> I provide.</p>
-<pre><code>DIN -&gt; [7-Seg] -&gt; [7-Seg] -&gt; [7-Seg] -&gt; [7-Seg] -&gt; [.] -&gt; [.]
-</code></pre>
+<pre class="language-text" tabindex="0"><code class="language-text">DIN -> [7-Seg] -> [7-Seg] -> [7-Seg] -> [7-Seg] -> [.] -> [.]</code></pre>
+
 <p>Where the following is true:</p>
 <ul>
 <li><code>7-Seg</code> - represents a 7-Segment PCB</li>
@@ -402,10 +407,10 @@ pre[class*="language-diff-"] {
 <p>The entire assemby should be mounted onto a backing board (using the stencil to make the appropriate holes), and the additional components should be connected to the <code>ESP8266</code> similar to the diagram below:</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/FQqx5c_4Bz-800.avif 800w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/FQqx5c_4Bz-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/FQqx5c_4Bz-800.png" alt="" width="800" height="607"></picture>
 _**NOTE** the single LED represents all the PCBs_
-<pre><code>D3       WS2812B        Lights
+<pre class="language-text" tabindex="0"><code class="language-text">D3       WS2812B        Lights
 D1       DHT11          Temperature
-A0       ADC - LDR      Brightness
-</code></pre>
+A0       ADC - LDR      Brightness</code></pre>
+
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/XsHME65Fee-800.avif 800w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/XsHME65Fee-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/XsHME65Fee-800.jpeg" alt="" width="800" height="356"></picture>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/IfhuBPnziu-800.avif 800w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/IfhuBPnziu-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/IfhuBPnziu-800.jpeg" alt="" width="800" height="298"></picture>
 <p>Like most <code>DIY</code> projects it may not be pretty, but it works!</p>
@@ -419,7 +424,7 @@ A0       ADC - LDR      Brightness
 <p>As mentioned above the <strong>7-Segment</strong> PCB's follow the standard layout (<code>A, B, C, D, E, F, G</code>) to make defining numbers a lot easier.</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/f_0pff2f0v-225.avif 225w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/f_0pff2f0v-225.webp 225w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/f_0pff2f0v-225.png" alt="" width="225" height="322"></picture>
 <p>Below is the number range used in this project as an example:</p>
-<pre><code>int digitsLeds[11][ledsInDigitCount] = {
+<pre class="language-text" tabindex="0"><code class="language-text">int digitsLeds[11][ledsInDigitCount] = {
 // A B C D E F G
   {1,1,1,1,1,1,0}, // 0
   {0,1,1,0,0,0,0}, // 1
@@ -431,9 +436,9 @@ A0       ADC - LDR      Brightness
   {1,1,1,0,0,0,0}, // 7
   {1,1,1,1,1,1,1}, // 8
   {1,1,1,1,0,1,1}, // 9
-  {0,0,0,0,0,0,0}, // 10 -&gt; ALL_OFF!
-};
-</code></pre>
+  {0,0,0,0,0,0,0}, // 10 -> ALL_OFF!
+};</code></pre>
+
 <h2 id="home-assistant-setup">Home Assistant Setup</h2>
 <p>Setting everything up in Home Assistant is pretty simple once you have flashed the firmware to your <code>ESP8266</code> using the <a href="https://esphome.io/">ESPHome</a>:</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/7DiQIj3r1s-802.avif 802w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/7DiQIj3r1s-802.webp 802w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/7DiQIj3r1s-802.png" alt="" width="802" height="243"></picture>
@@ -545,6 +550,7 @@ _It's not that pretty, but it gets the job done!_
         <span class="token key atrule">entity</span><span class="token punctuation">:</span> light.lounge_clock_all_lights
         <span class="token key atrule">hold_action</span><span class="token punctuation">:</span>
           <span class="token key atrule">action</span><span class="token punctuation">:</span> none</code></pre>
+
 <h3 id="collected-data">Collected Data</h3>
 <p>In addition to displaying the time, the clock also collects and submits the following data:</p>
 <picture><source type="image/avif" srcset="/blog/2022/2022-06-07/post2/Ztw3Lgpd-Y-328.avif 328w"><source type="image/webp" srcset="/blog/2022/2022-06-07/post2/Ztw3Lgpd-Y-328.webp 328w"><img loading="lazy" decoding="async" src="/blog/2022/2022-06-07/post2/Ztw3Lgpd-Y-328.png" alt="" width="328" height="438"></picture>
@@ -599,7 +605,7 @@ _It's not that pretty, but it gets the job done!_
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2022/2022-06-07/post2/` was built on 2026-03-17T17:49:29.679Z -->
+    <!-- This page `/blog/2022/2022-06-07/post2/` was built on 2026-03-17T18:08:59.906Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
