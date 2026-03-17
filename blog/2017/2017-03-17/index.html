@@ -393,7 +393,7 @@ pre[class*="language-diff-"] {
 </ul>
 
 <h2 id="breadboarding">Breadboarding</h2>
-<p>Let&#39;s jump right in and start pacing all our components onto our breadboard.</p>
+<p>Let&#39;s jump right in and start placing all our components onto our breadboard.</p>
 
 <h3 id="basic-component-layout">Basic component layout</h3>
 <p>Below is the most optimal layout I could come up with given the space restrictions on my selected breadboard.</p>
@@ -414,7 +414,7 @@ pre[class*="language-diff-"] {
 <h3 id="lcd-driver">LCD Driver</h3>
 <p>Next we are going to add the VCC and GND wires required to power the LCD driver board. For simplicity sake I am connecting these to the same pins used for the RTC module. They can be seen in the picture below (Red VCC and Brown GND).</p>
 <picture><source type="image/avif" srcset="/blog/2017/2017-03-17/lhsScGVmoL-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/lhsScGVmoL-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/lhsScGVmoL-800.jpeg" alt="" width="800" height="470"></picture>
-<p>Once we have the power connected to the LCD we will need to hook up its SCLand SDA lines to the I2C bus. This is done below using the Yellow and Red wires.</p>
+<p>Once we have the power connected to the LCD we will need to hook up its SCL and SDA lines to the I2C bus. This is done below using the Yellow and Red wires.</p>
 <picture><source type="image/avif" srcset="/blog/2017/2017-03-17/IxhDeIFvyV-800.avif 800w"><source type="image/webp" srcset="/blog/2017/2017-03-17/IxhDeIFvyV-800.webp 800w"><img loading="lazy" decoding="async" src="/blog/2017/2017-03-17/IxhDeIFvyV-800.jpeg" alt="" width="800" height="549"></picture>
 
 <h3 id="connecting-the-uno">Connecting the UNO</h3>
@@ -538,7 +538,7 @@ RTC_DS3231          rtc<span class="token punctuation">;</span>
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2017/2017-03-17/` was built on 2026-03-17T13:47:32.878Z -->
+    <!-- This page `/blog/2017/2017-03-17/` was built on 2026-03-17T14:06:19.708Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

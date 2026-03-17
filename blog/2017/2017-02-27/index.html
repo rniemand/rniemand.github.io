@@ -348,7 +348,7 @@ pre[class*="language-diff-"] {
 </div>
 <h2 class="quick-access" id="quick-access">Quick Access</h2>
 <div class="toc">
-        <ol><li><a href="#including-files">Including Files</a></li><li><a href="#data-types">Data Types</a></li><li><a href="#core-methods">Core Methods</a><ol><li><a href="#m-delay">delay()</a></li><li><a href="#workingwithio">Working with IO</a></li><li><a href="#workingwithserial">Working with Serial.</a></li><li><a href="#comments">Comments</a></li><li><a href="#constants">Constants</a></li><li><a href="#time">Time</a></li><li><a href="#math">Math</a></li><li><a href="#characters">Characters</a></li><li><a href="#random-numbers">Random Numbers</a></li><li><a href="#bits-and-bytes">Bits and Bytes</a></li></ol></li><li><a href="#interrupts">Interrupts</a></li></ol>
+        <ol><li><a href="#including-files">Including Files</a></li><li><a href="#data-types">Data Types</a></li><li><a href="#core-methods">Core Methods</a><ol><li><a href="#m-delay">delay()</a></li><li><a href="#workingwithio">Working with IO</a></li><li><a href="#workingwithserial">Working with Serial</a></li><li><a href="#comments">Comments</a></li><li><a href="#constants">Constants</a></li><li><a href="#time">Time</a></li><li><a href="#math">Math</a></li><li><a href="#characters">Characters</a></li><li><a href="#random-numbers">Random Numbers</a></li><li><a href="#bits-and-bytes">Bits and Bytes</a></li></ol></li><li><a href="#interrupts">Interrupts</a></li></ol>
       </div>
 
 
@@ -412,7 +412,7 @@ pre[class*="language-diff-"] {
 			<td><code>int</code></td>
 			<td><code>64</code></td>
 			<td>2 byte (16 bit)</td>
-			<td>-2,147,483,648 to 2,147,483,647</td>
+			<td>-32,768 to 32,767</td>
 		</tr>
 		<tr>
 			<td><code>word</code></td>
@@ -424,7 +424,7 @@ pre[class*="language-diff-"] {
 			<td><code>long</code></td>
 			<td><code>186000L</code></td>
 			<td>4 bytes (32 bits)</td>
-			<td>2,147,483,648 to 2,147,483,647</td>
+			<td>-2,147,483,648 to 2,147,483,647</td>
 		</tr>
 		<tr>
 			<td><code>short</code></td>
@@ -496,7 +496,7 @@ pre[class*="language-diff-"] {
 	<li><strong>Analog</strong> - used to read a value between <code>0</code> and <code>1024</code></li>
 </ul>
 
-<h3 id="workingwithserial">Working with Serial.</h3>
+<h3 id="workingwithserial">Working with Serial</h3>
 
 <pre class="language-cpp" tabindex="0"><code class="language-cpp"><span class="token comment">// Start serial @ 9600 bps</span>
 Serial<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token number">9600</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -607,7 +607,7 @@ true | false
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2017/2017-02-27/` was built on 2026-03-17T13:47:32.876Z -->
+    <!-- This page `/blog/2017/2017-02-27/` was built on 2026-03-17T14:06:19.708Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
