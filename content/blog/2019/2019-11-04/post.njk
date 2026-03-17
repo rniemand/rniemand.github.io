@@ -1,0 +1,74 @@
+---
+title: Installing MQTT on Ubuntu
+date: 2019-11-04
+tags: [iot, linux]
+logo: mqtt.png
+---
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
+</blockquote>
+<p>Today I am going to be covering installing and configuring <code>mosquitto</code> (a pretty common MQTT client) on Ubuntu. I make use of MQTT a lot when it comes to my home automation as it's a lightweight protocol that can easily run on devices with limited memory (like an ESP8266).</p>
+<h2 id="installation">Installation</h2>
+<p>If you haven't already you will need to add the mosquitto ppa to apt using the following command:</p>
+{% highlight "shell" %}
+sudo apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
+{% endhighlight %}
+
+<p>Once added you can install mosquitto using the following:</p>
+{% highlight "shell" %}
+sudo apt-get update && sudo apt-get install -y mosquitto
+{% endhighlight %}
+
+<p>Once installed you can verify if mosquitto is running through the following command:</p>
+{% highlight "shell" %}
+systemctl status mosquitto.service
+{% endhighlight %}
+
+<h2 id="general-configuration">General Configuration</h2>
+<p>If you want to add custom configuration to mosquitto you will need to create a configuration file called <code>/etc/mosquitto/conf.d/mosquitto.conf</code> (as it does not exist by default), we can create or edit this file using the following command:</p>
+{% highlight "shell" %}
+sudo nano /etc/mosquitto/conf.d/mosquitto.conf
+{% endhighlight %}
+
+<p>Generally the only configuration I use for mosquitto is disabling anonymous logins and specifying a path to the services' password file. The entirety of my configuration file looks like this:</p>
+{% highlight "text" %}
+allow_anonymous false
+password_file /etc/mosquitto/conf.d/passwd
+{% endhighlight %}
+
+<h2 id="adding-our-first-user">Adding our FIRST user</h2>
+<blockquote>
+<p><strong>Note</strong>: if you are wanting to add an additional user to mosquitto please refer to the next section, this section is for creating the initial password file and user. Running this command again will overwrite all existing users!</p>
+</blockquote>
+<p>To add our first user to mosquitto we will need to create our password file (specified by the <code>password_file</code> configuration value above). We can create a new password file and add our first user at the same time by using the following command:</p>
+{% highlight "shell" %}
+sudo mosquitto_passwd -c /etc/mosquitto/conf.d/passwd <username>
+{% endhighlight %}
+
+<p>Once done, simply restart mosquitto to enable the new account.</p>
+{% highlight "shell" %}
+sudo systemctl restart mosquitto
+{% endhighlight %}
+
+<h2 id="adding-additional-users">Adding additional users</h2>
+<p>To add additional users to mosquitto we can run the below command (note that we omit the -c switch this time as we are not wanting to create a password file).</p>
+{% highlight "shell" %}
+sudo mosquitto_passwd /etc/mosquitto/conf.d/passwd <username>
+{% endhighlight %}
+
+<p>You can run this command as many times as you need, and it will keep appending the users to the end of your password file.</p>
+<p>To enable any added user account we will need to restart mosquitto:</p>
+{% highlight "shell" %}
+sudo systemctl restart mosquitto
+{% endhighlight %}
+
+<h2 id="useful-links">Useful Links</h2>
+<p>That's pretty much all there is to installing mosquitto on Ubuntu, hopefully this saved you some time.</p>
+<p>Below are some helpful links to make working with MQTT a lot easier:</p>
+<ul>
+<li><a href="https://mqtt-explorer.com/">MQTT Explorer</a> - an awesome cross-platform MQTT client</li>
+<li><a href="https://mosquitto.org/">Official Mosquitto Website</a> - has a lot of documentation</li>
+<li><a href="https://www.hivemq.com/">Hive.MQ</a> - good resource for MQTT, has an awesome browser based client for quick testing.</li>
+</ul>
+<p>Please feel free to leave any comments and suggestions below as I am always looking for ways to improve my posts.</p>

@@ -1,0 +1,104 @@
+---
+title: Installing MariaDB (MySQL) on Ubuntu
+date: 2019-06-15
+tags: [linux, database]
+logo: mariadb.png
+---
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
+</blockquote>
+<p>This post covers the basics of installing MariaDB (an alternative to MySQL) on Ubuntu Server in an hopefully easy to follow format. I have broken the process up into smaller sections to make following along a lot easier.</p>
+<h2 id="installation">Installation</h2>
+<p>The first thing you will need to do is ensure that your server is up to date using the following command:</p>
+{% highlight "shell" %}
+$ sudo apt-get update && sudo apt-get -y upgrade
+{% endhighlight %}
+
+<p>Once updated you can install MariaDB with the following command:</p>
+{% highlight "shell" %}
+$ sudo apt-get -y install mariadb-server mariadb-client
+{% endhighlight %}
+
+<p>Once installed you can confirm everything is working correctly by checking the state of the service:</p>
+{% highlight "shell" %}
+$ sudo systemctl status mariadb.service
+{% endhighlight %}
+
+<p>Let's stop the service so we can make some additional configuration changes:</p>
+{% highlight "shell" %}
+$ sudo systemctl stop mariadb.service
+{% endhighlight %}
+
+<h2 id="configuration">Configuration</h2>
+<p>The default configuration file can be found at <code>/etc/mysql/mariadb.conf.d/50-server.cnf</code>, you can run the below command to edit it:</p>
+{% highlight "shell" %}
+$ sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+{% endhighlight %}
+
+<p>For me the only change I needed to make was to set the <code>bind-address</code> to <code>0.0.0.0</code> (all interfaces) to allow external access, however you may want to look through the configuration file and make additional changes to suit your setup.</p>
+<p>Once done, you will need to run the <code>mysql_secure_installation</code> script as sudo - this will guide you through all the recommended security settings for your installation.</p>
+<p>You will need to start MariaDB first before running the secure installation script.</p>
+{% highlight "shell" %}
+$ sudo systemctl start mariadb.service
+$ sudo /usr/bin/mysql_secure_installation
+{% endhighlight %}
+
+<h3 id="connecting-to-the-db">Connecting to the DB</h3>
+<p>You can connect to MariaDB using the following command:</p>
+{% highlight "shell" %}
+$ sudo mysql -u root -p
+{% endhighlight %}
+
+<h3 id="creating-users">Creating Users</h3>
+<p>You can create an user account with the below commands (be sure to replace the <code>&lt;USER&gt;</code> and <code>&lt;PASSWORD&gt;</code> placeholders):</p>
+{% highlight "sql" %}
+CREATE USER '<USER>' IDENTIFIED BY '<PASSWORD>';
+GRANT USAGE ON *.* TO '<USER>'@'%' IDENTIFIED BY '<PASSWORD>';
+FLUSH PRIVILEGES;
+{% endhighlight %}
+
+<h3 id="creating-db">Creating DB</h3>
+<p>You can create a DB with the below command (be sure to replace the <code>&lt;DB_NAME&gt;</code> placeholder):</p>
+{% highlight "sql" %}
+CREATE DATABASE `<DB_NAME>`;
+{% endhighlight %}
+
+<h3 id="assigning-an-user-to-a-db">Assigning an User to a DB</h3>
+<p>Use the below commands to assign an user to a specific DB (make sure you replace <code>&lt;DB_NAME&gt;</code>, <code>&lt;USER&gt;</code> and <code>&lt;HOST&gt;</code>):</p>
+{% highlight "sql" %}
+GRANT ALL privileges ON `<DB_NAME>`.* TO '<USER>'@'<HOST>';
+FLUSH PRIVILEGES;
+{% endhighlight %}
+
+<p>You can use <code>%</code> for <code>&lt;HOST&gt;</code> to allow access from anywhere - however it is a lot safer to lock down access to known, safe IP Addresses.</p>
+<h2 id="quick-reference">Quick Reference</h2>
+<p>Some helpful commands and paths to save you time.</p>
+<h3 id="data-directory">Data Directory</h3>
+<p><code>/var/lib/mysql/</code></p>
+<h3 id="service-management">Service Management</h3>
+{% highlight "shell" %}
+sudo systemctl start mariadb.service
+sudo systemctl stop mariadb.service
+sudo systemctl restart mariadb.service
+sudo systemctl status mariadb.service
+{% endhighlight %}
+
+<h3 id="connecting-to-mariadb">Connecting to MariaDB</h3>
+{% highlight "shell" %}
+sudo mysql -u root -p
+{% endhighlight %}
+
+<h3 id="creating-a-db">Creating a DB</h3>
+{% highlight "shell" %}
+CREATE DATABASE `<DB_NAME>`;
+{% endhighlight %}
+
+<h3 id="creating-a-user-and-assign-a-db">Creating a User and assign a DB</h3>
+{% highlight "shell" %}
+CREATE USER '<USER>' IDENTIFIED BY '<PASSWORD>';
+GRANT USAGE ON `<DB_NAME>`.* TO '<USER>'@'%' IDENTIFIED BY '<PASSWORD>';
+GRANT ALL privileges ON `<DB_NAME>`.* TO '<USER>'@'<HOST>';
+FLUSH PRIVILEGES;
+{% endhighlight %}
+

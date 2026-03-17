@@ -1,0 +1,77 @@
+---
+title: Installing Grafana on Ubuntu
+date: 2019-07-02
+tags: [monitoring, linux, grafana]
+logo: grafana.png
+---
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
+</blockquote>
+<p>Once you have a running instance of <a href="/blog/2019/2019-06-14/post1/">InfluxDB</a> being populated with that sweet, sweet <a href="/blog/2019/2019-06-17/post/">Telegraf</a> data, you are going to need a way to visualise it all, this is where <a href="https://grafana.com/">Grafana</a> comes in. Grafana is by far one of the best dash-boarding systems out there and is simple to use.</p>
+<p>In this post I will cover the steps needed to get Grafana up and running on your Ubuntu Server installation, let's dive in.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>Before you begin it is a good idea to make sure that you have the latest version of libfontconfig1 installed as my initial installation failed as it was missing on my system, installation is as simple as running:</p>
+{% highlight "shell" %}
+sudo apt-get install -y libfontconfig1
+{% endhighlight %}
+
+<p>Should you run into an error with the above you can run the below command (if the above succeeded you can skip this command):</p>
+{% highlight "shell" %}
+sudo apt --fix-broken install
+{% endhighlight %}
+
+<h2 id="download-and-install">Download and Install</h2>
+<p>Next, you will need to grab the appropriate installation package from <a href="https://grafana.com/grafana/download">the official Grafana release page</a>, in my case this was <code>grafana_6.2.2_amd64.deb</code>. Log onto your server and download the installation package using wget:</p>
+{% highlight "shell" %}
+wget https://dl.grafana.com/oss/release/grafana_6.2.2_amd64.deb
+{% endhighlight %}
+
+<p>Once downloaded you can install it with the command below:</p>
+{% highlight "shell" %}
+sudo dpkg -i grafana_6.2.2_amd64.deb
+{% endhighlight %}
+
+<p>After the installation has completed you can remove the package from your system as you no longer need it:</p>
+{% highlight "shell" %}
+sudo rm -f grafana_6.2.2_amd64.deb
+{% endhighlight %}
+
+<h2 id="configuration">Configuration</h2>
+<p>The main Grafana configuration file lives in /etc/grafana/grafana.ini and you can edit it with your favourite bash editor:</p>
+{% highlight "shell" %}
+sudo nano /etc/grafana/grafana.ini
+{% endhighlight %}
+
+<p>The only real configuration changes I make are shown below, this is mainly binding to <code>0.0.0.0</code> and ensuring that the default port is set to <code>3000</code>.</p>
+{% highlight "ini" %}
+[server]
+http_addr = 0.0.0.0
+http_port = 3000
+{% endhighlight %}
+
+<p>There are loads more configuration options to play around with, but as stated above these are the ones I most often mess around with.</p>
+<h2 id="creating-a-service">Creating a Service</h2>
+<p>You can enable the Grafana service with the following commands:</p>
+{% highlight "shell" %}
+sudo systemctl enable grafana-server
+sudo systemctl daemon-reload
+{% endhighlight %}
+
+<p>You can start and stop Grafana with the following commands:</p>
+{% highlight "shell" %}
+sudo systemctl start grafana-server
+sudo systemctl stop grafana-server
+{% endhighlight %}
+
+<p>Querying the status of Grafana is as simple as:</p>
+{% highlight "shell" %}
+sudo systemctl status grafana-server
+{% endhighlight %}
+
+<h2 id="first-time-configuration">First Time Configuration</h2>
+<p>Provided you left the default port unchanged, you should be able to connect to Grafana on <code>http://&lt;server_ip&gt;:3000/</code>, in my case that would be: <code>http://10.0.0.51:3000</code></p>
+<p>You should be greeted with the following login screen.</p>
+<img src="./001.png" alt="">
+<p>Login using <code>admin</code> with default password <code>admin</code> (you will be prompted to change it on login).</p>
+<p>Congratulations, you now have a working Grafana instance!</p>

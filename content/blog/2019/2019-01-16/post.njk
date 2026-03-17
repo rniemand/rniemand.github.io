@@ -1,0 +1,141 @@
+---
+title: Over the top Door Monitoring (RF, Node-RED and HASS)
+date: 2019-01-16
+tags: [home assistant, iot]
+logo: hass.png
+---
+
+<p>I work out of the basement at home and often don't hear when my wife gets back from work or my daughter gets back from school. I wanted a way to be notified when either the front door (or back door in this case) gets opened so I can head upstairs and greet them.</p>
+<p>I happened to have some <a href="https://www.aliexpress.com/item/32862123837.html">433 Mhz RF door sensors</a> lying around and decided to try setting up an audible alert on the basement Google Home when the door opens, this post is just a quick explanation of the flow I ended up using.</p>
+<p>With no doubt there are easier ways to go about solving this problem, but the solution I ended up using made the most sense to me at the time.</p>
+<h2 id="the-hardware">The Hardware</h2>
+<p>As mentioned above the star of the show are the 433 Mhz RF door sensors I bought from China:</p>
+<img src="./001.png" alt="" />
+<p>Unfortunately the model I selected only sends a single code (others offer a code for the <code>open</code> and <code>closed</code> state) - so I had to do some dirty hacking around this (see the Node-RED flows).</p>
+<p>I have a <a href="https://itead.cc/product/sonoff-rf-bridge-433/">Sonoff RF Bridge</a> running <a href="https://github.com/arendst/Tasmota">Tasmota</a> which intercepts all 433 MHz RF signals and relays them to my MQTT broker allowing me to use the switches in my Home Automation setup.</p>
+<img src="./002.jpg" alt="" />
+<p>The rest of the hardware used in the project consists of:</p>
+<ul>
+<li>Raspberry Pi 3 running Home Assistant</li>
+<li>Google Home - used for notifications</li>
+<li><a href="https://nanopi.io/nanopi-neo2.html">NanoPi NEO2</a> running Node-RED &lt;- this is an awesome $20 SBC!</li>
+</ul>
+<h2 id="node-red-flow">Node-RED Flow</h2>
+<p>As mentioned above the RF sensors I am using only send a code when the contact is broken (i.e. the door is opened). I would like the door to return to a closed state after 2 min so a re-trigger is possible, and a more accurate state for the door is recorded in Home Assistant.</p>
+<p>The simplest solution I came up with here was to:</p>
+<ul>
+<li>Create a flow to listen for the door open messages and schedule a closed message 2 min from its arrival</li>
+<li>Create a flow to publish the closed message at the correct time</li>
+</ul>
+<h3 id="schedule-reset-message">Schedule Reset Message</h3>
+<p>Here is the flow to schedule the reset (closed) messages in Node-RED.</p>
+<img src="./003.png" alt="" />
+<ul>
+<li>Subscribe to the Sonoff RF results topic (<code>tele/RF_Bridge/RESULT</code>)</li>
+<li>Convert the message body into an JSON object</li>
+<li>Switch based on the value of <code>msg.payload.RfReceived.Data</code></li>
+</ul>
+<img src="./004.png" alt="" />
+<p>Execute a simple JavaScript code block to schedule the reset message</p>
+{% highlight "js" %}
+let offTime = new Date(new Date().getTime() + 1000 * 60 * 2);
+flow.set("door_back_offAt", offTime);
+flow.set("door_back_state", "OPEN");
+{% endhighlight %}
+
+<h3 id="send-reset-message">Send Reset Message</h3>
+<p>The flow to send the reset message looks like this:</p>
+<img src="./005.png" alt="" />
+<ul>
+<li>At an interval of <code>10 seconds</code></li>
+</ul>
+<p>Run a script to determine if we need to send a reset message</p>
+{% highlight "js" %}
+let doorState = flow.get("door_back_state");
+let turnOffAt = flow.get("door_back_offAt");
+let newState = "IGNORE";
+if (doorState === "OPEN") {
+	if (new Date() > turnOffAt) {
+		flow.set("door_front_state", "CLOSED");
+		newState = "CLOSED";
+	}
+}
+msg.payload = {state: newState};
+return msg;
+{% endhighlight %}
+
+<ul>
+<li>Filter to check for the CLOSED state</li>
+</ul>
+<img src="./006.png" alt="" />
+<p>Template to generate the reset message:</p>
+{% highlight "json" %}
+{"RfReceived": {"Data": "B82346OFF"}}
+{% endhighlight %}
+
+<p>Publish the reset message via MQTT on the <code>tele/RF_Bridge/RESULT</code> topic - mocking the required structure of a decoded Sonoff RF message.</p>
+<h3 id="flows-side-by-side">Flows Side by Side</h3>
+<p>Schedule reset message flow:</p>
+<img src="./003.png" alt="" />
+<p>Send reset message flow:</p>
+<img src="./005.png" alt="" />
+<h2 id="home-assistant-binary-sensor">Home Assistant Binary Sensor</h2>
+<p>Although technically not required I setup a <a href="https://www.home-assistant.io/integrations/binary_sensor.mqtt">MQTT binary sensor</a> in Home Assistant to allow me to check the state history of the door:</p>
+{% highlight "yaml" %}
+binary_sensor:
+  - platform: mqtt
+    name: "Back Door"
+    state_topic: "tele/RF_Bridge/RESULT"
+    payload_on: "1E3B46"
+    payload_off: "1E3B46OFF"
+    device_class: door
+    value_template: "{{ value_json.RfReceived.Data }}"
+{% endhighlight %}
+
+<blockquote>
+<p><strong>Note</strong> the <code>1E3B46OFF</code> payload is the actual reset message sent from Node-RED</p>
+</blockquote>
+<p>After restarting Home Assistant I now had my doors showing up:</p>
+<img src="./007.png" alt="" />
+<p>And after some time I was able to get state history for the doors, see that the door was open for 2 min :).</p>
+<img src="./008.png" alt="" />
+<h2 id="alerting-rule">Alerting Rule</h2>
+<p>Now that I have my door in Home Assistant it was time to set up the actual alert, this was done through an Automation script, and after some playing around I ended up with the following:</p>
+{% highlight "yaml" %}
+alias: "Back Door Opened"
+initial_state: True
+
+trigger:
+  - platform: mqtt
+    topic: tele/RF_Bridge/RESULT
+
+condition:
+  condition: template
+  value_template: "{{ trigger.payload_json['RfReceived']['Data'] == '1E3B46' }}"
+
+action:
+  - service: tts.google_say
+    data:
+      entity_id: media_player.gym_speaker
+      message: Back door open
+{% endhighlight %}
+
+<p>Broken up it's easy enough to follow:</p>
+<ul>
+<li><code>alias</code> - what you want to call the Automation in Home Assistant</li>
+<li><code>initial_state</code> - enabled by default</li>
+<li><code>trigger</code> - condition to trigger the automation, in my case this was an MQTT message</li>
+<li><code>condition</code> - used to filter out the specific MQTT payload I wanted</li>
+<li><code>action</code> - response to the trigger and condition being met</li>
+</ul>
+<p>After reloading the automations in Home Assistant my Back Door Opened entry was listed!</p>
+<img src="./009.png" alt="" />
+<h2 id="testing-it-out">Testing it out</h2>
+<p>I didn't want to keep opening and closing the door to test the flow so I ended up using <a href="https://mqttfx.jensd.de/">MQTT.fx</a> to post a bare-bones JSON payload mimicking that of the Sonoff RF bridge.</p>
+<img src="./010.png" alt="" />
+<h2 id="in-closing">In closing</h2>
+<p>This is a rather complex solution to a simple problem, Ill be the first to admit that - however I love little challenges like this as it gets me thinking of new ways to solve them.</p>
+<p>The code used for Node-RED is not optimised at all (I would like to roll up the logic into a single step), but it gets the job done. The binary sensors in Home Assistant are only used for tracking the state of the door visually and are not required if you are following along at home.</p>
+<p>Hopefully you found this post interesting or amusing. I am blown away each day with the power and versatility packed into these open source projects - the community has poured a lot of love and devotion into them and it shows.</p>
+<p>Feel free to post any comments, questions or suggestions below!</p>
+<p>Happy hacking</p>

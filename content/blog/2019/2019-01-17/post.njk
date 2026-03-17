@@ -1,0 +1,76 @@
+---
+title: Running Grafana locally on HTTPS
+date: 2019-01-17
+tags: [monitoring, grafana]
+logo: grafana.png
+---
+
+<p>I am currently developing a custom data-source for <a href="https://grafana.com/">Grafana</a> and needed to run the server in HTTPS mode in order to test out a rather odd use-case, this is just a quick post on how I did it - hopefully this saves you some time in the future.</p>
+<h2 id="generating-the-certificates">Generating the certificates</h2>
+<p>Following the <a href="https://letsencrypt.org/docs/certificates-for-localhost/">steps outlined here</a>, I decided to spin up an Ubuntu <a href="https://www.docker.com/">Docker</a> container for this, making sure to map the /home directory to a folder on my PC for easy access.</p>
+{% highlight "text" %}
+docker run -it --rm -v C:\docker-data\ubuntu:/home ubuntu
+{% endhighlight %}
+
+<p>Once booted I installed openssh with the following command:</p>
+{% highlight "text" %}
+apt-get update && apt-get upgrade -y && apt-get install -y openssl
+{% endhighlight %}
+
+<p>Once installed be sure to change to your home directory:</p>
+{% highlight "text" %}
+cd /home
+{% endhighlight %}
+
+<p>Then run the below to generate a certificate for localhost:</p>
+{% highlight "text" %}
+openssl req -x509 -out localhost.crt -keyout localhost.key \
+  -newkey rsa:2048 -nodes -sha256 \
+  -subj '/CN=localhost' -extensions EXT -config <( \
+   printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+{% endhighlight %}
+
+<p>This should generate the following files in your mapped /home folder:</p>
+<ul>
+<li>localhost.crt</li>
+<li>localhost.key</li>
+</ul>
+<p>Copy these files to somewhere where your Grafana server can access them.</p>
+<h2 id="configure-grafana">Configure Grafana</h2>
+<p>In order to use the certificates you will need to make the following changes to your Grafana's <code>defaults.ini</code> file:</p>
+{% highlight "ini" %}
+[server]
+protocol = https
+cert_file = D:\WRK\grafana-5.4.2\localhost.crt
+cert_key = D:\WRK\grafana-5.4.2\localhost.key
+{% endhighlight %}
+
+<p>Save and close the file - that's it from the Grafana side.</p>
+<h3 id="trusting-the-certificate">Trusting the certificate</h3>
+<p>If you were to browse to your server on https now - your browser would throw up an error page saying that the certificate is not valid \ trusted. We can solve this by importing the localhost.crt file into the computer's trusted Root Certification Authorities.</p>
+<p>Note this is not recommended for production environments - but is the path of least resistance for us developers :)</p>
+<ul>
+<li>Open a Run dialog</li>
+<li>Enter in <code>mmc</code> and click OK</li>
+<li>Click File then Add/Remove Snap-in</li>
+<li>Select Certificates from the available snap-ins and click the Add &gt; button</li>
+<li>Select Computer Account on the screen that appears and click Next &gt;</li>
+<li>Ensure that Local Computer is selected on the next screen and click Finish</li>
+<li>Click OK to close the add snap-in dialog</li>
+<li>Using the left hand side panel navigate to Certificates -&gt; Trusted Root Certification Authorities -&gt; Certificates</li>
+<li>Right click on the Certificated folder and select All Tasks -&gt; Import from the context menu</li>
+<li>On the Certificate Import Wizard screen click Next</li>
+<li>Browse for the and select your localhost.crt on the next screen, then click Next</li>
+<li>Leave everything as is on the next screen - click Next</li>
+<li>Review the pending changes and click Finish to import your certificate</li>
+</ul>
+<p>If all goes well you should see a localhost certificate in the list:</p>
+<img src="./001.png" alt="" />
+<p>You're done with the import - you can now close the console.</p>
+<h2 id="testing-it-all-out">Testing it all out</h2>
+<p>You can now navigate to your Grafana's server address on https (in my case that's https://localhost:3000/?orgId=1) - your browser should pick up the certificate and allow the connection as shown below:</p>
+<img src="./002.png" alt="" />
+<blockquote>
+<p><strong>VIP</strong>: you may need to restart your browser as I know Chrome for a fact needs a restart to pick up changes to certificates - don't panic if it fails initially you probably just need to restart your browser.</p>
+</blockquote>
+<p>You are done!</p>

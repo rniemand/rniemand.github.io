@@ -1,0 +1,78 @@
+---
+title: Installing Webmin on Ubuntu
+date: 2019-07-24
+tags: [linux]
+logo: webmin.png
+---
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
+</blockquote>
+<p>Today I will be covering installing <a href="https://www.webmin.com/">Webmin</a> on Ubuntu (and Ubuntu Server), in case you are unaware of it (I was initially) here is a blurb taken from their website.</p>
+<p>Webmin is a web-based interface for system administration for Unix. Using any modern web browser, you can set up user accounts, Apache, DNS, file sharing and much more.</p>
+<p>I highly recommend checking out &quot;<a href="https://www.webmin.com/deb.html">the official deployment guide</a>&quot;, so should you get stuck with any of the steps below.</p>
+<h2 id="installation">Installation</h2>
+<p>First you will need to download the latest version of the Webmin installer on your server. You can get this link from their deployment guide, at the time of writing this post <code>webmin_1.920_all.deb</code> was the latest version. Once you are connected to your server you can simply download it using the following command (making sure that you reference the current version.</p>
+{% highlight "shell" %}
+wget http://prdownloads.sourceforge.net/webadmin/webmin_1.920_all.deb
+{% endhighlight %}
+
+<p>Once the download has completed you can install the package using dpkg as an elevated user.</p>
+{% highlight "shell" %}
+sudo dpkg --install webmin_1.920_all.deb
+{% endhighlight %}
+
+<p>I initially ran into some issues with the installation due to missing packages.</p>
+{% highlight "text" %}
+dpkg: error processing package webmin (--install):
+ dependency problems - leaving unconfigured
+Processing triggers for systemd (240-6ubuntu5) ...
+Errors were encountered while processing:
+ webmin
+{% endhighlight %}
+
+<p>Thankfully this was easily resolved using <code>apt</code>:</p>
+{% highlight "shell" %}
+sudo apt --fix-broken install
+{% endhighlight %}
+
+<p>After that, I was able to re-run the installation with no errors.</p>
+{% highlight "shell" %}
+sudo dpkg --install webmin_1.920_all.deb
+{% endhighlight %}
+
+<p>Don't forget to remove the installer once completed!</p>
+{% highlight "shell" %}
+rm webmin_1.920_all.deb
+{% endhighlight %}
+
+<h2 id="connecting-to-webmin">Connecting to Webmin</h2>
+<p>By default, the Webmin UI is exposed on port 10000 on your server's IP Address, connecting to it is as simple as navigating to <code>https://&lt;SERVER-IP&gt;:10000</code> in your favourite browser.</p>
+<img src="./001.png" alt="" />
+<p>You can log into Webmin using the same credentials you use to ssh into your server.</p>
+<p>When prompted to, I would highly suggest allowing Webmin to show you desktop notifications.</p>
+<p>Before continuing, it may be a good idea to install any missing updates to your server (they normally appear as shown below on Webmins landing page).</p>
+<img src="./002.png" alt="" />
+<h2 id="modules">Modules</h2>
+<p>One of the cool features with Webmin are its modules (plugins). There are a lot of modules available with some sensible defaults enabled. You can easily get a list of any disabled modules through the un-used Modules link.</p>
+<img src="./003.png" alt="" />
+<p>Setup and configuration of each module will vary so I can't cover all of them (thankfully their documentation is good). The only module I normally enable is the SMART Drive Status module as it provides some useful information about any drives attached to my servers.
+The next section will walk you through installing the required services to get up and running with the SMART Drive Status module.</p>
+<h3 id="smart-drive-status">SMART Drive Status</h3>
+<p>The SMART Drive Status module requires Smartmontools to be installed, you can install smartmontools with the below command:</p>
+{% highlight "shell" %}
+sudo apt install -y smartmontools
+{% endhighlight %}
+
+<p>During the installation process you will be prompted to enter in some information, from my experience the default (suggested) value worked perfectly.</p>
+<p>After the installation has completed you can click Refresh Modules to allow Webmin to discover the newly installed smartmontools package.</p>
+<img src="./004.png" alt="" />
+<p>You should now be able to see the plugin under the Hardware menu node.</p>
+<p>Clicking the configuration cog (in the top left corner) will bring up the modules configuration page.</p>
+<img src="./005.png" alt="" />
+<p>I would suggest enabling the module for all drives (as shown above).</p>
+<p>That's all there is to it, you should now see some additional drive information on the Webmin's overview page.</p>
+<img src="./006.png" alt="" />
+<h2 id="in-closing">In Closing</h2>
+<p>Hopefully you found this post helpful and were able to get your own deployment of Webmin up and running. If you get stuck feel free to ask a question below if you are unable to find an answer on <a href="https://www.webmin.com/">the official Webmin</a> site, I am always happy to try to help out.</p>
+<p>I am open to any feedback, comments and suggestions that you may have so please feel free to leave some, I will do my best to get back to you as soon as possible.</p>

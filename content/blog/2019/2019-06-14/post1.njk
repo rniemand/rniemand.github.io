@@ -1,0 +1,95 @@
+---
+title: Installing InfluxDB on Ubuntu
+date: 2019-06-14
+tags: [monitoring, linux]
+logo: influxdb.png
+---
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
+</blockquote>
+<p>This is a brief guide to get <a href="https://www.influxdata.com/products/influxdb-overview/">InfluxDB</a> up and running on Ubuntu Server, you can refer to the <a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/">official documentation</a> should you run into any issues.</p>
+<h2 id="installation">Installation</h2>
+<p>Installing InfluxDB on Ubuntu is pretty straightforward and can be completed in a few simple steps.</p>
+<h3 id="first-time-only">First Time Only</h3>
+<p>The first time you install any of the Influx Data products you will need to add their repository using the below commands:</p>
+{% highlight "shell" %}
+$ sudo wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+$ source /etc/lsb-release
+$ echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+{% endhighlight %}
+
+<h3 id="install-influxdb">Install InfluxDB</h3>
+<p>After updating apt-get you can install InfluxDB with the following command:</p>
+{% highlight "shell" %}
+$ sudo apt-get update && sudo apt-get install influxdb
+{% endhighlight %}
+
+<h3 id="configure-influxdb">Configure InfluxDB</h3>
+<p>Should you want to make any changes to the default configuration you can edit the configuration file with the following command:</p>
+{% highlight "shell" %}
+$ sudo nano /etc/influxdb/influxdb.conf
+{% endhighlight %}
+
+<p>The most common changes I make to this file when installing InfluxDB are:</p>
+<ul>
+<li>Enable the HTTP endpoint</li>
+<li>Set the bind address to <code>0.0.0.0</code></li>
+</ul>
+<h3 id="starting-the-service">Starting the service</h3>
+<p>Once installed you can start, stop and restart InfluxDB with the below commands:</p>
+{% highlight "shell" %}
+$ sudo systemctl start influxd.service
+$ sudo systemctl stop influxd.service
+$ sudo systemctl restart influxd.service
+{% endhighlight %}
+
+<h3 id="testing-install">Testing Install</h3>
+<p>To confirm InfluxDB is working (and the HTTP endpoint is enabled) you can try listing all databases using the following URL template (<code>http://&lt;server_ip&gt;:8086/query?q=show databases</code>), in my case that would be: <code>http://10.0.0.52:8086/query?q=show%20databases</code></p>
+<p>You should see something like the below if all went well:</p>
+<img src="./001.png" alt="" />
+<p>If you have any issues resolving your InfluxDB URL you can try running the following command on your server to see if there are any errors relating to InfluxDB</p>
+{% highlight "shell" %}
+$ tail -f /var/log/syslog | grep influx
+{% endhighlight %}
+
+<p>Hopefully it will shed some more light on the issue.</p>
+<img src="./002.png" alt="" />
+<h2 id="quick-reference">Quick Reference</h2>
+<p>Some helpful commands and paths to save you some time.</p>
+<ul>
+<li><a href="https://www.influxdata.com/products/influxdb-overview/">Official Site</a></li>
+<li><a href="https://docs.influxdata.com/influxdb/v1.7/introduction/installation/">InfluxDB Docs</a></li>
+</ul>
+<h3 id="configuration-file">Configuration File</h3>
+{% highlight "shell" %}
+$ sudo nano /etc/influxdb/influxdb.conf
+{% endhighlight %}
+
+<h3 id="service-management">Service Management</h3>
+{% highlight "shell" %}
+$ sudo systemctl start influxd.service
+$ sudo systemctl stop influxd.service
+$ sudo systemctl restart influxd.service
+{% endhighlight %}
+
+<h3 id="troubleshooting">Troubleshooting</h3>
+{% highlight "shell" %}
+$ tail -f /var/log/syslog | grep influx
+{% endhighlight %}
+
+<h3 id="data-directories">Data Directories</h3>
+{% highlight "shell" %}
+# Where the metadata/raft database is stored
+dir = "/var/lib/influxdb/meta"
+# The directory where the TSM storage engine stores TSM files.
+dir = "/var/lib/influxdb/data"
+# The directory where the TSM storage engine stores WAL files.
+wal-dir = "/var/lib/influxdb/wal"
+{% endhighlight %}
+
+<h3 id="ports">Ports</h3>
+<ul>
+<li><code>TCP</code> port <code>8086</code> client-server communication (InfluxDB HTTP API).</li>
+<li><code>TCP</code> port <code>8088</code> RPC service (for backup and restore operations).</li>
+</ul>

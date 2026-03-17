@@ -1,0 +1,86 @@
+---
+title: Collecting Sonoff Pow data in Home Assistant
+date: 2019-04-02
+tags: [home assistant, mqtt, iot]
+logo: sonoff.png
+---
+
+<p>This post covers the process of collecting performance data from most Sonoff devices, in this instance I will be working with my Sonoff Pow R2.</p>
+<h2 id="requirements">Requirements</h2>
+<p>To follow along you will need the following:</p>
+<ul>
+<li>an MQTT server - some setup <a href="/tags/mqtt/">posts here</a></li>
+<li>a Sonoff device running <a href="https://github.com/arendst/Tasmota">Tasmota</a></li>
+</ul>
+<h2 id="setting-the-correct-time">Setting the correct time</h2>
+<p>If you haven't already done so, I would recommend ensuring that you have the correct time set on your Sonoff device, setting the time can be done through the web console through one of the <a href="https://github.com/arendst/Tasmota#management">following methods</a>:</p>
+<h3 id="manual">Manual</h3>
+<p>You can set the time manually with any of the following commands (Timezone, TimeSTD, TimeDST), for example if I wish to manually set it for myself I could issue the following command:</p>
+{% highlight "shell" %}
+Timezone -6
+{% endhighlight %}
+
+<h3 id="ntp">NTP</h3>
+<p>The simplest way to set the time by far is through the use of a NTP Server - just google for one closest to you, my search returned the following server (2.ca.pool.ntp.org). To set the time using an NTP server you would use the NtpServer command followed by the servers address:</p>
+<ul>
+<li><code>NtpServer 2.ca.pool.ntp.org</code></li>
+</ul>
+<h2 id="configure-telemetry">Configure Telemetry</h2>
+<p>Next we will need to configure how often Tasmota publishes the telemetry data (statistics) that we want to collect. This is set in seconds and can range from 10 seconds all the way up to 300 seconds (5 min).</p>
+<p>Again this can be set through the Web Console with the TelePeriod command:</p>
+{% highlight "shell" %}
+TelePeriod 10
+{% endhighlight %}
+
+<h2 id="configuring-mqtt">Configuring MQTT</h2>
+<p>By far the easiest way to send data between your Sonoff device and Home Assistant is through MQTT.</p>
+<p>Configuration is done via the <code>Configuration</code> -&gt; <code>Configure MQTT</code> links:</p>
+<img src="./001.png" alt="" />
+<p>Take note of the topic as we will need to subscribe to it in Home Assistant.</p>
+<h2 id="mqtt-payload">MQTT Payload</h2>
+<p>The telemetry payload from my Sonoff POW R2 is shown below.</p>
+{% highlight "json" %}
+{
+	"Time": "2019-04-02T19:31:06",
+	"ENERGY": {
+		"TotalStartTime": "2019-03-19T21:10:01",
+		"Total": 1.368,
+		"Yesterday": 0.001,
+		"Today": 0.397,
+		"Period": 0,
+		"Power": 0,
+		"ApparentPower": 0,
+		"ReactivePower": 0,
+		"Factor": 0.0,
+		"Voltage": 0,
+		"Current": 0.0
+	}
+}
+{% endhighlight %}
+
+<p>As you can see there is a lot of useful data in the payload and it's pretty easy to work out what each value relates to on your Sonoff device.</p>
+<img src="./002.png" alt="" />
+<h2 id="home-assistant">Home Assistant</h2>
+<p>We will be making use of the <a href="https://www.home-assistant.io/integrations/sensor.mqtt">MQTT Sensor</a> component in Home Assistant with a custom <code>value_template</code> to extract the counter we are interested in. You will need to create one entry per value you wish to collect.</p>
+<p>Here is the configuration used to collect the Reactive Power (ReactivePower) value from the above MQTT payload.</p>
+<blockquote>
+<p><strong>Note</strong>: The parsed JSON payload is available through the value_json template variable.</p>
+</blockquote>
+{% highlight "yaml" %}
+sensor:
+  - platform: mqtt
+    state_topic: "tele/anet-a8-pow/SENSOR"
+    name: "Reactive Power (Anet A8)"
+    unit_of_measurement: "VA"
+    value_template: "{{ value_json.ENERGY.ReactivePower }}"
+{% endhighlight %}
+
+<p>Repeat this step for each counter you wish to collect.</p>
+<p>Once done be sure to check your configuration before restarting Home Assistant, and if all goes well you should end up with your new counters:</p>
+<img src="./003.png" alt="" />
+<p>Provided you are running the base recorder configuration, Home Assistant should store history data for your counters.</p>
+<img src="./004.png" alt="" />
+<h2 id="in-closing">In Closing</h2>
+<p>I hope that you found this post helpful, and that you are able to use your newly collected data to build all kinds of cool automations around your home.</p>
+<p>Feel free to leave any comments, feedback and suggestions below.</p>
+<p>Happy hacking!</p>

@@ -1,0 +1,91 @@
+---
+title: Installing Telegraf on Ubuntu
+date: 2019-06-17
+tags: [monitoring, linux]
+logo: telegraf.png
+---
+
+<blockquote>
+<p><strong>Hi there</strong>! This post is <a href="/series/">part of a series</a> I am doing where I attempt to move most of the applications I use at home over to Linux. If you find this interesting you may enjoy the other posts too!</p>
+</blockquote>
+<p><a href="https://www.influxdata.com/time-series-platform/telegraf/">Telegraf</a> is the open source server agent to help you collect metrics from your stacks, sensors and systems. Following the steps below should get you up and running with Telegraf in no time. Should you want to dive a bit deeper into some of the features offered by Telegraf you may want to refer to the <a href="https://docs.influxdata.com/telegraf/v1.11/introduction/installation/">official documentation here</a>.</p>
+<h2 id="first-time-only">First Time Only</h2>
+<p>The first time you install any of the Influx Data products you will need to add their repository using the below commands:</p>
+{% highlight "shell" %}
+sudo wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+source /etc/lsb-release
+echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+{% endhighlight %}
+
+<h2 id="installing-telegraf">Installing Telegraf</h2>
+<p>Once you have added the InfluxData source to your system, you can install Telegraf with the below command:</p>
+{% highlight "shell" %}
+sudo apt-get update && sudo apt-get install telegraf
+{% endhighlight %}
+
+<h2 id="configuring-telegraf">Configuring Telegraf</h2>
+<p>Once installed, you will need to make some changes to the default configuration file that Telegraf ships with. To do this we can edit the <code>telegraf.conf</code> file.</p>
+{% highlight "shell" %}
+sudo nano /etc/telegraf/telegraf.conf
+{% endhighlight %}
+
+<h3 id="influxdb-output">InfluxDB (Output)</h3>
+<p>You will need to enable at least 1 output for Telegraf, in my case (and most commonly) this would be <a href="/blog/2019/2019-06-14/post1/">InfluxDB</a>. Search for the <code>[[outputs.influxdb]]</code> configuration section and change as needed, my configuration is shown below:</p>
+{% highlight "ini" %}
+[[outputs.influxdb]]
+  urls = ["http://10.0.0.56:8086"]
+  database = "telegraf"
+{% endhighlight %}
+
+<h3 id="net-input">net (Input)</h3>
+<p>To collect networking stats for your computer you will need to enable the [[inputs.net]] plugin. Part of the configuration for the plugin is setting the interface name for your network card (the name varies from system to system) - the easiest way to get your interface name is by listing all the networking devices on your computer and choosing the most appropriate one from the results:</p>
+{% highlight "shell" %}
+ls /sys/class/net/
+{% endhighlight %}
+
+<p>Once you have your adapter name change your configuration to match it, in my case I am using the following configuration:</p>
+{% highlight "ini" %}
+[[inputs.net]]
+  interfaces = ["eno1"]
+{% endhighlight %}
+
+<h3 id="default-input">Default (Input)</h3>
+<p>When installing Telegraf on my system the following plugins seemed to be enabled by default (though your mileage may vary):</p>
+<ul>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/cpu/README.md">inputs.cpu</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/disk/README.md">inputs.disk</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/kernel/README.md">inputs.kernel</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/mem/README.md">inputs.mem</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/processes/README.md">inputs.processes</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/swap/README.md">inputs.swap</a></li>
+<li><a href="https://github.com/influxdata/telegraf/blob/release-1.11/plugins/inputs/system/README.md">inputs.system</a></li>
+</ul>
+<p>A complete list of Telegraf plugins can be found <a href="https://docs.influxdata.com/telegraf/v1.11/plugins/plugin-list/">here</a>.</p>
+<h2 id="service-management">Service Management</h2>
+<p>You can use the below commands to manage the Telegraf service after making configuration changes.</p>
+{% highlight "shell" %}
+sudo systemctl status telegraf.service
+sudo systemctl start telegraf.service
+sudo systemctl stop telegraf.service
+sudo systemctl restart telegraf.service
+{% endhighlight %}
+
+<blockquote>
+<p>Make sure you remember to restart the service after making configuration changes.</p>
+</blockquote>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Should you run into any issues with starting Telegraf, or you are missing data you can always run the below command to get the last couple of messages from Telegraf:</p>
+{% highlight "shell" %}
+sudo systemctl status telegraf.service
+{% endhighlight %}
+
+<p>Should the above not provide you any insight you could always run cat and grep on syslog to listen for new Telegraf events and print them to your screen:</p>
+{% highlight "shell" %}
+tail -f /var/log/syslog | grep telegraf
+{% endhighlight %}
+
+<p>In my case I had set the incorrect URL for InfluxDB :/</p>
+<img src="./001.png" alt="" />
+<h2 id="all-done">All Done</h2>
+<p>Hopefully you find this post helpful!</p>
+<p>Feel free to leave any feedback or comments below, or if you spot an issue let me know so I can fix it. Happy monitoring!</p>

@@ -1,0 +1,66 @@
+---
+title: Installing Telegraf on DietPi / ARM (Revised)
+date: 2019-03-27
+tags: [monitoring]
+logo: telegraf.png
+---
+
+<p>Today I would like to cover getting up and running with <a href="https://www.influxdata.com/time-series-platform/telegraf/">Telegraf</a> on my SBC computers, namely most arm/arm64 based Debian distros.</p>
+<p>This will be a brief post just covering the commands \ &quot;hacks&quot; used to get it all sorted.</p>
+<h2 id="uninstalling-optional">Uninstalling (Optional)</h2>
+<p>I had initially done a manual installation of Telegraf which needed to be removed:</p>
+{% highlight "shell" %}
+systemctl stop telegraf.service
+systemctl disable telegraf.service
+systemctl daemon-reload
+{% endhighlight %}
+
+<h2 id="installing-from-influxdatacom">Installing from influxdata.com</h2>
+<p>These steps are summarised from the <a href="https://docs.influxdata.com/telegraf/v1.10/introduction/installation/">official documentation</a>.</p>
+<p>Add the influxdb.key key:</p>
+{% highlight "shell" %}
+wget -qO- https://repos.influxdata.com/influxdb.key | sudo apt-key add -
+{% endhighlight %}
+
+<p>Create a source entry for <code>influxdb.list</code>:</p>
+{% highlight "shell" %}
+echo "deb [arch=arm64] https://repos.influxdata.com/debian stretch stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
+{% endhighlight %}
+
+<blockquote>
+<p><strong>Note</strong>: depending on your SBC architecture you may need to replace [arch=arm64] with [arch=armel] or [arch=armhf]! You can get your CPU architecture by running cat /proc/cpuinfo</p>
+</blockquote>
+<p>Run <code>apt-get update</code> and install required dependencies:</p>
+{% highlight "shell" %}
+sudo apt-get update && sudo apt-get install apt-transport-https
+{% endhighlight %}
+
+<p>Install telegraf:</p>
+{% highlight "shell" %}
+sudo apt-get update && sudo apt-get install telegraf
+{% endhighlight %}
+
+<h2 id="configuration">Configuration</h2>
+<p>By default the configuration file can be found at <code>/etc/telegraf/telegraf.conf</code>.</p>
+<p>You will need to edit this file to point Telegraf to your local InfluxDb server and add any modules you require:</p>
+{% highlight "shell" %}
+nano /etc/telegraf/telegraf.conf
+{% endhighlight %}
+
+<h2 id="running-as-a-service">Running as a service</h2>
+<p>Enabling the telegraf service should be as easy as issuing the following commands:</p>
+{% highlight "shell" %}
+systemctl start telegraf
+systemctl status telegraf
+{% endhighlight %}
+
+<p>Optionally you can run the below command to enable the service if it was not done as part of the installation:</p>
+{% highlight "shell" %}
+systemctl enable telegraf
+{% endhighlight %}
+
+<h2 id="notes">Notes</h2>
+<p>The official repository I used for discovering the supported CPU architectures is here: <a href="https://repos.influxdata.com/debian/dists/stretch/stable/">https://repos.influxdata.com/debian/dists/stretch/stable/</a>.</p>
+<p>Once running you should start seeing your hosts appearing in Chronograf.</p>
+<img src="./001.png" alt="" />
+<p>Hopefully you found this post helpful and as always, I welcome any comments, questions and feedback.</p>
