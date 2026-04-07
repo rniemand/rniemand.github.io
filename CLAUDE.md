@@ -217,6 +217,41 @@ Each `.project-topic` contains a `.project-topic-label` (muted uppercase categor
 
 The tags page (`content/tags.njk`) uses a responsive card grid with a live JavaScript filter input. Each card shows the tag name, post count badge, latest post title, and date. Cards animate on hover.
 
+**Logo mapping:** Each tag card displays a representative logo from `public/img/post-logos/` using a CSS `background-image` span (see eleventy-img bypass note above). The mapping is defined as a Nunjucks object at the top of the tag grid loop. Current mapping:
+
+| Tag | Logo | Notes |
+|---|---|---|
+| `.net` | `dotnet.png` | |
+| `3d printing` | `3dprinter.png` | |
+| `arduino` | `arduino.png` | |
+| `blogging` | `blog.png` | |
+| `ci-cd` | `git.png` | No dedicated CI/CD logo — approximate |
+| `database` | `mariadb.png` | Approximate — most common DB in recent posts |
+| `docker` | `docker.png` | |
+| `documentation` | `docsify.png` | |
+| `esp8266` | `esp8266.png` | |
+| `esphome` | `esphome.png` | |
+| `gaming` | `satisfactory.png` | Only gaming posts cover Satisfactory |
+| `github` | `github.png` | |
+| `grafana` | `grafana.png` | |
+| `home assistant` | `hass.png` | |
+| `influxdb` | `influxdb.png` | |
+| `iot` | `wifi.png` | No generic IoT logo — approximate |
+| `javascript` | `javascript.png` | |
+| `linux` | `ubuntu.png` | Approximate — most linux posts are Ubuntu |
+| `monitoring` | `grafana.png` | Approximate — most recognisable monitoring tool |
+| `mqtt` | `mqtt.png` | |
+| `networking` | `wifi.png` | No generic networking logo — approximate |
+| `server` | `server.png` | |
+| `svelte` | `svelte.png` | |
+| `tasmota` | `tasmota.png` | |
+| `telegraf` | `telegraf.png` | |
+| `typescript` | `typescript.png` | |
+| `unraid` | `unraid.png` | |
+| `windows` | *(none)* | **Missing** — no Windows logo in `public/img/post-logos/` yet |
+
+When a new tag is added, update the `tagLogos` object in `tags.njk` and add a matching logo to `public/img/post-logos/` if needed. Tags with no entry in the map fall back to the generic `bi-tag-fill` Bootstrap icon.
+
 ## Plugin Gotchas
 
 ### eleventy-plugin-toc
@@ -233,6 +268,22 @@ The image transform resolves `<img src="...">` paths **relative to the input tem
 - Images in `public/img/` are pass-through copied to `_site/img/` but are **not** found by the transform (the transform doesn't look in `public/`).
 - To have an image processed by the transform (e.g. in `content/index.njk`), place it under `content/` and use a relative path: `<img src="./img/richard.jpg">`.
 - A leading `/` resolves from the project root (e.g. `/img/foo.jpg` → `D:/dev/rniemand.github.io/img/foo.jpg`), which also doesn't exist unless you create a root-level `img/` dir.
+
+**Bypassing the transform entirely:** When you want to reference a `public/` image at its final runtime URL (e.g. `/img/post-logos/foo.png`) without the transform intercepting it, use a CSS `background-image` on a `<span>` via an inline style instead of an `<img>` tag. Inline `style` attributes are not processed by the transform:
+```html
+<!-- transform-safe — resolves at runtime via pass-through copy -->
+<span style="background-image:url('/img/post-logos/foo.png')"></span>
+```
+
+### Bootswatch Quartz — automatic card gradients
+The Quartz theme is compiled with `$enable-gradients: true`, so Bootstrap's `.card` (and several other components) automatically receive a `background-image: linear-gradient(...)`. To suppress the gradient on a custom card, add:
+```css
+.my-card {
+  background-color: #1f2540;
+  background-image: none !important;
+}
+```
+This is already applied to `.tag-card` and `.tag-card .card-footer` in `content/tags.njk`.
 
 ## Blog Update Checklist
 

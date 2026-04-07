@@ -19,18 +19,54 @@ eleventyNavigation:
     aria-label="Filter tags">
 </div>
 
+{% set tagLogos = {
+  ".net":           "dotnet.png",
+  "3d printing":    "3dprinter.png",
+  "arduino":        "arduino.png",
+  "blogging":       "blog.png",
+  "ci-cd":          "git.png",
+  "database":       "mariadb.png",
+  "docker":         "docker.png",
+  "documentation":  "docsify.png",
+  "esp8266":        "esp8266.png",
+  "esphome":        "esphome.png",
+  "gaming":         "satisfactory.png",
+  "github":         "github.png",
+  "grafana":        "grafana.png",
+  "home assistant": "hass.png",
+  "influxdb":       "influxdb.png",
+  "iot":            "wifi.png",
+  "javascript":     "javascript.png",
+  "linux":          "ubuntu.png",
+  "monitoring":     "grafana.png",
+  "mqtt":           "mqtt.png",
+  "networking":     "wifi.png",
+  "server":         "server.png",
+  "svelte":         "svelte.png",
+  "tasmota":        "tasmota.png",
+  "telegraf":       "telegraf.png",
+  "typescript":     "typescript.png",
+  "unraid":         "unraid.png"
+} %}
+
 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4" id="tagGrid">
   {% for tag in collections | getKeys | filterTagList | sortAlphabetically %}
     {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
     {% set posts = collections[tag] %}
     {% set postCount = posts.length %}
     {% set latestPost = posts[postCount - 1] %}
+    {% set logo = tagLogos[tag] %}
     <div class="col tag-card-item" data-tag="{{ tag | lower }}">
       <div class="card h-100 tag-card">
         <div class="card-body">
           <div class="d-flex align-items-center justify-content-between mb-2">
             <a href="{{ tagUrl }}" class="tag-card-link">
-              <i class="bi bi-tag-fill me-1"></i>{{ tag }}
+              {% if logo %}
+                <span class="tag-logo me-2" style="background-image:url('/img/post-logos/{{ logo }}')"></span>
+              {% else %}
+                <i class="bi bi-tag-fill me-1"></i>
+              {% endif %}
+              {{ tag }}
             </a>
             <span class="badge rounded-pill tag-count-badge">{{ postCount }}</span>
           </div>
@@ -67,9 +103,21 @@ eleventyNavigation:
     font-weight: 600;
     color: #c3e6ff;
     text-decoration: none;
+    display: flex;
+    align-items: center;
   }
   .tag-card-link:hover {
     color: #39cbfb;
+  }
+  .tag-logo {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 4px;
+    flex-shrink: 0;
   }
   .tag-count-badge {
     background-color: #e83283;
