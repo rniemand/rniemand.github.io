@@ -24,10 +24,6 @@ jobs:
           node-version: "22"
           cache: "npm" # caches ~/.npm keyed on package-lock.json automatically
 
-      - name: Debug image output
-        run: |
-          ls -R _site || true
-
       - name: Restore Eleventy cache
         uses: actions/cache@v4
         with:
@@ -37,6 +33,10 @@ jobs:
           key: ${{ runner.os }}-eleventy-${{ hashFiles('**/*.{png,jpg,jpeg,gif,webp,avif,svg}') }}
           restore-keys: |
             ${{ runner.os }}-eleventy-
+
+      - name: Debug image output
+        run: |
+          ls -R _site || true
 
       - name: Install dependencies
         run: npm ci
