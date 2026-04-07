@@ -22,13 +22,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "npm"          # caches ~/.npm keyed on package-lock.json automatically
+          cache: "npm" # caches ~/.npm keyed on package-lock.json automatically
 
-      - name: Restore Eleventy image/fetch cache
+      - name: Restore Eleventy cache
         uses: actions/cache@v4
         with:
-          path: .cache
-          key: ${{ runner.os }}-eleventy-${{ hashFiles('content/**/*.{png,jpg,jpeg,gif,webp,svg,avif}') }}
+          path: |
+            .cache
+            _site/img
+          key: ${{ runner.os }}-eleventy-${{ hashFiles('content/**/*.{png,jpg,jpeg,gif,webp,avif,svg}') }}
           restore-keys: |
             ${{ runner.os }}-eleventy-
 
