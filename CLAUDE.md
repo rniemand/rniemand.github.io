@@ -156,6 +156,14 @@ Always add `onclick="event.stopPropagation()"` to tag links inside cards so clic
 
 `content/blog.njk` — paginates at 25 posts, newest first. Uses `groupByYear` filter to group `pagination.items` into year sections with count badges. Has prev/next pagination buttons.
 
+**Live search** filters within the current page by title + tags (`data-search` attribute on each `.post-card`). When a query is active:
+- Non-matching cards are hidden (`display:none`)
+- Year groups with no visible posts are hidden
+- Pagination is hidden (searching across pages isn't supported — the "no results" message links to `/blog/` for that)
+- A match count ("N posts matched on this page") and a clear (×) button appear
+
+The inline `<script eleventy:ignore>` block drives the filter — `eleventy:ignore` prevents Eleventy's JS bundle from processing it.
+
 ## Projects Page Design
 
 `content/projects.njk` — Bootstrap `row g-4` grid of `.project-card` components. Each card has a `.project-card-header` (dark, with icon) and `.project-card-body` with `.project-topic` rows. Older posts are in a `<details>` element.

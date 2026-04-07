@@ -8,46 +8,74 @@ pagination:
   size: 25
   reverse: true
 ---
-<div class="d-flex align-items-baseline mb-4 gap-3">
+<div class="d-flex align-items-baseline mb-3 gap-3">
   <h1 class="mb-0">Archive</h1>
   <span class="text-muted small">{{ collections.posts | length }} posts total</span>
 </div>
 
-{% for group in pagination.items | groupByYear %}
-<h2 class="archive-year-header">
-  <i class="bi bi-calendar3 me-2"></i>{{ group.year }}
-  <span class="archive-year-count">{{ group.posts | length }}</span>
-</h2>
-
-{% for post in group.posts %}
-<div class="post-card" onclick="location.href='{{ post.url }}'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="{{ post.url }}" class="post-title">{{ post.data.title or post.url }}</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate2 }}</time>
-        </span>
-        {% if post.data.tags | filterTagList | length > 0 %}
-        <span class="post-tags-inline">
-          {% for tag in post.data.tags | filterTagList %}
-          <a href="/tags/{{ tag | slugify }}/" class="post-tag-badge" onclick="event.stopPropagation()">{{ tag }}</a>
-          {% endfor %}
-        </span>
-        {% endif %}
-      </div>
-    </div>
-    {% if post.data.logo %}
-    <img src="{{ post | postLogo(page) }}" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy" />
-    {% endif %}
+<div class="mb-4">
+  <div class="archive-search-wrap">
+    <i class="bi bi-search archive-search-icon"></i>
+    <input
+      type="text"
+      id="archiveSearch"
+      class="form-control archive-search-input"
+      placeholder="Search by title or tag…"
+      autocomplete="off"
+      aria-label="Search posts">
+    <button class="archive-search-clear" id="archiveSearchClear" aria-label="Clear search" style="display:none">
+      <i class="bi bi-x-lg"></i>
+    </button>
   </div>
+  <div id="archiveSearchInfo" class="archive-search-info" style="display:none"></div>
+</div>
+
+{% for group in pagination.items | groupByYear %}
+<div class="archive-year-group" data-year="{{ group.year }}">
+  <h2 class="archive-year-header">
+    <i class="bi bi-calendar3 me-2"></i>{{ group.year }}
+    <span class="archive-year-count">{{ group.posts | length }}</span>
+  </h2>
+
+  {% for post in group.posts %}
+  <div class="post-card"
+    onclick="location.href='{{ post.url }}'"
+    data-search="{{ (post.data.title or post.url) | lower }} {{ post.data.tags | filterTagList | join(' ') | lower }}">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="{{ post.url }}" class="post-title">{{ post.data.title or post.url }}</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate2 }}</time>
+          </span>
+          {% if post.data.tags | filterTagList | length > 0 %}
+          <span class="post-tags-inline">
+            {% for tag in post.data.tags | filterTagList %}
+            <a href="/tags/{{ tag | slugify }}/" class="post-tag-badge" onclick="event.stopPropagation()">{{ tag }}</a>
+            {% endfor %}
+          </span>
+          {% endif %}
+        </div>
+      </div>
+      {% if post.data.logo %}
+      <img src="{{ post | postLogo(page) }}" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy" />
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
 </div>
 {% endfor %}
-{% endfor %}
+
+<div id="archiveNoResults" class="archive-no-results" style="display:none">
+  <i class="bi bi-search me-2"></i>No posts match your search on this page.
+  {% if pagination.pages.length > 1 %}
+  <div class="mt-2 small">Try another page or <a href="/blog/">browse all pages</a>.</div>
+  {% endif %}
+</div>
 
 {% if pagination.pages.length > 1 %}
-<nav class="mt-4" aria-label="Archive pages">
+<nav class="mt-4" id="archivePagination" aria-label="Archive pages">
   <ul class="pagination justify-content-center archive-pagination flex-wrap">
     {% if pagination.href.previous %}
     <li class="page-item">
@@ -67,3 +95,54 @@ pagination:
   </ul>
 </nav>
 {% endif %}
+
+<script eleventy:ignore>
+(function () {
+  const input = document.getElementById('archiveSearch');
+  const clearBtn = document.getElementById('archiveSearchClear');
+  const infoEl = document.getElementById('archiveSearchInfo');
+  const noResults = document.getElementById('archiveNoResults');
+  const pagination = document.getElementById('archivePagination');
+  const cards = document.querySelectorAll('.post-card[data-search]');
+  const yearGroups = document.querySelectorAll('.archive-year-group');
+
+  function applyFilter() {
+    const q = input.value.toLowerCase().trim();
+    clearBtn.style.display = q ? '' : 'none';
+
+    let visible = 0;
+
+    cards.forEach(function (card) {
+      const match = !q || card.dataset.search.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+
+    yearGroups.forEach(function (group) {
+      const anyVisible = Array.from(group.querySelectorAll('.post-card')).some(c => c.style.display !== 'none');
+      group.style.display = anyVisible ? '' : 'none';
+    });
+
+    noResults.style.display = visible === 0 && q ? '' : 'none';
+
+    if (q && visible > 0) {
+      infoEl.textContent = visible + ' post' + (visible === 1 ? '' : 's') + ' match\u00aD\u00ADed on this page';
+      infoEl.style.display = '';
+    } else {
+      infoEl.style.display = 'none';
+    }
+
+    if (pagination) {
+      pagination.style.display = q ? 'none' : '';
+    }
+  }
+
+  input.addEventListener('input', applyFilter);
+
+  clearBtn.addEventListener('click', function () {
+    input.value = '';
+    input.focus();
+    applyFilter();
+  });
+})();
+</script>

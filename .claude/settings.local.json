@@ -14,7 +14,8 @@
       "Bash(tasklist /fi \"PID eq 21836\")",
       "Bash(tasklist)",
       "Bash(wmic process:*)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/blog/)"
     ]
   }
 }
