@@ -34,10 +34,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-eleventy-
 
-      - name: Debug image output
-        run: |
-          ls -R _site || true
-
       - name: Install dependencies
         run: npm ci
 

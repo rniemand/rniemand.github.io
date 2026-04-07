@@ -92,9 +92,6 @@ export default async function (eleventyConfig) {
 	const isProductionBuild = process.env.ELEVENTY_RUN_MODE === "build";
 	eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
 		formats: isProductionBuild ? ["avif", "webp", "auto"] : ["webp", "auto"],
-
-		// widths: ["auto"],
-
 		failOnError: false,
 		htmlOptions: {
 			imgAttributes: {
@@ -103,7 +100,9 @@ export default async function (eleventyConfig) {
 				decoding: "async",
 			}
 		},
-
+		cacheOptions: {
+			directory: ".cache/eleventy-img",
+		},
 		sharpOptions: {
 			animated: true,
 			avif: { effort: 0 },
