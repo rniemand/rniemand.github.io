@@ -234,6 +234,37 @@ The image transform resolves `<img src="...">` paths **relative to the input tem
 - To have an image processed by the transform (e.g. in `content/index.njk`), place it under `content/` and use a relative path: `<img src="./img/richard.jpg">`.
 - A leading `/` resolves from the project root (e.g. `/img/foo.jpg` → `D:/dev/rniemand.github.io/img/foo.jpg`), which also doesn't exist unless you create a root-level `img/` dir.
 
+## Blog Update Checklist
+
+Every time a new post is added (or a batch of posts is touched), work through the following in order.
+
+### 1. Content review (new posts only)
+
+- **Grammar, spelling & wording** — proofread the full post copy. Fix obvious errors directly; flag ambiguous rewrites for the author to approve.
+- **Technical accuracy** — verify that commands, config snippets, and version numbers look correct for the stated context. If something appears wrong or outdated, **do not silently correct it** — provide reference links so the author can confirm before changing anything.
+- **External links** — check that all `href` values pointing outside the site return a valid response (not 404 / domain-parked). Flag any dead links with the broken URL and a suggested replacement if one can be found.
+- **Internal links** — verify that all relative or absolute internal `href` values resolve to a real page within the site. Cross-reference against the file structure in `content/`.
+
+### 2. Projects page (`content/projects.njk`)
+
+- If the new post belongs to an existing project card, add a `.project-link` badge to the appropriate `.project-topic` section.
+- If the new post represents a **new topic with 3 or more posts**, create a new `.project-card` with a relevant Bootstrap Icon and logical sub-topics.
+- If the post is part of a **series**, ensure it is either:
+  - Listed inline under a labelled `Series: …` topic row (for short series ≤ ~8 posts), or
+  - Placed inside a `<details class="project-archive">` block with a `Series: … (N posts)` summary (for longer series).
+- Do **not** add one-off posts to the projects page — the 3-post minimum applies.
+
+### 3. Tags
+
+- Compare the tags on the new post against tags used on thematically similar posts. Aim for consistency (e.g. `home assistant` not `hass`, `database` not `db`).
+- If a chosen tag feels like a poor fit or a duplicate of an existing tag, **flag it to the author** with a suggested alternative — do not rename tags silently, as they affect tag pages and URLs.
+- Periodically (e.g. when touching older posts or doing a larger refactor), scan older post frontmatter for tag inconsistencies and report a summary to the author for review.
+
+### 4. General
+
+- Run a quick visual check in the preview server after changes to confirm nothing is broken.
+- If the post introduces a new content pattern (new frontmatter field, new shortcode usage, etc.) update this `CLAUDE.md` accordingly.
+
 ## Analytics & Comments
 
 - **Google Analytics:** GA4 tag `G-HRDC8SXRVG` (in `base.njk`)
