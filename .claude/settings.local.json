@@ -15,7 +15,8 @@
       "Bash(tasklist)",
       "Bash(wmic process:*)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/blog/)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/blog/)",
+      "Bash(npm --version)"
     ]
   }
 }

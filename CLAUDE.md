@@ -182,3 +182,22 @@ The tags page (`content/tags.njk`) uses a responsive card grid with a live JavaS
 - Output: `_site/` directory
 - GitHub Pages with custom domain `richardn.ca` (CNAME in `public/`)
 - Also has `netlify.toml` and `vercel.json` configs
+
+## GitHub Actions CI/CD (`.github/workflows/build.yml`)
+
+Two-job pipeline — `build` then `deploy` (deploy only runs on `main`):
+
+| What | Value | Notes |
+|---|---|---|
+| Runner | `ubuntu-24.04` | Latest GitHub-hosted runner |
+| Node | `22` | Current LTS |
+| npm install | `npm ci` | Fast, reproducible from lockfile |
+| npm cache | `setup-node cache: 'npm'` | Automatic `~/.npm` cache keyed on `package-lock.json` |
+| Eleventy cache | `actions/cache@v4` → `.cache/` | Preserves processed images & fetch cache across runs |
+| Eleventy cache key | SHA of all image files | Invalidates only when source images change |
+| Deploy action | `actions/upload-pages-artifact@v3` + `actions/deploy-pages@v4` | Official GitHub Pages OIDC deploy — no PAT needed, no `gh-pages` branch commit |
+| Concurrency | `cancel-in-progress: true` | Cancels stale builds when a new push arrives |
+
+**One-time setup required:** For the official `deploy-pages` action to work, the GitHub repository Pages source must be set to **"GitHub Actions"** (not "Deploy from a branch"). Go to: *Settings → Pages → Build and deployment → Source → GitHub Actions*.
+
+The biggest CI time-saver is the `.cache/` restore — `eleventy-img` stores processed AVIF/WebP in `.cache/` and skips reprocessing on cache hit, cutting build time from ~90s to ~5s when images haven't changed.
