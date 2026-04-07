@@ -201,6 +201,71 @@ a {
 }
 
 /* =====================================================
+   Archive search
+   ===================================================== */
+.archive-search-wrap {
+	position: relative;
+}
+.archive-search-icon {
+	position: absolute;
+	left: 0.85rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #5a6a84;
+	pointer-events: none;
+	font-size: 0.9rem;
+}
+.archive-search-input {
+	background-color: #1f2540;
+	border-color: #2a3358;
+	color: #e9e9e8;
+	padding-left: 2.4rem;
+	padding-right: 2.5rem;
+}
+.archive-search-input:focus {
+	background-color: #252d50;
+	border-color: #39cbfb;
+	color: #e9e9e8;
+	box-shadow: 0 0 0 0.2rem rgba(57, 203, 251, 0.15);
+}
+.archive-search-input::placeholder {
+	color: #4a5a74;
+}
+.archive-search-clear {
+	position: absolute;
+	right: 0.6rem;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	color: #5a6a84;
+	cursor: pointer;
+	padding: 0.2rem 0.4rem;
+	line-height: 1;
+	font-size: 0.8rem;
+}
+.archive-search-clear:hover {
+	color: #b2fde7;
+}
+.archive-search-info {
+	color: #7a90b0;
+	font-size: 0.82rem;
+	margin-top: 0.4rem;
+}
+.archive-no-results {
+	color: #7a90b0;
+	text-align: center;
+	padding: 2.5rem 1rem;
+	background: #1f2540;
+	border: 1px dashed #2a3358;
+	border-radius: 0.5rem;
+	margin-top: 0.5rem;
+}
+.archive-no-results a {
+	color: #b2fde7;
+}
+
+/* =====================================================
    Archive page — year headers
    ===================================================== */
 .archive-year-header {
@@ -741,7 +806,7 @@ pre[class*="language-diff-"] {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2017/2017-10-03/` was built on 2026-04-07T04:52:00.723Z -->
+    <!-- This page `/blog/2017/2017-10-03/` was built on 2026-04-07T04:57:22.526Z -->
     <script type="module" src="/dist/sbTUTLFUoZ.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

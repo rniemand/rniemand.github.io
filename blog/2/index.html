@@ -201,6 +201,71 @@ a {
 }
 
 /* =====================================================
+   Archive search
+   ===================================================== */
+.archive-search-wrap {
+	position: relative;
+}
+.archive-search-icon {
+	position: absolute;
+	left: 0.85rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #5a6a84;
+	pointer-events: none;
+	font-size: 0.9rem;
+}
+.archive-search-input {
+	background-color: #1f2540;
+	border-color: #2a3358;
+	color: #e9e9e8;
+	padding-left: 2.4rem;
+	padding-right: 2.5rem;
+}
+.archive-search-input:focus {
+	background-color: #252d50;
+	border-color: #39cbfb;
+	color: #e9e9e8;
+	box-shadow: 0 0 0 0.2rem rgba(57, 203, 251, 0.15);
+}
+.archive-search-input::placeholder {
+	color: #4a5a74;
+}
+.archive-search-clear {
+	position: absolute;
+	right: 0.6rem;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	color: #5a6a84;
+	cursor: pointer;
+	padding: 0.2rem 0.4rem;
+	line-height: 1;
+	font-size: 0.8rem;
+}
+.archive-search-clear:hover {
+	color: #b2fde7;
+}
+.archive-search-info {
+	color: #7a90b0;
+	font-size: 0.82rem;
+	margin-top: 0.4rem;
+}
+.archive-no-results {
+	color: #7a90b0;
+	text-align: center;
+	padding: 2.5rem 1rem;
+	background: #1f2540;
+	border: 1px dashed #2a3358;
+	border-radius: 0.5rem;
+	margin-top: 0.5rem;
+}
+.archive-no-results a {
+	color: #b2fde7;
+}
+
+/* =====================================================
    Archive page — year headers
    ===================================================== */
 .archive-year-header {
@@ -481,665 +546,687 @@ a {
     <main class="flex-shrink-0 pt-3">
       <div class="container main-content">
         
-<div class="d-flex align-items-baseline mb-4 gap-3">
+<div class="d-flex align-items-baseline mb-3 gap-3">
   <h1 class="mb-0" id="archive">Archive</h1>
   <span class="text-muted small">114 posts total</span>
 </div>
 
-
-<h2 class="archive-year-header" id="2018-20">
-  <i class="bi bi-calendar3 me-2"></i>2018
-  <span class="archive-year-count">20</span>
-</h2>
-
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-12-06/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-12-06/" class="post-title">Home Assistant From Scratch - Breaking up Config</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-12-06">06 Dec 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
+<div class="mb-4">
+  <div class="archive-search-wrap">
+    <i class="bi bi-search archive-search-icon"></i>
+    <input type="text" id="archiveSearch" class="form-control archive-search-input" placeholder="Search by title or tag…" autocomplete="off" aria-label="Search posts">
+    <button class="archive-search-clear" id="archiveSearchClear" aria-label="Clear search" style="display:none">
+      <i class="bi bi-x-lg"></i>
+    </button>
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-10-17/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-10-17/" class="post-title">Install MySQL on DietPi (Debian)</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-10-17">17 Oct 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/linux/" class="post-tag-badge" onclick="event.stopPropagation()">linux</a>
-          
-          <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/mysql.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-10-09/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-10-09/" class="post-title">Home Assistant From Scratch - Octoprint</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-10-09">09 Oct 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/3d-printing/" class="post-tag-badge" onclick="event.stopPropagation()">3d printing</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-07-26/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-07-26/" class="post-title">Home Assistant From Scratch - Weather and System Monitoring</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-07-26">26 Jul 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-07-25/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-07-25/" class="post-title">Home Assistant From Scratch - History</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-07-25">25 Jul 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-07-19/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-07-19/" class="post-title">Home Assistant From Scratch - Presence Detection</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-07-19">19 Jul 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-07-17/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-07-17/" class="post-title">Home Assistant From Scratch - MySQL</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-07-17">17 Jul 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-07-16/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-07-16/" class="post-title">Home Assistant From Scratch - MQTT</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-07-16">16 Jul 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-07-03/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-07-03/" class="post-title">Home Assistant From Scratch - Speedtest.net</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-07-03">03 Jul 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-07-02/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-07-02/" class="post-title">Home Assistant From Scratch - Hue Lights</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-07-02">02 Jul 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-06-29/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-06-29/" class="post-title">Home Assistant From Scratch - Secrets and Security</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-06-29">29 Jun 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-06-28/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-06-28/" class="post-title">Home Assistant From Scratch - Setting Up Plex</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-06-28">28 Jun 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-06-27/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-06-27/" class="post-title">Home Assistant From Scratch - Installation</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-06-27">27 Jun 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-06-19/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-06-19/" class="post-title">Alert Maker Revival</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-06-19">19 Jun 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/net/" class="post-tag-badge" onclick="event.stopPropagation()">.net</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/dotnet.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-03-22/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-03-22/" class="post-title">Flashing Tasmota on Sonoff (Revised)</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-03-22">22 Mar 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
-          
-          <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
-          
-          <a href="/tags/tasmota/" class="post-tag-badge" onclick="event.stopPropagation()">tasmota</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/tasmota.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-03-19/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-03-19/" class="post-title">Setting up ESP8266 on Arduino</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-03-19">19 Mar 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
-          
-          <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
-          
-          <a href="/tags/esp8266/" class="post-tag-badge" onclick="event.stopPropagation()">esp8266</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/esp8266.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-03-15/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-03-15/" class="post-title">NodeRED on DietPi</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-03-15">15 Mar 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
-          
-          <a href="/tags/linux/" class="post-tag-badge" onclick="event.stopPropagation()">linux</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/node-red.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-02-16/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-02-16/" class="post-title">MySQL and Home Assistant</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-02-16">16 Feb 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-02-15/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-02-15/" class="post-title">Upgrading Home Assistant on DietPi</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-02-15">15 Feb 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/linux/" class="post-tag-badge" onclick="event.stopPropagation()">linux</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2018/2018-01-08/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2018/2018-01-08/" class="post-title">Installing Mosquitto on (DietPi / Raspbian / Debian)</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2018-01-08">08 Jan 2018</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
-          
-          <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
-          
-          <a href="/tags/linux/" class="post-tag-badge" onclick="event.stopPropagation()">linux</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/mqtt.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
+  <div id="archiveSearchInfo" class="archive-search-info" style="display:none"></div>
 </div>
 
 
-<h2 class="archive-year-header" id="2017-5">
-  <i class="bi bi-calendar3 me-2"></i>2017
-  <span class="archive-year-count">5</span>
-</h2>
+<div class="archive-year-group" data-year="2018">
+  <h2 class="archive-year-header" id="2018-20">
+    <i class="bi bi-calendar3 me-2"></i>2018
+    <span class="archive-year-count">20</span>
+  </h2>
 
-
-<div class="post-card" onclick="location.href='/blog/2017/2017-12-10/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2017/2017-12-10/" class="post-title">Home Assistant + ESP Easy + DHT11 = :)</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2017-12-10">10 Dec 2017</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-12-06/'" data-search="home assistant from scratch - breaking up config home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-12-06/" class="post-title">Home Assistant From Scratch - Breaking up Config</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-12-06">06 Dec 2018</time>
+          </span>
           
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
           
-          <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
-          
-          <a href="/tags/esp8266/" class="post-tag-badge" onclick="event.stopPropagation()">esp8266</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-10-17/'" data-search="install mysql on dietpi (debian) linux database">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-10-17/" class="post-title">Install MySQL on DietPi (Debian)</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-10-17">17 Oct 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/linux/" class="post-tag-badge" onclick="event.stopPropagation()">linux</a>
+            
+            <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/mysql.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-10-09/'" data-search="home assistant from scratch - octoprint home assistant 3d printing">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-10-09/" class="post-title">Home Assistant From Scratch - Octoprint</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-10-09">09 Oct 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/3d-printing/" class="post-tag-badge" onclick="event.stopPropagation()">3d printing</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-07-26/'" data-search="home assistant from scratch - weather and system monitoring home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-07-26/" class="post-title">Home Assistant From Scratch - Weather and System Monitoring</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-07-26">26 Jul 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-07-25/'" data-search="home assistant from scratch - history home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-07-25/" class="post-title">Home Assistant From Scratch - History</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-07-25">25 Jul 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-07-19/'" data-search="home assistant from scratch - presence detection home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-07-19/" class="post-title">Home Assistant From Scratch - Presence Detection</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-07-19">19 Jul 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-07-17/'" data-search="home assistant from scratch - mysql home assistant database">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-07-17/" class="post-title">Home Assistant From Scratch - MySQL</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-07-17">17 Jul 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-07-16/'" data-search="home assistant from scratch - mqtt home assistant mqtt">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-07-16/" class="post-title">Home Assistant From Scratch - MQTT</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-07-16">16 Jul 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-07-03/'" data-search="home assistant from scratch - speedtest.net home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-07-03/" class="post-title">Home Assistant From Scratch - Speedtest.net</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-07-03">03 Jul 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-07-02/'" data-search="home assistant from scratch - hue lights home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-07-02/" class="post-title">Home Assistant From Scratch - Hue Lights</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-07-02">02 Jul 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-06-29/'" data-search="home assistant from scratch - secrets and security home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-06-29/" class="post-title">Home Assistant From Scratch - Secrets and Security</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-06-29">29 Jun 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-06-28/'" data-search="home assistant from scratch - setting up plex home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-06-28/" class="post-title">Home Assistant From Scratch - Setting Up Plex</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-06-28">28 Jun 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-06-27/'" data-search="home assistant from scratch - installation home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-06-27/" class="post-title">Home Assistant From Scratch - Installation</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-06-27">27 Jun 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-06-19/'" data-search="alert maker revival .net">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-06-19/" class="post-title">Alert Maker Revival</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-06-19">19 Jun 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/net/" class="post-tag-badge" onclick="event.stopPropagation()">.net</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/dotnet.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-03-22/'" data-search="flashing tasmota on sonoff (revised) arduino iot tasmota">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-03-22/" class="post-title">Flashing Tasmota on Sonoff (Revised)</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-03-22">22 Mar 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
+            
+            <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
+            
+            <a href="/tags/tasmota/" class="post-tag-badge" onclick="event.stopPropagation()">tasmota</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/tasmota.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-03-19/'" data-search="setting up esp8266 on arduino arduino iot esp8266">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-03-19/" class="post-title">Setting up ESP8266 on Arduino</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-03-19">19 Mar 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
+            
+            <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
+            
+            <a href="/tags/esp8266/" class="post-tag-badge" onclick="event.stopPropagation()">esp8266</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/esp8266.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-03-15/'" data-search="nodered on dietpi iot linux">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-03-15/" class="post-title">NodeRED on DietPi</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-03-15">15 Mar 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
+            
+            <a href="/tags/linux/" class="post-tag-badge" onclick="event.stopPropagation()">linux</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/node-red.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-02-16/'" data-search="mysql and home assistant home assistant database">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-02-16/" class="post-title">MySQL and Home Assistant</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-02-16">16 Feb 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-02-15/'" data-search="upgrading home assistant on dietpi home assistant linux">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-02-15/" class="post-title">Upgrading Home Assistant on DietPi</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-02-15">15 Feb 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/linux/" class="post-tag-badge" onclick="event.stopPropagation()">linux</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2018/2018-01-08/'" data-search="installing mosquitto on (dietpi / raspbian / debian) iot mqtt linux">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2018/2018-01-08/" class="post-title">Installing Mosquitto on (DietPi / Raspbian / Debian)</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2018-01-08">08 Jan 2018</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
+            
+            <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
+            
+            <a href="/tags/linux/" class="post-tag-badge" onclick="event.stopPropagation()">linux</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/mqtt.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
 </div>
 
-<div class="post-card" onclick="location.href='/blog/2017/2017-10-30/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2017/2017-10-30/" class="post-title">Arduino Basics: LDR</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2017-10-30">30 Oct 2017</time>
-        </span>
-        
-        <span class="post-tags-inline">
+<div class="archive-year-group" data-year="2017">
+  <h2 class="archive-year-header" id="2017-5">
+    <i class="bi bi-calendar3 me-2"></i>2017
+    <span class="archive-year-count">5</span>
+  </h2>
+
+  
+  <div class="post-card" onclick="location.href='/blog/2017/2017-12-10/'" data-search="home assistant + esp easy + dht11 = :) home assistant iot esp8266">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2017/2017-12-10/" class="post-title">Home Assistant + ESP Easy + DHT11 = :)</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2017-12-10">10 Dec 2017</time>
+          </span>
           
-          <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
+            
+            <a href="/tags/esp8266/" class="post-tag-badge" onclick="event.stopPropagation()">esp8266</a>
+            
+          </span>
           
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../../img/post-logos/arduino.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2017/2017-10-30/'" data-search="arduino basics: ldr arduino">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2017/2017-10-30/" class="post-title">Arduino Basics: LDR</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2017-10-30">30 Oct 2017</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/arduino.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2017/2017-10-19/'" data-search="monitoring a door with home assistant home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2017/2017-10-19/" class="post-title">Monitoring a Door with Home Assistant</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2017-10-19">19 Oct 2017</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2017/2017-10-03/'" data-search="sonoff &amp; mqtt example (lounge light) iot arduino mqtt">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2017/2017-10-03/" class="post-title">Sonoff &amp; MQTT Example (Lounge Light)</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2017-10-03">03 Oct 2017</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
+            
+            <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
+            
+            <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/sonoff.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2017/2017-09-26/'" data-search="monitoring temperature with mqtt and home assistant home assistant mqtt">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2017/2017-09-26/" class="post-title">Monitoring Temperature with MQTT and Home Assistant</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2017-09-26">26 Sep 2017</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
 </div>
 
-<div class="post-card" onclick="location.href='/blog/2017/2017-10-19/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2017/2017-10-19/" class="post-title">Monitoring a Door with Home Assistant</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2017-10-19">19 Oct 2017</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
 
-<div class="post-card" onclick="location.href='/blog/2017/2017-10-03/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2017/2017-10-03/" class="post-title">Sonoff &amp; MQTT Example (Lounge Light)</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2017-10-03">03 Oct 2017</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
-          
-          <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
-          
-          <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/sonoff.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2017/2017-09-26/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2017/2017-09-26/" class="post-title">Monitoring Temperature with MQTT and Home Assistant</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2017-09-26">26 Sep 2017</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
+<div id="archiveNoResults" class="archive-no-results" style="display:none">
+  <i class="bi bi-search me-2"></i>No posts match your search on this page.
+  
+  <div class="mt-2 small">Try another page or <a href="/blog/">browse all pages</a>.</div>
+  
 </div>
 
 
-
-
-<nav class="mt-4" aria-label="Archive pages">
+<nav class="mt-4" id="archivePagination" aria-label="Archive pages">
   <ul class="pagination justify-content-center archive-pagination flex-wrap">
     
     <li class="page-item">
@@ -1170,6 +1257,57 @@ a {
 </nav>
 
 
+<script>
+(function () {
+  const input = document.getElementById('archiveSearch');
+  const clearBtn = document.getElementById('archiveSearchClear');
+  const infoEl = document.getElementById('archiveSearchInfo');
+  const noResults = document.getElementById('archiveNoResults');
+  const pagination = document.getElementById('archivePagination');
+  const cards = document.querySelectorAll('.post-card[data-search]');
+  const yearGroups = document.querySelectorAll('.archive-year-group');
+
+  function applyFilter() {
+    const q = input.value.toLowerCase().trim();
+    clearBtn.style.display = q ? '' : 'none';
+
+    let visible = 0;
+
+    cards.forEach(function (card) {
+      const match = !q || card.dataset.search.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+
+    yearGroups.forEach(function (group) {
+      const anyVisible = Array.from(group.querySelectorAll('.post-card')).some(c => c.style.display !== 'none');
+      group.style.display = anyVisible ? '' : 'none';
+    });
+
+    noResults.style.display = visible === 0 && q ? '' : 'none';
+
+    if (q && visible > 0) {
+      infoEl.textContent = visible + ' post' + (visible === 1 ? '' : 's') + ' match\u00aD\u00ADed on this page';
+      infoEl.style.display = '';
+    } else {
+      infoEl.style.display = 'none';
+    }
+
+    if (pagination) {
+      pagination.style.display = q ? 'none' : '';
+    }
+  }
+
+  input.addEventListener('input', applyFilter);
+
+  clearBtn.addEventListener('click', function () {
+    input.value = '';
+    input.focus();
+    applyFilter();
+  });
+})();
+</script>
+
 
       </div>
     </main>
@@ -1181,7 +1319,7 @@ a {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/2/` was built on 2026-04-07T04:52:01.478Z -->
+    <!-- This page `/blog/2/` was built on 2026-04-07T04:57:23.259Z -->
     <script type="module" src="/dist/twsaDz-zsL.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>

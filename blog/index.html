@@ -201,6 +201,71 @@ a {
 }
 
 /* =====================================================
+   Archive search
+   ===================================================== */
+.archive-search-wrap {
+	position: relative;
+}
+.archive-search-icon {
+	position: absolute;
+	left: 0.85rem;
+	top: 50%;
+	transform: translateY(-50%);
+	color: #5a6a84;
+	pointer-events: none;
+	font-size: 0.9rem;
+}
+.archive-search-input {
+	background-color: #1f2540;
+	border-color: #2a3358;
+	color: #e9e9e8;
+	padding-left: 2.4rem;
+	padding-right: 2.5rem;
+}
+.archive-search-input:focus {
+	background-color: #252d50;
+	border-color: #39cbfb;
+	color: #e9e9e8;
+	box-shadow: 0 0 0 0.2rem rgba(57, 203, 251, 0.15);
+}
+.archive-search-input::placeholder {
+	color: #4a5a74;
+}
+.archive-search-clear {
+	position: absolute;
+	right: 0.6rem;
+	top: 50%;
+	transform: translateY(-50%);
+	background: none;
+	border: none;
+	color: #5a6a84;
+	cursor: pointer;
+	padding: 0.2rem 0.4rem;
+	line-height: 1;
+	font-size: 0.8rem;
+}
+.archive-search-clear:hover {
+	color: #b2fde7;
+}
+.archive-search-info {
+	color: #7a90b0;
+	font-size: 0.82rem;
+	margin-top: 0.4rem;
+}
+.archive-no-results {
+	color: #7a90b0;
+	text-align: center;
+	padding: 2.5rem 1rem;
+	background: #1f2540;
+	border: 1px dashed #2a3358;
+	border-radius: 0.5rem;
+	margin-top: 0.5rem;
+}
+.archive-no-results a {
+	color: #b2fde7;
+}
+
+/* =====================================================
    Archive page — year headers
    ===================================================== */
 .archive-year-header {
@@ -481,704 +546,732 @@ a {
     <main class="flex-shrink-0 pt-3">
       <div class="container main-content">
         
-<div class="d-flex align-items-baseline mb-4 gap-3">
+<div class="d-flex align-items-baseline mb-3 gap-3">
   <h1 class="mb-0" id="archive">Archive</h1>
   <span class="text-muted small">114 posts total</span>
 </div>
 
-
-<h2 class="archive-year-header" id="2026-1">
-  <i class="bi bi-calendar3 me-2"></i>2026
-  <span class="archive-year-count">1</span>
-</h2>
-
-
-<div class="post-card" onclick="location.href='/blog/2026/2026-02-09/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2026/2026-02-09/" class="post-title">Running InfluxDB 3 Core On Unraid</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2026-02-09">09 Feb 2026</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
-          
-          <a href="/tags/influxdb/" class="post-tag-badge" onclick="event.stopPropagation()">influxdb</a>
-          
-          <a href="/tags/grafana/" class="post-tag-badge" onclick="event.stopPropagation()">grafana</a>
-          
-          <a href="/tags/monitoring/" class="post-tag-badge" onclick="event.stopPropagation()">monitoring</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../img/post-logos/influxdb.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
+<div class="mb-4">
+  <div class="archive-search-wrap">
+    <i class="bi bi-search archive-search-icon"></i>
+    <input type="text" id="archiveSearch" class="form-control archive-search-input" placeholder="Search by title or tag…" autocomplete="off" aria-label="Search posts">
+    <button class="archive-search-clear" id="archiveSearchClear" aria-label="Clear search" style="display:none">
+      <i class="bi bi-x-lg"></i>
+    </button>
   </div>
+  <div id="archiveSearchInfo" class="archive-search-info" style="display:none"></div>
 </div>
 
 
-<h2 class="archive-year-header" id="2025-5">
-  <i class="bi bi-calendar3 me-2"></i>2025
-  <span class="archive-year-count">5</span>
-</h2>
+<div class="archive-year-group" data-year="2026">
+  <h2 class="archive-year-header" id="2026-1">
+    <i class="bi bi-calendar3 me-2"></i>2026
+    <span class="archive-year-count">1</span>
+  </h2>
 
-
-<div class="post-card" onclick="location.href='/blog/2025/2025-07-11/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2025/2025-07-11/" class="post-title">Collecting Unraid CPU Temperature in Home Assistant</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2025-07-10">10 Jul 2025</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2026/2026-02-09/'" data-search="running influxdb 3 core on unraid unraid influxdb grafana monitoring">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2026/2026-02-09/" class="post-title">Running InfluxDB 3 Core On Unraid</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2026-02-09">09 Feb 2026</time>
+          </span>
           
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+            <a href="/tags/influxdb/" class="post-tag-badge" onclick="event.stopPropagation()">influxdb</a>
+            
+            <a href="/tags/grafana/" class="post-tag-badge" onclick="event.stopPropagation()">grafana</a>
+            
+            <a href="/tags/monitoring/" class="post-tag-badge" onclick="event.stopPropagation()">monitoring</a>
+            
+          </span>
           
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/influxdb.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
+  
 </div>
 
-<div class="post-card" onclick="location.href='/blog/2025/2025-07-10/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2025/2025-07-10/" class="post-title">Monitoring your Unraid server with Telegraf and Grafana</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2025-07-10">10 Jul 2025</time>
-        </span>
-        
-        <span class="post-tags-inline">
+<div class="archive-year-group" data-year="2025">
+  <h2 class="archive-year-header" id="2025-5">
+    <i class="bi bi-calendar3 me-2"></i>2025
+    <span class="archive-year-count">5</span>
+  </h2>
+
+  
+  <div class="post-card" onclick="location.href='/blog/2025/2025-07-11/'" data-search="collecting unraid cpu temperature in home assistant unraid home assistant">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2025/2025-07-11/" class="post-title">Collecting Unraid CPU Temperature in Home Assistant</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2025-07-10">10 Jul 2025</time>
+          </span>
           
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+          </span>
           
-          <a href="/tags/monitoring/" class="post-tag-badge" onclick="event.stopPropagation()">monitoring</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2025/2025-07-10/'" data-search="monitoring your unraid server with telegraf and grafana unraid monitoring">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2025/2025-07-10/" class="post-title">Monitoring your Unraid server with Telegraf and Grafana</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2025-07-10">10 Jul 2025</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+            <a href="/tags/monitoring/" class="post-tag-badge" onclick="event.stopPropagation()">monitoring</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2025/2025-07-09/'" data-search="automatic mariadb backups with unraid unraid database">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2025/2025-07-09/" class="post-title">Automatic MariaDB Backups with Unraid</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2025-07-09">09 Jul 2025</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+            <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2025/2025-07-08/'" data-search="core unraid plugins and containers unraid">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2025/2025-07-08/" class="post-title">Core Unraid Plugins and Containers</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2025-07-07">07 Jul 2025</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2025/2025-07-07/'" data-search="automated appdata backups with unraid unraid">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2025/2025-07-07/" class="post-title">Automated appdata backups with Unraid</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2025-07-07">07 Jul 2025</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
 </div>
 
-<div class="post-card" onclick="location.href='/blog/2025/2025-07-09/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2025/2025-07-09/" class="post-title">Automatic MariaDB Backups with Unraid</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2025-07-09">09 Jul 2025</time>
-        </span>
-        
-        <span class="post-tags-inline">
+<div class="archive-year-group" data-year="2024">
+  <h2 class="archive-year-header" id="2024-1">
+    <i class="bi bi-calendar3 me-2"></i>2024
+    <span class="archive-year-count">1</span>
+  </h2>
+
+  
+  <div class="post-card" onclick="location.href='/blog/2024/2024-07-31/post/'" data-search="using certificates with asp.net core under docker .net docker">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2024/2024-07-31/post/" class="post-title">Using Certificates with ASP.Net Core under Docker</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2024-07-31">31 Jul 2024</time>
+          </span>
           
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/net/" class="post-tag-badge" onclick="event.stopPropagation()">.net</a>
+            
+            <a href="/tags/docker/" class="post-tag-badge" onclick="event.stopPropagation()">docker</a>
+            
+          </span>
           
-          <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/docker.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
+  
 </div>
 
-<div class="post-card" onclick="location.href='/blog/2025/2025-07-08/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2025/2025-07-08/" class="post-title">Core Unraid Plugins and Containers</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2025-07-07">07 Jul 2025</time>
-        </span>
-        
-        <span class="post-tags-inline">
+<div class="archive-year-group" data-year="2023">
+  <h2 class="archive-year-header" id="2023-4">
+    <i class="bi bi-calendar3 me-2"></i>2023
+    <span class="archive-year-count">4</span>
+  </h2>
+
+  
+  <div class="post-card" onclick="location.href='/blog/2023/2023-09-21/post/'" data-search="simple toast messages using sveltestrap svelte">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2023/2023-09-21/post/" class="post-title">Simple Toast Messages using SvelteStrap</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2023-09-21">21 Sep 2023</time>
+          </span>
           
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/svelte/" class="post-tag-badge" onclick="event.stopPropagation()">svelte</a>
+            
+          </span>
           
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/svelte.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2023/2023-09-20/post/'" data-search="sonarqube in docker docker ci-cd">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2023/2023-09-20/post/" class="post-title">SonarQube in Docker</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2023-09-20">20 Sep 2023</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/docker/" class="post-tag-badge" onclick="event.stopPropagation()">docker</a>
+            
+            <a href="/tags/ci-cd/" class="post-tag-badge" onclick="event.stopPropagation()">ci-cd</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../img/post-logos/sonarqube.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2023/2023-09-19/post/'" data-search="svelte tips and tricks svelte">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2023/2023-09-19/post/" class="post-title">Svelte Tips and Tricks</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2023-09-19">19 Sep 2023</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/svelte/" class="post-tag-badge" onclick="event.stopPropagation()">svelte</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../img/post-logos/svelte.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
+  <div class="post-card" onclick="location.href='/blog/2023/2023-06-21/post/'" data-search="using github pages for your personal blog blogging github">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2023/2023-06-21/post/" class="post-title">Using GitHub Pages for your Personal Blog</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2023-06-20">20 Jun 2023</time>
+          </span>
+          
+          <span class="post-tags-inline">
+            
+            <a href="/tags/blogging/" class="post-tag-badge" onclick="event.stopPropagation()">blogging</a>
+            
+            <a href="/tags/github/" class="post-tag-badge" onclick="event.stopPropagation()">github</a>
+            
+          </span>
+          
+        </div>
+      </div>
+      
+      <img src="../img/post-logos/github.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
+    </div>
+  </div>
+  
 </div>
 
-<div class="post-card" onclick="location.href='/blog/2025/2025-07-07/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2025/2025-07-07/" class="post-title">Automated appdata backups with Unraid</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2025-07-07">07 Jul 2025</time>
-        </span>
-        
-        <span class="post-tags-inline">
+<div class="archive-year-group" data-year="2022">
+  <h2 class="archive-year-header" id="2022-14">
+    <i class="bi bi-calendar3 me-2"></i>2022
+    <span class="archive-year-count">14</span>
+  </h2>
+
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-12-22/post/'" data-search="docsify for your projects documentation">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-12-22/post/" class="post-title">Docsify for your projects</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-12-22">22 Dec 2022</time>
+          </span>
           
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/documentation/" class="post-tag-badge" onclick="event.stopPropagation()">documentation</a>
+            
+          </span>
           
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/docsify.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/unraid.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-
-<h2 class="archive-year-header" id="2024-1">
-  <i class="bi bi-calendar3 me-2"></i>2024
-  <span class="archive-year-count">1</span>
-</h2>
-
-
-<div class="post-card" onclick="location.href='/blog/2024/2024-07-31/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2024/2024-07-31/post/" class="post-title">Using Certificates with ASP.Net Core under Docker</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2024-07-31">31 Jul 2024</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-11-25/post/'" data-search="updating chirpy blogging">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-11-25/post/" class="post-title">Updating Chirpy</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-11-25">25 Nov 2022</time>
+          </span>
           
-          <a href="/tags/net/" class="post-tag-badge" onclick="event.stopPropagation()">.net</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/blogging/" class="post-tag-badge" onclick="event.stopPropagation()">blogging</a>
+            
+          </span>
           
-          <a href="/tags/docker/" class="post-tag-badge" onclick="event.stopPropagation()">docker</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/git.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/docker.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-
-<h2 class="archive-year-header" id="2023-4">
-  <i class="bi bi-calendar3 me-2"></i>2023
-  <span class="archive-year-count">4</span>
-</h2>
-
-
-<div class="post-card" onclick="location.href='/blog/2023/2023-09-21/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2023/2023-09-21/post/" class="post-title">Simple Toast Messages using SvelteStrap</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2023-09-21">21 Sep 2023</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-08-25/post/'" data-search="voxelab aries 3d printer with cura 3d printing">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-08-25/post/" class="post-title">Voxelab Aries 3D Printer with Cura</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-08-25">25 Aug 2022</time>
+          </span>
           
-          <a href="/tags/svelte/" class="post-tag-badge" onclick="event.stopPropagation()">svelte</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/3d-printing/" class="post-tag-badge" onclick="event.stopPropagation()">3d printing</a>
+            
+          </span>
           
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/3dprinter.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/svelte.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2023/2023-09-20/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2023/2023-09-20/post/" class="post-title">SonarQube in Docker</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2023-09-20">20 Sep 2023</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-07-18/post/'" data-search="legacy blog posts (2011) blogging">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-07-18/post/" class="post-title">Legacy Blog Posts (2011)</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-07-18">18 Jul 2022</time>
+          </span>
           
-          <a href="/tags/docker/" class="post-tag-badge" onclick="event.stopPropagation()">docker</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/blogging/" class="post-tag-badge" onclick="event.stopPropagation()">blogging</a>
+            
+          </span>
           
-          <a href="/tags/ci-cd/" class="post-tag-badge" onclick="event.stopPropagation()">ci-cd</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/blog.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/sonarqube.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2023/2023-09-19/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2023/2023-09-19/post/" class="post-title">Svelte Tips and Tricks</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2023-09-19">19 Sep 2023</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-06-15/post/'" data-search="ceiling fan remote hacking arduino home assistant iot esp8266">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-06-15/post/" class="post-title">Ceiling Fan Remote Hacking</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-06-15">15 Jun 2022</time>
+          </span>
           
-          <a href="/tags/svelte/" class="post-tag-badge" onclick="event.stopPropagation()">svelte</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
+            
+            <a href="/tags/esp8266/" class="post-tag-badge" onclick="event.stopPropagation()">esp8266</a>
+            
+          </span>
           
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/esphome.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/svelte.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2023/2023-06-21/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2023/2023-06-21/post/" class="post-title">Using GitHub Pages for your Personal Blog</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2023-06-20">20 Jun 2023</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-06-10/post/'" data-search="hass on unraid: times of day automations home assistant unraid">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-06-10/post/" class="post-title">HASS On Unraid: Times of Day Automations</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-06-10">10 Jun 2022</time>
+          </span>
           
-          <a href="/tags/blogging/" class="post-tag-badge" onclick="event.stopPropagation()">blogging</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+          </span>
           
-          <a href="/tags/github/" class="post-tag-badge" onclick="event.stopPropagation()">github</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/github.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-
-<h2 class="archive-year-header" id="2022-14">
-  <i class="bi bi-calendar3 me-2"></i>2022
-  <span class="archive-year-count">14</span>
-</h2>
-
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-12-22/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-12-22/post/" class="post-title">Docsify for your projects</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-12-22">22 Dec 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-06-07/post2/'" data-search="lounge clock (v 1.0) home assistant 3d printing iot esphome arduino">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-06-07/post2/" class="post-title">Lounge Clock (v 1.0)</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-06-07">07 Jun 2022</time>
+          </span>
           
-          <a href="/tags/documentation/" class="post-tag-badge" onclick="event.stopPropagation()">documentation</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/3d-printing/" class="post-tag-badge" onclick="event.stopPropagation()">3d printing</a>
+            
+            <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
+            
+            <a href="/tags/esphome/" class="post-tag-badge" onclick="event.stopPropagation()">esphome</a>
+            
+            <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
+            
+          </span>
           
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/esphome.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/docsify.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-11-25/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-11-25/post/" class="post-title">Updating Chirpy</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-11-25">25 Nov 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-06-07/post1/'" data-search="hass on unraid: esphome - zigbee - z-wave home assistant unraid esphome iot">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-06-07/post1/" class="post-title">HASS On Unraid: ESPHome - Zigbee - Z-Wave</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-06-07">07 Jun 2022</time>
+          </span>
           
-          <a href="/tags/blogging/" class="post-tag-badge" onclick="event.stopPropagation()">blogging</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+            <a href="/tags/esphome/" class="post-tag-badge" onclick="event.stopPropagation()">esphome</a>
+            
+            <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
+            
+          </span>
           
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/git.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-08-25/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-08-25/post/" class="post-title">Voxelab Aries 3D Printer with Cura</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-08-25">25 Aug 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-06-06/post/'" data-search="hass on unraid: mqtt home assistant unraid mqtt">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-06-06/post/" class="post-title">HASS On Unraid: MQTT</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-06-06">06 Jun 2022</time>
+          </span>
           
-          <a href="/tags/3d-printing/" class="post-tag-badge" onclick="event.stopPropagation()">3d printing</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+            <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
+            
+          </span>
           
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/3dprinter.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-07-18/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-07-18/post/" class="post-title">Legacy Blog Posts (2011)</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-07-18">18 Jul 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-05-31/post/'" data-search="sonarqube and github actions ci-cd">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-05-31/post/" class="post-title">SonarQube and Github Actions</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-05-31">31 May 2022</time>
+          </span>
           
-          <a href="/tags/blogging/" class="post-tag-badge" onclick="event.stopPropagation()">blogging</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/ci-cd/" class="post-tag-badge" onclick="event.stopPropagation()">ci-cd</a>
+            
+          </span>
           
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/sonarqube.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/blog.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-06-15/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-06-15/post/" class="post-title">Ceiling Fan Remote Hacking</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-06-15">15 Jun 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-05-30/post2/'" data-search="hass on unraid: google tts home assistant unraid">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-05-30/post2/" class="post-title">HASS On Unraid: Google TTS</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-05-30">30 May 2022</time>
+          </span>
           
-          <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+          </span>
           
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
-          
-          <a href="/tags/esp8266/" class="post-tag-badge" onclick="event.stopPropagation()">esp8266</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/esphome.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-06-10/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-06-10/post/" class="post-title">HASS On Unraid: Times of Day Automations</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-06-10">10 Jun 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-05-30/post1/'" data-search="hass on unraid: dns home assistant unraid">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-05-30/post1/" class="post-title">HASS On Unraid: DNS</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-05-30">30 May 2022</time>
+          </span>
           
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+          </span>
           
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-06-07/post2/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-06-07/post2/" class="post-title">Lounge Clock (v 1.0)</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-06-07">07 Jun 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-05-27/post2/'" data-search="hass on unraid: mariadb home assistant unraid database">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-05-27/post2/" class="post-title">HASS On Unraid: MariaDB</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-05-27">27 May 2022</time>
+          </span>
           
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+            <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
+            
+          </span>
           
-          <a href="/tags/3d-printing/" class="post-tag-badge" onclick="event.stopPropagation()">3d printing</a>
-          
-          <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
-          
-          <a href="/tags/esphome/" class="post-tag-badge" onclick="event.stopPropagation()">esphome</a>
-          
-          <a href="/tags/arduino/" class="post-tag-badge" onclick="event.stopPropagation()">arduino</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/esphome.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-06-07/post1/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-06-07/post1/" class="post-title">HASS On Unraid: ESPHome - Zigbee - Z-Wave</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-06-07">07 Jun 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
+  
+  <div class="post-card" onclick="location.href='/blog/2022/2022-05-27/post1/'" data-search="hass on unraid: installation home assistant unraid">
+    <div class="d-flex align-items-start gap-3">
+      <div class="flex-grow-1 min-w-0">
+        <a href="/blog/2022/2022-05-27/post1/" class="post-title">HASS On Unraid: Installation</a>
+        <div class="post-meta-row mt-1">
+          <span class="post-date">
+            <i class="bi bi-calendar-event me-1"></i>
+            <time datetime="2022-05-27">27 May 2022</time>
+          </span>
           
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+          <span class="post-tags-inline">
+            
+            <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
+            
+            <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
+            
+          </span>
           
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
-          
-          <a href="/tags/esphome/" class="post-tag-badge" onclick="event.stopPropagation()">esphome</a>
-          
-          <a href="/tags/iot/" class="post-tag-badge" onclick="event.stopPropagation()">iot</a>
-          
-        </span>
-        
+        </div>
       </div>
+      
+      <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
+      
     </div>
-    
-    <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
   </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-06-06/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-06-06/post/" class="post-title">HASS On Unraid: MQTT</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-06-06">06 Jun 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
-          
-          <a href="/tags/mqtt/" class="post-tag-badge" onclick="event.stopPropagation()">mqtt</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-05-31/post/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-05-31/post/" class="post-title">SonarQube and Github Actions</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-05-31">31 May 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/ci-cd/" class="post-tag-badge" onclick="event.stopPropagation()">ci-cd</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../img/post-logos/sonarqube.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-05-30/post2/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-05-30/post2/" class="post-title">HASS On Unraid: Google TTS</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-05-30">30 May 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-05-30/post1/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-05-30/post1/" class="post-title">HASS On Unraid: DNS</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-05-30">30 May 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-05-27/post2/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-05-27/post2/" class="post-title">HASS On Unraid: MariaDB</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-05-27">27 May 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
-          
-          <a href="/tags/database/" class="post-tag-badge" onclick="event.stopPropagation()">database</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
-</div>
-
-<div class="post-card" onclick="location.href='/blog/2022/2022-05-27/post1/'">
-  <div class="d-flex align-items-start gap-3">
-    <div class="flex-grow-1 min-w-0">
-      <a href="/blog/2022/2022-05-27/post1/" class="post-title">HASS On Unraid: Installation</a>
-      <div class="post-meta-row mt-1">
-        <span class="post-date">
-          <i class="bi bi-calendar-event me-1"></i>
-          <time datetime="2022-05-27">27 May 2022</time>
-        </span>
-        
-        <span class="post-tags-inline">
-          
-          <a href="/tags/home-assistant/" class="post-tag-badge" onclick="event.stopPropagation()">home assistant</a>
-          
-          <a href="/tags/unraid/" class="post-tag-badge" onclick="event.stopPropagation()">unraid</a>
-          
-        </span>
-        
-      </div>
-    </div>
-    
-    <img src="../img/post-logos/hass.png" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy">
-    
-  </div>
+  
 </div>
 
 
+<div id="archiveNoResults" class="archive-no-results" style="display:none">
+  <i class="bi bi-search me-2"></i>No posts match your search on this page.
+  
+  <div class="mt-2 small">Try another page or <a href="/blog/">browse all pages</a>.</div>
+  
+</div>
 
 
-<nav class="mt-4" aria-label="Archive pages">
+<nav class="mt-4" id="archivePagination" aria-label="Archive pages">
   <ul class="pagination justify-content-center archive-pagination flex-wrap">
     
     <li class="page-item active">
@@ -1205,6 +1298,57 @@ a {
 </nav>
 
 
+<script>
+(function () {
+  const input = document.getElementById('archiveSearch');
+  const clearBtn = document.getElementById('archiveSearchClear');
+  const infoEl = document.getElementById('archiveSearchInfo');
+  const noResults = document.getElementById('archiveNoResults');
+  const pagination = document.getElementById('archivePagination');
+  const cards = document.querySelectorAll('.post-card[data-search]');
+  const yearGroups = document.querySelectorAll('.archive-year-group');
+
+  function applyFilter() {
+    const q = input.value.toLowerCase().trim();
+    clearBtn.style.display = q ? '' : 'none';
+
+    let visible = 0;
+
+    cards.forEach(function (card) {
+      const match = !q || card.dataset.search.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+
+    yearGroups.forEach(function (group) {
+      const anyVisible = Array.from(group.querySelectorAll('.post-card')).some(c => c.style.display !== 'none');
+      group.style.display = anyVisible ? '' : 'none';
+    });
+
+    noResults.style.display = visible === 0 && q ? '' : 'none';
+
+    if (q && visible > 0) {
+      infoEl.textContent = visible + ' post' + (visible === 1 ? '' : 's') + ' match\u00aD\u00ADed on this page';
+      infoEl.style.display = '';
+    } else {
+      infoEl.style.display = 'none';
+    }
+
+    if (pagination) {
+      pagination.style.display = q ? 'none' : '';
+    }
+  }
+
+  input.addEventListener('input', applyFilter);
+
+  clearBtn.addEventListener('click', function () {
+    input.value = '';
+    input.focus();
+    applyFilter();
+  });
+})();
+</script>
+
 
       </div>
     </main>
@@ -1216,7 +1360,7 @@ a {
         </span>
       </div>
     </footer>
-    <!-- This page `/blog/` was built on 2026-04-07T04:52:00.734Z -->
+    <!-- This page `/blog/` was built on 2026-04-07T04:57:22.541Z -->
     <script type="module" src="/dist/twsaDz-zsL.js"></script>
     <script src="//cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async=""></script>
