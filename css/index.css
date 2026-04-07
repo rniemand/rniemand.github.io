@@ -203,46 +203,91 @@ div.main-content .table-hover > tbody > tr:hover > * {
 }
 
 /* =====================================================
-   Post Article — table of contents
+   Post Article — table of contents (sticky sidebar)
    ===================================================== */
-.post-toc {
-	background: #111827;
-	border: 1px solid #2a3358;
-	border-left: 3px solid #39cbfb;
-	border-radius: 0.6rem;
-	padding: 1.1rem 1.4rem;
-	margin-bottom: 2rem;
+.post-content-grid {
+	display: grid;
+	grid-template-columns: 210px 1fr;
+	gap: 0 2.5rem;
+	align-items: start;
+}
+
+.post-toc-sidebar {
+	position: sticky;
+	top: 4.5rem;
+	max-height: calc(100vh - 5.5rem);
+	overflow-y: auto;
+	padding-right: 0.25rem;
+	scrollbar-width: thin;
+	scrollbar-color: #2a3358 transparent;
 }
 
 .post-toc-label {
-	color: #39cbfb;
-	font-size: 0.72rem;
+	color: #6b849c;
+	font-size: 0.75rem;
 	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: 0.1em;
-	margin-bottom: 0.65rem;
+	letter-spacing: 0.12em;
+	margin: 0 0 0.5rem 0;
+	padding-bottom: 0.4rem;
+	border-bottom: 1px solid #2a3358;
 }
 
-.post-toc div > nav ol,
-.post-toc div > nav ul {
+.post-toc-sidebar .toc ol,
+.post-toc-sidebar .toc ul {
+	list-style: none;
 	margin: 0;
-	padding-left: 1.25rem;
+	padding: 0;
 }
 
-.post-toc div > nav li {
-	padding: 0.1rem 0;
-	line-height: 1.55;
+.post-toc-sidebar .toc li > ol,
+.post-toc-sidebar .toc li > ul {
+	padding-left: 0.75rem;
 }
 
-.post-toc div > nav a {
-	color: #8ab8d8;
+.post-toc-sidebar .toc li {
+	padding: 0;
+	line-height: 1;
+}
+
+.post-toc-sidebar .toc a {
+	display: block;
+	color: #556b80;
 	text-decoration: none;
-	font-size: 0.88rem;
-	transition: color 0.12s;
+	font-size: 0.9rem;
+	padding: 0.28rem 0.5rem;
+	border-left: 2px solid transparent;
+	transition: color 0.15s, border-color 0.15s, background 0.15s;
+	border-radius: 0 0.25rem 0.25rem 0;
 }
 
-.post-toc div > nav a:hover {
+.post-toc-sidebar .toc a:hover {
+	color: #b2fde7;
+	border-left-color: #2a3358;
+	background: rgba(42, 51, 88, 0.25);
+}
+
+.post-toc-sidebar .toc a.toc-active {
 	color: #f0ff7f;
+	border-left-color: #39cbfb;
+	border-left-width: 3px;
+	background: rgba(57, 203, 251, 0.12);
+	font-weight: 600;
+}
+
+@media (max-width: 991px) {
+	.post-content-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.post-toc-sidebar {
+		position: static;
+		max-height: none;
+		overflow-y: visible;
+		border-bottom: 1px solid #2a3358;
+		margin-bottom: 1.75rem;
+		padding-bottom: 0.75rem;
+	}
 }
 
 /* =====================================================

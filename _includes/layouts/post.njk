@@ -25,15 +25,20 @@ layout: layouts/base.njk
   </header>
 
   {%- if content | toc %}
-  <div class="post-toc">
-    <div class="post-toc-label"><i class="bi bi-list-ul me-2"></i>Contents</div>
-    {{ content | toc | safe }}
+  <div class="post-content-grid">
+    <aside class="post-toc-sidebar" aria-label="Table of contents">
+      <p class="post-toc-label"><i class="bi bi-list-nested me-2"></i>Contents</p>
+      {{ content | toc | safe }}
+    </aside>
+    <div class="post-body">
+      {{ content | safe }}
+    </div>
   </div>
-  {%- endif %}
-
+  {%- else %}
   <div class="post-body">
     {{ content | safe }}
   </div>
+  {%- endif %}
 
   {%- if collections.posts %}
   {%- set previousPost = collections.posts | getPreviousCollectionItem %}
