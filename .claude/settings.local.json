@@ -16,7 +16,9 @@
       "Bash(wmic process:*)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/blog/)",
-      "Bash(npm --version)"
+      "Bash(npm --version)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/blog/2022/2022-11-25/post/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/blog/2022/2022-06-15/post/)"
     ]
   }
 }

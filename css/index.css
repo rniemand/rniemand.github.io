@@ -1,10 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 body {
-	font-family: "Open Sans", sans-serif;
-	font-optical-sizing: auto;
 	background-image: none !important;
 	background-color: #1a1e2e !important;
+	font-family: "Open Sans", sans-serif;	
+ 	font-optical-sizing: auto;
+	font-size: 1.1rem;
 }
 
 .navbar .navbar-brand.active,
@@ -14,15 +16,11 @@ body {
 
 div.main-content {
 	margin-top: 4rem;
-	font-size: 1.1rem;
+	font-size: 1.15rem;
 }
 
 .blog-list a {
 	text-decoration: none;
-}
-
-.post-meta .post-date time {
-	color: #f3fe90;
 }
 
 div.main-content > h1 {
@@ -35,51 +33,25 @@ div.main-content > h2 {
 	margin-bottom: 1rem;
 }
 
-div.main-content h2.quick-access {
-	color: #7cbbe6;
-}
-
 div.main-content > h3 {
 	color: #f0ff7f;
 	margin-bottom: 1rem;
 }
 
 div.main-content pre {
-	font-size: 1.1rem;
-	background-color: #31363b;
-	border: 1px solid #3f4851;
-	padding: 0.5rem;
-	margin-bottom: 1rem;
-}
-
-div.main-content picture img:not(.no-borders) {
-	border: 1px solid #454d55;
-	max-width: 100%;
-	height: auto;
+	font-size: 1rem;
+	background-color: #0e1525;
+	border: 1px solid #2a3358;
 	border-radius: 0.5rem;
-}
-
-div.main-content picture {
-	display: block;
-}
-div.main-content picture:has(img.text-center) {
-	text-align: center;
-}
-
-div.main-content picture img {
-	margin-bottom: 1rem;
-	box-shadow: 5px 5px 10px 0px #2b3137;
-}
-
-div.main-content div.prev-next {
-	background-color: #29303729;
-	border-radius: 0.5rem;
-	padding: 0.5rem;
+	padding: 1rem 1.25rem;
+	margin-bottom: 1.5rem;
 }
 
 div.main-content table {
-	border: 1px solid #363c43;
-	font-size: 1rem;
+	border: 1px solid #2a3358;
+	font-size: 0.95rem;
+	width: 100%;
+	margin-bottom: 1.5rem;
 }
 
 div.main-content .list-group-item:hover {
@@ -95,7 +67,6 @@ div.main-content .accordion .accordion-item .accordion-body {
 	background-color: #2a2f35;
 }
 
-
 a.postlist-link {
 	color: #f0ff7f;
 }
@@ -105,15 +76,312 @@ a.postlist-link {
 a {
 	color: #b2fde7;
 }
-.table>:not(caption)>*>* {
-	background-color: #363c4339;
+/* =====================================================
+   Tables
+   ===================================================== */
+.table-wrap {
+	overflow-x: auto;
+	margin-bottom: 1.5rem;
+	border: 1px solid #2a3358;
+	border-radius: 0.5rem;
+}
+
+.table-wrap table {
+	margin-bottom: 0;
+	border: none;
+}
+
+.post-body .table thead th,
+div.main-content .table thead th {
+	background-color: #151d35 !important;
+	color: #c3e6ff !important;
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	border: 1px solid #253060 !important;
+	border-bottom: 2px solid #2a3358 !important;
+	padding: 0.65rem 1rem;
+}
+
+.post-body .table tbody td,
+div.main-content .table tbody td {
+	color: #c8d4e0;
+	border: 1px solid #1e2845 !important;
+	padding: 0.55rem 1rem;
+	vertical-align: middle;
+}
+
+.post-body .table-striped > tbody > tr:nth-of-type(odd) > *,
+div.main-content .table-striped > tbody > tr:nth-of-type(odd) > * {
+	background-color: #1a1f38 !important;
+	color: #c8d4e0 !important;
+}
+
+.post-body .table-striped > tbody > tr:nth-of-type(even) > *,
+div.main-content .table-striped > tbody > tr:nth-of-type(even) > * {
+	background-color: #13172c !important;
+	color: #c8d4e0 !important;
+}
+
+.post-body .table-hover > tbody > tr:hover > *,
+div.main-content .table-hover > tbody > tr:hover > * {
+	background-color: #252d50 !important;
+	color: #f0f4f8 !important;
+}
+
+/* =====================================================
+   Post Article — header card
+   ===================================================== */
+.post-header {
+	background: linear-gradient(135deg, #1c2242 0%, #182038 100%);
+	border: 1px solid #2a3358;
+	border-radius: 0.75rem;
+	padding: 1.75rem 2rem;
+	margin-bottom: 2rem;
+}
+
+.post-header .post-title {
+	color: #c3e6ff;
+	font-size: 1.85rem;
+	font-weight: 700;
+	line-height: 1.3;
+	margin-bottom: 1rem;
+	letter-spacing: -0.02em;
+}
+
+.post-meta-bar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.6rem;
+}
+
+.post-date-badge {
+	color: #7a90b0;
+	font-size: 0.85rem;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.post-date-badge time {
+	color: #a0bcd8;
+}
+
+.post-tag-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.post-tag-pill {
+	background: #162030;
+	color: #b2fde7;
+	border: 1px solid #2a4060;
+	border-radius: 999px;
+	font-size: 0.72rem;
+	font-weight: 500;
+	padding: 0.18rem 0.65rem;
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.post-tag-pill:hover {
+	background: #1e3050;
+	color: #f0ff7f;
+	border-color: #3a5080;
+}
+
+/* =====================================================
+   Post Article — table of contents
+   ===================================================== */
+.post-toc {
+	background: #111827;
+	border: 1px solid #2a3358;
+	border-left: 3px solid #39cbfb;
+	border-radius: 0.6rem;
+	padding: 1.1rem 1.4rem;
+	margin-bottom: 2rem;
+}
+
+.post-toc-label {
+	color: #39cbfb;
+	font-size: 0.72rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	margin-bottom: 0.65rem;
+}
+
+.post-toc div > nav ol,
+.post-toc div > nav ul {
+	margin: 0;
+	padding-left: 1.25rem;
+}
+
+.post-toc div > nav li {
+	padding: 0.1rem 0;
+	line-height: 1.55;
+}
+
+.post-toc div > nav a {
+	color: #8ab8d8;
+	text-decoration: none;
+	font-size: 0.88rem;
+	transition: color 0.12s;
+}
+
+.post-toc div > nav a:hover {
+	color: #f0ff7f;
+}
+
+/* =====================================================
+   Post Article — prose body
+   ===================================================== */
+.post-body {
+	font-size: 1.1rem;
+	line-height: 1.85;
+	color: #c8d4e0;
+}
+
+.post-body h2 {
+	color: #ffd97f;
+	font-size: 1.4rem;
+	font-weight: 700;
+	margin-top: 2.25rem;
+	margin-bottom: 0.75rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid #252d50;
+	letter-spacing: -0.01em;
+}
+
+.post-body h3 {
+	color: #f0ff7f;
+	font-size: 1.15rem;
+	font-weight: 600;
+	margin-top: 1.75rem;
+	margin-bottom: 0.5rem;
+}
+
+.post-body h4 {
+	color: #a8d8f0;
+	font-size: 1rem;
+	font-weight: 600;
+	margin-top: 1.25rem;
+	margin-bottom: 0.4rem;
+}
+
+.post-body p {
+	margin-bottom: 1.25rem;
+}
+
+.post-body a {
+	color: #b2fde7;
+}
+
+.post-body a:hover {
+	color: #f0ff7f;
+}
+
+.post-body ul,
+.post-body ol {
+	margin-bottom: 1.25rem;
+	padding-left: 1.5rem;
+}
+
+.post-body li {
+	margin-bottom: 0.35rem;
+}
+
+/* =====================================================
+   Post Article — images (integrated card style)
+   ===================================================== */
+.post-body picture {
+	display: block;
+	background: #0a0f1e;
+	border: 1px solid #2a3358;
+	border-radius: 0.6rem;
+	padding: 0.75rem;
+	margin: 1.75rem auto;
+	text-align: center;
+}
+
+.post-body p:has(> picture) {
+	margin-bottom: 0;
+}
+
+.post-body picture img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 0.35rem;
+	display: block;
+	margin: 0 auto;
+	box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+}
+
+.post-body picture img.no-borders {
+	border: none;
+	box-shadow: none;
+}
+
+/* =====================================================
+   Post Article — prev / next navigation
+   ===================================================== */
+.post-nav {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0.75rem;
+	margin-top: 3rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid #252d50;
+}
+
+.post-nav-item {
+	background: #141929;
+	border: 1px solid #252d50;
+	border-radius: 0.6rem;
+	padding: 0.9rem 1.1rem;
+	text-decoration: none;
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	transition: border-color 0.15s, background 0.15s;
+}
+
+.post-nav-item:hover {
+	background: #1a2240;
+	border-color: #3a5080;
+	text-decoration: none;
+}
+
+.post-nav-next {
+	text-align: right;
+}
+
+.post-nav-dir {
+	color: #4a6080;
+	font-size: 0.7rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	font-weight: 600;
+}
+
+.post-nav-title {
+	color: #8ab8d8;
+	font-size: 0.88rem;
+	line-height: 1.4;
+}
+
+.post-nav-item:hover .post-nav-title {
+	color: #f0ff7f;
 }
 
 /* =====================================================
    Post Cards (archive, home, tag pages)
    ===================================================== */
 .post-card {
-	background: #1f2540;
+	background: #2b355e54;
 	border: 1px solid #2a3358;
 	border-radius: 0.5rem;
 	padding: 0.9rem 1.1rem;
@@ -126,7 +394,7 @@ a {
 	border-color: #3d5080;
 }
 .post-card .post-title {
-	color: #f0ff7f;
+	color: #ffffff;
 	text-decoration: none;
 	font-weight: 600;
 	font-size: 1rem;
@@ -484,5 +752,14 @@ a {
 	}
 	.about-card {
 		padding: 1.25rem;
+	}
+	.post-header {
+		padding: 1.25rem 1.25rem;
+	}
+	.post-header .post-title {
+		font-size: 1.4rem;
+	}
+	.post-nav {
+		grid-template-columns: 1fr;
 	}
 }

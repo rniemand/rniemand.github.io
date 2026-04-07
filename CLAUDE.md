@@ -56,6 +56,43 @@ The Eleventy build (including image optimisation) takes **~60–90 seconds** bef
 - **Syntax highlighting:** Prism.js with Okaidia theme
 - **Image optimization:** @11ty/eleventy-img (outputs AVIF + WebP)
 - **Date handling:** Luxon
+- **Body font:** Open Sans (user preference; Inter and Nunito also imported as alternatives)
+
+## Post Layout (`_includes/layouts/post.njk`)
+
+Blog posts use a structured `<article class="post-article">` wrapper with three key sections:
+
+| Section | Class | Description |
+|---|---|---|
+| Header card | `.post-header` | Dark gradient card containing `.post-title` (h1) and `.post-meta-bar` (date + tag pills) |
+| Table of contents | `.post-toc` | Cyan left-border card with `.post-toc-label`; only rendered when `content \| toc` is truthy |
+| Body prose | `.post-body` | Prose content with Inter typography, styled h2/h3/h4, images, and lists |
+| Prev/next nav | `.post-nav` | CSS grid (2-col) of `.post-nav-item` cards for previous/next post links |
+
+**Tag pills** in the post header use `.post-tag-pill` (rounded, mint/dark style) — distinct from `.post-tag-badge` used in post cards on listing pages.
+
+**`js/post.js`** auto-applies Bootstrap table classes to `.post-body table` elements on page load, and wraps each table in a `<div class="table-wrap">` for horizontal scroll on mobile and rounded-border containment.
+
+## Table Styling
+
+Tables in blog posts are styled by the combination of `post.js` (adds Bootstrap classes + `.table-wrap`) and custom CSS:
+
+| Part | Style |
+|---|---|
+| Wrapper | `.table-wrap` — `border: 1px solid #2a3358`, `border-radius: 0.5rem`, `overflow-x: auto` |
+| Header `<th>` | Background `#151d35`, color `#c3e6ff`, uppercase, `letter-spacing: 0.06em`, cell borders `#253060`, bottom border `2px #2a3358` |
+| Odd rows | Background `#1a1f38`, cell borders `#1e2845` |
+| Even rows | Background `#13172c`, cell borders `#1e2845` |
+| Hover | Background `#252d50`, color `#f0f4f8` |
+
+Add class `skip-auto-class` to any `<table>` to opt out of the automatic JS styling.
+
+## Image Display
+
+Eleventy image transform wraps all `<img>` tags in `<picture>` elements. In blog post bodies, `.post-body picture` is styled as an integrated dark card:
+- Background `#0a0f1e`, border `#2a3358`, `border-radius: 0.6rem`, `padding: 0.75rem`
+- The `<img>` inside has `border-radius: 0.35rem` and a deep `box-shadow`
+- Add class `no-borders` to the original `<img>` to suppress shadow/border styling
 
 ## Color Palette
 

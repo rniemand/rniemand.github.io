@@ -4,63 +4,59 @@ layout: layouts/base.njk
 {# Only include the syntax highlighter CSS on blog posts, included with the CSS per-page bundle #}
 <style>{% include "node_modules/prismjs/themes/prism-okaidia.css" %}</style>
 <style>{% include "css/prism-diff.css" %}</style>
-<h1>{{ title }}</h1>
 
-<div class="p-1 mb-1 d-flex post-meta">
-	{%- if tags | filterTagList | length > 0 %}
-		<span>
-			<i class="bi bi-bookmarks-fill"></i>
-			{%- for tag in tags | filterTagList %}
-			{%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-				<a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a>{%- if not loop.last %}, {% endif %}
-			{%- endfor %}
-		</span>
-	{%- endif %}
-	<div class="p-2 flex-grow-1">&nbsp;</div>
-	<span class="post-date">
-		<i class="bi bi-calendar-plus-fill"></i>
-		<time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
-	</span>
-</div>
+<article class="post-article">
+  <header class="post-header">
+    <h1 class="post-title">{{ title }}</h1>
+    <div class="post-meta-bar">
+      <span class="post-date-badge">
+        <i class="bi bi-calendar2 me-1"></i>
+        <time datetime="{{ page.date | htmlDateString }}">{{ page.date | readableDate }}</time>
+      </span>
+      {%- if tags | filterTagList | length > 0 %}
+      <div class="post-tag-row">
+        {%- for tag in tags | filterTagList %}
+        {%- set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+        <a href="{{ tagUrl }}" class="post-tag-pill">{{ tag }}</a>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </div>
+  </header>
 
+  {%- if content | toc %}
+  <div class="post-toc">
+    <div class="post-toc-label"><i class="bi bi-list-ul me-2"></i>Contents</div>
+    {{ content | toc | safe }}
+  </div>
+  {%- endif %}
 
-{%- if content | toc %}
-<h2 class="quick-access">Quick Access</h2>
-{{ content | toc | safe }}
-{%- endif %}
+  <div class="post-body">
+    {{ content | safe }}
+  </div>
 
-{{ content | safe }}
-
-{%- if collections.posts %}
-{%- set previousPost = collections.posts | getPreviousCollectionItem %}
-{%- set nextPost = collections.posts | getNextCollectionItem %}
-{%- if nextPost or previousPost %}
-<div class="d-flex mb-3 prev-next">
-	{%- if previousPost %}
-	<i class="bi bi-arrow-left-short"></i>
-	<span class="text-start">Previous<br><a href="{{ previousPost.url }}">{{ previousPost.data.title }}</a></span>
-	{% endif %}
-	<div class="p-2 flex-grow-1">&nbsp;</div>
-	{%- if nextPost %}
-	<span class="text-end">Next<br><a href="{{ nextPost.url }}">{{ nextPost.data.title }}</a></span>
-	<i class="bi bi-arrow-right-short"></i>
-	{% endif %}
-</div>
-{%- endif %}
-{%- endif %}
+  {%- if collections.posts %}
+  {%- set previousPost = collections.posts | getPreviousCollectionItem %}
+  {%- set nextPost = collections.posts | getNextCollectionItem %}
+  {%- if nextPost or previousPost %}
+  <nav class="post-nav" aria-label="Post navigation">
+    {%- if previousPost %}
+    <a href="{{ previousPost.url }}" class="post-nav-item post-nav-prev">
+      <span class="post-nav-dir"><i class="bi bi-arrow-left me-1"></i>Previous</span>
+      <span class="post-nav-title">{{ previousPost.data.title }}</span>
+    </a>
+    {%- else %}
+    <div></div>
+    {%- endif %}
+    {%- if nextPost %}
+    <a href="{{ nextPost.url }}" class="post-nav-item post-nav-next">
+      <span class="post-nav-dir">Next<i class="bi bi-arrow-right ms-1"></i></span>
+      <span class="post-nav-title">{{ nextPost.data.title }}</span>
+    </a>
+    {%- endif %}
+  </nav>
+  {%- endif %}
+  {%- endif %}
+</article>
 
 <script>{% include "js/post.js" %}</script>
-{# <div id="disqus_thread"></div>
-<script>
-    var disqus_config = function () {
-		this.page.url = '{{page.url }}';  // Replace PAGE_URL with your page's canonical URL variable
-		this.page.identifier = '{{page | pageSlug}}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    (function() { // DON'T EDIT BELOW THIS LINE
-    var d = document, s = d.createElement('script');
-    s.src = 'https://richardn-ca.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript> #}
