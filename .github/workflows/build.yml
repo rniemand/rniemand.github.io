@@ -30,6 +30,7 @@ jobs:
           path: |
             .cache
             _site/img
+            _site/blog
           key: ${{ runner.os }}-eleventy-${{ hashFiles('**/*.{png,jpg,jpeg,gif,webp,avif,svg}') }}
           restore-keys: |
             ${{ runner.os }}-eleventy-
