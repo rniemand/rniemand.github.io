@@ -23,7 +23,7 @@ npm run debug   # Verbose debug build
 
 **Important:** `npm start` has a hardcoded `--port=8081` flag — it does **not** respect the `PORT` env variable, so `autoPort: true` won't work with it. The `eleventy-preview` config passes `--port=8082` explicitly as an arg.
 
-The Eleventy build (including image optimisation) takes **~60–90 seconds** before the server is ready to serve pages. Allow for this when using `preview_start`.
+The Eleventy build (including image optimisation) takes **~60–90 seconds** on a cold start. However, if `npm start` is already running in a terminal (watch mode), the `.cache/` is warm and `eleventy-preview` starts in **a few seconds** — no need to sleep 90s in that case. Only sleep if you have confirmed the cache is cold (i.e. no dev server has been running).
 
 ## Key Files & Directories
 
@@ -65,7 +65,7 @@ Blog posts use a structured `<article class="post-article">` wrapper with three 
 | Section | Class | Description |
 |---|---|---|
 | Header card | `.post-header` | Dark gradient card containing `.post-title` (h1) and `.post-meta-bar` (date + tag pills) |
-| Table of contents | `.post-toc` | Cyan left-border card with `.post-toc-label`; only rendered when `content \| toc` is truthy |
+| Table of contents | `.post-content-grid` | CSS grid wrapping `.post-toc-sidebar` (sticky, 210px) + `.post-body`; only rendered when `content \| toc` is truthy. Collapses to single column on ≤991px. |
 | Body prose | `.post-body` | Prose content with Inter typography, styled h2/h3/h4, images, and lists |
 | Prev/next nav | `.post-nav` | CSS grid (2-col) of `.post-nav-item` cards for previous/next post links |
 
@@ -211,9 +211,28 @@ The inline `<script eleventy:ignore>` block drives the filter — `eleventy:igno
 
 `content/projects.njk` — Bootstrap `row g-4` grid of `.project-card` components. Each card has a `.project-card-header` (dark, with icon) and `.project-card-body` with `.project-topic` rows. Older posts are in a `<details>` element.
 
+Each `.project-topic` contains a `.project-topic-label` (muted uppercase category name) and a `.project-links` flex-wrap container of `.project-link` pill badges. Each badge links to a post.
+
 ## Tags Page
 
 The tags page (`content/tags.njk`) uses a responsive card grid with a live JavaScript filter input. Each card shows the tag name, post count badge, latest post title, and date. Cards animate on hover.
+
+## Plugin Gotchas
+
+### eleventy-plugin-toc
+The `| toc` filter outputs `<div class="toc"><ol>...</ol></div>` — there is **no `<nav>` element**. CSS selectors must use `.toc` not `nav`:
+```css
+/* correct */
+.post-toc-sidebar .toc a { ... }
+/* wrong — nav doesn't exist in the output */
+.post-toc-sidebar div > nav a { ... }
+```
+
+### eleventy-img transform & image paths
+The image transform resolves `<img src="...">` paths **relative to the input template file**, not the project root or `public/`. Key rules:
+- Images in `public/img/` are pass-through copied to `_site/img/` but are **not** found by the transform (the transform doesn't look in `public/`).
+- To have an image processed by the transform (e.g. in `content/index.njk`), place it under `content/` and use a relative path: `<img src="./img/richard.jpg">`.
+- A leading `/` resolves from the project root (e.g. `/img/foo.jpg` → `D:/dev/rniemand.github.io/img/foo.jpg`), which also doesn't exist unless you create a root-level `img/` dir.
 
 ## Analytics & Comments
 

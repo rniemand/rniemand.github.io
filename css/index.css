@@ -727,25 +727,44 @@ div.main-content .table-hover > tbody > tr:hover > * {
 	padding: 0.9rem 1.1rem;
 }
 .project-topic {
-	padding: 0.3rem 0;
+	padding: 0.5rem 0;
 	border-bottom: 1px solid #1a2035;
-	font-size: 0.92rem;
-	line-height: 1.6;
 }
 .project-topic:last-child {
 	border-bottom: none;
 }
 .project-topic-label {
-	color: #7a90b0;
-	font-size: 0.78rem;
-	font-weight: 600;
+	color: #556b80;
+	font-size: 0.68rem;
+	font-weight: 700;
 	text-transform: uppercase;
-	letter-spacing: 0.05em;
+	letter-spacing: 0.09em;
 	display: block;
-	margin-bottom: 0.1rem;
+	margin-bottom: 0.4rem;
+}
+.project-links {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+.project-link {
+	display: inline-block;
+	background: #111827;
+	border: 1px solid #2a3358;
+	border-radius: 0.3rem;
+	color: #8ab8d8;
+	font-size: 0.82rem;
+	padding: 0.2rem 0.65rem;
+	text-decoration: none;
+	transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.project-link:hover {
+	background: #1a2540;
+	border-color: #39cbfb;
+	color: #f0ff7f;
 }
 .project-archive summary {
-	color: #7a90b0;
+	color: #556b80;
 	font-size: 0.82rem;
 	cursor: pointer;
 	user-select: none;
