@@ -237,4 +237,8 @@ Two-job pipeline — `build` then `deploy` (deploy only runs on `main`):
 
 **One-time setup required:** For the official `deploy-pages` action to work, the GitHub repository Pages source must be set to **"GitHub Actions"** (not "Deploy from a branch"). Go to: *Settings → Pages → Build and deployment → Source → GitHub Actions*.
 
-The biggest CI time-saver is the `.cache/` restore — `eleventy-img` stores processed AVIF/WebP in `.cache/` and skips reprocessing on cache hit, cutting build time from ~90s to ~5s when images haven't changed.
+**Image format strategy** (controlled via `ELEVENTY_RUN_MODE` in `eleventy.config.js`):
+- **Dev/watch** (`npm start`, `ELEVENTY_RUN_MODE=serve`): generates **WebP + original only** — skips AVIF to keep rebuilds fast
+- **Production** (`npm run build`, `ELEVENTY_RUN_MODE=build`): generates **AVIF + WebP + original**, with AVIF `effort: 0` (fastest Sharp encode setting) to reduce CI time
+
+The `.cache/` restore — `eleventy-img` stores processed images in `.cache/` and skips reprocessing on cache hit, cutting build time from ~90s to ~5s when images haven't changed.

@@ -87,9 +87,11 @@ export default async function (eleventyConfig) {
 	// });
 
 	// Image optimization: https://www.11ty.dev/docs/plugins/image/#eleventy-transform
+	// AVIF is skipped in dev/watch mode (serve/watch) to speed up rebuilds.
+	// In production (build mode) AVIF is generated with effort:0 (fastest encode).
+	const isProductionBuild = process.env.ELEVENTY_RUN_MODE === "build";
 	eleventyConfig.addPlugin(eleventyImageTransformPlugin, {
-		// Output formats for each image.
-		formats: ["avif", "webp", "auto"],
+		formats: isProductionBuild ? ["avif", "webp", "auto"] : ["webp", "auto"],
 
 		// widths: ["auto"],
 
@@ -104,6 +106,7 @@ export default async function (eleventyConfig) {
 
 		sharpOptions: {
 			animated: true,
+			avif: { effort: 0 },
 		},
 	});
 
