@@ -6,6 +6,13 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "start"],
       "port": 8081
+    },
+    {
+      "name": "eleventy-preview",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["@11ty/eleventy", "--serve", "--quiet", "--port=8082"],
+      "port": 8082,
+      "autoPort": false
     }
   ]
 }

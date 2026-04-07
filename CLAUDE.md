@@ -12,6 +12,19 @@ npm run build   # Production build → _site/
 npm run debug   # Verbose debug build
 ```
 
+## Preview Server
+
+`.claude/launch.json` defines two server configurations:
+
+| Name | Port | Notes |
+|---|---|---|
+| `eleventy-dev` | 8081 | Standard dev server via `npm start` |
+| `eleventy-preview` | 8082 | Alternate for Claude preview tool (avoids port conflicts) |
+
+**Important:** `npm start` has a hardcoded `--port=8081` flag — it does **not** respect the `PORT` env variable, so `autoPort: true` won't work with it. The `eleventy-preview` config passes `--port=8082` explicitly as an arg.
+
+The Eleventy build (including image optimisation) takes **~60–90 seconds** before the server is ready to serve pages. Allow for this when using `preview_start`.
+
 ## Key Files & Directories
 
 | Path | Purpose |
@@ -20,10 +33,14 @@ npm run debug   # Verbose debug build
 | `_data/metadata.js` | Site title, URL, description, author |
 | `_includes/layouts/base.njk` | Root HTML shell — navbar, footer, analytics |
 | `_includes/layouts/post.njk` | Individual blog post layout |
-| `_includes/postslist.njk` | Reusable post list component |
+| `_includes/postslist.njk` | Reusable post list component (used by tag-pages.njk) |
 | `css/index.css` | Custom styles (overrides Bootswatch) |
 | `css/theme.css` | Bootswatch Quartz dark theme (do not edit) |
 | `content/` | All site pages (blog posts, tags, archive, etc.) |
+| `content/index.njk` | Home page — hero section + featured post + recent posts |
+| `content/blog.njk` | Archive — year-grouped post cards + pagination |
+| `content/projects.njk` | Projects — Bootstrap card grid by topic |
+| `content/about.njk` | About Me page (GitHub: rniemand) |
 | `content/tags.njk` | Tags overview page (card grid + live filter) |
 | `content/tag-pages.njk` | Auto-generated per-tag listing pages |
 | `_config/filters.js` | Custom Eleventy filters |
@@ -52,11 +69,14 @@ The site uses a dark theme. Key custom colors (defined in `css/index.css`):
 | H3 headings | `#f0ff7f` (lime yellow) |
 | Links | `#b2fde7` (mint) |
 | Post tag links | `#f0ff7f` |
+| Post title (cards) | `#f0ff7f` (lime yellow) |
 | Code | `#e0e832` (bright yellow) |
 | Code background | `#31363b` |
 | Primary accent | `#e83283` (pink/magenta — from Quartz) |
 | Info/cyan accent | `#39cbfb` |
 | Navbar/Footer bg | `#212529` (Bootstrap dark) |
+| Card background | `#1f2540` |
+| Card border | `#2a3358` |
 
 **Important:** `css/theme.css` sets a cyan→indigo→pink gradient on `body`. This is overridden in `css/index.css` with:
 ```css
@@ -75,6 +95,7 @@ Nav items are driven by `eleventyNavigation` frontmatter in content files:
 | Projects | Projects | 2 | `bi-folder2-open` |
 | Tags | Tags | 3 | `bi-tags-fill` |
 | Archive | Archive | 4 | `bi-journal-text` |
+| About | About | 5 | `bi-person-fill` |
 
 Icons are rendered in `base.njk` via a `{% if entry.key == "..." %}` block. To add a new nav item with a custom icon, add it to the if/elif chain in `base.njk`.
 
@@ -106,6 +127,38 @@ Use `draft: true` to hide a post from production builds.
 | `sortAlphabetically` | Alphabetical sort |
 | `postBanner` | Generates banner image path |
 | `postLogo` | Generates logo image path |
+| `head` | Returns first N items (negative N = last N items) |
+| `groupByYear` | Groups post array into `[{year, posts}]` — newest year first |
+
+## Post Card Component
+
+Post cards are used on the home page, archive, and tag pages. CSS classes:
+- `.post-card` — clickable card container (onclick sets location.href)
+- `.post-title` — lime yellow link, hover turns light blue
+- `.post-meta-row` — flex row holding date and tags
+- `.post-date` — muted date with calendar icon
+- `.post-tags-inline` — inline tag badges container
+- `.post-tag-badge` — small dark badge link per tag
+- `.post-card-logo` — small logo image (44×44)
+- `.post-card-banner` — full-width banner image
+
+Always add `onclick="event.stopPropagation()"` to tag links inside cards so clicking a tag doesn't also navigate to the post.
+
+## Home Page Design
+
+`content/index.njk` — no pagination, accesses `collections.posts | reverse` directly:
+- Hero section (`.hero-section`) with CTA buttons
+- Featured latest post (`.featured-post`) showing `allPosts[0]`
+- Recent posts (loop indices 2–9 via `loop.index`)
+- "View all N posts" link to `/blog/`
+
+## Archive Page Design
+
+`content/blog.njk` — paginates at 25 posts, newest first. Uses `groupByYear` filter to group `pagination.items` into year sections with count badges. Has prev/next pagination buttons.
+
+## Projects Page Design
+
+`content/projects.njk` — Bootstrap `row g-4` grid of `.project-card` components. Each card has a `.project-card-header` (dark, with icon) and `.project-card-body` with `.project-topic` rows. Older posts are in a `<details>` element.
 
 ## Tags Page
 

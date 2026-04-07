@@ -7,7 +7,14 @@
       "Bash(grep -oP \".{100}linear-gradient\\\\\\(90deg,#33b7e2,#5e62b0,#dc307c\\\\\\)\" C:/dev/rniemand.github.io/css/theme.css)",
       "Bash(python3 -c \":*)",
       "Bash(node -e \":*)",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npm run:*)",
+      "Bash(netstat -ano)",
+      "Bash(findstr \":8081\")",
+      "Bash(tasklist /fi \"PID eq 21836\")",
+      "Bash(tasklist)",
+      "Bash(wmic process:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8082/)"
     ]
   }
 }

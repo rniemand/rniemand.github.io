@@ -3,100 +3,121 @@ title: Projects
 eleventyNavigation:
   key: Projects
   order: 2
+description: A curated index of posts organized by project topic
 ---
 
-<h1>Projects</h1>
+<h1><i class="bi bi-folder2-open me-2"></i>Projects</h1>
+<p class="text-muted mb-4">A quick reference to posts organized by topic. Updated as new content is added.</p>
 
-<p>This page serves as a quick reference to related posts around specific topics.</p>
-<p>As new posts become available this section will be updated with links to entries in an easy to access manner.</p>
+<div class="row g-4">
 
-<h2>Home Assistant</h2>
-<ul>
-	<li>
-		<strong>Automations</strong>: (
-			<a href="/blog/2022/2022-06-10/post/">times of day</a>
-		)
-	</li>
-	<li>
-		<strong>Unraid</strong>: (
-			<a href="/blog/2022/2022-05-27/post1/">installation</a>,
-			<a href="/blog/2022/2022-05-30/post1/">DNS</a>,
-			<a href="/blog/2022/2022-05-27/post2/">Maria DB</a>,
-			<a href="/blog/2022/2022-06-06/post/">MQTT</a>
-		)
-	</li>
-	<li>
-		<strong>Projects</strong>: (
-			<a href="/blog/2017/2017-10-19/">door monitoring</a>,
-			<a href="/blog/2017/2017-09-19/post/">gate monitoring</a>
-		)
-	</li>
-	<li>
-		<strong>TTS</strong>: (
-			<a href="/blog/2022/2022-05-30/post2/">setup</a>
-		)
-	</li>
-	<li>
-		<strong>Zigbee</strong>: (
-			<a href="/blog/2022/2022-06-07/post1/">Zigbee & Z-Wave</a>
-		)
-	</li>
-	<li>
-		Archive
-		<ul>
-			<li>
-				<strong>2019</strong>: (
-					<a href="/blog/2019/2019-01-16/post/">door monitoring</a>
-				)
-			</li>
-			<li>
-				<strong>2018</strong>: (
-					<a href="/blog/2018/2018-02-16/">MySQL</a>,
-					<a href="/blog/2018/2018-02-15/">upgrading</a>,
-					<a href="/blog/2018/2018-07-25/">history</a>,
-					<a href="/blog/2018/2018-07-19/">presence</a>,
-					<a href="/blog/2018/2018-06-29//">secrets</a>,
-					<a href="/blog/2018/2018-06-28/">Plex</a>,
-					<a href="/blog/2018/2018-12-06/">configuration</a>
-				)
-			</li>
-			<li>
-				<strong>2017</strong>: (
-					<a href="/blog/2017/2017-09-09/">Windows service</a>
-				)
-			</li>
-		</ul>
-	</li>
-</ul>
+  <div class="col-md-6">
+    <div class="project-card">
+      <div class="project-card-header">
+        <i class="bi bi-house-gear-fill me-2"></i>Home Assistant
+      </div>
+      <div class="project-card-body">
+        <div class="project-topic">
+          <span class="project-topic-label">Automations</span>
+          <a href="/blog/2022/2022-06-10/post/">Times of day</a>
+        </div>
+        <div class="project-topic">
+          <span class="project-topic-label">Unraid setup</span>
+          <a href="/blog/2022/2022-05-27/post1/">Installation</a>,
+          <a href="/blog/2022/2022-05-30/post1/">DNS</a>,
+          <a href="/blog/2022/2022-05-27/post2/">MariaDB</a>,
+          <a href="/blog/2022/2022-06-06/post/">MQTT</a>
+        </div>
+        <div class="project-topic">
+          <span class="project-topic-label">Projects</span>
+          <a href="/blog/2017/2017-10-19/">Door monitoring</a>,
+          <a href="/blog/2017/2017-09-19/post/">Gate monitoring</a>
+        </div>
+        <div class="project-topic">
+          <span class="project-topic-label">TTS</span>
+          <a href="/blog/2022/2022-05-30/post2/">Setup</a>
+        </div>
+        <div class="project-topic">
+          <span class="project-topic-label">Zigbee</span>
+          <a href="/blog/2022/2022-06-07/post1/">Zigbee &amp; Z-Wave</a>
+        </div>
+        <details class="project-archive mt-2">
+          <summary>Older posts</summary>
+          <div class="project-topic mt-2">
+            <span class="project-topic-label">2019</span>
+            <a href="/blog/2019/2019-01-16/post/">Door monitoring</a>
+          </div>
+          <div class="project-topic">
+            <span class="project-topic-label">2018</span>
+            <a href="/blog/2018/2018-02-16/">MySQL</a>,
+            <a href="/blog/2018/2018-02-15/">Upgrading</a>,
+            <a href="/blog/2018/2018-07-25/">History</a>,
+            <a href="/blog/2018/2018-07-19/">Presence</a>,
+            <a href="/blog/2018/2018-06-29//">Secrets</a>,
+            <a href="/blog/2018/2018-06-28/">Plex</a>,
+            <a href="/blog/2018/2018-12-06/">Configuration</a>
+          </div>
+          <div class="project-topic">
+            <span class="project-topic-label">2017</span>
+            <a href="/blog/2017/2017-09-09/">Windows service</a>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
 
-<h2>Unraid</h2>
-<ul>
-	<li>
-		<strong>Automated Backups</strong>: (
-			<a href="/blog/2025/2025-07-07/">appdata</a>,
-			<a href="/blog/2025/2025-07-09/">MariaDB</a>
-		)
-	</li>
-	<li>
-		<strong>Monitoring</strong>: (
-			<a href="/blog/2025/2025-07-10/">telegraf</a>,
-			<a href="/blog/2025/2025-07-11/">Home Assistant</a>
-		)
-	</li>
-</ul>
+  <div class="col-md-6">
+    <div class="project-card">
+      <div class="project-card-header">
+        <i class="bi bi-server me-2"></i>Unraid
+      </div>
+      <div class="project-card-body">
+        <div class="project-topic">
+          <span class="project-topic-label">Automated Backups</span>
+          <a href="/blog/2025/2025-07-07/">Appdata</a>,
+          <a href="/blog/2025/2025-07-09/">MariaDB</a>
+        </div>
+        <div class="project-topic">
+          <span class="project-topic-label">Monitoring</span>
+          <a href="/blog/2025/2025-07-10/">Telegraf</a>,
+          <a href="/blog/2025/2025-07-11/">Home Assistant</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<h2>Other</h2>
+  <div class="col-md-6">
+    <div class="project-card">
+      <div class="project-card-header">
+        <i class="bi bi-cpu me-2"></i>Electronics &amp; Hardware
+      </div>
+      <div class="project-card-body">
+        <div class="project-topic">
+          <span class="project-topic-label">Arduino</span>
+          <a href="/blog/2017/2017-02-27/">Cheat sheet</a>,
+          <a href="/blog/2017/2017-02-28/">Data types</a>
+        </div>
+        <div class="project-topic">
+          <span class="project-topic-label">Lounge Clock</span>
+          <a href="/blog/2022/2022-06-07/post2/">v1.0</a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<ul>
-	<li>
-		<strong>Ardruino</strong>: (
-			<a href="/blog/2017/2017-02-27/">Cheat sheet</a>,
-			<a href="/blog/2017/2017-02-28/">data types</a>
-		)
-	</li>
-	<li><a href="/blog/2022/2022-06-07/post2/">Lounge Clock (v 1.0)</a></li>
-	<li><strong>JS Pong</strong>: (
-		<a href="/blog/2016/2016-07-29/">post 1</a>,
-		<a href="/blog/2016/2016-08-02/">post 2</a>
-	)</li>
-</ul>
+  <div class="col-md-6">
+    <div class="project-card">
+      <div class="project-card-header">
+        <i class="bi bi-code-slash me-2"></i>Software Projects
+      </div>
+      <div class="project-card-body">
+        <div class="project-topic">
+          <span class="project-topic-label">JS Pong</span>
+          <a href="/blog/2016/2016-07-29/">Post 1</a>,
+          <a href="/blog/2016/2016-08-02/">Post 2</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

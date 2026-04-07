@@ -8,17 +8,62 @@ pagination:
   size: 25
   reverse: true
 ---
-<h1>Blog Post Archive</h1>
+<div class="d-flex align-items-baseline mb-4 gap-3">
+  <h1 class="mb-0">Archive</h1>
+  <span class="text-muted small">{{ collections.posts | length }} posts total</span>
+</div>
 
-{% set postslist = pagination.items | reverse %}
-{% include "postslist.njk" %}
+{% for group in pagination.items | groupByYear %}
+<h2 class="archive-year-header">
+  <i class="bi bi-calendar3 me-2"></i>{{ group.year }}
+  <span class="archive-year-count">{{ group.posts | length }}</span>
+</h2>
 
-<nav>
-  <ul class="pagination justify-content-end">
-	{%- for pageEntry in pagination.pages %}
-    	<li class="page-item {% if page.url == pagination.hrefs[ loop.index0 ] %}active{% endif %}">
-			<a class="page-link" href="{{ pagination.hrefs[ loop.index0 ] }}"{% if page.url == pagination.hrefs[ loop.index0 ] %} aria-current="page"{% endif %}>{{ loop.index }}</a>
-		</li>
-	{%- endfor %}
+{% for post in group.posts %}
+<div class="post-card" onclick="location.href='{{ post.url }}'">
+  <div class="d-flex align-items-start gap-3">
+    <div class="flex-grow-1 min-w-0">
+      <a href="{{ post.url }}" class="post-title">{{ post.data.title or post.url }}</a>
+      <div class="post-meta-row mt-1">
+        <span class="post-date">
+          <i class="bi bi-calendar-event me-1"></i>
+          <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate2 }}</time>
+        </span>
+        {% if post.data.tags | filterTagList | length > 0 %}
+        <span class="post-tags-inline">
+          {% for tag in post.data.tags | filterTagList %}
+          <a href="/tags/{{ tag | slugify }}/" class="post-tag-badge" onclick="event.stopPropagation()">{{ tag }}</a>
+          {% endfor %}
+        </span>
+        {% endif %}
+      </div>
+    </div>
+    {% if post.data.logo %}
+    <img src="{{ post | postLogo(page) }}" alt="" width="44" height="44" class="post-card-logo flex-shrink-0" loading="lazy" />
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+{% endfor %}
+
+{% if pagination.pages.length > 1 %}
+<nav class="mt-4" aria-label="Archive pages">
+  <ul class="pagination justify-content-center archive-pagination flex-wrap">
+    {% if pagination.href.previous %}
+    <li class="page-item">
+      <a class="page-link" href="{{ pagination.href.previous }}"><i class="bi bi-chevron-left"></i></a>
+    </li>
+    {% endif %}
+    {%- for pageEntry in pagination.pages %}
+    <li class="page-item {% if page.url == pagination.hrefs[ loop.index0 ] %}active{% endif %}">
+      <a class="page-link" href="{{ pagination.hrefs[ loop.index0 ] }}"{% if page.url == pagination.hrefs[ loop.index0 ] %} aria-current="page"{% endif %}>{{ loop.index }}</a>
+    </li>
+    {%- endfor %}
+    {% if pagination.href.next %}
+    <li class="page-item">
+      <a class="page-link" href="{{ pagination.href.next }}"><i class="bi bi-chevron-right"></i></a>
+    </li>
+    {% endif %}
   </ul>
 </nav>
+{% endif %}

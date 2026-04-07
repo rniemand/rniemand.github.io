@@ -1,24 +1,78 @@
 ---
 title: Home
-pagination:
-  data: collections.posts
-  size: 10
-  reverse: true
 ---
 
-<h1>Welcome to my blog!</h1>
-<p>This is a space where I randomly post about things that interest me along with showcasing some of the <a href="/projects/">projects</a> that I am currently working on.</p>
-<p>Being a self-taught developer I am open to any feedback, comments, and suggestions on any of my posts to improve and learn more - don’t be shy to add in your comments.</p>
+<div class="hero-section">
+  <h1><i class="bi bi-code-slash me-2"></i>Hey, I'm Richard!</h1>
+  <p class="hero-desc">I'm a self-taught developer who writes about home automation, software projects, and whatever else catches my interest. Feedback and comments are always welcome.</p>
+  <div class="d-flex flex-wrap gap-2 mt-3">
+    <a href="/projects/" class="btn btn-sm hero-btn-primary"><i class="bi bi-folder2-open me-1"></i>Projects</a>
+    <a href="/tags/" class="btn btn-sm hero-btn-secondary"><i class="bi bi-tags-fill me-1"></i>Browse Tags</a>
+    <a href="/blog/" class="btn btn-sm hero-btn-secondary"><i class="bi bi-journal-text me-1"></i>Full Archive</a>
+    <a href="/about/" class="btn btn-sm hero-btn-secondary"><i class="bi bi-person-fill me-1"></i>About Me</a>
+  </div>
+</div>
 
-{% set postsCount = collections.posts | length %}
-{% set latestPostsCount = postsCount | min(5) %}
-<h2>Latest Blog Posts</h2>
+{% set allPosts = collections.posts | reverse %}
+{% set latestPost = allPosts[0] %}
 
-{% set postslist = collections.posts | head(-1 * 10) %}
-{% set postslistCounter = postsCount %}
-{% include "postslist.njk" %}
+{% if latestPost %}
+<div class="featured-post">
+  <div class="featured-label"><i class="bi bi-star-fill me-1"></i>Latest Post</div>
+  <div class="featured-title">
+    <a href="{{ latestPost.url }}">{{ latestPost.data.title or latestPost.url }}</a>
+  </div>
+  <div class="featured-meta mt-2">
+    <i class="bi bi-calendar-event me-1"></i>
+    <time datetime="{{ latestPost.date | htmlDateString }}">{{ latestPost.date | readableDate }}</time>
+    {% if latestPost.data.tags | filterTagList | length > 0 %}
+    <span class="mx-2">&middot;</span>
+    {% for tag in latestPost.data.tags | filterTagList %}
+    <a href="/tags/{{ tag | slugify }}/" class="post-tag-badge">{{ tag }}</a>
+    {% endfor %}
+    {% endif %}
+  </div>
+  {% if latestPost.data.description %}
+  <p class="featured-desc mt-2 mb-0">{{ latestPost.data.description }}</p>
+  {% endif %}
+</div>
+{% endif %}
 
-{% set morePosts = postsCount - 5 %}
-{% if morePosts > 0 %}
-<p class="text-end">{{ morePosts }} more post{% if morePosts != 1 %}s{% endif %} can be found in <a href="blog.njk">the archive</a>.</p>
+<h2><i class="bi bi-clock-history me-2"></i>Recent Posts</h2>
+
+{% for post in allPosts %}
+{% if loop.index > 1 and loop.index <= 9 %}
+<div class="post-card" onclick="location.href='{{ post.url }}'">
+  <div class="d-flex align-items-start gap-3">
+    <div class="flex-grow-1 min-w-0">
+      <a href="{{ post.url }}" class="post-title">{{ post.data.title or post.url }}</a>
+      <div class="post-meta-row mt-1">
+        <span class="post-date">
+          <i class="bi bi-calendar-event me-1"></i>
+          <time datetime="{{ post.date | htmlDateString }}">{{ post.date | readableDate2 }}</time>
+        </span>
+        {% if post.data.tags | filterTagList | length > 0 %}
+        <span class="post-tags-inline">
+          {% for tag in post.data.tags | filterTagList | head(3) %}
+          <a href="/tags/{{ tag | slugify }}/" class="post-tag-badge" onclick="event.stopPropagation()">{{ tag }}</a>
+          {% endfor %}
+        </span>
+        {% endif %}
+      </div>
+    </div>
+    {% if post.data.logo %}
+    <img src="{{ post | postLogo(page) }}" alt="" width="40" height="40" class="post-card-logo flex-shrink-0" loading="lazy" />
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+
+{% set totalPosts = collections.posts | length %}
+{% if totalPosts > 9 %}
+<div class="text-end mt-3">
+  <a href="/blog/" class="btn btn-sm btn-outline-secondary">
+    <i class="bi bi-journal-text me-1"></i>View all {{ totalPosts }} posts in the archive
+  </a>
+</div>
 {% endif %}

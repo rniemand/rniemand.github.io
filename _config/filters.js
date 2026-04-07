@@ -66,4 +66,16 @@ export default function (eleventyConfig) {
 	});
 
 	eleventyConfig.addFilter("sortAlphabetically", (strings) => (strings || []).sort((b, a) => b.localeCompare(a)));
+
+	eleventyConfig.addFilter("groupByYear", (posts) => {
+		const groups = {};
+		for (const post of (posts || [])) {
+			const year = new Date(post.date).getFullYear();
+			if (!groups[year]) groups[year] = [];
+			groups[year].push(post);
+		}
+		return Object.entries(groups)
+			.sort(([a], [b]) => b - a)
+			.map(([year, posts]) => ({ year, posts }));
+	});
 }
