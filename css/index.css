@@ -618,6 +618,24 @@ div.main-content .table-hover > tbody > tr:hover > * {
 	padding: 2.25rem 2rem;
 	margin-bottom: 2rem;
 }
+.hero-inner {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+}
+.hero-text {
+	flex: 1;
+	min-width: 0;
+}
+.hero-photo {
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	object-fit: cover;
+	object-position: center top;
+	border: 3px solid #2a3358;
+	flex-shrink: 0;
+}
 .hero-section h1 {
 	color: #c3e6ff;
 	font-size: 2rem;
@@ -791,9 +809,23 @@ div.main-content .table-hover > tbody > tr:hover > * {
 /* =====================================================
    Responsive tweaks
    ===================================================== */
+@media (max-width: 768px) and (min-width: 577px) {
+	.hero-photo {
+		width: 120px;
+		height: 120px;
+	}
+}
+
 @media (max-width: 576px) {
 	.hero-section {
 		padding: 1.5rem 1.25rem;
+	}
+	.hero-inner {
+		align-items: flex-start;
+	}
+	.hero-photo {
+		width: 80px;
+		height: 80px;
 	}
 	.hero-section h1 {
 		font-size: 1.5rem;
