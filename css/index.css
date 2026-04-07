@@ -3,6 +3,8 @@
 body {
 	font-family: "Open Sans", sans-serif;
 	font-optical-sizing: auto;
+	background-image: none !important;
+	background-color: #1a1e2e !important;
 }
 
 .navbar .navbar-brand.active,

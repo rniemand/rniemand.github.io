@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npm install:*)",
       "Bash(npm outdated:*)",
-      "Bash(npm audit:*)"
+      "Bash(npm audit:*)",
+      "Bash(grep -oP \".{100}linear-gradient\\\\\\(90deg,#33b7e2,#5e62b0,#dc307c\\\\\\)\" C:/dev/rniemand.github.io/css/theme.css)",
+      "Bash(python3 -c \":*)",
+      "Bash(node -e \":*)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }

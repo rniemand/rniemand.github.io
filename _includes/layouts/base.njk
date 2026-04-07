@@ -30,7 +30,7 @@
     <header>
       <nav class="navbar navbar-expand-md fixed-top bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand {% if '/' == page.url %}active{% endif %}" href="/">RichardN</a>
+          <a class="navbar-brand {% if '/' == page.url %}active{% endif %}" href="/"><i class="bi bi-house-fill me-1"></i>RichardN</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -45,7 +45,12 @@
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               {%- for entry in collections.all | eleventyNavigation %}
                 <li class="nav-item">
-                  <a class="nav-link {% if entry.url == page.url %}active{% endif %}" href="{{ entry.url }}">{{ entry.title }}</a>
+                  <a class="nav-link {% if entry.url == page.url %}active{% endif %}" href="{{ entry.url }}">
+                    {%- if entry.key == "Projects" %}<i class="bi bi-folder2-open me-1"></i>
+                    {%- elif entry.key == "Tags" %}<i class="bi bi-tags-fill me-1"></i>
+                    {%- elif entry.key == "Archive" %}<i class="bi bi-journal-text me-1"></i>
+                    {%- else %}<i class="bi bi-link-45deg me-1"></i>
+                    {%- endif %}{{ entry.title }}</a>
                 </li>
               {%- endfor %}
             </ul>

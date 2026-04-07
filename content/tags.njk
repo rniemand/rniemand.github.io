@@ -5,38 +5,117 @@ eleventyNavigation:
   order: 3
 ---
 
-<h1>Posts by Tags</h1>
+<h1><i class="bi bi-tags-fill me-2"></i>Posts by Tags</h1>
 
-<p>
-	This page is used to list out all the tags used in my posts, along with providing a link directly to the latest post for the given tag.
-	Clicking on a <strong>tag</strong> will list every post containing the selected tag.
-</p>
+<p>Browse all tags below. Click any tag to see related posts.</p>
+
+<div class="mb-3">
+  <input
+    type="text"
+    class="form-control"
+    id="tagSearch"
+    placeholder="Filter tags..."
+    autocomplete="off"
+    aria-label="Filter tags">
+</div>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3 mb-4" id="tagGrid">
+  {% for tag in collections | getKeys | filterTagList | sortAlphabetically %}
+    {% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
+    {% set posts = collections[tag] %}
+    {% set postCount = posts.length %}
+    {% set latestPost = posts[postCount - 1] %}
+    <div class="col tag-card-item" data-tag="{{ tag | lower }}">
+      <div class="card h-100 tag-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <a href="{{ tagUrl }}" class="tag-card-link">
+              <i class="bi bi-tag-fill me-1"></i>{{ tag }}
+            </a>
+            <span class="badge rounded-pill tag-count-badge">{{ postCount }}</span>
+          </div>
+          <div class="tag-latest-post">
+            <small class="text-muted d-block mb-1">Latest post:</small>
+            <small><a href="{{ latestPost.url }}">{{ latestPost.data.title }}</a></small>
+          </div>
+        </div>
+        <div class="card-footer">
+          <small class="tag-date"><i class="bi bi-calendar2 me-1"></i>{{ latestPost.date | readableDate2 }}</small>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+<div id="tagNoResults" class="text-center text-muted py-4" style="display:none;">
+  <i class="bi bi-search me-2"></i>No tags match your filter.
+</div>
 
 <style>
-	.tags-table .post-date {
-		color: #eaff9b;
-	}
+  .tag-card {
+    background-color: #252a3a;
+    border-color: #353a4e;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .tag-card:hover {
+    border-color: #39cbfb;
+    transform: translateY(-2px);
+  }
+  .tag-card-link {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #c3e6ff;
+    text-decoration: none;
+  }
+  .tag-card-link:hover {
+    color: #39cbfb;
+  }
+  .tag-count-badge {
+    background-color: #e83283;
+    color: #fff;
+    font-size: 0.8rem;
+  }
+  .tag-card .card-footer {
+    background-color: #1e2336;
+    border-color: #353a4e;
+  }
+  .tag-date {
+    color: #eaff9b;
+  }
+  .tag-latest-post a {
+    color: #b2fde7;
+  }
+  #tagSearch {
+    background-color: #252a3a;
+    border-color: #353a4e;
+    color: #e9e9e8;
+  }
+  #tagSearch:focus {
+    background-color: #2a3045;
+    border-color: #39cbfb;
+    color: #e9e9e8;
+    box-shadow: 0 0 0 0.2rem rgba(57, 203, 251, 0.2);
+  }
+  #tagSearch::placeholder {
+    color: #6c757d;
+  }
 </style>
 
-<table class="table table-sm table-hover tags-table">
-	<thead>
-		<tr>
-			<th>Tag</th>
-			<th># Posts</th>
-			<th>Last Post Date</th>
-			<th>Latest Post</th>
-		</tr>
-	</thead>
-	<tbody>
-		{% for tag in collections | getKeys | filterTagList | sortAlphabetically %}
-			{% set tagUrl %}/tags/{{ tag | slugify }}/{% endset %}
-			{% set postCount %}{{ collections[tag].length }}{% endset %}
-			<tr>
-				<td><a href="{{ tagUrl }}" class="post-tag">{{ tag }}</a></td>
-				<td>{{postCount}} post{% if postCount>1 %}s{% endif %}</td>
-				<td class="post-date">{{ collections[tag][postCount-1].date | readableDate2 }}</td>
-				<td><a href="{{ collections[tag][postCount-1].url }}">{{ collections[tag][postCount-1].data.title }}</a></td>
-			</tr>
-		{% endfor %}
-	</tbody>
-</table>
+<script>
+(function () {
+  const input = document.getElementById('tagSearch');
+  const cards = document.querySelectorAll('.tag-card-item');
+  const noResults = document.getElementById('tagNoResults');
+
+  input.addEventListener('input', function () {
+    const q = this.value.toLowerCase().trim();
+    let visible = 0;
+    cards.forEach(function (card) {
+      const match = q === '' || card.dataset.tag.includes(q);
+      card.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    noResults.style.display = visible === 0 ? '' : 'none';
+  });
+})();
+</script>
