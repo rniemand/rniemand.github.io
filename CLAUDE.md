@@ -123,7 +123,11 @@ body {
 }
 ```
 
-## Navigation
+## Navigation & Layout
+
+**Navbar** (`base.njk`): Uses `navbar-dark bg-dark` (Bootstrap `#212529`). Padding reduced via `.navbar { padding-top/bottom: 0.3rem }` in `css/index.css`. The `div.main-content` top margin is `3.5rem` to clear the compact fixed navbar.
+
+**Footer** (`base.njk`): Single-line GitHub link. Uses `py-2` (not `py-3`) for a slim height.
 
 Nav items are driven by `eleventyNavigation` frontmatter in content files:
 
@@ -180,6 +184,8 @@ Post cards are used on the home page, archive, and tag pages. CSS classes:
 - `.post-card-banner` — full-width banner image
 
 Always add `onclick="event.stopPropagation()"` to tag links inside cards so clicking a tag doesn't also navigate to the post.
+
+The inner flex row uses `align-items-center` (not `align-items-start`) so logo icons vertically centre within the card regardless of title length.
 
 ## Home Page Design
 

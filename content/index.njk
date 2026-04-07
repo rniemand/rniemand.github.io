@@ -46,7 +46,7 @@ title: Home
 {% for post in allPosts %}
 {% if loop.index > 1 and loop.index <= 9 %}
 <div class="post-card" onclick="location.href='{{ post.url }}'">
-  <div class="d-flex align-items-start gap-3">
+  <div class="d-flex align-items-center gap-3">
     <div class="flex-grow-1 min-w-0">
       <a href="{{ post.url }}" class="post-title">{{ post.data.title or post.url }}</a>
       <div class="post-meta-row mt-1">

@@ -1,6 +1,6 @@
 {%- for post in postslist | reverse %}
 <div class="post-card" onclick="location.href='{{ post.url }}'">
-  <div class="d-flex align-items-start gap-3">
+  <div class="d-flex align-items-center gap-3">
     <div class="flex-grow-1 min-w-0">
       <a href="{{ post.url }}" class="post-title">{% if post.data.title %}{{ post.data.title }}{% else %}<code>{{ post.url }}</code>{% endif %}</a>
       <div class="post-meta-row mt-1">

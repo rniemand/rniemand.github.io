@@ -9,13 +9,22 @@ body {
 	font-size: 1.1rem;
 }
 
+.navbar {
+	padding-top: 0.3rem;
+	padding-bottom: 0.3rem;
+}
+
+footer.footer {
+	background-color: #13161b !important;
+}
+
 .navbar .navbar-brand.active,
 .navbar-nav .nav-item .nav-link.active {
-	border-bottom: 1px solid #e0e9f2;
+	border-bottom: 1px solid #5a6a84;
 }
 
 div.main-content {
-	margin-top: 4rem;
+	margin-top: 3.5rem;
 	font-size: 1.15rem;
 }
 
@@ -600,7 +609,7 @@ div.main-content .table-hover > tbody > tr:hover > * {
    Featured post (home page)
    ===================================================== */
 .featured-post {
-	background: linear-gradient(135deg, #1f2a45, #1a2540);
+	linear-gradient(135deg, #000000, #0e2765);
 	border: 1px solid #3d5080;
 	border-radius: 0.75rem;
 	padding: 1.5rem;
