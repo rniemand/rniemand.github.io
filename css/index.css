@@ -784,9 +784,20 @@ div.main-content .table-hover > tbody > tr:hover > * {
 	margin-top: 0.5rem;
 }
 .about-intro {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
 	margin-bottom: 1.5rem;
 	padding-bottom: 1.25rem;
 	border-bottom: 1px solid #2a3358;
+}
+.about-photo {
+	width: 90px;
+	height: 90px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 3px solid #2a3358;
+	flex-shrink: 0;
 }
 .about-name {
 	color: #c3e6ff;
