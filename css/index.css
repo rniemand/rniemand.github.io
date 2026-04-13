@@ -363,16 +363,11 @@ div.main-content .table-hover > tbody > tr:hover > * {
 }
 
 /* =====================================================
-   Post Article — images (integrated card style)
+   Post Article — images
    ===================================================== */
 .post-body picture {
 	display: block;
-	width: fit-content;
-	background: #2a3a6b12;
-	border: 1px solid #2a3358;
-	border-radius: 0.6rem;
-	padding: 0.75rem;
-	margin: 1.75rem auto;
+	margin: 2rem auto;
 	text-align: center;
 }
 
@@ -383,15 +378,15 @@ div.main-content .table-hover > tbody > tr:hover > * {
 .post-body picture img {
 	max-width: 100%;
 	height: auto;
-	border-radius: 0.35rem;
+	border-radius: 0.5rem;
 	display: block;
 	margin: 0 auto;
-	box-shadow: 0 6px 24px rgba(0, 0, 0, 0.55);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
 .post-body picture img.no-borders {
-	border: none;
 	box-shadow: none;
+	border-radius: 0;
 }
 
 /* =====================================================
