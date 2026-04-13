@@ -550,6 +550,13 @@ div.main-content .table-hover > tbody > tr:hover > * {
 }
 
 /* =====================================================
+   Post Article — comments (Giscus)
+   ===================================================== */
+.post-comments {
+	margin-top: 2.5rem;
+}
+
+/* =====================================================
    Post Cards (archive, home, tag pages)
    ===================================================== */
 .post-card {
