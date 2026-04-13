@@ -60,9 +60,7 @@ div.main-content pre {
 	font-size: 1rem;
 	background-color: #0e1525;
 	border: 1px solid #2a3358;
-	border-radius: 0.5rem;
 	padding: 1rem 1.25rem;
-	margin-bottom: 1.5rem;
 }
 
 div.main-content table {
@@ -397,32 +395,116 @@ div.main-content .table-hover > tbody > tr:hover > * {
 }
 
 /* =====================================================
-   Post Article — code block: copy button + collapse/expand
+   Post Article — code block: header, language label,
+                  line numbers, copy button, collapse/expand
    ===================================================== */
 .code-block-wrapper {
 	position: relative;
+	margin-bottom: 1.5rem;
 }
 
-/* When a collapsible expander is present, remove pre's bottom margin
-   (the expander bar takes over that spacing role) */
-.code-block-wrapper > pre.code-pre-collapsible {
+/* Header bar: language label left, copy button right */
+.code-block-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background: #080d1a;
+	border: 1px solid #2a3358;
+	border-bottom: 1px solid #131828;
+	border-radius: 0.5rem 0.5rem 0 0;
+	padding: 0.3rem 0.45rem 0.3rem 0.85rem;
+	min-height: 2rem;
+}
+
+.code-lang-label {
+	color: #4a6890;
+	font-size: 0.68rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	user-select: none;
+}
+
+/* Copy button — lives inside the header bar */
+.copy-code-btn {
+	background: transparent;
+	color: #4a6080;
+	border: 1px solid transparent;
+	border-radius: 0.3rem;
+	padding: 0.2rem 0.4rem;
+	font-size: 0.82rem;
+	line-height: 1;
+	cursor: pointer;
+	transition: background 0.15s, color 0.15s, border-color 0.15s;
+	flex-shrink: 0;
+}
+
+.copy-code-btn:hover {
+	background: #1a2540;
+	color: #c3e6ff;
+	border-color: #2a3358;
+}
+
+.copy-code-btn.copied {
+	color: #b2fde7;
+	border-color: rgba(178, 253, 231, 0.4);
+}
+
+/* Pre — flush below the header, no top rounding */
+div.main-content pre,
+.post-body pre {
+	border-radius: 0 0 0.5rem 0.5rem;
+	border-top: none;
+	margin-top: 0 !important;
 	margin-bottom: 0;
+}
+
+/* Line numbers — gutter injected by JS as <span class="code-line-numbers-rows"> */
+pre.has-line-numbers {
+	padding-left: 3.5em !important;
+	position: relative;
+}
+
+.code-line-numbers-rows {
+	position: absolute;
+	pointer-events: none;
+	top: 1rem;     /* match pre padding-top */
+	left: 0;
+	width: 3em;
+	border-right: 1px solid #1e2845;
+	counter-reset: linenumber;
+	user-select: none;
+	line-height: 1.5; /* match prism okaidia line-height */
+}
+
+.code-line-numbers-rows > span {
+	display: block;
+	counter-increment: linenumber;
+}
+
+.code-line-numbers-rows > span::before {
+	content: counter(linenumber);
+	color: #323e52;
+	display: block;
+	padding-right: 0.75em;
+	text-align: right;
+	font-size: 1rem;
+}
+
+/* When a collapsible expander is present, remove pre's bottom rounding
+   (the expander bar takes over that role) */
+.code-block-wrapper > pre.code-pre-collapsible {
 	overflow-x: auto;
 	overflow-y: hidden;
 	transition: max-height 0.25s ease;
-}
-
-/* Round only the top corners while the expander bar is attached below */
-.code-block-wrapper > pre.code-pre-collapsed,
-.code-block-wrapper > pre.code-pre-collapsible {
-	border-radius: 0.5rem 0.5rem 0 0;
+	border-radius: 0 !important;
 	border-bottom-color: #0e1525; /* dissolve bottom border into expander */
 }
 
 /* Expander bar — flush footer beneath the pre */
 .code-expander {
 	position: relative;
-	margin-bottom: 1.5rem;
 }
 
 /* Gradient fade overlay when collapsed — sits over the bottom of the pre */
@@ -463,38 +545,6 @@ div.main-content .table-hover > tbody > tr:hover > * {
 .code-expand-btn .bi {
 	font-size: 0.68rem;
 	opacity: 0.8;
-}
-
-/* Copy button — always visible at reduced opacity, full on hover/active */
-.copy-code-btn {
-	position: absolute;
-	top: 0.5rem;
-	right: 0.5rem;
-	background: rgba(31, 37, 64, 0.85);
-	color: #8ba0c0;
-	border: 1px solid #2a3358;
-	border-radius: 0.35rem;
-	padding: 0.25rem 0.45rem;
-	font-size: 0.85rem;
-	line-height: 1;
-	cursor: pointer;
-	opacity: 0.65;
-	transition: opacity 0.15s, background 0.15s, color 0.15s;
-	z-index: 2;
-	backdrop-filter: blur(2px);
-}
-
-.copy-code-btn:hover {
-	opacity: 1;
-	background: #2a3358;
-	color: #c3e6ff;
-	border-color: #3a5080;
-}
-
-.copy-code-btn.copied {
-	color: #b2fde7;
-	border-color: #b2fde7;
-	opacity: 1;
 }
 
 /* =====================================================

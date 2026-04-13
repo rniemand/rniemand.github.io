@@ -29,6 +29,24 @@ const setupTocSpy = () => {
     headings.forEach(h => observer.observe(h));
 }
 
+const LANG_NAMES = {
+    'js': 'JavaScript', 'javascript': 'JavaScript',
+    'ts': 'TypeScript', 'typescript': 'TypeScript',
+    'css': 'CSS', 'html': 'HTML', 'xml': 'XML', 'svg': 'SVG',
+    'bash': 'Bash', 'sh': 'Shell', 'shell': 'Shell', 'zsh': 'Zsh', 'fish': 'Fish',
+    'python': 'Python', 'py': 'Python',
+    'json': 'JSON', 'json5': 'JSON5', 'yaml': 'YAML', 'yml': 'YAML', 'toml': 'TOML', 'ini': 'INI',
+    'csharp': 'C#', 'cs': 'C#', 'cpp': 'C++', 'c': 'C',
+    'java': 'Java', 'go': 'Go', 'rust': 'Rust', 'kotlin': 'Kotlin', 'scala': 'Scala',
+    'sql': 'SQL', 'markdown': 'Markdown', 'md': 'Markdown',
+    'nginx': 'Nginx', 'dockerfile': 'Dockerfile', 'docker': 'Dockerfile',
+    'powershell': 'PowerShell', 'ps1': 'PowerShell',
+    'ruby': 'Ruby', 'rb': 'Ruby', 'php': 'PHP',
+    'scss': 'SCSS', 'sass': 'Sass', 'less': 'Less',
+    'graphql': 'GraphQL', 'svelte': 'Svelte', 'vue': 'Vue',
+    'jsx': 'JSX', 'tsx': 'TSX',
+};
+
 const setupCodeBlocks = () => {
     document.querySelectorAll('.post-body pre').forEach(pre => {
         const wrapper = document.createElement('div');
@@ -38,13 +56,28 @@ const setupCodeBlocks = () => {
 
         const codeEl = pre.querySelector('code') || pre;
 
-        // Copy button — always visible, copies all content regardless of expand state
+        // Detect language from class on <pre> or <code>
+        const langMatch = (pre.className + ' ' + codeEl.className).match(/language-([^\s]+)/);
+        const langKey = langMatch ? langMatch[1].replace(/^diff-/, '').toLowerCase() : '';
+        const langDisplay = LANG_NAMES[langKey] || (langKey ? langKey.toUpperCase() : '');
+
+        // Header bar: language label left, copy button right
+        const header = document.createElement('div');
+        header.className = 'code-block-header';
+
+        const langLabel = document.createElement('span');
+        langLabel.className = 'code-lang-label';
+        langLabel.textContent = langDisplay;
+
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-code-btn';
         copyBtn.setAttribute('aria-label', 'Copy code');
         copyBtn.setAttribute('title', 'Copy code');
         copyBtn.innerHTML = '<i class="bi bi-clipboard"></i>';
-        wrapper.appendChild(copyBtn);
+
+        header.appendChild(langLabel);
+        header.appendChild(copyBtn);
+        wrapper.insertBefore(header, pre);
 
         copyBtn.addEventListener('click', () => {
             const text = codeEl.innerText.replace(/\n$/, '');
@@ -58,27 +91,32 @@ const setupCodeBlocks = () => {
             });
         });
 
-        // Collapse logic — show only 15 lines by default if code is longer
+        // Line numbers — inject empty spans, CSS counters do the numbering
         const rawText = codeEl.innerText.replace(/\n$/, '');
         const lineCount = rawText.split('\n').length;
+
+        const lnRows = document.createElement('span');
+        lnRows.className = 'code-line-numbers-rows';
+        lnRows.setAttribute('aria-hidden', 'true');
+        lnRows.innerHTML = Array.from({length: lineCount}, () => '<span></span>').join('');
+        codeEl.appendChild(lnRows);
+        pre.classList.add('has-line-numbers');
+
+        // Collapse logic — show only 10 lines by default if code is longer
         if (lineCount <= 10) return;
 
         const hiddenCount = lineCount - 10;
 
-        // Measure 10-line height using computed styles
         const cs = window.getComputedStyle(codeEl);
         let lh = parseFloat(cs.lineHeight);
         if (isNaN(lh)) lh = parseFloat(cs.fontSize) * 1.5;
         const preCs = window.getComputedStyle(pre);
         const collapsedHeight = Math.ceil(lh * 10 + parseFloat(preCs.paddingTop) + parseFloat(preCs.paddingBottom));
 
-        // Apply collapsed state
         pre.classList.add('code-pre-collapsible', 'code-pre-collapsed');
         pre.style.maxHeight = collapsedHeight + 'px';
-
         wrapper.classList.add('code-block-collapsed');
 
-        // Expander bar beneath the pre
         const expander = document.createElement('div');
         expander.className = 'code-expander';
         expander.innerHTML = `<button class="code-expand-btn" aria-expanded="false">
