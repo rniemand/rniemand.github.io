@@ -19,5 +19,33 @@ const setupTocSpy = () => {
     headings.forEach(h => observer.observe(h));
 }
 
+const setupCopyButtons = () => {
+    document.querySelectorAll('.post-body pre').forEach(pre => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'code-block-wrapper';
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        const btn = document.createElement('button');
+        btn.className = 'copy-code-btn';
+        btn.setAttribute('aria-label', 'Copy code');
+        btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy';
+        wrapper.appendChild(btn);
+
+        btn.addEventListener('click', () => {
+            const code = pre.querySelector('code') || pre;
+            navigator.clipboard.writeText(code.innerText).then(() => {
+                btn.innerHTML = '<i class="bi bi-clipboard-check me-1"></i>Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="bi bi-clipboard me-1"></i>Copy';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        });
+    });
+}
+
 styleTables();
 setupTocSpy();
+setupCopyButtons();
