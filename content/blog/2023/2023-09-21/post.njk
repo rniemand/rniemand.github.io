@@ -66,7 +66,6 @@ export const toastError = (
 <p>This is the custom component that wraps the <a href="https://sveltestrap.js.org/?path=/story/components-toast--toast">Toast SvelteStrap</a> component and places all added toast messages in the bottom corner of your application using the <code>position-fixed bottom-0 end-0 p-3</code> <a href="https://getbootstrap.com/">BootStrap</a> styles.</p>
 <p>When the component is mounted it subscribes to the toasts store exposed from <code>ToastManager.ts</code> (and unsubscribes when the component is unmounted). Each toast message added to the store is rendered in the <a href="https://svelte.dev/docs/logic-blocks">each loop</a>.</p>
 <p>By default all toasts will automatically close after 5 seconds (unless configured not to in the <code>NlpToastMessage</code> constructor), clicking the close icon on a toast will trigger the dismiss method on the manager and remove the toast notification immediately.</p>
-<p>{% raw %}</p>
 {% highlight "html" %}
 <script lang="ts">
   import { onMount } from "svelte";
@@ -82,18 +81,16 @@ export const toastError = (
 </script>
 
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-  {#each toastMessages as entry}
+  {{ "{#" }}each toastMessages as entry}
   <Toast autohide>
     <ToastHeader icon="{entry.color}" toggle="{entry.dismiss}">
       {entry.title}
     </ToastHeader>
-    {#if entry.body}<ToastBody>{entry.body}</ToastBody>{/if}
+    {{ "{#" }}if entry.body}<ToastBody>{entry.body}</ToastBody>{/if}
   </Toast>
   {/each}
 </div>
 {% endhighlight %}
-
-<p>{% endraw %}</p>
 <h2 id="usage">Usage</h2>
 <p>Usage is pretty simple, all you need to do is add the <code>&lt;ToastManager /&gt;</code> component anywhere in your application (I would suggest adding this to your layout file).</p>
 {% highlight "html" %}
