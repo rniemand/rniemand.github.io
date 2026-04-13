@@ -84,5 +84,96 @@
       });
     </script>
     <script id="dsq-count-scr" src="//richardn-ca.disqus.com/count.js" async></script>
+    <script eleventy:ignore>
+    (function() {
+      var KONAMI = [38,38,40,40,37,39,37,39,66,65];
+      var pos = 0;
+      document.addEventListener('keydown', function(e) {
+        if (e.keyCode === KONAMI[pos]) {
+          pos++;
+          if (pos === KONAMI.length) {
+            pos = 0;
+            launchFireworks();
+          }
+        } else {
+          pos = e.keyCode === KONAMI[0] ? 1 : 0;
+        }
+      });
+
+      function launchFireworks() {
+        var canvas = document.createElement('canvas');
+        canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999';
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        document.body.appendChild(canvas);
+        var ctx = canvas.getContext('2d');
+        var particles = [];
+        var start = null;
+        var duration = 4500;
+
+        function Particle(x, y, color) {
+          var angle = Math.random() * Math.PI * 2;
+          var speed = 2 + Math.random() * 5;
+          this.x = x;
+          this.y = y;
+          this.vx = Math.cos(angle) * speed;
+          this.vy = Math.sin(angle) * speed - 2;
+          this.alpha = 1;
+          this.color = color;
+          this.radius = 2 + Math.random() * 2;
+          this.gravity = 0.12;
+          this.decay = 0.013 + Math.random() * 0.01;
+        }
+        Particle.prototype.update = function() {
+          this.vy += this.gravity;
+          this.x += this.vx;
+          this.y += this.vy;
+          this.alpha -= this.decay;
+          this.vx *= 0.98;
+        };
+        Particle.prototype.draw = function(ctx) {
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, this.alpha);
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+          ctx.restore();
+        };
+
+        var palette = ['#e83283','#39cbfb','#ffd97f','#f0ff7f','#b2fde7','#c3e6ff','#ff6b6b','#ffffff'];
+        var nextBurst = 0;
+        var burstInterval = 350;
+
+        function burst() {
+          var x = 80 + Math.random() * (canvas.width - 160);
+          var y = 60 + Math.random() * (canvas.height * 0.6);
+          var color = palette[Math.floor(Math.random() * palette.length)];
+          for (var i = 0; i < 70; i++) {
+            particles.push(new Particle(x, y, color));
+          }
+        }
+
+        function tick(ts) {
+          if (!start) start = ts;
+          var elapsed = ts - start;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          if (elapsed > nextBurst && elapsed < duration - 600) {
+            burst();
+            nextBurst += burstInterval;
+          }
+          particles = particles.filter(function(p) { return p.alpha > 0; });
+          particles.forEach(function(p) { p.update(); p.draw(ctx); });
+          if (elapsed < duration || particles.length) {
+            requestAnimationFrame(tick);
+          } else {
+            canvas.remove();
+          }
+        }
+
+        requestAnimationFrame(tick);
+      }
+    })();
+    </script>
   </body>
 </html>
