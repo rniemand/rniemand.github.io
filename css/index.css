@@ -672,19 +672,31 @@ div.main-content .table-hover > tbody > tr:hover > * {
    Featured post (home page)
    ===================================================== */
 .featured-post {
-	linear-gradient(135deg, #000000, #0e2765);
-	border: 1px solid #3d5080;
+	background: linear-gradient(135deg, #0d1228 0%, #1a1040 50%, #2a0d3a 100%);
+	background-image: none !important;
+	border: 1px solid #6030a0;
 	border-radius: 0.75rem;
 	padding: 1.5rem;
 	margin-bottom: 2rem;
+	box-shadow: 0 0 0 1px rgba(232, 50, 131, 0.15), 0 4px 24px rgba(96, 48, 160, 0.3);
+	position: relative;
+	overflow: hidden;
+}
+.featured-post::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(135deg, rgba(232, 50, 131, 0.06) 0%, rgba(57, 203, 251, 0.04) 100%);
+	pointer-events: none;
 }
 .featured-label {
 	color: #e83283;
 	font-size: 0.78rem;
 	text-transform: uppercase;
-	letter-spacing: 0.08em;
+	letter-spacing: 0.1em;
 	font-weight: 700;
 	margin-bottom: 0.5rem;
+	text-shadow: 0 0 12px rgba(232, 50, 131, 0.5);
 }
 .featured-title a {
 	color: #c3e6ff;
@@ -701,7 +713,7 @@ div.main-content .table-hover > tbody > tr:hover > * {
 	font-size: 0.88rem;
 }
 .featured-desc {
-	color: #8a9bb5;
+	color: #9baecb;
 	font-size: 0.95rem;
 }
 
