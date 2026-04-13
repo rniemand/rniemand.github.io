@@ -58,19 +58,19 @@ const setupCodeBlocks = () => {
             });
         });
 
-        // Collapse logic — show only 3 lines by default if code is longer
+        // Collapse logic — show only 15 lines by default if code is longer
         const rawText = codeEl.innerText.replace(/\n$/, '');
         const lineCount = rawText.split('\n').length;
-        if (lineCount <= 3) return;
+        if (lineCount <= 15) return;
 
-        const hiddenCount = lineCount - 3;
+        const hiddenCount = lineCount - 15;
 
-        // Measure 3-line height using computed styles
+        // Measure 15-line height using computed styles
         const cs = window.getComputedStyle(codeEl);
         let lh = parseFloat(cs.lineHeight);
         if (isNaN(lh)) lh = parseFloat(cs.fontSize) * 1.5;
         const preCs = window.getComputedStyle(pre);
-        const collapsedHeight = Math.ceil(lh * 3 + parseFloat(preCs.paddingTop) + parseFloat(preCs.paddingBottom));
+        const collapsedHeight = Math.ceil(lh * 15 + parseFloat(preCs.paddingTop) + parseFloat(preCs.paddingBottom));
 
         // Apply collapsed state
         pre.classList.add('code-pre-collapsible', 'code-pre-collapsed');
